@@ -17,7 +17,7 @@ public class Car {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Car(long vehicleNumber, String frameNumber, String brandNumber, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge) {
+    public Car(long vehicleNumber, String frameNumber, String brandNumber, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, Booking booking) {
         this.vehicleNumber = vehicleNumber;
         this.frameNumber = frameNumber;
         this.brand = brandNumber;
@@ -27,6 +27,8 @@ public class Car {
         this.steelPrice = steelPrice;
         this.registrationFee = registrationFee;
         this.co2Discharge = co2Discharge;
+        this.inspected = inspected;
+        this.booking = booking;
     }
 
     public Car(){}
@@ -149,6 +151,25 @@ public class Car {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String toString(){
+
+        String inspectedYN = inspected ? "Yes" : "No";
+
+        return "#" + vehicleNumber +
+                " : " + frameNumber +
+                " - " + brand +
+                ", " + model +
+                ": " + color + "\n" +
+                ", Equipment-level: " + equipmentLevel +
+                ", Steel-price: " + steelPrice +
+                ", Registration-fee: " + registrationFee +
+                ", Co2-fischarge: " + co2Discharge + "\n" +
+                ", Inspected: " + inspectedYN +
+                ", Booking: " + booking +
+                ", Created at: " + createdAt +
+                ", Updated at: " + updatedAt;
     }
 
 }
