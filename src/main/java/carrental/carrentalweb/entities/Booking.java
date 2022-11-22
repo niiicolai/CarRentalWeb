@@ -1,2 +1,4 @@
-package carrental.carrentalweb.entities;public class Booking {
+package carrental.carrentalweb.entities;
+
+public class Booking {
 }
