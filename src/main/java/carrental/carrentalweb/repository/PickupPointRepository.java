@@ -111,6 +111,39 @@ public class PickupPointRepository {
     return pickupPoint;
   }
 
+
+  public PickupPoint findPickupPointByZipcode(String findZipcode){
+
+    PickupPoint pickupPointZip = new PickupPoint();
+    List<PickupPoint> pickupPoints = new ArrayList<>();
+    try {
+      String query = "SELECT * FROM pickup_points";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      while (resultSet.next()) {
+        String name = resultSet.getString(1);
+        Address address = (Address) resultSet.getObject(2);
+        LocalDateTime createdAt =  (LocalDateTime) resultSet.getObject(3);
+        LocalDateTime updatedAt =  (LocalDateTime) resultSet.getObject(4);
+
+        pickupPoints.add(new PickupPoint(name,
+            address,
+            createdAt,
+            updatedAt));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    for (PickupPoint pickupPoint: pickupPoints){
+      if (pickupPoint.getAddress().getZipCode().equals(findZipcode)){
+      pickupPointZip = pickupPoint;
+      }
+    }
+    return pickupPointZip;
+  }
+
   public void updatePickupPoint (PickupPoint pickupPoint){
 
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
