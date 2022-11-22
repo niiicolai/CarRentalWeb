@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div>
+            <h2>New user</h2>
+            <form th:action="@{/user}" th:object="${user}" th:method="patch">
+                <div>
+                    <label name="username">Username</label>
+                    <input type="text" name="username" th:value="${user.getUsername()}"
+                           placeholder="Username"
+                           autocomplete="off"
+                           required="required" />
+                </div>
+                <div>
+                    <div>
+                        <label name="password" class="form-label">Password</label>
+                        <small>Min length: 8 characters</small>
+                    </div>
+                    <input type="password" name="password" 
+                           placeholder="new password ..."
+                           autocomplete="off"
+                           required="required"
+                           minlength="8" />
+                </div>
+                <div>
+                    <input type="submit" value="Save" />
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
