@@ -9,7 +9,7 @@ import carrental.carrentalweb.entities.User;
 public class UserRepository {
 
     public User find(String column, Object value) {
-        String sql = String.format("SELECT * FROM users WHERE %s = ?", column);
+        String sql = String.format("SELECT * FROM users INNER JOIN roles ON users.id=roles.user_id WHERE users.%s=?", column);
         
         /* TODO: Fetch user from database */
 

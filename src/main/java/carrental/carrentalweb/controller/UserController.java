@@ -48,7 +48,7 @@ public class UserController {
 
     @PatchMapping("/user")
     public String update(User user, @AuthenticationPrincipal User authUser) {
-        /* Only allow the authenticated user to be modifed. */
+        /* Only allow the authenticated user to be modified. */
         user.setId(authUser.getId());
         if (userRepository.update(user))
             return "redirect:user";
@@ -58,7 +58,7 @@ public class UserController {
 
     @PatchMapping("/user/password")
     public String updatePassword(User user, @AuthenticationPrincipal User authUser) {
-        /* Only allow the authenticated user to be modifed. */
+        /* Only allow the authenticated user to be modified. */
         user.setId(authUser.getId());
         if (userRepository.updatePassword(user))
             return "redirect:user";
@@ -68,7 +68,7 @@ public class UserController {
 
     @DeleteMapping("/user")
     public String delete(User user, @AuthenticationPrincipal User authUser) {
-        /* Only allow the authenticated user to be modifed. */
+        /* Only allow the authenticated user to be modified. */
         user.setId(authUser.getId());
         if (userRepository.delete(user))
             return "redirect:/";
