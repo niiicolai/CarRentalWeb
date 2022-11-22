@@ -1,5 +1,9 @@
 package carrental.carrentalweb.entities;
 
+/*
+ * Written by Nicolai Berg Andersen.
+ */
+
 import java.util.Collection;
 import java.util.List;
 
