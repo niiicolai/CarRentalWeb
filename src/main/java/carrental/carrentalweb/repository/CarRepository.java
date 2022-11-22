@@ -17,11 +17,11 @@ import java.util.List;
 
 @Repository
 public class CarRepository {
-    @Value("${JDBCUrl}")
+    @Value("${db.url}")
     private String url;
-    @Value("${JDBCUsername")
+    @Value("${db.username}")
     private String username;
-    @Value("${JDBCPassword")
+    @Value("${db.password}")
     private String password;
 
     public Car createCar(Car newCar) {
