@@ -30,7 +30,7 @@ public class PickupPointRepository {
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
     try {
-      String query = "INSERT INTO pickup_points (name," +
+      String query = "INSERT INTO pickup_points (location_name," +
           "address," +
           "created_at," +
           "updated_at)" +
@@ -84,7 +84,7 @@ public class PickupPointRepository {
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
     try {
-      String query = "SELECT * FROM pickup_points WHERE name=?";
+      String query = "SELECT * FROM pickup_points WHERE location_name=?";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setString(1, findName);
 
@@ -112,12 +112,12 @@ public class PickupPointRepository {
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
     try {
-      String query = "UPDATE pickup_points (name, " +
-          "address, " +
-          "created_at, " +
+      String query = "INSERT INTO pickup_points (location_name," +
+          "address," +
+          "created_at," +
           "updated_at)" +
           "VALUES (?, ?, ?, ?)" +
-          "WHERE name =?";
+          "WHERE location_name = ?";
 
       PreparedStatement preparedStatement = conn.prepareStatement(query);
 
