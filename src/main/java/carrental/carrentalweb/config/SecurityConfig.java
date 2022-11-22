@@ -36,20 +36,14 @@ public class SecurityConfig {
      *  Configure authorization on incoming HTTP request.
      */
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers(unauthorizedPaths)
-            .permitAll()
+                .antMatchers(unauthorizedPaths)
+                .permitAll()
             .and()
                 .authorizeRequests()
-                .antMatchers(CLIENT_PATHS)
-                .hasRole(CLIENT_ROLE)
-                .anyRequest()
-                .authenticated()
-            .and()
-                .authorizeRequests()
-                .antMatchers(EMPLOYEE_PATHS)
-                .hasRole(EMPLOYEE_ROLE)
+                .antMatchers(CLIENT_PATHS).hasRole(CLIENT_ROLE)
+                .antMatchers(EMPLOYEE_PATHS).hasRole(EMPLOYEE_ROLE)
                 .anyRequest()
                 .authenticated()
             .and()
