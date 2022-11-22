@@ -1,5 +1,9 @@
 package carrental.carrentalweb.services;
 
+/*
+ * Written by Nicolai Berg Andersen.
+ */
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

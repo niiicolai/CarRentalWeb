@@ -49,3 +49,18 @@ CREATE TABLE subscriptions (
                       created_at          DATE,
                       updated_at          DATE
 );
+
+
+CREATE TABLE bookings (
+                       id INT AUTO_INCREMENT PRIMARY KEY
+                       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE credit_ratings (
+                       booking_id INT AUTO_INCREMENT PRIMARY KEY,
+                       state VARCHAR(255) NOT NULL,
+                       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       FOREIGN KEY(booking_id) REFERENCES bookings(id)
+);

@@ -1,5 +1,9 @@
 package carrental.carrentalweb.repository;
 
+/*
+ * Written by Nicolai Berg Andersen.
+ */
+
 import org.springframework.stereotype.Repository;
 
 import carrental.carrentalweb.builder.UserBuilder;

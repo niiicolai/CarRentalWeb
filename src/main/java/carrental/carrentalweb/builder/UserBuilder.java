@@ -1,5 +1,9 @@
 package carrental.carrentalweb.builder;
 
+/*
+ * Written by Nicolai Berg Andersen.
+ */
+
 import java.util.ArrayList;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

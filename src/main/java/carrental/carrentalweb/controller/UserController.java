@@ -1,5 +1,9 @@
 package carrental.carrentalweb.controller;
 
+/*
+ * Written by Nicolai Berg Andersen.
+ */
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
