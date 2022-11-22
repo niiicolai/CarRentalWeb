@@ -11,9 +11,4 @@ public class SubscriptionRepository {
     @Value("${JDBCPassword")
     private String password;
 
-    public SubscriptionRepository(String url, String username, String password) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
-    }
 }
