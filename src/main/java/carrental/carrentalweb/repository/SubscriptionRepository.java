@@ -1,7 +1,5 @@
 package carrental.carrentalweb.repository;
 
-import carrental.carrentalweb.entities.Booking;
-import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.utilities.MySQLConnector;
 import org.springframework.beans.factory.annotation.Value;
@@ -86,7 +84,7 @@ public class SubscriptionRepository {
     public void update(Subscription subscription){
         Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         try {
-            String query = "UPDATE subscriptions" +
+            String query = "UPDATE subscriptions " +
                     "SET available=?," +
                     "updated_at=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
