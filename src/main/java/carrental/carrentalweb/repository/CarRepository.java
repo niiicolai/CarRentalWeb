@@ -4,6 +4,7 @@ import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.utilities.MySQLConnector;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -29,18 +30,18 @@ public class CarRepository {
         try {
             String query = "INSERT INTO cars (vehicle_number," +
                     "frame_number," +
-                    "brand_number," +
+                    "brand," +
                     "model," +
                     "color," +
                     "equipment_level," +
                     "steel_price," +
-                    "registration_fee" +
+                    "registration_fee," +
                     "co2_discharge," +
                     "inspected," +
                     "booking, " +
                     "created_at," +
                     "updated_at)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?; ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
 
             preparedStatement.setString(1, newCar.getFrameNumber());
@@ -152,15 +153,16 @@ public class CarRepository {
     public void updateCar (Car car){
         Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         try {
-            String query = "UPDATE cars" +
+            String query = "UPDATE cars " +
                     "SET color=?," +
-                    "equipment_leve=?," +
+                    "equipment_level=?," +
                     "steel_price=?," +
                     "registration_fee=?," +
                     "co2_discharge=?," +
-                    "inpected=?," +
+                    "inspected=?," +
                     "booking=?," +
-                    "updated_at";
+                    "updated_at=?" +
+                    "WHERE vehicle_number=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
 
             preparedStatement.setString(1, car.getColor());
@@ -169,7 +171,9 @@ public class CarRepository {
             preparedStatement.setDouble(4, car.getRegistrationFee());
             preparedStatement.setDouble(5, car.getCo2Discharge());
             preparedStatement.setBoolean(6, car.getInspected());
-            preparedStatement.setObject(7, LocalDateTime.now());
+            preparedStatement.setObject(7, car.getBooking());
+            preparedStatement.setObject(8, LocalDateTime.now());
+            preparedStatement.setLong(9, car.getVehicleNumber());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e){
