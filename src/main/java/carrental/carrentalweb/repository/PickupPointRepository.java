@@ -116,7 +116,8 @@ public class PickupPointRepository {
           "address, " +
           "created_at, " +
           "updated_at)" +
-          "VALUES (?, ?, ?, ?)";
+          "VALUES (?, ?, ?, ?)" +
+          "WHERE name =?";
 
       PreparedStatement preparedStatement = conn.prepareStatement(query);
 
@@ -124,6 +125,7 @@ public class PickupPointRepository {
       preparedStatement.setObject(2, pickupPoint.getAddress());
       preparedStatement.setObject(3, pickupPoint.getCreatedAt());
       preparedStatement.setObject(4, pickupPoint.getUpdatedAt());
+      preparedStatement.setString(5, pickupPoint.getName());
 
       preparedStatement.executeUpdate();
     } catch (SQLException e){
