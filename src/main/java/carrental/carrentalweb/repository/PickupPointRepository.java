@@ -4,6 +4,7 @@ import carrental.carrentalweb.entities.Address;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.utilities.MySQLConnector;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 
 import java.sql.Connection;
@@ -14,13 +15,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class PickupPointRepository {
-  @Value("${JDBCUrl}")
+
+  @Value("${db.url}")
   private String url;
-  @Value("${JDBCUsername")
+
+  @Value("${db.username}")
   private String username;
-  @Value("${JDBCPassword")
+
+  @Value("${db.password}")
   private String password;
 
   private Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
@@ -116,8 +120,8 @@ public class PickupPointRepository {
           "address," +
           "created_at," +
           "updated_at)" +
-          "VALUES (?, ?, ?, ?)" +
-          "WHERE location_name = ?";
+          "VALUES (?, ?, ?, ?) " +
+          "WHERE location_name = ?;";
 
       PreparedStatement preparedStatement = conn.prepareStatement(query);
 
