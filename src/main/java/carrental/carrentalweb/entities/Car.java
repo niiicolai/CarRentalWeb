@@ -2,31 +2,65 @@ package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
 
-public class CarEntity {
+public class Car {
     private long vehicleNumber;
     private String frameNumber;
-    private String brandNumber;
+    private String brand;
     private String model;
     private String color;
     private int equipmentLevel;
     private double steelPrice;
     private double registrationFee;
     private double co2Discharge;
-    private String state;
+    private boolean inspected;
+    private Booking booking;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public CarEntity(long vehicleNumber, String frameNumber, String brandNumber, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, String state) {
+    public Car(long vehicleNumber, String frameNumber, String brandNumber, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge) {
         this.vehicleNumber = vehicleNumber;
         this.frameNumber = frameNumber;
-        this.brandNumber = brandNumber;
+        this.brand = brandNumber;
         this.model = model;
         this.color = color;
         this.equipmentLevel = equipmentLevel;
         this.steelPrice = steelPrice;
         this.registrationFee = registrationFee;
         this.co2Discharge = co2Discharge;
-        this.state = state;
+    }
+
+    public Car(){}
+
+    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, Booking booking, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.vehicleNumber = vehicleNumber;
+        this.frameNumber = frameNumber;
+        this.brand = brand;
+        this.model = model;
+        this.color = color;
+        this.equipmentLevel = equipmentLevel;
+        this.steelPrice = steelPrice;
+        this.registrationFee = registrationFee;
+        this.co2Discharge = co2Discharge;
+        this.inspected = inspected;
+        this.booking = booking;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public boolean getInspected(){
+        return this.inspected;
+    }
+
+    public void setInspected(boolean inspected){
+        this.inspected = inspected;
+    }
+
+    public Booking getBooking(){
+        return this.booking;
+    }
+
+    public void setBooking(Booking booking){
+        this.booking = booking;
     }
 
     public long getVehicleNumber() {
@@ -37,8 +71,8 @@ public class CarEntity {
         return frameNumber;
     }
 
-    public String getBrandNumber() {
-        return brandNumber;
+    public String getBrand() {
+        return brand;
     }
 
     public String getModel() {
@@ -65,10 +99,6 @@ public class CarEntity {
         return co2Discharge;
     }
 
-    public String getState() {
-        return state;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -85,8 +115,8 @@ public class CarEntity {
         this.frameNumber = frameNumber;
     }
 
-    public void setBrandNumber(String brandNumber) {
-        this.brandNumber = brandNumber;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public void setModel(String model) {
@@ -111,10 +141,6 @@ public class CarEntity {
 
     public void setCo2Discharge(double co2Discharge) {
         this.co2Discharge = co2Discharge;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
