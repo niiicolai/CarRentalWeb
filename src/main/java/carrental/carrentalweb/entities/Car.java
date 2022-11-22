@@ -2,7 +2,7 @@ package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
 
-public class CarEntity {
+public class Car {
     private long vehicleNumber;
     private String frameNumber;
     private String brandNumber;
@@ -16,7 +16,7 @@ public class CarEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public CarEntity(long vehicleNumber, String frameNumber, String brandNumber, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, String state) {
+    public Car(long vehicleNumber, String frameNumber, String brandNumber, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, String state) {
         this.vehicleNumber = vehicleNumber;
         this.frameNumber = frameNumber;
         this.brandNumber = brandNumber;
