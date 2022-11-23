@@ -13,13 +13,15 @@ public class InvoiceSpecificationRepository {
     public InvoiceSpecification find(String column, Object value) {
         String sql = String.format("SELECT * FROM invoice_specifications WHERE %s=?", column);
         
-        /* TODO: Fetch from database */
+        /* TODO: FETCH INVOICE SPECIFICATION */
 
         return new InvoiceSpecification(1, "");
     }
     
     public boolean insert(InvoiceSpecification invoiceSpecification) {
         String sql = "INSERT INTO invoice_specifications (booking_id, description, price) (?, ?)";
+
+        /* TODO: INSERT INVOICE SPECIFICATION */
 
         return true;
     }
