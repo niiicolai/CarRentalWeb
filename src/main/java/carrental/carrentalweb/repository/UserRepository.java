@@ -15,7 +15,7 @@ public class UserRepository {
     public User find(String column, Object value) {
         String sql = String.format("SELECT * FROM users INNER JOIN roles ON users.id=roles.user_id WHERE users.%s=?", column);
         
-        /* TODO: Fetch user from database */
+        /* TODO: FETCH USER */
 
         return new UserBuilder()
             .id(1)
@@ -38,7 +38,7 @@ public class UserRepository {
         user.encodedPassword();        
         String sql = "INSERT INTO users (username, password) (?, ?)";
 
-        /* TODO: Insert user into database */
+        /* TODO: INSERT USER */
 
         return true;
     }
@@ -50,7 +50,7 @@ public class UserRepository {
          */        
         String sql = "UPDATE users SET username = ?";
 
-        /* TODO: Modify the database user */
+        /* TODO: UPDATE USER */
         
         return true;
     }
@@ -65,7 +65,7 @@ public class UserRepository {
         user.encodedPassword();
         String sql = "UPDATE users SET password = ?";
 
-        /* TODO: Modify the database user */
+        /* TODO: UPDATE USER */
         
         return true;
     }
@@ -73,7 +73,7 @@ public class UserRepository {
     public boolean delete(User user) {
         String sql = "DELETE users WHERE id = ?";
 
-        /* TODO: Delete from the database */
+        /* TODO: DELETE USER */
         
         return true;
     }
