@@ -1,8 +1,9 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.*;
-import carrental.carrentalweb.utilities.MySQLConnector;
-import org.springframework.beans.factory.annotation.Value;
+import carrental.carrentalweb.services.DatabaseService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -16,22 +17,15 @@ import java.util.List;
 @Repository
 public class BookingRepository {
 
-  @Value("${db.url}")
-  private String url;
-
-  @Value("${db.username}")
-  private String username;
-
-  @Value("${db.password}")
-  private String password;
-
-  private Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
+  @Autowired
+  DatabaseService databaseService;
 
   public void createBooking(Booking newBooking) {
 
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
     try {
+      Connection conn = databaseService.getConnection();
       String query = "INSERT INTO bookings (car," +
           "subscription_name," +
           "creditrating," +
@@ -68,6 +62,7 @@ public class BookingRepository {
 
     List<Booking> bookings = new ArrayList<>();
     try {
+      Connection conn = databaseService.getConnection();
       String query = "SELECT * FROM bookings WHERE user = ?";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setObject(1, findByUser);
@@ -110,6 +105,7 @@ public class BookingRepository {
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
     try {
+      Connection conn = databaseService.getConnection();
       String query = "SELECT * FROM bookings WHERE id=?";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setLong(1, findById);

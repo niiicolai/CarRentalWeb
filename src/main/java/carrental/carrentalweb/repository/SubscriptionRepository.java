@@ -4,7 +4,6 @@ import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.services.DatabaseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -52,6 +51,7 @@ public class SubscriptionRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
     public List<Subscription> getAll() {
         
