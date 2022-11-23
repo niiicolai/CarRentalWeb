@@ -49,3 +49,10 @@ CREATE TABLE subscriptions (
                       created_at          DATE,
                       updated_at          DATE
 );
+
+CREATE TABLE pickup_points  (
+                      location_name       VARCHAR(255)    PRIMARY KEY        NOT NULL       UNIQUE,
+                      address             BIGINT,
+                      created_at          DATE,
+                      updated_at          DATE
+);
