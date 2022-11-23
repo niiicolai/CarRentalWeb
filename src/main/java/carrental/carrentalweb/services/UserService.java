@@ -5,8 +5,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import carrental.carrentalweb.builder.UserBuilder;
 import carrental.carrentalweb.repository.UserRepository;
+
+/*
+ * Written by Nicolai Berg Andersen.
+ */
 
 @Service
 public class UserService implements UserDetailsService {
