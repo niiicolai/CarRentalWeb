@@ -85,3 +85,10 @@ CREATE TABLE invoice_specifications (
                        booking_id INT NOT NULL,
                        FOREIGN KEY(booking_id) REFERENCES invoices(booking_id)
 );
+
+CREATE TABLE pickup_points  (
+                      location_name       VARCHAR(255)    PRIMARY KEY        NOT NULL       UNIQUE,
+                      address             BIGINT,
+                      created_at          DATE,
+                      updated_at          DATE
+);
