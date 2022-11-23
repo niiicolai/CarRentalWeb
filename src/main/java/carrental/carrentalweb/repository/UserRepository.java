@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 import carrental.carrentalweb.builder.UserBuilder;
 import carrental.carrentalweb.entities.User;
 
+/*
+ * Written by Nicolai Berg Andersen.
+ */
+
 @Repository
 public class UserRepository {
 

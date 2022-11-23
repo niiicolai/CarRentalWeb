@@ -23,6 +23,10 @@ public class SubscriptionRepository {
     @Value("${db.password}")
     private String password;
 
+    // TODO: create find method
+    public Subscription find(String subscriptionName) {
+        return new Subscription();
+    }
 
     public void create(Subscription subscription) {
         Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);

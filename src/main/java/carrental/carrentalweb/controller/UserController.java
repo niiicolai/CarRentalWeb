@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.UserRepository;
 
+/*
+ * Written by Nicolai Berg Andersen.
+ */
+
 @Controller
 public class UserController {
     

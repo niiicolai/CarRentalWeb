@@ -10,6 +10,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import carrental.carrentalweb.services.UserService;
 
+/*
+ * Written by Nicolai Berg Andersen.
+ */
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
