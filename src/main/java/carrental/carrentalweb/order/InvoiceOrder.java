@@ -48,6 +48,8 @@ public class InvoiceOrder {
         specification.setDescription(subscription.getName());
         specification.setPrice(subscription.getPrice());
         invoiceSpecificationRepository.insert(specification);
+
+        /* TODO: SEND EMAIL */
         
         return invoice;
     }
