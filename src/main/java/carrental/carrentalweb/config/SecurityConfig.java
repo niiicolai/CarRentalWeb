@@ -1,9 +1,5 @@
 package carrental.carrentalweb.config;
 
-/*
- * Written by Nicolai Berg Andersen.
- */
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import carrental.carrentalweb.services.UserService;
+
+/*
+ * Written by Nicolai Berg Andersen.
+ */
 
 @Configuration
 @EnableWebSecurity

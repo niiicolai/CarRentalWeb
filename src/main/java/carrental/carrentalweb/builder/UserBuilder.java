@@ -1,15 +1,14 @@
 package carrental.carrentalweb.builder;
 
-/*
- * Written by Nicolai Berg Andersen.
- */
-
 import java.util.ArrayList;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import carrental.carrentalweb.config.SecurityConfig;
 import carrental.carrentalweb.entities.User;
+
+/*
+ * Written by Nicolai Berg Andersen.
+ */
 
 public class UserBuilder {
 

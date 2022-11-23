@@ -1,12 +1,12 @@
 package carrental.carrentalweb.repository;
 
-/*
- * Written by Nicolai Berg Andersen.
- */
-
 import org.springframework.stereotype.Repository;
 import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.enums.CreditRatingState;
+
+/*
+ * Written by Nicolai Berg Andersen.
+ */
 
 @Repository
 public class CreditRatingRepository {

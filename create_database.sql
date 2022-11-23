@@ -53,8 +53,10 @@ CREATE TABLE subscriptions (
 
 CREATE TABLE bookings (
                        id INT AUTO_INCREMENT PRIMARY KEY
+                       subscription_name VARCHAR(255) NOT NULL,
                        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+                       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       FOREIGN KEY(subscription_name) REFERENCES subscriptions(name)
 );
 
 CREATE TABLE credit_ratings (
@@ -63,4 +65,23 @@ CREATE TABLE credit_ratings (
                        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                        FOREIGN KEY(booking_id) REFERENCES bookings(id)
+);
+
+CREATE TABLE invoices (
+                       booking_id INT AUTO_INCREMENT PRIMARY KEY
+                       due DATETIME NOT NULL,
+                       paid_at DATETIME,
+                       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       FOREIGN KEY(booking_id) REFERENCES bookings(id)
+);
+
+CREATE TABLE invoice_specifications (
+                       id INT AUTO_INCREMENT PRIMARY KEY
+                       description VARCHAR(255) NOT NULL,
+                       price DOUBLE NOT NULL,
+                       updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       booking_id INT NOT NULL,
+                       FOREIGN KEY(booking_id) REFERENCES invoices(booking_id)
 );

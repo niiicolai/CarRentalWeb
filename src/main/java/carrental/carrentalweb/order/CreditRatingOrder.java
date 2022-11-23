@@ -1,15 +1,15 @@
 package carrental.carrentalweb.order;
 
-/*
- * Written by Nicolai Berg Andersen.
- */
-
 import java.lang.Math;
 
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.enums.CreditRatingState;
 import carrental.carrentalweb.repository.CreditRatingRepository;
+
+/*
+ * Written by Nicolai Berg Andersen.
+ */
 
 public class CreditRatingOrder {
 
