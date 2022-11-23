@@ -24,7 +24,8 @@ public class DamageReportController {
     }
 
     @GetMapping("/damage-report/edit/{id}")
-    public String edit(@PathVariable("id") Long id) {
+    public String edit(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("damage-report", dmgRepo.getByBookingId(id));
         return "damage-report/edit";
     }
 
