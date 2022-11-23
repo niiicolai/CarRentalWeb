@@ -28,8 +28,8 @@ public class CreditRatingOrder {
 
         /* Save credit rating */
         CreditRating creditRating = new CreditRating(state, booking.getId());
-        CreditRatingRepository repository = new CreditRatingRepository();        
-        repository.insert(creditRating);
+        //CreditRatingRepository repository = new CreditRatingRepository();        
+        //repository.insert(creditRating);
     
         return creditRating;
     }

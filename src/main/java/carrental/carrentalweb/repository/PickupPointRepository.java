@@ -2,7 +2,9 @@ package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.Address;
 import carrental.carrentalweb.entities.PickupPoint;
-import carrental.carrentalweb.utilities.MySQLConnector;
+import carrental.carrentalweb.services.DatabaseService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -18,22 +20,15 @@ import java.util.List;
 @Repository
 public class PickupPointRepository {
 
-  @Value("${db.url}")
-  private String url;
-
-  @Value("${db.username}")
-  private String username;
-
-  @Value("${db.password}")
-  private String password;
-
-  private Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
+  @Autowired
+  DatabaseService databaseService;
 
   public void createPickupPoint(PickupPoint newPickupPoint) {
 
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
     try {
+      Connection conn = databaseService.getConnection();
       String query = "INSERT INTO pickup_points (location_name," +
           "address," +
           "created_at," +
@@ -59,6 +54,7 @@ public class PickupPointRepository {
 
     List<PickupPoint> pickupPoints = new ArrayList<>();
     try {
+      Connection conn = databaseService.getConnection();
       String query = "SELECT * FROM pickup_points";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       ResultSet resultSet = preparedStatement.executeQuery();
@@ -88,6 +84,7 @@ public class PickupPointRepository {
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
     try {
+      Connection conn = databaseService.getConnection();
       String query = "SELECT * FROM pickup_points WHERE location_name=?";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setString(1, findName);
@@ -129,6 +126,7 @@ public class PickupPointRepository {
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
     try {
+      Connection conn = databaseService.getConnection();
       String query = "INSERT INTO pickup_points (location_name," +
           "address," +
           "created_at," +

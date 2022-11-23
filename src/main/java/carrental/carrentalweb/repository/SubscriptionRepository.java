@@ -1,7 +1,9 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.Subscription;
-import carrental.carrentalweb.utilities.MySQLConnector;
+import carrental.carrentalweb.services.DatabaseService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -16,22 +18,18 @@ import java.util.List;
 // Mads
 @Repository
 public class SubscriptionRepository {
-    @Value("${db.url}")
-    private String url;
-    @Value("${db.username}")
-    private String username;
-    @Value("${db.password}")
-    private String password;
+
+    @Autowired
+    DatabaseService databaseService;
 
     // TODO: create find method
     public Subscription find(String subscriptionName) {
         return new Subscription();
     }
 
-    public void create(Subscription subscription) {
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
-
+    public Subscription create(Subscription subscription) {
         try {
+            Connection conn = databaseService.getConnection();
             String query = "INSERT INTO subscriptions (" +
                     "name," +
                     "days," +
@@ -56,9 +54,10 @@ public class SubscriptionRepository {
         }
     }
     public List<Subscription> getAll() {
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
+        
         List<Subscription> subscriptions = new ArrayList<>();
         try {
+            Connection conn = databaseService.getConnection();
             String query = "SELECT * FROM subscriptions";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
 
@@ -85,8 +84,8 @@ public class SubscriptionRepository {
         return subscriptions;
     }
     public void update(Subscription subscription){
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         try {
+            Connection conn = databaseService.getConnection();
             String query = "UPDATE subscriptions " +
                     "SET available=?," +
                     "updated_at=?";

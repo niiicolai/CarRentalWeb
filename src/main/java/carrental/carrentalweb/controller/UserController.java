@@ -1,5 +1,6 @@
 package carrental.carrentalweb.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +18,13 @@ import carrental.carrentalweb.repository.UserRepository;
 
 @Controller
 public class UserController {
-    
-    private UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    UserRepository userRepository;
 
-    @GetMapping("/user")
+    @GetMapping("/")
     public String show(Model model, @AuthenticationPrincipal User user) {
+        userRepository.find(null, user);
         model.addAttribute("user", user);
 		return "user/show";
     }

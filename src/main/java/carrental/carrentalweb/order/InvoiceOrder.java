@@ -34,20 +34,20 @@ public class InvoiceOrder {
         invoice.setDue(due);
 
         /* Save invoice */
-        InvoiceRepository repository = new InvoiceRepository();        
-        repository.insert(invoice);
+        //InvoiceRepository repository = new InvoiceRepository();        
+        //repository.insert(invoice);
 
         /* Get subscription */
-        SubscriptionRepository subscriptionRepository = new SubscriptionRepository();
-        Subscription subscription = subscriptionRepository.find(subscriptionName);
+        //SubscriptionRepository subscriptionRepository = new SubscriptionRepository();
+        //Subscription subscription = subscriptionRepository.find(subscriptionName);
 
         /* Add invoice specification */
-        InvoiceSpecificationRepository invoiceSpecificationRepository = new InvoiceSpecificationRepository();
-        InvoiceSpecification specification = new InvoiceSpecification();
-        specification.setBookingId(bookingId);
-        specification.setDescription(subscription.getName());
-        specification.setPrice(subscription.getPrice());
-        invoiceSpecificationRepository.insert(specification);
+        //InvoiceSpecificationRepository invoiceSpecificationRepository = new InvoiceSpecificationRepository();
+        //InvoiceSpecification specification = new InvoiceSpecification();
+        //specification.setBookingId(bookingId);
+        //specification.setDescription(subscription.getName());
+        //specification.setPrice(subscription.getPrice());
+        //invoiceSpecificationRepository.insert(specification);
         
         return invoice;
     }
