@@ -96,6 +96,7 @@ class CarRepository {
     public void find(long primaryKey) {
         try {
             Connection connection = CustomDriverManager.getConnection("", "", "");
+            //Connection connection = DriverManager.getConnection("", "", "");
             PreparedStatement statement = connection.prepareStatement("");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {                
