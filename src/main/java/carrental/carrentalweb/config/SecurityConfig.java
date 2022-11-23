@@ -2,8 +2,10 @@ package carrental.carrentalweb.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,21 +18,22 @@ import carrental.carrentalweb.services.UserService;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     /* Client properties */
     private static final String CLIENT_ROLE = "CLIENT";
-    private static final String[] CLIENT_PATHS = {"/"};
+    private static final String[] CLIENT_PATHS = {"/t"};
 
     /* Employee properties */
     private static final String EMPLOYEE_ROLE = "EMPLOYEE";
-    private static final String[] EMPLOYEE_PATHS = {"/"};
+    private static final String[] EMPLOYEE_PATHS = {"/t"};
     
     /* Unauthorized properties */
     private static final String[] unauthorizedPaths = {"/"};
 
     /* Redirects */
-    private static final String AFTER_LOGIN_URL = "/user";
+    private static final String AFTER_LOGIN_URL = "/";
     private static final String AFTER_LOGOUT_URL = "/";
 
     /* Encryption */
@@ -73,7 +76,7 @@ public class SecurityConfig {
      *  Set user service.
      */
     @Bean
-    public UserService customUserDetailsService() {
+    public UserDetailsService customUserDetailsService() {
         return new UserService();
     }
 }

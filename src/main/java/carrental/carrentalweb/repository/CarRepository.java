@@ -2,7 +2,9 @@ package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
-import carrental.carrentalweb.utilities.MySQLConnector;
+import carrental.carrentalweb.services.DatabaseService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
@@ -17,17 +19,14 @@ import java.util.List;
 
 @Repository
 public class CarRepository {
-    @Value("${db.url}")
-    private String url;
-    @Value("${db.username}")
-    private String username;
-    @Value("${db.password}")
-    private String password;
+
+    @Autowired
+    DatabaseService databaseService;
 
     public Car createCar(Car newCar) {
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
         try {
+            Connection conn = databaseService.getConnection();
             String query = "INSERT INTO cars (vehicle_number," +
                     "frame_number," +
                     "brand," +
@@ -66,9 +65,9 @@ public class CarRepository {
     }
 
     public List<Car> getAllCars() {
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         List<Car> cars = new ArrayList<>();
         try {
+            Connection conn = databaseService.getConnection();
             String query = "SELECT * FROM cars";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -108,8 +107,8 @@ public class CarRepository {
 
     public Car findCarByVehicleNumber(long vehicleNumberInput){
         Car foundCar = new Car();
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         try {
+            Connection conn = databaseService.getConnection();
             String query = "SELECT * FROM cars WHERE vehicle_number=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setLong(1, vehicleNumberInput);
@@ -151,8 +150,8 @@ public class CarRepository {
     }
 
     public void updateCar (Car car){
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         try {
+            Connection conn = databaseService.getConnection();
             String query = "UPDATE cars " +
                     "SET color=?," +
                     "equipment_level=?," +
@@ -182,9 +181,9 @@ public class CarRepository {
     }
 
     public void deleteCarByVehicleNumber(long vehicleNumber){
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         String query = "DELETE FROM cars WHERE vehicle_number=?";
         try {
+            Connection conn = databaseService.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setLong(1, vehicleNumber);
 
