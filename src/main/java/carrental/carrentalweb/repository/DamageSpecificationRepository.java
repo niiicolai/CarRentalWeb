@@ -4,8 +4,9 @@ import carrental.carrentalweb.entities.Address;
 import carrental.carrentalweb.entities.DamageSpecification;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.entities.Subscription;
-import carrental.carrentalweb.utilities.MySQLConnector;
-import org.springframework.beans.factory.annotation.Value;
+import carrental.carrentalweb.services.DatabaseService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -19,17 +20,14 @@ import java.util.List;
 // Mads
 @Repository
 public class DamageSpecificationRepository {
-    @Value("${db.url}")
-    private String url;
-    @Value("${db.username}")
-    private String username;
-    @Value("${db.password}")
-    private String password;
+    
+    @Autowired
+    DatabaseService databaseService;
 
     public List<DamageSpecification> getAll() {
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         List<DamageSpecification> specifications = new ArrayList<>();
         try {
+            Connection conn = databaseService.getConnection();
             String query = "SELECT * FROM damage_specifications";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
 
@@ -55,9 +53,8 @@ public class DamageSpecificationRepository {
     }
 
     public void create(DamageSpecification dmgSpec) {
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
-
         try {
+            Connection conn = databaseService.getConnection();
             String query = "INSERT INTO damage_specifications (" +
                     "description," +
                     "damaged," +
@@ -82,8 +79,8 @@ public class DamageSpecificationRepository {
 
     public void update(DamageSpecification dmgSpec) {
 
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
         try {
+            Connection conn = databaseService.getConnection();
             String query = "UPDATE damage_specifications " +
                     "SET damaged=?," +
                     "price=?," +
@@ -103,9 +100,8 @@ public class DamageSpecificationRepository {
     public DamageSpecification getByDescription(String description) {
         DamageSpecification dmgSpec = new DamageSpecification();
 
-        Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
-
         try {
+            Connection conn = databaseService.getConnection();
             String query = "SELECT * FROM damage_specifications WHERE description=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
 

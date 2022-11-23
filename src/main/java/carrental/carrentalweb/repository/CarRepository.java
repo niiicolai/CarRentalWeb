@@ -5,8 +5,6 @@ import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.services.DatabaseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
