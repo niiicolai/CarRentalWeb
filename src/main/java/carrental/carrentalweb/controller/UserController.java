@@ -1,9 +1,5 @@
 package carrental.carrentalweb.controller;
 
-/*
- * Written by Nicolai Berg Andersen.
- */
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.UserRepository;
+
+/*
+ * Written by Nicolai Berg Andersen.
+ */
 
 @Controller
 public class UserController {
