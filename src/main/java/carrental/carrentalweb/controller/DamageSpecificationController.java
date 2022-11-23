@@ -38,7 +38,7 @@ public class DamageSpecificationController {
 
     @GetMapping("/damage-specification/edit/{desc}")
     public String edit(@PathVariable("desc") String description, Model model) {
-        model.addAttribute("desc", description);
+        model.addAttribute("desc", dmgSpecRepo.getByDescription(description));
         return "damage-specification/edit";
     }
 
