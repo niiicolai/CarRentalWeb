@@ -24,7 +24,7 @@ public class SubscriptionRepository {
     private String password;
 
 
-    public Subscription create(Subscription subscription) {
+    public void create(Subscription subscription) {
         Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
         try {
@@ -50,7 +50,6 @@ public class SubscriptionRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return subscription;
     }
     public List<Subscription> getAll() {
         Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
