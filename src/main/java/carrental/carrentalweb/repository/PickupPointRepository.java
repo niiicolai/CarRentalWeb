@@ -108,6 +108,19 @@ public class PickupPointRepository {
     return pickupPoint;
   }
 
+
+  public PickupPoint findPickupPointByZipcode(String findZipcode){
+
+    PickupPoint pickupPointZip = new PickupPoint();
+
+    for (PickupPoint pickupPoint: getPickupPointsList()){
+      if (pickupPoint.getAddress().getZipCode().equals(findZipcode)){
+      pickupPointZip = pickupPoint;
+      }
+    }
+    return pickupPointZip;
+  }
+
   public void updatePickupPoint (PickupPoint pickupPoint){
 
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);

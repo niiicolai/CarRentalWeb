@@ -52,7 +52,6 @@ public class SubscriptionRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return subscription;
     }
     public List<Subscription> getAll() {
         
