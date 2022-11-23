@@ -27,7 +27,7 @@ public class CreditRatingOrder {
             state = CreditRatingState.Approve;
 
         /* Save credit rating */
-        CreditRating creditRating = new CreditRating(state, booking.getId());
+        CreditRating creditRating = new CreditRating(booking.getId(), state);
         CreditRatingRepository repository = new CreditRatingRepository();        
         repository.insert(creditRating);
     

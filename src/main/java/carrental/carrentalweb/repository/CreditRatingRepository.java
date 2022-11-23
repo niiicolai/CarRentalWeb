@@ -14,13 +14,15 @@ public class CreditRatingRepository {
     public CreditRating find(String column, Object value) {
         String sql = String.format("SELECT * FROM credit_ratings WHERE %s=?", column);
         
-        /* TODO: Fetch from database */
+        /* TODO: FETCH CREDIT RATING */
 
-        return new CreditRating(CreditRatingState.Reject, 1);
+        return new CreditRating(1, CreditRatingState.Reject);
     }
     
     public boolean insert(CreditRating creditRating) {
-        String sql = "INSERT INTO credit_ratings (state) (?)";
+        String sql = "INSERT INTO credit_ratings (booking_id, state) (?, ?)";
+
+        /* TODO: INSERT CREDIT RATING */
 
         return true;
     }

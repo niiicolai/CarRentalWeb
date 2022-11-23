@@ -15,12 +15,12 @@ public class CreditRating {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
-    public CreditRating(CreditRatingState state, long bookingId) {
+    public CreditRating(long bookingId, CreditRatingState state) {
         this.state = state;
         this.bookingId = bookingId;
     }
 
-    public CreditRating(CreditRatingState state, long bookingId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public CreditRating(long bookingId, CreditRatingState state, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.state = state;
         this.bookingId = bookingId;
         this.createdAt = createdAt;
