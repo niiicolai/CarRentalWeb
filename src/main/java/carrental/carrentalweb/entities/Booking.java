@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public class Booking {
     private long id;
+
+    private User user;
     private Car car;
     private String subscriptionName;
     private CreditRating creditRating;
@@ -13,7 +15,16 @@ public class Booking {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Booking(long id, Car car, String subscriptionName, CreditRating creditRating, PickupPoint pickupPoint, DamageReport damageReport, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Booking(long id, User user, Car car, String subscriptionName, CreditRating creditRating, PickupPoint pickupPoint, DamageReport damageReport, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.user = user;
         this.id = id;
         this.car = car;
         this.subscriptionName = subscriptionName;
@@ -23,6 +34,9 @@ public class Booking {
         this.deliveredAt = deliveredAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public Booking() {
     }
 
     public Car getCar() {
