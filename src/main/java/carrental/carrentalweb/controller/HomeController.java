@@ -11,9 +11,6 @@ import carrental.carrentalweb.services.InvoicePDFService;
 @Controller
 public class HomeController {
 
-    @Autowired
-    InvoicePDFService invoicePDFService;
-    
     @GetMapping("/")
     public String index() {
 		return "home/index";
