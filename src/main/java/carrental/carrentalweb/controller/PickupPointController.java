@@ -36,7 +36,7 @@ public class PickupPointController {
   @PostMapping("pickuppoints/create")
   public String createPickupPoint(PickupPoint pickupPoint){
     ppRepo.createPickupPoint(pickupPoint);
-    return "pickuppoints/create";
+    return "redirect:pickuppoints/index";
 
   }
 
@@ -49,7 +49,7 @@ public class PickupPointController {
   @PatchMapping("pickuppoints/edit")
   public String editPickupPoint(PickupPoint pickupPoint){
     ppRepo.updatePickupPoint(pickupPoint);
-    return "redirect:/pickuppoints";
+    return "redirect:pickuppoints/index";
   }
 
 }
