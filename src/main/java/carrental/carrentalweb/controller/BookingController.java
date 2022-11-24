@@ -26,6 +26,7 @@ public class BookingController {
   }
 
 
+
   @GetMapping("bookings/index{id}")
   public String index(@AuthenticationPrincipal User user, Model model){
 

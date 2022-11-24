@@ -17,10 +17,10 @@ public class Car {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Car(long vehicleNumber, String frameNumber, String brandNumber, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, Booking booking) {
-        this.vehicleNumber = vehicleNumber;
+    //New car constructor (Does not need booking. createdAt and updatedAt are generated)
+    public Car(String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected) {
         this.frameNumber = frameNumber;
-        this.brand = brandNumber;
+        this.brand = brand;
         this.model = model;
         this.color = color;
         this.equipmentLevel = equipmentLevel;
@@ -28,7 +28,6 @@ public class Car {
         this.registrationFee = registrationFee;
         this.co2Discharge = co2Discharge;
         this.inspected = inspected;
-        this.booking = booking;
     }
 
     public Car(){}
