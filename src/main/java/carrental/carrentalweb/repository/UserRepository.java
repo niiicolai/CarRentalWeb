@@ -39,11 +39,12 @@ public class UserRepository {
          */
         user.encodedPassword();     
 
-        String sql = "INSERT INTO users (username, password, enabled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, password, email, enabled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         LinkedList<Object> values = new LinkedList<>();
         values.add(user.getUsername());
         values.add(user.getPassword());
+        values.add(user.getEmail());
         values.add(true);
         values.add(true);
         values.add(true);
@@ -67,10 +68,11 @@ public class UserRepository {
          * Password encoding is not needed, 
          * because the password is not updated
          */        
-        String sql = "UPDATE users SET username = ? WHERE id = ?";
+        String sql = "UPDATE users SET username = ?, email = ? WHERE id = ?";
         
         LinkedList<Object> values = new LinkedList<>();
         values.add(user.getUsername());
+        values.add(user.getEmail());
         values.add(user.getId());
 
         databaseService.executeUpdate(sql, values);
@@ -124,6 +126,7 @@ public class UserRepository {
             .id((long) map.get("id"))
             .username((String) map.get("username"))
             .password((String) map.get("password"))
+            .email((String) map.get("email"))
             .roles((String) map.get("role_name"))
             .isAccountNonExpired((int) map.get("account_non_expired") == 1)
             .isAccountNonLocked((int) map.get("account_non_locked") == 1)

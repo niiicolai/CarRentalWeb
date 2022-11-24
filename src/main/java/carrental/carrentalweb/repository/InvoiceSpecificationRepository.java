@@ -31,6 +31,17 @@ public class InvoiceSpecificationRepository {
 
         return parseFromMap(resultList.get(0));
     }
+
+    public InvoiceSpecification[] findCollection(String column, Object value) {
+        String sql = String.format("SELECT * FROM invoice_specifications WHERE %s=?", column);
+        
+        LinkedList<Object> values = new LinkedList<>();
+        values.add(value);
+        
+        List<HashMap<String, Object>> resultList = databaseService.executeQuery(sql, values);
+
+        return parseFromList(resultList);
+    }
     
     public boolean insert(InvoiceSpecification invoiceSpecification) {
         String sql = "INSERT INTO invoice_specifications (booking_id, description, price) (?, ?)";
@@ -52,6 +63,14 @@ public class InvoiceSpecificationRepository {
         if (resultList == null) return null;
 
         return parseFromMap(resultList.get(0));
+    }
+
+    private InvoiceSpecification[] parseFromList(List<HashMap<String, Object>> list) {
+        InvoiceSpecification[] specifications = new InvoiceSpecification[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            specifications[i] = parseFromMap(list.get(i));
+        }
+        return specifications;
     }
 
     private InvoiceSpecification parseFromMap(HashMap<String, Object> map) {
