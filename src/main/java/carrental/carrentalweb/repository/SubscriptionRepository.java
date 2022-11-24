@@ -70,21 +70,21 @@ public class SubscriptionRepository {
 
         return parseFromList(resultList);
     }
-    public void update(Subscription subscription){
-        try {
-            Connection conn = databaseService.getConnection();
-            String query = "UPDATE subscriptions " +
-                    "SET available=?," +
-                    "updated_at=?";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+    public boolean update(Subscription subscription){
+        String query = "UPDATE subscriptions " +
+                "SET available=?," +
+                "updated_at=?";
 
-            preparedStatement.setBoolean(1, subscription.isAvailable());
-            preparedStatement.setObject(2, LocalDateTime.now());
+        LinkedList<Object> values = new LinkedList<>();
+        values.add(subscription.getName());
+        values.add(subscription.getDays());
+        values.add(subscription.getPrice());
+        values.add(subscription.getCreatedAt());
+        values.add(subscription.getUpdatedAt());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        databaseService.executeUpdate(query, values);
+
+        return true;
     }
 
     private Subscription parseFromMap(HashMap<String, Object> map) {
