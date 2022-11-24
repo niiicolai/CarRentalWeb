@@ -16,6 +16,12 @@ public class InvoiceSpecification {
     public InvoiceSpecification() {
     }
 
+    public InvoiceSpecification(long bookingId, String description, double price) {
+        this.bookingId = bookingId;
+        this.description = description;
+        this.price = price;
+    }
+
     public InvoiceSpecification(long bookingId, String description) {
         this.bookingId = bookingId;
         this.description = description;
