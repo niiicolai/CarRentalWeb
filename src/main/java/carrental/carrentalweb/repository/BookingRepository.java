@@ -141,4 +141,30 @@ public class BookingRepository {
     return findBooking;
   }
 
+  public void updateBooking(Booking booking){
+    try {
+      Connection conn = databaseService.getConnection();
+      String queryCreate = "UPDATE bookings " +
+          "SET userid = ?, car = ?, subscription_name =?, credit_rating = ?, pickup_point = ?, damage_report = ?, delivered_at = ?, created_at = ?, updated_at = ? WHERE id=?";
+      PreparedStatement preparedStatement = conn.prepareStatement(queryCreate);
+
+
+      preparedStatement.setObject(1, booking.getUser());
+      preparedStatement.setObject(2, booking.getCar());
+      preparedStatement.setString(3, booking.getSubscriptionName());
+      preparedStatement.setObject(4, booking.getCreditRating());
+      preparedStatement.setObject(5, booking.getPickupPoint());
+      preparedStatement.setObject(6, booking.getDamageReport());
+      preparedStatement.setObject(7, booking.getDeliveredAt());
+      preparedStatement.setObject(8, booking.getCreatedAt());
+      preparedStatement.setObject(9, booking.getUpdatedAt());
+      preparedStatement.setLong(10, booking.getId());
+
+      preparedStatement.executeUpdate();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

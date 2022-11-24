@@ -22,6 +22,12 @@ public class PickupPoint {
     this.createdAt = createdAt;
   }
 
+  public PickupPoint(Address address, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    this.address = address;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
+
   public PickupPoint() {
   }
 

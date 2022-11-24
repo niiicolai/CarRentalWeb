@@ -126,20 +126,14 @@ public class PickupPointRepository {
 
     try {
       Connection conn = databaseService.getConnection();
-      String query = "INSERT INTO pickup_points (location_name," +
-          "address," +
-          "created_at," +
-          "updated_at)" +
-          "VALUES (?, ?, ?, ?) " +
-          "WHERE location_name = ?;";
+      String query = "UPDATE bookings SET address = ?, created_at = ?, updated_at = ? WHERE location_name = ?";
 
       PreparedStatement preparedStatement = conn.prepareStatement(query);
 
-      preparedStatement.setString(1, pickupPoint.getName());
-      preparedStatement.setObject(2, pickupPoint.getAddress());
-      preparedStatement.setObject(3, pickupPoint.getCreatedAt());
-      preparedStatement.setObject(4, pickupPoint.getUpdatedAt());
-      preparedStatement.setString(5, pickupPoint.getName());
+      preparedStatement.setObject(1, pickupPoint.getAddress());
+      preparedStatement.setObject(2, pickupPoint.getCreatedAt());
+      preparedStatement.setObject(3, pickupPoint.getUpdatedAt());
+      preparedStatement.setString(4, pickupPoint.getName());
 
       preparedStatement.executeUpdate();
     } catch (SQLException e){

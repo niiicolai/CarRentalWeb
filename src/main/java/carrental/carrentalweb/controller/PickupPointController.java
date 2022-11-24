@@ -1,13 +1,12 @@
 package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.Address;
+import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.repository.PickupPointRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -28,50 +27,29 @@ public class PickupPointController {
   }
 
   @GetMapping("pickuppoints/create")
-  public String newPickupPoint(){
-
+  public String newPickupPoint(Model model){
+    model.addAttribute("pickupPoint", new PickupPoint());
     return "pickupoints/create";
   }
 
+
   @PostMapping("pickuppoints/create")
-  public String createPickupPoint(@RequestParam("name") String name,
-                                  @RequestParam("street") String street,
-                                  @RequestParam("city") String city,
-                                  @RequestParam("zipcode") String zipCode,
-                                  @RequestParam("country") String country){
+  public String createPickupPoint(PickupPoint pickupPoint){
+    ppRepo.createPickupPoint(pickupPoint);
+    return "redirect:pickuppoints/index";
 
-    PickupPoint newPickupPoint = new PickupPoint(name, new Address(street, city, zipCode, country, LocalDateTime.now()), LocalDateTime.now());
-
-    ppRepo.createPickupPoint(newPickupPoint);
-
-    return "pickuppoints/create";
   }
 
-  @GetMapping("pickuppoints/edit")
-  public String editPickupPoint(){
+  @GetMapping("pickuppoints/edit{id}")
+  public String updatePickupPoint(Model model, @RequestParam("name") String name){
+    model.addAttribute("pickupPoint", ppRepo.findPickupPointByName(name));
     return "pickupoints/edit";
   }
 
-  @PostMapping("pickuppoints/edit")
-  public String updatePickupPoint(){
-    //hvad skal man opdatere ud fra? Skal man vælge en bestemt attribut der skal ændres ved address eller pickuppoint eller skal det hele bare genindtastes?
-    return "pickuppoints/edit";
+  @PatchMapping("pickuppoints/edit")
+  public String editPickupPoint(PickupPoint pickupPoint){
+    ppRepo.updatePickupPoint(pickupPoint);
+    return "redirect:pickuppoints/index";
   }
 
- /* @PostMapping()
-  public String findPickupPointByName(Model model, String name){
-
-    model.addAttribute(ppRepo.findPickupPointByName(name));
-
-    return "";
-  }
-
-  @PostMapping()
-  public String findPickupPointByZip(Model model, String zipCode){
-
-    model.addAttribute(ppRepo.findPickupPointByZipcode(zipCode));
-
-    return "";
-  }
-*/
 }

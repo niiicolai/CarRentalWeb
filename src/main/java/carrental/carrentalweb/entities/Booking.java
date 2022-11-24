@@ -36,6 +36,18 @@ public class Booking {
         this.updatedAt = updatedAt;
     }
 
+    public Booking(User user, Car car, String subscriptionName, CreditRating creditRating, PickupPoint pickupPoint, DamageReport damageReport, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.user = user;
+        this.car = car;
+        this.subscriptionName = subscriptionName;
+        this.creditRating = creditRating;
+        this.pickupPoint = pickupPoint;
+        this.damageReport = damageReport;
+        this.deliveredAt = deliveredAt;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public Booking() {
     }
 
