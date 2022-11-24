@@ -49,7 +49,13 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 -- Thomas
 CREATE TABLE IF NOT EXISTS bookings (
     id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid              BIGINT,
+    car                 BIGINT,
     subscription_name   VARCHAR(255) NOT NULL,
+    credit_rating       BIGINT,
+    pickup_point        BIGINT,
+    damage_report       BIGINT,
+    delivered_at        DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(subscription_name) REFERENCES subscriptions(name)
