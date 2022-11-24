@@ -5,20 +5,20 @@
     <head></head>
     <body layout:fragment="content">
         <div class="card p-3 mb-3 mt-3">
-            <h2>New user</h2>
-            <form th:action="@{/signup}" th:object="${user}" th:method="post">
+            <div th:if="${param.error}">
+                Invalid username or password.
+            </div>
+            <h2>Login</h2>
+            <form th:action="@{/login}" th:method="post">
                 <div>
-                    <label name="username">Username</label>
-                    <input type="text" name="username" th:value="${user.getUsername()}"
+                    <label name="username">Username</label><br>
+                    <input type="text" name="username"
                            placeholder="Username"
                            autocomplete="off"
                            required="required" />
                 </div>
                 <div>
-                    <div>
-                        <label name="password" class="form-label">Password</label>
-                        <small>Min length: 8 characters</small>
-                    </div>
+                    <label name="password" class="form-label">Password</label><br>
                     <input type="password" name="password" 
                            placeholder="new password ..."
                            autocomplete="off"
@@ -26,7 +26,7 @@
                            minlength="8" />
                 </div>
                 <div>
-                    <input type="submit" class="btn btn-outline-secondary btn-sm mt-3" value="Save" />
+                    <input type="submit" class="btn btn-outline-secondary btn-sm mt-3" value="login" />
                 </div>
             </form>
         </div>

@@ -5,12 +5,10 @@ CREATE TABLE IF NOT EXISTS users (
     id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
     username            VARCHAR(255) NOT NULL UNIQUE,
     password            VARCHAR(255) NOT NULL,
-    updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
--- Nicolai
-CREATE TABLE IF NOT EXISTS roles (
-    name VARCHAR(255) PRIMARY KEY,
+    enabled             INT NOT NULL,
+    account_non_locked  INT NOT NULL,
+    account_non_expired INT NOT NULL,
+    credentials_non_expired INT NOT NULL,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -21,8 +19,7 @@ CREATE TABLE IF NOT EXISTS user_role (
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, role_name),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (role_name) REFERENCES roles(name)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 -- Mikkel
 CREATE TABLE IF NOT EXISTS cars (
