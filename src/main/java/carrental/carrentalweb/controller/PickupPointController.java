@@ -28,7 +28,7 @@ public class PickupPointController {
 
   @GetMapping("pickuppoints/create")
   public String newPickupPoint(Model model){
-
+    model.addAttribute("pickupPoint", new PickupPoint());
     return "pickupoints/create";
   }
 
@@ -42,7 +42,7 @@ public class PickupPointController {
 
   @GetMapping("pickuppoints/edit{id}")
   public String updatePickupPoint(Model model, @RequestParam("name") String name){
-    model.addAttribute("pcikuppoint", ppRepo.findPickupPointByName(name));
+    model.addAttribute("pickupPoint", ppRepo.findPickupPointByName(name));
     return "pickupoints/edit";
   }
 
