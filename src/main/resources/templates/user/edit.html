@@ -1,45 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/layout/layout}">
     <head></head>
-    <body>
+    <body layout:fragment="content">
         <div>
-            <h2>Update user</h2>
-            <form th:action="@{/user}" th:object="${user}" th:method="patch">
-                <div>
-                    <label name="username">Username</label>
-                    <input type="text" name="username" th:value="${user.getUsername()}"
-                           placeholder="Username"
-                           autocomplete="off"
-                           required="required" />
-                </div>
-                <div>
-                    <input type="submit" value="Save" />
-                </div>
-            </form>
-            
-            <h2>Update password</h2>
-            <form th:action="@{/user/password}" th:object="${user}" th:method="patch">
-                <div>
+            <div class="card p-3 mb-3 mt-3">
+                <h2>Update details</h2>
+                <form th:action="@{/user}" th:object="${user}" th:method="patch">
                     <div>
-                        <label name="password" class="form-label">Password</label>
-                        <small>Min length: 8 characters</small>
+                        <label name="username">Username</label>
+                        <input type="text" name="username" th:value="${user.getUsername()}"                           
+                            placeholder="Username"
+                            autocomplete="off"
+                            required="required" />
                     </div>
-                    <input type="password" name="password" 
-                           placeholder="new password ..."
-                           autocomplete="off"
-                           required="required"
-                           minlength="8" />
-                </div>
-                <div>
-                    <input type="submit" value="Save" />
-                </div>
-            </form>
+                    <div>
+                        <input type="submit" value="Save" class="btn btn-outline-secondary mt-2" />
+                    </div>
+                </form>
+            </div>
             
-            <h2>Delete user</h2>
-            <h6>The deletion is permanently!</h6>
-            <form th:action="@{/users}" th:object="${user}" th:method="delete">
-                <button type="submit">Delete</button>
-            </form>
+            <div class="card p-3 mb-3 mt-3">
+                <h2>Update password</h2>
+                <form th:action="@{/user/password}" th:object="${user}" th:method="patch">
+                    <div>
+                        <div>
+                            <label name="password" class="form-label">Password</label>
+                            <small>Min length: 8 characters</small>
+                        </div>
+                        <input type="password" name="password" 
+                            placeholder="new password ..."
+                            autocomplete="off"
+                            required="required"
+                            minlength="8" />
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-outline-secondary mt-2" value="Save" />
+                    </div>
+                </form>
+            </div>
+            
+            <div class="card p-3 mb-3 mt-3">
+                <h2>Disable user</h2>
+                <form th:action="@{/user}" th:object="${user}" th:method="delete">
+                    <button type="submit" class="btn btn-outline-danger mt-2">Disable</button>
+                </form>
+            </div>
         </div>
     </body>
 </html>

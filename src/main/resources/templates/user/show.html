@@ -1,7 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/layout/layout}">
     <head></head>
-    <body>
-        <a th:href="@{/user/edit}">edit</a>
+    <body layout:fragment="content">
+        <div class="card p-3 mb-3 mt-3">
+            <h1 th:text="${user.getUsername()}" />
+            <a class="navbar-link btn btn-outline-secondary btn-sm" href="/user/edit">
+                Edit Profile
+            </a>
+        </div>
     </body>
 </html>

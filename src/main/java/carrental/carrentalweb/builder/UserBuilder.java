@@ -20,7 +20,7 @@ public class UserBuilder {
         this.user = new User();
     }
 
-    public UserBuilder id(int id) {
+    public UserBuilder id(long id) {
         user.setId(id);
         return this;
     }

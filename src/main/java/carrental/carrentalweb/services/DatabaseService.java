@@ -36,6 +36,7 @@ public class DatabaseService {
         PreparedStatement statement = connection.prepareStatement(sql);
         for (int i = 0; i < values.size(); i++)
             statement.setObject(i + 1, values.get(i));
+        System.out.println(statement);
         return statement;
     }
 
@@ -54,6 +55,7 @@ public class DatabaseService {
             PreparedStatement statement = prepareStatement(sql, values);
             ResultSet resultSet = statement.executeQuery();
             result = parseResultSet(resultSet);
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

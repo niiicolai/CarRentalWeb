@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 import carrental.carrentalweb.services.UserService;
 
@@ -23,19 +24,27 @@ public class SecurityConfig {
 
     /* Client properties */
     private static final String CLIENT_ROLE = "CLIENT";
-    private static final String[] CLIENT_PATHS = {"/t"};
+    private static final String[] CLIENT_PATHS = {"/user"};
 
     /* Employee properties */
     private static final String EMPLOYEE_ROLE = "EMPLOYEE";
-    private static final String[] EMPLOYEE_PATHS = {"/t"};
+    private static final String[] EMPLOYEE_PATHS = {"/user"};
     
     /* Unauthorized properties */
-    private static final String[] unauthorizedPaths = {"/"};
+    private static final String[] unauthorizedPaths = {"/", "/signup", "/login**"};
 
-    /* Redirects */
-    private static final String AFTER_LOGIN_URL = "/";
+
+    private static final String LOGIN_PAGE = "/login";
+    private static final String LOGIN_URL = "/login";
+    private static final String LOGIN_FAILURE_URL = "/login?error=true";
+    private static final String AFTER_LOGIN_URL = "/user";
+
     private static final String AFTER_LOGOUT_URL = "/";
+    private static final String LOGOUT_URL = "/logout";
 
+    
+    
+    
     /* Encryption */
     public static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 
@@ -48,16 +57,22 @@ public class SecurityConfig {
                 .antMatchers(unauthorizedPaths)
                 .permitAll()
             .and()
-                .authorizeRequests()
-                .antMatchers(CLIENT_PATHS).hasRole(CLIENT_ROLE)
+                .authorizeRequests()           
                 .antMatchers(EMPLOYEE_PATHS).hasRole(EMPLOYEE_ROLE)
+                .antMatchers(CLIENT_PATHS).hasRole(CLIENT_ROLE)
                 .anyRequest()
                 .authenticated()
             .and()
                 .formLogin()
+                .loginPage(LOGIN_PAGE)
+                .loginProcessingUrl(LOGIN_URL)
                 .defaultSuccessUrl(AFTER_LOGIN_URL, true)
+                .failureUrl(LOGIN_FAILURE_URL)
             .and()
                 .logout()
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .logoutUrl(LOGOUT_URL)
                 .logoutSuccessUrl(AFTER_LOGOUT_URL)
             .and()
                 .httpBasic();
