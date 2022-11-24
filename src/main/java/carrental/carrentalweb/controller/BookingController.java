@@ -57,7 +57,7 @@ public class BookingController {
 
     br.createBooking(booking);
 
-    return "bookings/create";
+    return "redirect:bookings/index";
   }
 
   @GetMapping("bookings/edit/{id}")
@@ -72,6 +72,6 @@ public class BookingController {
 
     br.updateBooking(booking);
 
-    return "redirect:bookings/show";
+    return "redirect:bookings/index";
   }
 }
