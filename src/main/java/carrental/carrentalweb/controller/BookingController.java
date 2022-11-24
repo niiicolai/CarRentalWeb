@@ -22,7 +22,6 @@ public class BookingController {
 
   @GetMapping("bookings/index")
   public String index(HttpSession session, Model model){
-
     return "bookings/index";
   }
 
