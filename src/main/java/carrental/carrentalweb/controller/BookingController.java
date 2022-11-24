@@ -9,10 +9,7 @@ import org.springframework.boot.Banner;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -48,35 +45,32 @@ public class BookingController {
     return "bookings/show";
   }*/
 
-  @GetMapping("bookings/create/{id}")
-  public String showCreate(@AuthenticationPrincipal User user){
-
+  @GetMapping("bookings/create")
+  public String showCreate(Model model){
+    model.addAttribute("booking", new Booking());
 
     return "bookings/create";
   }
 
-  @PostMapping("bookings/create/{id}")
-  public String create(@AuthenticationPrincipal User user){
+  @PostMapping("bookings/create")
+  public String create(Booking booking){
 
-    Booking newBooking = new Booking();
-
-    br.createBooking(newBooking);
+    br.createBooking(booking);
 
     return "bookings/create";
   }
 
   @GetMapping("bookings/edit/{id}")
-  public String update(Model model, @RequestParam("booking") Booking booking){
-
-    model.addAttribute("booking", booking);
+  public String update(Model model, @RequestParam("id") long id){
+      model.addAttribute("booking", br.findBookingId(id));
 
     return "bookings/edit";
   }
 
-  @PostMapping("bookings/edit/{id}")
-  public String edit(@RequestParam("bookingId") Long id, @RequestBody Booking editBooking){
+  @PatchMapping("bookings/edit")
+  public String edit(Booking booking){
 
-    br.updateBooking(editBooking, id);
+    br.updateBooking(booking);
 
     return "redirect:bookings/show";
   }

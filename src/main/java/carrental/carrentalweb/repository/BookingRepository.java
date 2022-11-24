@@ -141,7 +141,7 @@ public class BookingRepository {
     return findBooking;
   }
 
-  public void updateBooking(Booking booking, Long id){
+  public void updateBooking(Booking booking){
     try {
       Connection conn = databaseService.getConnection();
       String queryCreate = "UPDATE bookings " +
@@ -158,7 +158,7 @@ public class BookingRepository {
       preparedStatement.setObject(7, booking.getDeliveredAt());
       preparedStatement.setObject(8, booking.getCreatedAt());
       preparedStatement.setObject(9, booking.getUpdatedAt());
-      preparedStatement.setLong(10, id);
+      preparedStatement.setLong(10, booking.getId());
 
       preparedStatement.executeUpdate();
 
