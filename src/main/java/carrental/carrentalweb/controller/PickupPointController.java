@@ -1,12 +1,14 @@
 package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.Address;
+import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.repository.PickupPointRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
@@ -53,25 +55,10 @@ public class PickupPointController {
   }
 
   @PostMapping("pickuppoints/edit")
-  public String updatePickupPoint(){
-    //hvad skal man opdatere ud fra? Skal man vælge en bestemt attribut der skal ændres ved address eller pickuppoint eller skal det hele bare genindtastes?
+  public String updatePickupPoint(@RequestParam("pickuppointname") String name, @RequestBody PickupPoint pp){
+
+    ppRepo.updatePickupPoint(pp, name);
     return "pickuppoints/edit";
   }
 
- /* @PostMapping()
-  public String findPickupPointByName(Model model, String name){
-
-    model.addAttribute(ppRepo.findPickupPointByName(name));
-
-    return "";
-  }
-
-  @PostMapping()
-  public String findPickupPointByZip(Model model, String zipCode){
-
-    model.addAttribute(ppRepo.findPickupPointByZipcode(zipCode));
-
-    return "";
-  }
-*/
 }
