@@ -1,8 +1,10 @@
 package carrental.carrentalweb.controller;
 
 
+import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.BookingRepository;
 import carrental.carrentalweb.repository.PickupPointRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +29,17 @@ public class BookingController {
   }
 
   @GetMapping("bookings/show/{id}")
-  public String show(HttpSession session, Model model){
-    Long loginId = (Long) session.getAttribute("LOGIN_ID");
-    // Listen skal findes ved hjælp af user
-    // model.addAttribute(br.getBookingList());
+  public String show(@AuthenticationPrincipal User user, Model model){
+
+    model.addAttribute("bookinglist", br.getBookingList(user));
 
     return "bookings/show";
+  }
+
+  @GetMapping("bookings/create")
+  public String showCreate(HttpSession session){
+
+    return "bookings/create";
   }
 
   @GetMapping("bookings/create")
