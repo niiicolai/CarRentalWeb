@@ -120,7 +120,7 @@ public class PickupPointRepository {
     return pickupPointZip;
   }
 
-  public void updatePickupPoint (PickupPoint pickupPoint, String name){
+  public void updatePickupPoint (PickupPoint pickupPoint){
 
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 
@@ -133,7 +133,7 @@ public class PickupPointRepository {
       preparedStatement.setObject(1, pickupPoint.getAddress());
       preparedStatement.setObject(2, pickupPoint.getCreatedAt());
       preparedStatement.setObject(3, pickupPoint.getUpdatedAt());
-      preparedStatement.setString(4, name);
+      preparedStatement.setString(4, pickupPoint.getName());
 
       preparedStatement.executeUpdate();
     } catch (SQLException e){

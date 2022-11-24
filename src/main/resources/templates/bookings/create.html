@@ -4,8 +4,8 @@
 <head></head>
 <body layout:fragment="content">
 
-<form action="bookings/create" method="post">
-  <button type="submit">Book</button>
+<form action="/bookings/create" th:object="${booking}" method="post">
+  <!-- .... --->
 </form>
 
 </body>
