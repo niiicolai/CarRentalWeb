@@ -13,13 +13,10 @@ import java.util.List;
 // Mads
 @Repository
 public class SubscriptionRepository {
-
     private final DatabaseService databaseService;
-
     public SubscriptionRepository(DatabaseService databaseService) {
         this.databaseService = databaseService;
     }
-
     public Subscription get(String column, Object value) {
         String sql = String.format("SELECT * FROM subscriptions WHERE %s=?", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
@@ -31,7 +28,6 @@ public class SubscriptionRepository {
         DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
         return parseResponse(databaseResponse);
     }
-
     public boolean create(Subscription subscription) {
         String query = "INSERT INTO subscriptions (name, days, price, available) VALUES (?, ?, ?, ?)";
         DatabaseRequestBody body = new DatabaseRequestBody(subscription.getName(), subscription.getDays(),
@@ -40,18 +36,16 @@ public class SubscriptionRepository {
         return databaseResponse.isSuccessful();
     }
     public boolean update(Subscription subscription){
-        String query = "UPDATE subscriptions SET available = ?, price = ?, days = ?, available = ? WHERE name = ?";
+        String query = "UPDATE subscriptions SET price = ?, days = ?, available = ? WHERE name = ?";
         DatabaseRequestBody body = new DatabaseRequestBody(subscription.getPrice(), subscription.getDays(),
             subscription.isAvailable(), subscription.getName());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
-
     private List<Subscription> parseResponse(DatabaseResponse databaseResponse) {
         List<Subscription> subscriptions = new LinkedList<Subscription>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
-
             subscriptions.add(
                 new Subscription(
                     (String) record.map().get("name"),
