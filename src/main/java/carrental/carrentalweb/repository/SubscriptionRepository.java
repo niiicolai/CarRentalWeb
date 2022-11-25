@@ -20,11 +20,16 @@ public class SubscriptionRepository {
         this.databaseService = databaseService;
     }
 
-    public Subscription find(String column, Object value) {
+    public Subscription get(String column, Object value) {
         String sql = String.format("SELECT * FROM subscriptions WHERE %s=?", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
         return parseResponse(databaseResponse).get(0);
+    }
+    public List<Subscription> getAll() {
+        String query = "SELECT * FROM subscriptions";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
+        return parseResponse(databaseResponse);
     }
 
     public boolean create(Subscription subscription) {
@@ -33,11 +38,6 @@ public class SubscriptionRepository {
             subscription.getPrice(), subscription.isAvailable());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
-    }
-    public List<Subscription> getAll() {
-        String query = "SELECT * FROM subscriptions";
-        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
-        return parseResponse(databaseResponse);
     }
     public boolean update(Subscription subscription){
         String query = "UPDATE subscriptions SET available = ?, price = ?, days = ?, available = ? WHERE name = ?";
@@ -63,7 +63,6 @@ public class SubscriptionRepository {
                 )
             );
         }
-
         return subscriptions;
     }
 }
