@@ -40,7 +40,6 @@ public class DamageReportRepository {
         List<DamageReport> dmgReports = new LinkedList<DamageReport>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
-
             dmgReports.add(
                     new DamageReport(
                             (long) record.map().get("booking_id"),
