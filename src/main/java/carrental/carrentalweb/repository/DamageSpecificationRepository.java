@@ -22,19 +22,14 @@ public class DamageSpecificationRepository {
 
     public DamageSpecification get(String column, Object value) {
         String query = String.format("SELECT * FROM damage_specifications WHERE %s=?", column);
-
         DatabaseRequestBody body = new DatabaseRequestBody(value);
-
         DatabaseResponse databaseResponse = databaseService.executeQuery(query, body);
-
         return parseResponse(databaseResponse).get(0);
     }
 
     public List<DamageSpecification> getAll() {
         String query = "SELECT * FROM damage_specifications";
-
         DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
-
         return parseResponse(databaseResponse);
     }
 
@@ -49,7 +44,6 @@ public class DamageSpecificationRepository {
 
         DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.isDamaged(),
                 dmgSpec.getPrice());
-
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
@@ -62,9 +56,7 @@ public class DamageSpecificationRepository {
 
         DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.isDamaged(),
                 dmgSpec.getPrice());
-
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
-
         return databaseResponse.isSuccessful();
     }
 

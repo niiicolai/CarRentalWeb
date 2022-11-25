@@ -23,21 +23,15 @@ public class DamageReportRepository {
 
     public DamageReport get(String column, Object value) {
         String sql = String.format("SELECT * FROM damage_reports WHERE %s=? ", column);
-
         DatabaseRequestBody body = new DatabaseRequestBody(value);
-
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
-
         return parseResponse(databaseResponse).get(0);
     }
 
     public boolean create(DamageReport damageReport) {
         String query = "INSERT INTO damage_reports (booking_id) VALUES (?)";
-
         DatabaseRequestBody body = new DatabaseRequestBody(damageReport.getBookingId());
-
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
-
         return databaseResponse.isSuccessful();
 
     }
