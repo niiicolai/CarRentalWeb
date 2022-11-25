@@ -1,19 +1,12 @@
 package carrental.carrentalweb.controller;
 
-
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.BookingRepository;
-import carrental.carrentalweb.repository.PickupPointRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class BookingController {

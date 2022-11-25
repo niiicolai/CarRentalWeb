@@ -1,7 +1,6 @@
 package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.DamageReport;
-import carrental.carrentalweb.entities.DamageSpecification;
 import carrental.carrentalweb.repository.DamageReportRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

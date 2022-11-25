@@ -3,7 +3,6 @@ package carrental.carrentalweb.entities;
 import java.time.LocalDateTime;
 
 public class PickupPoint {
-
   private String name;
   private Address address;
   private LocalDateTime createdAt;

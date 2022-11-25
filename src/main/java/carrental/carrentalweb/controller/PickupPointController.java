@@ -1,14 +1,10 @@
 package carrental.carrentalweb.controller;
 
-import carrental.carrentalweb.entities.Address;
-import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.repository.PickupPointRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @Controller
 public class PickupPointController {

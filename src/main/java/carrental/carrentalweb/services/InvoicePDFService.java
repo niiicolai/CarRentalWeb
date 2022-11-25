@@ -1,19 +1,9 @@
 package carrental.carrentalweb.services;
 
 import java.awt.Color;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
- 
-import javax.servlet.http.HttpServletResponse;
- 
 import com.lowagie.text.*;
-import com.lowagie.text.pdf.*;
-
 import carrental.carrentalweb.builder.PDFBuilder;
 import carrental.carrentalweb.entities.Invoice;
 import carrental.carrentalweb.entities.InvoiceSpecification;

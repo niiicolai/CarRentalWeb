@@ -3,11 +3,7 @@ package carrental.carrentalweb.repository;
 import carrental.carrentalweb.entities.Address;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.services.DatabaseService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

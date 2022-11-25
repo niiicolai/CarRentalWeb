@@ -1,12 +1,8 @@
 package carrental.carrentalweb.repository;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import carrental.carrentalweb.builder.UserBuilder;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.records.DatabaseRecord;

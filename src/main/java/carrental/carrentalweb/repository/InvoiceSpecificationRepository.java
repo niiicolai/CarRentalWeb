@@ -1,12 +1,8 @@
 package carrental.carrentalweb.repository;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import carrental.carrentalweb.entities.InvoiceSpecification;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;

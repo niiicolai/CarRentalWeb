@@ -3,10 +3,8 @@ package carrental.carrentalweb.utilities;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import carrental.carrentalweb.enums.DatabaseResponseState;
 import carrental.carrentalweb.records.DatabaseRecord;
-
 
 public class DatabaseResponse implements Iterator<DatabaseRecord> {
     private List<DatabaseRecord> databaseRecords;    
