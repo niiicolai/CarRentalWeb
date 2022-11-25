@@ -5,7 +5,6 @@ import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
-
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.LinkedList;

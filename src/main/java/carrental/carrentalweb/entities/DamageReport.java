@@ -1,7 +1,6 @@
 package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 // Mads
 public class DamageReport {

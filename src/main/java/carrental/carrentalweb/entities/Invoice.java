@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 
 public class Invoice {
-    
     private long bookingId;
     private LocalDateTime due;
     private LocalDateTime paidAt;

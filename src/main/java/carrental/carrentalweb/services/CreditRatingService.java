@@ -1,7 +1,6 @@
 package carrental.carrentalweb.services;
 
 import org.springframework.stereotype.Service;
-
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.enums.CreditRatingState;

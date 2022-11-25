@@ -1,13 +1,9 @@
 package carrental.carrentalweb.services;
 
 import java.io.File;
-import java.util.List;
-
 import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import carrental.carrentalweb.entities.Invoice;
 import carrental.carrentalweb.entities.InvoiceSpecification;
 import carrental.carrentalweb.entities.User;

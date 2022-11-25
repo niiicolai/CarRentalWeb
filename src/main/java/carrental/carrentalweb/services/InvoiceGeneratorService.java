@@ -1,9 +1,7 @@
 package carrental.carrentalweb.services;
 
 import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Service;
-
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Invoice;
 import carrental.carrentalweb.entities.InvoiceSpecification;

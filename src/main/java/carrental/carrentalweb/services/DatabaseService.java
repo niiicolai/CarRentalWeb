@@ -2,23 +2,12 @@ package carrental.carrentalweb.services;
 
 import java.sql.Connection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.lowagie.text.pdf.events.IndexEvents.Entry;
-
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
-import groovy.util.MapEntry;
-
 import java.sql.*;
-
-
 
 @Service
 public class DatabaseService {
