@@ -37,6 +37,7 @@ public class BookingRepository {
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(newBooking.getUserId(), newBooking.getVehicleNumber(), newBooking.getSubscriptionName(), newBooking.getPickupPointName(), newBooking.getDeliveredAt(), newBooking.getCreatedAt(), newBooking.getUpdatedAt());
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
+    return databaseResponse.isSuccessful();
     /*try {
       Connection conn = databaseService.getConnection();
       String query = "INSERT INTO bookings (user_id," +
@@ -59,7 +60,6 @@ public class BookingRepository {
     } catch (SQLException e){
       e.printStackTrace();
     }*/
-    return databaseResponse.isSuccessful();
   }
 
 
