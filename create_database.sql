@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS credit_ratings (
     state               VARCHAR(255) NOT NULL,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(booking_id) REFERENCES bookings(booking_id)
+    FOREIGN KEY(booking_id) REFERENCES bookings(id)
 );
 -- Nicolai (one-to-one, bookings)
 CREATE TABLE IF NOT EXISTS invoices (

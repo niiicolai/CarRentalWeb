@@ -19,8 +19,11 @@ import java.util.List;
 @Repository
 public class PickupPointRepository {
 
-  @Autowired
-  DatabaseService databaseService;
+  private final DatabaseService databaseService;
+
+  public PickupPointRepository(DatabaseService databaseService) {
+    this.databaseService = databaseService;
+  }
 
   public void createPickupPoint(PickupPoint newPickupPoint) {
 

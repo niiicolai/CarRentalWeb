@@ -1,9 +1,12 @@
 package carrental.carrentalweb.controller;
 
+import carrental.carrentalweb.entities.DamageReport;
+import carrental.carrentalweb.entities.DamageSpecification;
 import carrental.carrentalweb.repository.DamageReportRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,15 +26,14 @@ public class DamageReportController {
         return "damage-report/show";
     }
 
-    @GetMapping("/damage-report/edit/{id}")
-    public String edit(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("damage-report", dmgRepo.get("booking_id", id));
-        return "damage-report/edit";
+    @GetMapping("/damage-report/new")
+    public String instantiate() {
+        return "damage-report/new";
     }
 
-    @PostMapping("/damage-report/edit/{id}")
-    public String update(@PathVariable("id") Long id) {
-        dmgRepo.update(dmgRepo.get("booking_id", id));
-        return "redirect:/damage-report/show/" + id;
+    @PostMapping("/damage-report/new")
+    public String create(@ModelAttribute("damage-report") DamageReport dmgReport) {
+        dmgRepo.create(dmgReport);
+        return "redirect:/damage-report/show/" + dmgReport.getBookingId();
     }
 }

@@ -1,14 +1,13 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.DamageReport;
-import carrental.carrentalweb.entities.DamageSpecification;
-import carrental.carrentalweb.entities.Subscription;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,32 +22,39 @@ public class DamageReportRepository {
     }
 
     public DamageReport get(String column, Object value) {
-        String sql = String.format("SELECT * FROM damage_reports WHERE %s=? " +
-                "LEFT OUTER JOIN damage_report_specifications " +
-                "ON damage_reports.id = damage_report_specifications.report_id " +
-                "LEFT OUTER JOIN damage_specifications " +
-                "ON damage_report_specifications.spec_description = damage_specifications.description",
-                column);
+        String sql = String.format("SELECT * FROM damage_reports WHERE %s=? ", column);
 
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(value);
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
 
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(sql, values);
-        if (resultList == null) return null;
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
 
-        return parseFromMap(resultList.get(0));
+        return parseResponse(databaseResponse).get(0);
     }
 
-    public void update(DamageReport damageReport) {
+    public boolean create(DamageReport damageReport) {
+        String query = "INSERT INTO damage_reports (booking_id) VALUES (?)";
+
+        DatabaseRequestBody body = new DatabaseRequestBody(damageReport.getBookingId());
+
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+
+        return databaseResponse.isSuccessful();
 
     }
-    private DamageReport parseFromMap(HashMap<String, Object> map) {
-        if (map == null) return null;
-        return new DamageReport(
-                (List<DamageSpecification>) map.get("damage_specifications"),
-                (Long) map.get("booking_id"),
-                (LocalDateTime) map.get("created_at"),
-                (LocalDateTime) map.get("updated_at")
-        );
+
+    private List<DamageReport> parseResponse(DatabaseResponse databaseResponse) {
+        List<DamageReport> dmgReports = new LinkedList<DamageReport>();
+        while (databaseResponse.hasNext()) {
+            DatabaseRecord record = databaseResponse.next();
+
+            dmgReports.add(
+                    new DamageReport(
+                            (long) record.map().get("booking_id"),
+                            (LocalDateTime) record.map().get("created_at"),
+                            (LocalDateTime) record.map().get("updated_at")
+                    )
+            );
+        }
+        return dmgReports;
     }
 }

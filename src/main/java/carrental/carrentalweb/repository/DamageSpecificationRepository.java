@@ -1,15 +1,12 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.DamageSpecification;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,22 +23,19 @@ public class DamageSpecificationRepository {
     public DamageSpecification get(String column, Object value) {
         String query = String.format("SELECT * FROM damage_specifications WHERE %s=?", column);
 
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(value);
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
 
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(query, values);
-        if (resultList == null) return null;
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, body);
 
-        return parseFromMap(resultList.get(0));
+        return parseResponse(databaseResponse).get(0);
     }
 
     public List<DamageSpecification> getAll() {
         String query = "SELECT * FROM damage_specifications";
 
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(query, new LinkedList<>());
-        if (resultList == null) return null;
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
 
-        return parseFromList(resultList);
+        return parseResponse(databaseResponse);
     }
 
     public boolean create(DamageSpecification dmgSpec) {
@@ -53,15 +47,11 @@ public class DamageSpecificationRepository {
                 "updated_at)" +
                 "VALUES (?, ?, ?, ?, ?)";
 
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(dmgSpec.getDescription());
-        values.add(dmgSpec.isDamaged());
-        values.add(dmgSpec.getPrice());
-        values.add(dmgSpec.getCreatedAt());
-        values.add(dmgSpec.getUpdatedAt());
+        DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.isDamaged(),
+                dmgSpec.getPrice());
 
-        databaseService.executeUpdate(query, values);
-        return true;
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+        return databaseResponse.isSuccessful();
     }
 
     public boolean update(DamageSpecification dmgSpec) {
@@ -70,31 +60,29 @@ public class DamageSpecificationRepository {
                 "price=?," +
                 "updated_at=?";
 
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(dmgSpec.isDamaged());
-        values.add(dmgSpec.getPrice());
-        values.add(dmgSpec.getUpdatedAt());
+        DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.isDamaged(),
+                dmgSpec.getPrice());
 
-        databaseService.executeUpdate(query, values);
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
 
-        return true;
+        return databaseResponse.isSuccessful();
     }
 
-    private DamageSpecification parseFromMap(HashMap<String, Object> map) {
-        if (map == null) return null;
-        return new DamageSpecification(
-                (String) map.get("description"),
-                (boolean) map.get("damaged"),
-                (double) map.get("price"),
-                (LocalDateTime) map.get("created_at"),
-                (LocalDateTime) map.get("updated_at")
-        );
-    }
-    private List<DamageSpecification> parseFromList(List<HashMap<String, Object>> list) {
-        List<DamageSpecification> dmgSpec = new ArrayList<>();
-        for (HashMap<String, Object> map : list) {
-            dmgSpec.add(parseFromMap(map));
+    private List<DamageSpecification> parseResponse(DatabaseResponse databaseResponse) {
+        List<DamageSpecification> dmgSpecs = new LinkedList<DamageSpecification>();
+        while (databaseResponse.hasNext()) {
+            DatabaseRecord record = databaseResponse.next();
+
+            dmgSpecs.add(
+                    new DamageSpecification(
+                            (String) record.map().get("description"),
+                            (boolean) record.map().get("damaged"),
+                            (double) record.map().get("price"),
+                            (LocalDateTime) record.map().get("created_at"),
+                            (LocalDateTime) record.map().get("updated_at")
+                    )
+            );
         }
-        return dmgSpec;
+        return dmgSpecs;
     }
 }

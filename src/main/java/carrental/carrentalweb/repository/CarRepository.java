@@ -4,9 +4,7 @@ import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.services.DatabaseService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +16,11 @@ import java.util.List;
 @Repository
 public class CarRepository {
 
-    @Autowired
-    DatabaseService databaseService;
+    private final DatabaseService databaseService;
+
+    public CarRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
 
     public Car createCar(Car newCar) {
 
