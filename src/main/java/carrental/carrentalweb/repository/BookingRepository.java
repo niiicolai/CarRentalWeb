@@ -26,26 +26,19 @@ public class BookingRepository {
 
     try {
       Connection conn = databaseService.getConnection();
-      String query = "INSERT INTO bookings (car," +
+      String query = "INSERT INTO bookings (user_id," +
+          "vehicle_number," +
           "subscription_name," +
-          "creditrating," +
-          "pickup_point," +
-          "damage_report," +
-          "delivered_at" +
-          "created_at" +
-          "updated_at)" +
-          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          "pickup_point_name," +
+          "delivered_at)" +
+          "VALUES (?, ?, ?, ?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
 
-      preparedStatement.setObject(1, newBooking.getUser());
-      preparedStatement.setObject(2, newBooking.getCar());
+      preparedStatement.setObject(1, newBooking.getUserId());
+      preparedStatement.setObject(2, newBooking.getVehicleNumber());
       preparedStatement.setString(3, newBooking.getSubscriptionName());
-      preparedStatement.setObject(4, newBooking.getCreditRating());
-      preparedStatement.setObject(5, newBooking.getPickupPoint());
-      preparedStatement.setObject(6, newBooking.getDamageReport());
-      preparedStatement.setObject(7, newBooking.getDeliveredAt());
-      preparedStatement.setObject(8, newBooking.getCreatedAt());
-      preparedStatement.setObject(9, newBooking.getUpdatedAt());
+      preparedStatement.setObject(4, newBooking.getPickupPointName());
+      preparedStatement.setObject(5, newBooking.getDeliveredAt());
 
 
       preparedStatement.executeUpdate();
@@ -69,27 +62,16 @@ public class BookingRepository {
       ResultSet resultSet = preparedStatement.executeQuery();
 
       while (resultSet.next()) {
-        Long id = resultSet.getLong(1);
-        User user = (User) resultSet.getObject(2);
-        Car car = (Car) resultSet.getObject(3);
-        String subName= resultSet.getString(4);
-        CreditRating cr = (CreditRating) resultSet.getObject(5);
-        PickupPoint pp = (PickupPoint) resultSet.getObject(6);
-        DamageReport dr = (DamageReport) resultSet.getObject(7);
-        LocalDateTime deliveredAt =  (LocalDateTime) resultSet.getObject(8);
-        LocalDateTime createdAt =  (LocalDateTime) resultSet.getObject(9);
-        LocalDateTime updatedAt =  (LocalDateTime) resultSet.getObject(10);
-
-        bookings.add(new Booking(id,
-            user,
-            car,
-            subName,
-            cr,
-            pp,
-            dr,
-            deliveredAt,
-            createdAt,
-            updatedAt));
+        bookings.add(new Booking(
+            resultSet.getLong("id"),
+            resultSet.getLong("user_id"),
+            resultSet.getLong("vehicle_number"),
+            resultSet.getString("subscription_name"),
+            resultSet.getString("pickup_point_name"),
+            (LocalDateTime) resultSet.getObject("delivered_at"),
+            (LocalDateTime) resultSet.getObject("created_at"),
+            (LocalDateTime) resultSet.getObject("updated_at"))
+        );
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -113,27 +95,15 @@ public class BookingRepository {
       ResultSet resultSet = preparedStatement.executeQuery();
 
       while (resultSet.next()) {
-        Long id = resultSet.getLong(1);
-        User user = (User) resultSet.getObject(2);
-        Car car = (Car) resultSet.getObject(3);
-        String subName= resultSet.getString(4);
-        CreditRating cr = (CreditRating) resultSet.getObject(5);
-        PickupPoint pp = (PickupPoint) resultSet.getObject(6);
-        DamageReport dr = (DamageReport) resultSet.getObject(7);
-        LocalDateTime deliveredAt =  (LocalDateTime) resultSet.getObject(8);
-        LocalDateTime createdAt =  (LocalDateTime) resultSet.getObject(9);
-        LocalDateTime updatedAt =  (LocalDateTime) resultSet.getObject(10);
-
-        findBooking = new Booking(id,
-            user,
-            car,
-            subName,
-            cr,
-            pp,
-            dr,
-            deliveredAt,
-            createdAt,
-            updatedAt);
+        findBooking = new Booking(
+            resultSet.getLong("id"),
+            resultSet.getLong("user_id"),
+            resultSet.getLong("vehicle_number"),
+            resultSet.getString("subscription_name"),
+            resultSet.getString("pickup_point_name"),
+            (LocalDateTime) resultSet.getObject("delivered_at"),
+            (LocalDateTime) resultSet.getObject("created_at"),
+            (LocalDateTime) resultSet.getObject("updated_at"));
       }
     } catch(SQLException e){
       e.printStackTrace();
@@ -145,26 +115,25 @@ public class BookingRepository {
     try {
       Connection conn = databaseService.getConnection();
       String queryCreate = "UPDATE bookings " +
-          "SET userid = ?, car = ?, subscription_name =?, credit_rating = ?, pickup_point = ?, damage_report = ?, delivered_at = ?, created_at = ?, updated_at = ? WHERE id=?";
+          "SET user_id = ?, vehicle_number = ?, subscription_name =?, pickup_point_name = ?, delivered_at = ? WHERE id=?";
       PreparedStatement preparedStatement = conn.prepareStatement(queryCreate);
 
-
-      preparedStatement.setObject(1, booking.getUser());
-      preparedStatement.setObject(2, booking.getCar());
+      preparedStatement.setObject(1, booking.getUserId());
+      preparedStatement.setObject(2, booking.getVehicleNumber());
       preparedStatement.setString(3, booking.getSubscriptionName());
-      preparedStatement.setObject(4, booking.getCreditRating());
-      preparedStatement.setObject(5, booking.getPickupPoint());
-      preparedStatement.setObject(6, booking.getDamageReport());
-      preparedStatement.setObject(7, booking.getDeliveredAt());
-      preparedStatement.setObject(8, booking.getCreatedAt());
-      preparedStatement.setObject(9, booking.getUpdatedAt());
-      preparedStatement.setLong(10, booking.getId());
+      preparedStatement.setObject(4, booking.getPickupPointName());
+      preparedStatement.setObject(5, booking.getDeliveredAt());
+      preparedStatement.setLong(6, booking.getId());
 
       preparedStatement.executeUpdate();
 
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public Booking last() {
+	return null;
   }
 
 }

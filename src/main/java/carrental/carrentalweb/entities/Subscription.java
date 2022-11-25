@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 // Mads
 public class Subscription {
     private String name;
-    private double days;
+    private long days;
     private double price;
     private boolean available;
     private LocalDateTime createdAt;
@@ -13,7 +13,7 @@ public class Subscription {
     public Subscription() {
     }
 
-    public Subscription(String name, double days, double price, boolean available, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Subscription(String name, long days, double price, boolean available, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
         this.days = days;
         this.price = price;
@@ -30,11 +30,11 @@ public class Subscription {
         this.name = name;
     }
 
-    public double getDays() {
+    public long getDays() {
         return days;
     }
 
-    public void setDays(double days) {
+    public void setDays(long days) {
         this.days = days;
     }
 
