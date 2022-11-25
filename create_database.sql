@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS cars (
 -- Mads
 CREATE TABLE IF NOT EXISTS subscriptions (
     name                VARCHAR(255)    PRIMARY KEY         NOT NULL      UNIQUE,
-    days                BIGINT          NOT NULL, -- should be BIGINT because LocalDateTime.plusDays(days) expects a long.
+    days                BIGINT          NOT NULL, 
     price               DOUBLE          NOT NULL,
     available           BIT(1),
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS credit_ratings (
     state               VARCHAR(255) NOT NULL,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(booking_id) REFERENCES bookings(id)
+    FOREIGN KEY(booking_id) REFERENCES bookings(booking_id)
 );
 -- Nicolai (one-to-one, bookings)
 CREATE TABLE IF NOT EXISTS invoices (

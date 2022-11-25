@@ -2,13 +2,23 @@ package carrental.carrentalweb.services;
 
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.lowagie.text.pdf.events.IndexEvents.Entry;
+
+import carrental.carrentalweb.records.DatabaseRecord;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
+import groovy.util.MapEntry;
+
 import java.sql.*;
+
+
 
 @Service
 public class DatabaseService {
@@ -27,61 +37,59 @@ public class DatabaseService {
     public Connection getConnection() throws SQLException {
         if (connection == null)
             connection = DriverManager.getConnection(url, username, password);
-
         return connection;
     }
 
-    private PreparedStatement prepareStatement(String sql, List<Object> values) throws SQLException {
+    private PreparedStatement prepareStatement(String sql, DatabaseRequestBody body) throws SQLException {
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
-        for (int i = 0; i < values.size(); i++)
-            statement.setObject(i + 1, values.get(i));
+        for (int i = 0; i < body.size(); i++)
+            statement.setObject(i + 1, body.next());
         System.out.println(statement);
         return statement;
     }
 
-    public void executeUpdate(String sql, List<Object> values) {
+    public DatabaseResponse executeUpdate(String sql, DatabaseRequestBody body) {
+        DatabaseResponse response = new DatabaseResponse();
         try {
-            PreparedStatement statement = prepareStatement(sql, values);
+            PreparedStatement statement = prepareStatement(sql, body);
             statement.executeUpdate();
         } catch (SQLException e) {
+            response.setError(e.getMessage());
             e.printStackTrace();
         }
+
+        return response;
     }
 
-    public List<HashMap<String, Object>> executeQuery(String sql, List<Object> values) {
-        List<HashMap<String, Object>> result = null;
+    public DatabaseResponse executeQuery(String sql, DatabaseRequestBody body) {
+        DatabaseResponse response = new DatabaseResponse();
         try {
-            PreparedStatement statement = prepareStatement(sql, values);
+            PreparedStatement statement = prepareStatement(sql, body);
             ResultSet resultSet = statement.executeQuery();
-            result = parseResultSet(resultSet);
+            parseResultSet(resultSet, response);
             
         } catch (SQLException e) {
+            response.setError(e.getMessage());
             e.printStackTrace();
         }
 
-        return result;
+        return response;
     }
 
     // Parse result list
-    private static List<HashMap<String, Object>> parseResultSet(ResultSet resultSet) throws SQLException {
-        LinkedList<HashMap<String, Object>> resultList = new LinkedList<>();  
+    private static void parseResultSet(ResultSet resultSet, DatabaseResponse response) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();
-
-        int k = metaData.getColumnCount();
+        int columnCount = metaData.getColumnCount();
             
         while(resultSet.next()) {
-                
-            HashMap<String, Object> result = new HashMap<>();
-            for (int j = 1; j < k + 1; j++) {
+            HashMap<String, Object> recordValues = new HashMap<>();
+            for (int j = 1; j < columnCount + 1; j++) {
                 String columnName = metaData.getColumnName(j);
                 Object value = resultSet.getObject(columnName);
-                result.put(columnName, value);
+                recordValues.put(columnName, value);
             }
-                
-            resultList.add(result);
+            response.add(new DatabaseRecord(recordValues));
         }
-
-        return resultList;
     }
 }

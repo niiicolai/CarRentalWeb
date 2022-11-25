@@ -58,4 +58,8 @@ public class CreditRating {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public boolean isApproved() {
+        return this.state == CreditRatingState.Approve;
+    }
 }

@@ -40,7 +40,7 @@ public class SubscriptionRepository {
     public boolean create(Subscription subscription) {
         String query = "INSERT INTO subscriptions (name, days, price, available) VALUES (?, ?, ?, ?)";
         DatabaseRequestBody body = new DatabaseRequestBody(subscription.getName(), subscription.getDays(),
-                subscription.getPrice(), subscription.isAvailable());
+            subscription.getPrice(), subscription.isAvailable());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
@@ -52,7 +52,7 @@ public class SubscriptionRepository {
     public boolean update(Subscription subscription){
         String query = "UPDATE subscriptions SET available = ?, price = ?, days = ?, available = ? WHERE name = ?";
         DatabaseRequestBody body = new DatabaseRequestBody(subscription.getPrice(), subscription.getDays(),
-                subscription.isAvailable(), subscription.getName());
+            subscription.isAvailable(), subscription.getName());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
@@ -63,17 +63,17 @@ public class SubscriptionRepository {
             DatabaseRecord record = databaseResponse.next();
 
             subscriptions.add(
-                    new Subscription(
-                            (String) record.map().get("name"),
-                            (long) record.map().get("days"),
-                            (Double) record.map().get("price"),
-                            (Boolean) record.map().get("available"),
-                            (LocalDateTime) record.map().get("created_at"),
-                            (LocalDateTime) record.map().get("updated_at")
-                    )
+                new Subscription(
+                    (String) record.map().get("name"),
+                    (long) record.map().get("days"),
+                    (Double) record.map().get("price"),
+                    (Boolean) record.map().get("available"),
+                    (LocalDateTime) record.map().get("created_at"),
+                    (LocalDateTime) record.map().get("updated_at")
+                )
             );
         }
 
         return subscriptions;
-    }
+    }    
 }

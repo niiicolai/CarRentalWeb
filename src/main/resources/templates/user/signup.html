@@ -15,6 +15,13 @@
                            required="required" />
                 </div>
                 <div>
+                    <label name="email">E-mail</label>
+                    <input type="text" name="email" th:value="${user.getEmail()}"                           
+                        placeholder="E-mail"
+                        autocomplete="off"
+                        required="required" />
+                </div>
+                <div>
                     <div>
                         <label name="password" class="form-label">Password</label>
                         <small>Min length: 8 characters</small>
