@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS cars (
 -- Mads
 CREATE TABLE IF NOT EXISTS subscriptions (
     name                VARCHAR(255)    PRIMARY KEY         NOT NULL      UNIQUE,
-    days                BIGINT          NOT NULL, -- should be BIGINT because LocalDateTime.plusDays(days) expects a long. 
+    days                BIGINT          NOT NULL, 
     price               DOUBLE          NOT NULL,
     available           BIT(1),
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
