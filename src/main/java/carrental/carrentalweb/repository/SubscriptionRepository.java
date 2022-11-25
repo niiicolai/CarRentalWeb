@@ -1,22 +1,13 @@
 package carrental.carrentalweb.repository;
 
-import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.entities.Subscription;
-import carrental.carrentalweb.enums.CreditRatingState;
-import carrental.carrentalweb.enums.DatabaseResponseState;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 
 import org.springframework.stereotype.Repository;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,8 +57,8 @@ public class SubscriptionRepository {
                 new Subscription(
                     (String) record.map().get("name"),
                     (long) record.map().get("days"),
-                    (Double) record.map().get("price"),
-                    (Boolean) record.map().get("available"),
+                    (double) record.map().get("price"),
+                    (boolean) record.map().get("available"),
                     (LocalDateTime) record.map().get("created_at"),
                     (LocalDateTime) record.map().get("updated_at")
                 )
@@ -75,5 +66,5 @@ public class SubscriptionRepository {
         }
 
         return subscriptions;
-    }    
+    }
 }

@@ -19,8 +19,11 @@ import carrental.carrentalweb.utilities.DatabaseResponse;
 @Repository
 public class InvoiceSpecificationRepository {
 
-    @Autowired
-    DatabaseService databaseService;
+    private final DatabaseService databaseService;
+
+    public InvoiceSpecificationRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
 
     public InvoiceSpecification find(String column, Object value) {
         String sql = String.format("SELECT * FROM invoice_specifications WHERE %s=?", column);

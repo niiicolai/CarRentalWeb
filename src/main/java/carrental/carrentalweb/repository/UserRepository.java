@@ -21,8 +21,11 @@ import carrental.carrentalweb.utilities.DatabaseResponse;
 @Repository
 public class UserRepository {
 
-    @Autowired
-    DatabaseService databaseService;
+    private final DatabaseService databaseService;
+
+    public UserRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
 
     public User find(String column, Object value) {
         String sql = String.format("SELECT * FROM users INNER JOIN user_role ON users.id=user_role.user_id WHERE users.%s = ? ", column);

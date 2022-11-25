@@ -6,23 +6,19 @@ import carrental.carrentalweb.services.DatabaseService;
 
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 @Repository
 public class BookingRepository {
 
-  @Autowired
-  DatabaseService databaseService;
+  private final DatabaseService databaseService;
+
+  public BookingRepository(DatabaseService databaseService) {
+    this.databaseService = databaseService;
+  }
 
   public boolean createBooking(Booking newBooking) {
 

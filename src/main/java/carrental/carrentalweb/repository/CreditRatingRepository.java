@@ -1,10 +1,7 @@
 package carrental.carrentalweb.repository;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.enums.CreditRatingState;
@@ -20,8 +17,11 @@ import carrental.carrentalweb.utilities.DatabaseResponse;
 @Repository
 public class CreditRatingRepository {
 
-    @Autowired
-    DatabaseService databaseService;
+    private final DatabaseService databaseService;
+
+    public CreditRatingRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
 
     public CreditRating find(String column, Object value) {
         String sql = String.format("SELECT * FROM credit_ratings WHERE %s=?", column);
