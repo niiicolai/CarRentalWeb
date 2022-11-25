@@ -38,13 +38,13 @@ public class DamageSpecificationController {
 
     @GetMapping("/damage-specification/edit/{desc}")
     public String edit(@PathVariable("desc") String description, Model model) {
-        model.addAttribute("desc", dmgSpecRepo.getByDescription(description));
+        model.addAttribute("desc", dmgSpecRepo.get("description", description));
         return "damage-specification/edit";
     }
 
     @PostMapping("/damage-specification/edit/{desc}")
     public String update(@PathVariable("desc") String description) {
-        dmgSpecRepo.update(dmgSpecRepo.getByDescription(description));
+        dmgSpecRepo.update(dmgSpecRepo.get("description", description));
         return "redirect:/damage-specifications";
     }
 }

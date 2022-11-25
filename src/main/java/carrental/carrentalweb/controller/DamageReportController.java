@@ -19,19 +19,19 @@ public class DamageReportController {
 
     @GetMapping("/damage-report/show/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("damage-report", dmgRepo.getByBookingId(id));
+        model.addAttribute("damage-report", dmgRepo.get("booking_id", id));
         return "damage-report/show";
     }
 
     @GetMapping("/damage-report/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("damage-report", dmgRepo.getByBookingId(id));
+        model.addAttribute("damage-report", dmgRepo.get("booking_id", id));
         return "damage-report/edit";
     }
 
     @PostMapping("/damage-report/edit/{id}")
     public String update(@PathVariable("id") Long id) {
-        dmgRepo.update(dmgRepo.getByBookingId(id));
+        dmgRepo.update(dmgRepo.get("booking_id", id));
         return "redirect:/damage-report/show/" + id;
     }
 }
