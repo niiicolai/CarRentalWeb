@@ -5,6 +5,8 @@ import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.BookingRepository;
 import carrental.carrentalweb.repository.PickupPointRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -54,10 +56,8 @@ public class BookingController {
 
   @PostMapping("bookings/create")
   public String create(Booking booking){
-
     br.createBooking(booking);
-
-    return "redirect:bookings/index";
+    return "redirect:/bookings/index";
   }
 
   @GetMapping("bookings/edit/{id}")

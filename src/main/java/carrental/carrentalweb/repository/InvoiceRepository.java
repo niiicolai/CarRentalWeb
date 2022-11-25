@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import carrental.carrentalweb.entities.Invoice;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 
 /*
  * Written by Nicolai Berg Andersen.
@@ -23,44 +26,38 @@ public class InvoiceRepository {
 
     public Invoice find(String column, Object value) {
         String sql = String.format("SELECT * FROM invoices WHERE %s=?", column);
-        
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(value);
-        
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(sql, values);
-        if (resultList == null) return null;
-
-        return parseFromMap(resultList.get(0));
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        return parseResponse(databaseResponse).get(0);
     }
     
     public boolean insert(Invoice invoice) {
         String sql = "INSERT INTO invoices (booking_id, due, paid_at) (?, ?, ?)";
-
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(invoice.getBookingId());
-        values.add(invoice.getDue());
-        values.add(invoice.getPaidAt());
-
-        databaseService.executeUpdate(sql, values);
-
-        return true;
+        DatabaseRequestBody body = new DatabaseRequestBody(invoice.getBookingId(), invoice.getDue(), invoice.getPaidAt());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
+        return databaseResponse.isSuccessful();
     }
 
     public Invoice last() {
-        String sql = String.format("SELECT * FROM invoices ORDER BY created_at DESC LIMIT 1");
-        
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(sql, new LinkedList<>());
-        if (resultList == null) return null;
-
-        return parseFromMap(resultList.get(0));
+        String sql = "SELECT * FROM invoices ORDER BY created_at DESC LIMIT 1";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+        return parseResponse(databaseResponse).get(0);
     }
 
-    private Invoice parseFromMap(HashMap<String, Object> map) {
-        if (map == null) return null;
-        return new Invoice(
-            (long) map.get("booking_id"),
-            (LocalDateTime) map.get("due"),
-            (LocalDateTime) map.get("paid_at")
-        );
+    private List<Invoice> parseResponse(DatabaseResponse databaseResponse) {
+        List<Invoice> invoices = new LinkedList<Invoice>();
+        while (databaseResponse.hasNext()) {
+            DatabaseRecord record = databaseResponse.next();
+
+            invoices.add(
+                new Invoice(
+                    (long) record.map().get("booking_id"),
+                    (LocalDateTime) record.map().get("due"),
+                    (LocalDateTime) record.map().get("paid_at")
+                )
+            );
+        }
+
+        return invoices;
     }
 }

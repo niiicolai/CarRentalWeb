@@ -3,7 +3,11 @@ package carrental.carrentalweb.repository;
 import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.enums.CreditRatingState;
+import carrental.carrentalweb.enums.DatabaseResponseState;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 
 import org.springframework.stereotype.Repository;
 import java.sql.Connection;
@@ -28,81 +32,48 @@ public class SubscriptionRepository {
 
     public Subscription find(String column, Object value) {
         String sql = String.format("SELECT * FROM subscriptions WHERE %s=?", column);
-
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(value);
-
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(sql, values);
-        if (resultList == null) return null;
-
-        return parseFromMap(resultList.get(0));
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        return parseResponse(databaseResponse).get(0);
     }
 
     public boolean create(Subscription subscription) {
-        String query = "INSERT INTO subscriptions (" +
-                "name," +
-                "days," +
-                "price," +
-                "available," +
-                "created_at," +
-                "updated_at)" +
-                "VALUES (?, ?, ?, ?, ?, ?)";
-
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(subscription.getName());
-        values.add(subscription.getDays());
-        values.add(subscription.getPrice());
-        values.add(subscription.isAvailable());
-        values.add(subscription.getCreatedAt());
-        values.add(subscription.getUpdatedAt());
-
-        databaseService.executeUpdate(query, values);
-        return true;
+        String query = "INSERT INTO subscriptions (name, days, price, available) VALUES (?, ?, ?, ?)";
+        DatabaseRequestBody body = new DatabaseRequestBody(subscription.getName(), subscription.getDays(),
+            subscription.getPrice(), subscription.isAvailable());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+        return databaseResponse.isSuccessful();
     }
     public List<Subscription> getAll() {
-
-        List<Subscription> subscriptions = new ArrayList<>();
-
         String query = "SELECT * FROM subscriptions";
-
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(query, new LinkedList<>());
-        if (resultList == null) return null;
-
-        return parseFromList(resultList);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
+        return parseResponse(databaseResponse);
     }
     public boolean update(Subscription subscription){
-        String query = "UPDATE subscriptions " +
-                "SET available=?," +
-                "updated_at=?";
-
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(subscription.getName());
-        values.add(subscription.getDays());
-        values.add(subscription.getPrice());
-        values.add(subscription.getCreatedAt());
-        values.add(subscription.getUpdatedAt());
-
-        databaseService.executeUpdate(query, values);
-
-        return true;
+        String query = "UPDATE subscriptions SET available = ?, price = ?, days = ?, available = ? WHERE name = ?";
+        DatabaseRequestBody body = new DatabaseRequestBody(subscription.getPrice(), subscription.getDays(),
+            subscription.isAvailable(), subscription.getName());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+        return databaseResponse.isSuccessful();
     }
 
-    private Subscription parseFromMap(HashMap<String, Object> map) {
-        if (map == null) return null;
-        return new Subscription(
-                (String) map.get("name"),
-                (Double) map.get("days"),
-                (Double) map.get("price"),
-                (Boolean) map.get("available"),
-                (LocalDateTime) map.get("created_at"),
-                (LocalDateTime) map.get("updated_at")
-        );
-    }
-    private List<Subscription> parseFromList(List<HashMap<String, Object>> list) {
-        List<Subscription> subscriptions = new ArrayList<>();
-        for (HashMap<String, Object> map : list) {
-            subscriptions.add(parseFromMap(map));
+    private List<Subscription> parseResponse(DatabaseResponse databaseResponse) {
+        List<Subscription> subscriptions = new LinkedList<Subscription>();
+        while (databaseResponse.hasNext()) {
+            DatabaseRecord record = databaseResponse.next();
+
+            subscriptions.add(
+                new Subscription(
+                    (String) record.map().get("name"),
+                    (long) record.map().get("days"),
+                    (Double) record.map().get("price"),
+                    (Boolean) record.map().get("available"),
+                    (LocalDateTime) record.map().get("created_at"),
+                    (LocalDateTime) record.map().get("updated_at")
+                )
+            );
         }
+
         return subscriptions;
-    }
+    }    
 }
