@@ -7,14 +7,13 @@
     <title>Title</title>
 </head>
 <body layout:fragment="content">
-    <form th:action="@{/subscriptions/new}" th:object="${subscription}" th:method="post">
-        
-        <input th:field="*{name}" type="text" placeholder="name" required>
+    <form th:action="@{/subscriptions/edit}" th:object="${subscription}" th:method="patch">
+        <input th:field="*{name}" type="hidden" required>
         <input th:field="*{days}" type="text" placeholder="days" required>
         <input th:field="*{price}" type="text" placeholder="price" required>
 
         <span>is available:</span>
-        <input th:field="*{available}" type="checkbox">
+        <input th:field="*{available}" type="checkbox" th:checked="${subscription.isAvailable()}">
 
         <input type="submit" value="update">
 

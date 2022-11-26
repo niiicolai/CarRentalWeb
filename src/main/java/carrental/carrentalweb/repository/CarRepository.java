@@ -36,11 +36,8 @@ public class CarRepository {
                     "steel_price," +
                     "registration_fee," +
                     "co2_discharge," +
-                    "inspected," +
-                    "booking, " +
-                    "created_at," +
-                    "updated_at)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "inspected) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             System.out.println("Created query");
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             System.out.println("Created preparedStatement");
@@ -55,10 +52,6 @@ public class CarRepository {
             preparedStatement.setDouble(8, newCar.getRegistrationFee());
             preparedStatement.setDouble(9, newCar.getCo2Discharge());
             preparedStatement.setBoolean(10, newCar.getInspected());
-            preparedStatement.setObject(11, newCar.getBooking());
-            preparedStatement.setObject(12, LocalDateTime.now());
-            preparedStatement.setObject(13, LocalDateTime.now());
-
             preparedStatement.executeUpdate();
 
         } catch (SQLException e){
@@ -86,7 +79,7 @@ public class CarRepository {
                 double registrationFee = resultSet.getDouble(8);
                 double co2Discharge = resultSet.getDouble(9);
                 boolean inspected = resultSet.getBoolean(10);
-                Booking booking = (Booking) resultSet.getObject(11);
+                long bookingId = (long) resultSet.getLong(11);
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject(12);
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject(13);
                 cars.add(new Car(vehicleNumber,
@@ -98,7 +91,7 @@ public class CarRepository {
                         registrationFee,
                         co2Discharge,
                         inspected,
-                        booking,
+                        bookingId,
                         createdAt,
                         updatedAt));
             }
@@ -131,7 +124,7 @@ public class CarRepository {
                 double registrationFee = resultSet.getDouble(8);
                 double co2Discharge = resultSet.getDouble(9);
                 boolean inspected = resultSet.getBoolean(11);
-                Booking booking = (Booking) resultSet.getObject(10);
+                long bookingId = (long) resultSet.getLong(10);
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject(12);
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject(13);
                 foundCar = new Car(vehicleNumber,
@@ -144,7 +137,7 @@ public class CarRepository {
                         registrationFee,
                         co2Discharge,
                         inspected,
-                        booking,
+                        bookingId,
                         createdAt,
                         updatedAt);
             }
@@ -164,7 +157,8 @@ public class CarRepository {
                     "registration_fee=?," +
                     "co2_discharge=?," +
                     "inspected=?," +
-                    "booking=?," +
+                    "model=?," +
+                    "brand=?," +
                     "updated_at=?" +
                     "WHERE vehicle_number=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -175,9 +169,10 @@ public class CarRepository {
             preparedStatement.setDouble(4, car.getRegistrationFee());
             preparedStatement.setDouble(5, car.getCo2Discharge());
             preparedStatement.setBoolean(6, car.getInspected());
-            preparedStatement.setObject(7, car.getBooking());
-            preparedStatement.setObject(8, LocalDateTime.now());
-            preparedStatement.setLong(9, car.getVehicleNumber());
+            preparedStatement.setString(7, car.getModel());
+            preparedStatement.setString(8, car.getBrand());
+            preparedStatement.setObject(9, LocalDateTime.now());
+            preparedStatement.setLong(10, car.getVehicleNumber());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e){

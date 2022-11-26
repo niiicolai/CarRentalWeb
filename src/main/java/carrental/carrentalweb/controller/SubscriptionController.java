@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 // Mads
@@ -24,7 +26,8 @@ public class SubscriptionController {
     }
 
     @GetMapping("/subscriptions/new")
-    public String instantiate() {
+    public String instantiate(Model model) {
+        model.addAttribute("subscription", new Subscription());
         return "subscriptions/new";
     }
 
@@ -33,4 +36,16 @@ public class SubscriptionController {
         subRepo.create(subscription);
         return "redirect:/subscriptions";
     }
+
+    @GetMapping("/subscriptions/edit/{name}")
+	public String updatePickupPoint(Model model, @PathVariable("name") String name) {
+		model.addAttribute("subscription", subRepo.get("name", name));
+		return "subscriptions/edit";
+	}
+
+	@PatchMapping("/subscriptions/edit")
+	public String editPickupPoint(Subscription subscription) {
+		subRepo.update(subscription);
+		return "redirect:/subscriptions";
+	}
 }

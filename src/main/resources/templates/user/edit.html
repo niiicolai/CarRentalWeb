@@ -10,17 +10,11 @@
                 <form th:action="@{/user}" th:object="${user}" th:method="patch">
                     <div>
                         <label name="username">Username</label>
-                        <input type="text" name="username" th:value="${user.getUsername()}"                           
-                            placeholder="Username"
-                            autocomplete="off"
-                            required="required" />
+                        <input th:field="*{username}" type="text" placeholder="username" autocomplete="off" required>
                     </div>
                     <div>
                         <label name="email">E-mail</label>
-                        <input type="text" name="email" th:value="${user.getEmail()}"                           
-                            placeholder="E-mail"
-                            autocomplete="off"
-                            required="required" />
+                        <input th:field="*{email}" type="text" placeholder="email" autocomplete="off" required>
                     </div>
                     <div>
                         <input type="submit" value="Save" class="btn btn-outline-secondary mt-2" />
@@ -36,11 +30,7 @@
                             <label name="password" class="form-label">Password</label>
                             <small>Min length: 8 characters</small>
                         </div>
-                        <input type="password" name="password" 
-                            placeholder="new password ..."
-                            autocomplete="off"
-                            required="required"
-                            minlength="8" />
+                        <input name="password" type="text" placeholder="password" autocomplete="off" minlength="8" required>
                     </div>
                     <div>
                         <input type="submit" class="btn btn-outline-secondary mt-2" value="Save" />

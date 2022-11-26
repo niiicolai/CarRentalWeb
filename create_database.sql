@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS cars (
     registration_fee    DOUBLE,
     co2_discharge       DOUBLE,
     inspected           BIT(1),
-    booking             BIGINT,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -46,21 +45,6 @@ CREATE TABLE IF NOT EXISTS subscriptions (
     available           BIT(1),
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
--- Thomas
-CREATE TABLE IF NOT EXISTS bookings (
-    id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id             BIGINT NOT NULL,
-    vehicle_number      BIGINT NOT NULL,
-    subscription_name   VARCHAR(255) NOT NULL,
-    pickup_point_name   VARCHAR(255) NOT NULL,
-    delivered_at        DATETIME,
-    updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(subscription_name) REFERENCES subscriptions(name),
-    FOREIGN KEY(pickup_point_name) REFERENCES pickup_points(location_name),
-    FOREIGN KEY(vehicle_number) REFERENCES cars(vehicle_number),
-    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 -- Nicolai (one-to-one, bookings)
 CREATE TABLE IF NOT EXISTS credit_ratings (
@@ -89,11 +73,42 @@ CREATE TABLE IF NOT EXISTS invoice_specifications (
     FOREIGN KEY(booking_id) REFERENCES invoices(booking_id)
 );
 -- Thomas
+CREATE TABLE IF NOT EXISTS address  (
+    id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    street              VARCHAR(255) NOT NULL,
+    city                VARCHAR(255) NOT NULL,
+    zipCode             VARCHAR(255) NOT NULL,
+    country             VARCHAR(255) NOT NULL,
+    updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+INSERT INTO carrental.address (street, city, zipCode, country) VALUES ('Street 1A', 'City A', '42311', 'Denmark');
+INSERT INTO carrental.address (street, city, zipCode, country) VALUES ('Street 1B', 'City B', '32545', 'Denmark');
+INSERT INTO carrental.address (street, city, zipCode, country) VALUES ('Street 1C', 'City C', '14324', 'Denmark');
+INSERT INTO carrental.address (street, city, zipCode, country) VALUES ('Street 1D', 'City D', '53463', 'Denmark');
+
 CREATE TABLE IF NOT EXISTS pickup_points  (
-    location_name       VARCHAR(255) PRIMARY KEY NOT NULL,
-    address             BIGINT,
-    created_at          DATE,
-    updated_at          DATE
+    id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name                VARCHAR(255) NOT NULL,
+    address_id          BIGINT NOT NULL,
+    updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (address_id) REFERENCES address(id)
+);
+-- Thomas
+CREATE TABLE IF NOT EXISTS bookings (
+    id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id             BIGINT NOT NULL,
+    vehicle_number      BIGINT NOT NULL,
+    subscription_name   VARCHAR(255) NOT NULL,
+    pickup_point_id     BIGINT NOT NULL,
+    delivered_at        DATETIME,
+    updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(subscription_name) REFERENCES subscriptions(name),
+    FOREIGN KEY(pickup_point_id) REFERENCES pickup_points(id),
+    FOREIGN KEY(vehicle_number) REFERENCES cars(vehicle_number),
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 -- Mads
 CREATE TABLE IF NOT EXISTS damage_reports (
@@ -105,7 +120,7 @@ CREATE TABLE IF NOT EXISTS damage_reports (
 );
 -- Mads
 CREATE TABLE IF NOT EXISTS damage_specifications (
-    description         VARCHAR(255)    PRIMARY KEY         NOT NULL      UNIQUE,
+    description         VARCHAR(255) PRIMARY KEY,
     damaged             BIT(1),
     price               DOUBLE,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -118,6 +133,6 @@ CREATE TABLE IF NOT EXISTS damage_report_specifications (
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (report_id, spec_description),
-    FOREIGN KEY (report_id) REFERENCES damage_reports(id),
+    FOREIGN KEY (report_id) REFERENCES damage_reports(booking_id),
     FOREIGN KEY (spec_description) REFERENCES damage_specifications(description)
 );

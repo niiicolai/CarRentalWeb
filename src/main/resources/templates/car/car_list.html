@@ -1,11 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-<h1>Car list</h1>
+<body layout:fragment="content">
+<h1>Car list (<a th:href="@{/add-car}">new</a>)</h1>
+    <ul th:each="car: ${cars}">
+        <li>
+            <p>Model: <span th:text="${car.getModel()}" /></p>
+            <a th:href="@{/edit-car/{vehicleNumber}(vehicleNumber = ${car.getVehicleNumber()})}">Edit</a>
+            
+            <div sec:authorize="hasRole('ROLE_CLIENT')" class="d-flex gap-2">
 
+                <div th:if="${creditRating == null || !creditRating.isApproved()}">
+                    <div th:replace="credit_rating/fragments/show.html :: show(${creditRating})" />
+                    <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})" />
+                </div>
+
+                <div th:if="${booking.getId() == 0 && creditRating != null && creditRating.isApproved()}">
+                    <form th:action="@{/bookings/create}" th:object="${booking}" th:method="post">
+                        <input name="vehicleNumber" type="hidden" th:value="${car.getVehicleNumber()}" />
+                        <input name="userId" type="hidden" th:value="${user.getId()}" />
+                        <input name="subscriptionName" type="text" placeholder="subscription name" />
+                        <input name="pickupPointId" type="text" placeholder="pickup point id" />
+                        <button type="submit" class="btn btn-outline-danger mt-2">Book car</button>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ul>
 </body>
 </html>

@@ -6,20 +6,21 @@ public class Booking {
     private long id;
     private long userId;
     private long vehicleNumber;
-    
+    private long pickupPointId;
+
     private String subscriptionName;
-    private String pickupPointName;
+    
 
     private LocalDateTime deliveredAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Booking(long id, long userId, long vehicleNumber, String subscriptionName, String pickupPointName, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Booking(long id, long userId, long vehicleNumber, String subscriptionName, long pickupPointId, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.userId = userId;
         this.vehicleNumber = vehicleNumber;
         this.subscriptionName = subscriptionName;
-        this.pickupPointName = pickupPointName;
+        this.pickupPointId = pickupPointId;
         this.deliveredAt = deliveredAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -40,8 +41,8 @@ public class Booking {
         return vehicleNumber;
     }
 
-    public String getPickupPointName() {
-        return pickupPointName;
+    public long getPickupPointId() {
+        return pickupPointId;
     }
 
     public LocalDateTime getDeliveredAt() {
@@ -72,8 +73,8 @@ public class Booking {
         this.subscriptionName = subscriptionName;
     }
 
-    public void setPickupPointName(String pickupPointName) {
-        this.pickupPointName = pickupPointName;
+    public void setPickupPointId(long pickupPointId) {
+        this.pickupPointId = pickupPointId;
     }
 
     public void setDeliveredAt(LocalDateTime deliveredAt) {

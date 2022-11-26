@@ -43,9 +43,9 @@ public class UserRepository {
 
         DatabaseRequestBody userRequestbody = new DatabaseRequestBody(user.getUsername(), user.getPassword(), 
             user.getEmail(), true, true, true, true);
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(userSql, userRequestbody);
         DatabaseRequestBody roleRequestbody = new DatabaseRequestBody("CLIENT", last().getId());
         
-        DatabaseResponse databaseResponse = databaseService.executeUpdate(userSql, userRequestbody);
         databaseService.executeUpdate(roleSql, roleRequestbody);
 
         return databaseResponse.isSuccessful();
