@@ -23,7 +23,7 @@ public class SecurityConfig {
 
     /* Client properties */
     private static final String CLIENT_ROLE = "CLIENT";
-    private static final String[] CLIENT_PATHS = {"/user"};
+    private static final String[] CLIENT_PATHS = {"/user", "/credit/rating"};
 
     /* Employee properties */
     private static final String EMPLOYEE_ROLE = "EMPLOYEE";

@@ -27,12 +27,19 @@ public class CreditRatingRepository {
         String sql = String.format("SELECT * FROM credit_ratings WHERE %s=?", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
     }
     
     public boolean insert(CreditRating creditRating) {
-        String sql = "INSERT INTO credit_ratings (state, booking_id) (?, ?)";
-        DatabaseRequestBody body = new DatabaseRequestBody(creditRating.getState(), creditRating.getBookingId());
+        String sql = "INSERT INTO credit_ratings (state, user_id) VALUES (?, ?)";        
+        DatabaseRequestBody body = new DatabaseRequestBody(creditRating.getState().name(), creditRating.getUserId());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
+        return databaseResponse.isSuccessful();
+    }
+
+    public boolean update(CreditRating creditRating) {
+        String sql = "UPDATE credit_ratings SET state = ? WHERE user_id = ?";
+        DatabaseRequestBody body = new DatabaseRequestBody(creditRating.getState().name(), creditRating.getUserId());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         return databaseResponse.isSuccessful();
     }
@@ -40,18 +47,24 @@ public class CreditRatingRepository {
     public CreditRating last() {
         String sql = "SELECT * FROM credit_ratings ORDER BY created_at DESC LIMIT 1";        
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
+    }
+
+    private CreditRating parseResponseFirst(DatabaseResponse databaseResponse) {
+        List<CreditRating> creditRatings = parseResponse(databaseResponse);
+        if (creditRatings.size() == 0) return null;
+        else return creditRatings.get(0);
     }
 
     private List<CreditRating> parseResponse(DatabaseResponse databaseResponse) {
         List<CreditRating> creditRatings = new LinkedList<CreditRating>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
-
+            
             creditRatings.add(
                 new CreditRating(
-                    (CreditRatingState) record.map().get("state"),
-                    (Long) record.map().get("booking_id")
+                    CreditRatingState.valueOf((String) record.map().get("state")),
+                    (Long) record.map().get("user_id")
                 )
             );
         }

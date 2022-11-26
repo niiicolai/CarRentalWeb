@@ -9,6 +9,9 @@
             <a class="navbar-link btn btn-outline-secondary btn-sm" href="/user/edit">
                 Edit Profile
             </a>
+
+            <div th:replace="credit_rating/fragments/show.html :: show(${creditRating})" />
+            <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})" />
         </div>
     </body>
 </html>
