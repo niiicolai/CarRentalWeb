@@ -2,6 +2,8 @@ package carrental.carrentalweb.services;
 
 import java.sql.Connection;
 import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import carrental.carrentalweb.records.DatabaseRecord;
@@ -12,6 +14,8 @@ import java.sql.*;
 @Service
 public class DatabaseService {
 
+    private Connection connection;
+
     @Value("${db.url}")
     private String url;
 
@@ -21,7 +25,14 @@ public class DatabaseService {
     @Value("${db.password}")
     private String password;
 
-    private Connection connection;
+    public DatabaseService () {
+    }
+
+    public DatabaseService (String url, String username, String password) {
+        this.url = url;
+        this.username = username;
+        this.password = password;
+    }
 
     public Connection getConnection() throws SQLException {
         if (connection == null)
@@ -81,4 +92,6 @@ public class DatabaseService {
             response.add(new DatabaseRecord(recordValues));
         }
     }
+
+    public String getUrl() {return url;}
 }
