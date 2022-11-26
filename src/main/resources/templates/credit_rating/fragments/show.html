@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h5>Credit Rating:</h5>
+        <p th:text="${creditRating.getState()}" />
+    </body>
+</html>
+
+<div th:fragment="show(creditRating)" xmlns:th="http://www.thymeleaf.org" class="mt-3">
+    <h5>Credit Rating:</h5>
+    <div th:if="${creditRating == null}">
+        <p>You have no credit rating yet.</p>
+    </div>
+    <div th:if="${creditRating != null}">
+        <p th:text="${creditRating.getState()}" />
+    </div>
+</div>

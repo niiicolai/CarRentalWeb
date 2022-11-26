@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import carrental.carrentalweb.entities.User;
+import carrental.carrentalweb.repository.CreditRatingRepository;
 import carrental.carrentalweb.repository.UserRepository;
 
 /*
@@ -25,10 +26,14 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CreditRatingRepository creditRatingRepository;
+
     @GetMapping("/user")
     public String show(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("user", userRepository.find("id", user.getId()));
-		return "user/show";
+        model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
+        return "user/show";
     }
 
     @GetMapping("/user/edit")

@@ -64,11 +64,11 @@ CREATE TABLE IF NOT EXISTS bookings (
 );
 -- Nicolai (one-to-one, bookings)
 CREATE TABLE IF NOT EXISTS credit_ratings (
-    booking_id          BIGINT PRIMARY KEY,
+    user_id          	BIGINT PRIMARY KEY,
     state               VARCHAR(255) NOT NULL,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(booking_id) REFERENCES bookings(id)
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 -- Nicolai (one-to-one, bookings)
 CREATE TABLE IF NOT EXISTS invoices (

@@ -45,10 +45,10 @@ public class UserRepository {
             user.getEmail(), true, true, true, true);
         DatabaseRequestBody roleRequestbody = new DatabaseRequestBody("CLIENT", last().getId());
         
-        databaseService.executeUpdate(userSql, userRequestbody);
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(userSql, userRequestbody);
         databaseService.executeUpdate(roleSql, roleRequestbody);
 
-        return true;
+        return databaseResponse.isSuccessful();
     }
 
     public boolean update(User user) {
@@ -58,9 +58,9 @@ public class UserRepository {
          */        
         String sql = "UPDATE users SET username = ?, email = ? WHERE id = ?";
         DatabaseRequestBody body = new DatabaseRequestBody(user.getUsername(), user.getEmail(), user.getId());
-        databaseService.executeUpdate(sql, body);
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         
-        return true;
+        return databaseResponse.isSuccessful();
     }
 
     /* 
@@ -74,17 +74,17 @@ public class UserRepository {
 
         String sql = "UPDATE users SET password = ? WHERE id = ?";
         DatabaseRequestBody body = new DatabaseRequestBody(user.getPassword(), user.getId());
-        databaseService.executeUpdate(sql, body);
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         
-        return true;
+        return databaseResponse.isSuccessful();
     }
 
     public boolean disable(User user) {
         String sql = "UPDATE users SET enabled = 0 WHERE id = ?";
         DatabaseRequestBody body = new DatabaseRequestBody(user.getId());
-        databaseService.executeUpdate(sql, body);
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         
-        return true;
+        return databaseResponse.isSuccessful();
     }
 
     public User last() {

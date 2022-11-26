@@ -10,19 +10,19 @@ import carrental.carrentalweb.enums.CreditRatingState;
 
 public class CreditRating {
     
-    private long bookingId;
+    private long userId;
     private CreditRatingState state;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
-    public CreditRating(CreditRatingState state, long bookingId) {
+    public CreditRating(CreditRatingState state, long userId) {
         this.state = state;
-        this.bookingId = bookingId;
+        this.userId = userId;
     }
 
-    public CreditRating(CreditRatingState state, long bookingId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public CreditRating(CreditRatingState state, long userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.state = state;
-        this.bookingId = bookingId;
+        this.userId = userId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -35,12 +35,12 @@ public class CreditRating {
         return state;
     }
 
-    public void setBookingId(long bookingId) {
-        this.bookingId = bookingId;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public long getBookingId() {
-        return bookingId;
+    public long getUserId() {
+        return userId;
     }
 
     public LocalDateTime getCreatedAt() {
