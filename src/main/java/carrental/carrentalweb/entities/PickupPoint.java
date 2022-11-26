@@ -3,26 +3,22 @@ package carrental.carrentalweb.entities;
 import java.time.LocalDateTime;
 
 public class PickupPoint {
+  private long id;
   private String name;
-  private Address address;
+  private long addressId;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
-  public PickupPoint(String name, Address address, LocalDateTime createdAt, LocalDateTime updatedAt) {
+  public PickupPoint(long id, String name, long addressId) {
+    this.id = id;
     this.name = name;
-    this.address = address;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+    this.addressId = addressId;
   }
 
-  public PickupPoint(String name, Address address, LocalDateTime createdAt) {
+  public PickupPoint(long id, String name, long addressId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    this.id = id;
     this.name = name;
-    this.address = address;
-    this.createdAt = createdAt;
-  }
-
-  public PickupPoint(Address address, LocalDateTime createdAt, LocalDateTime updatedAt) {
-    this.address = address;
+    this.addressId = addressId;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -38,12 +34,20 @@ public class PickupPoint {
     this.name = name;
   }
 
-  public Address getAddress() {
-    return address;
+  public void setId(long id) {
+    this.id = id;
   }
 
-  public void setAddress(Address address) {
-    this.address = address;
+  public long getId() {
+    return id;
+  }
+
+  public long getAddressId() {
+    return addressId;
+  }
+
+  public void setAddressId(long addressId) {
+    this.addressId = addressId;
   }
 
   public LocalDateTime getCreatedAt() {

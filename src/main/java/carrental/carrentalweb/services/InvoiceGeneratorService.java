@@ -12,7 +12,8 @@ import carrental.carrentalweb.records.InvoiceRecord;
 public class InvoiceGeneratorService {
     
     public InvoiceRecord generate(Booking booking, Subscription subscription) {
-        LocalDateTime due = LocalDateTime.now().plusDays(subscription.getDays());
+        long days = (long) subscription.getDays();
+        LocalDateTime due = LocalDateTime.now().plusDays(days);
         long bookingId = booking.getId();
 
         /* Build invoice */

@@ -23,7 +23,7 @@ public class SecurityConfig {
 
     /* Client properties */
     private static final String CLIENT_ROLE = "CLIENT";
-    private static final String[] CLIENT_PATHS = {"/user", "/credit/rating"};
+    private static final String[] CLIENT_PATHS = {"/user", "/credit/rating", "/pickuppoints**"};
 
     /* Employee properties */
     private static final String EMPLOYEE_ROLE = "EMPLOYEE";
@@ -57,7 +57,6 @@ public class SecurityConfig {
                 .permitAll()
             .and()
                 .authorizeRequests()           
-                .antMatchers(EMPLOYEE_PATHS).hasRole(EMPLOYEE_ROLE)
                 .antMatchers(CLIENT_PATHS).hasRole(CLIENT_ROLE)
                 .anyRequest()
                 .authenticated()

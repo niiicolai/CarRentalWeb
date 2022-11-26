@@ -1,26 +1,21 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout}">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/layout/layout}">
 <head></head>
 <body layout:fragment="content">
-<h3>List of bookings</h3>
-<tr th:each="b : ${bookinglist}">
-    <td th:text="${b.car.model}"></td>
-    <td th:text="${b.subscriptionName}"></td>
-    <td th:text="${b.deliveredAt}"></td>
-    <td th:text="${b.createdAt}"></td>
-</tr>
+    <h3>List of bookings</h3>
+    <ul th:each="b : ${bookinglist}">
+        <li>
+            <p th:text="${b.getId()}"></p>
+            <p th:text="${b.getSubscriptionName()}"></p>
+            <p th:text="${b.getPickupPointId()}"></p>
+            <p th:text="${b.getVehicleNumber()}"></p>
+            <p th:text="${b.getUserId()}"></p>
+            <p th:text="${b.getDeliveredAt()}"></p>
+            <p th:text="${b.getCreatedAt()}"></p>
+            <p th:text="${b.getUpdatedAt()}"></p>
+        </li>
+    </ul>
 </body>
 </html>
-
-private long id;
-
-private User user;
-private Car car;
-private String subscriptionName;
-private CreditRating creditRating;
-private PickupPoint pickupPoint;
-private DamageReport damageReport;
-private LocalDateTime deliveredAt;
-private LocalDateTime createdAt;
-private LocalDateTime updatedAt;

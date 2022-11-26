@@ -9,43 +9,39 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class PickupPointController {
 
-  private final PickupPointRepository ppRepo;
+	private final PickupPointRepository ppRepo;
 
-  public PickupPointController(PickupPointRepository ppRepo) {
-    this.ppRepo = ppRepo;
-  }
+	public PickupPointController(PickupPointRepository ppRepo) {
+		this.ppRepo = ppRepo;
+	}
 
+	@GetMapping("/pickups")
+	public String index(Model model) {
+		model.addAttribute("pickupPoints", ppRepo.getPickupPointsList());
+		return "pickups/index";
+	}
 
-  @GetMapping("pickuppoints/index")
-  public String index(Model model){
-    model.addAttribute("pickuppoints", ppRepo.getPickupPointsList());
-    return "pickuppoints/index";
-  }
+	@GetMapping("/pickups/create")
+	public String newPickupPoint(Model model) {
+		model.addAttribute("pickupPoint", new PickupPoint());
+		return "pickups/create";
+	}
 
-  @GetMapping("pickuppoints/create")
-  public String newPickupPoint(Model model){
-    model.addAttribute("pickupPoint", new PickupPoint());
-    return "pickupoints/create";
-  }
+	@PostMapping("/pickups/create")
+	public String createPickupPoint(PickupPoint pickupPoint) {
+		ppRepo.createPickupPoint(pickupPoint);
+		return "redirect:/pickups";
+	}
 
+	@GetMapping("/pickups/edit/{id}")
+	public String updatePickupPoint(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("pickupPoint", ppRepo.findPickupPointById(id));
+		return "pickups/edit";
+	}
 
-  @PostMapping("pickuppoints/create")
-  public String createPickupPoint(PickupPoint pickupPoint){
-    ppRepo.createPickupPoint(pickupPoint);
-    return "redirect:pickuppoints/index";
-
-  }
-
-  @GetMapping("pickuppoints/edit{id}")
-  public String updatePickupPoint(Model model, @RequestParam("name") String name){
-    model.addAttribute("pickupPoint", ppRepo.findPickupPointByName(name));
-    return "pickupoints/edit";
-  }
-
-  @PatchMapping("pickuppoints/edit")
-  public String editPickupPoint(PickupPoint pickupPoint){
-    ppRepo.updatePickupPoint(pickupPoint);
-    return "redirect:pickuppoints/index";
-  }
-
+	@PatchMapping("/pickups/edit")
+	public String editPickupPoint(PickupPoint pickupPoint) {
+		ppRepo.updatePickupPoint(pickupPoint);
+		return "redirect:/pickups";
+	}
 }

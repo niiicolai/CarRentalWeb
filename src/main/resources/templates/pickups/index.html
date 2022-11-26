@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body layout:fragment="content">
+    <h1>Pickups (<a th:href="@{/pickups/create}">new</a>)</h1>
+    <ul th:each="pickupPoint: ${pickupPoints}">
+        <li>
+            <p>Name: <span th:text="${pickupPoint.getName()}" /></p>
+            <p>Address id: <span th:text="${pickupPoint.getAddressId()}" /></p>
+            <a th:href="@{/pickups/edit/{id}(id = ${pickupPoint.getId()})}">Edit</a>
+        </li>
+    </ul>
+</body>
+</html>
