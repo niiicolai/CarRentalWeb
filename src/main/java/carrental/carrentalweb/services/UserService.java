@@ -1,7 +1,5 @@
 package carrental.carrentalweb.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import carrental.carrentalweb.entities.User;
@@ -16,11 +14,17 @@ public class UserService implements UserDetailsService {
 
     private static final String USERNAME_COLUMN = "username";
 
-    @Autowired
     private UserRepository userRepository;
 
+    public UserService () {
+    }
+
+    public UserService (UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.find(USERNAME_COLUMN, username);
         if (user == null)
             throw new UsernameNotFoundException(username);

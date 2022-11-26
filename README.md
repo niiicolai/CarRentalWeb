@@ -5,3 +5,9 @@
 ```
  $ mvn spring-boot:run
 ```
+
+# Run test
+
+```
+$ mvn test
+```
