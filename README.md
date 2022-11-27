@@ -4,7 +4,7 @@ A sample project of a Car Rental web application.
 # Getting Started
 
 ## How to start application
-Move to the folder containing the project's pom.xml file, and enter the following into a terminal:
+`cd` into the folder containing the project's `pom.xml` file, and enter the following into a terminal:
 ```
  $ mvn spring-boot:run
 ```
@@ -13,16 +13,16 @@ Move to the folder containing the project's pom.xml file, and enter the followin
 Tests can be found at [test/java/carrental/carrentalweb](https://github.com/niiicolai/CarRentalWeb/tree/main/src/test/java/carrental/carrentalweb).
 
 ## Test Database
-The test environment is designed to used a seperate version of the original database. The configuration can be found at [DatabaseParameterResolver.java](https://github.com/niiicolai/CarRentalWeb/blob/main/src/test/java/carrental/carrentalweb/parameter_resolvers/DatabaseParameterResolver.java#L28-L32).
+The test environment is designed to use a seperate version of the original database. The configuration can be found at [DatabaseParameterResolver.java](https://github.com/niiicolai/CarRentalWeb/blob/main/src/test/java/carrental/carrentalweb/parameter_resolvers/DatabaseParameterResolver.java#L28-L32).
 
 ## Entity Factories
 Find factory methods to create test data at [entity_factories](https://github.com/niiicolai/CarRentalWeb/tree/main/src/test/java/carrental/carrentalweb/entity_factories).
 
 ## Parameter Resolver
-Parameter resolvers can be used to defined instances of objects that Spring Boot should inject into test methods.
+Parameter resolvers can be used to define instances of objects that Spring Boot should inject into test methods.
 
 ## How to execute tests
-Move to the folder containing the project's pom.xml file, and enter the following into a terminal:
+`cd` into the folder containing the project's `pom.xml` file, and enter the following into a terminal:
 ```
 $ mvn test
 ```
