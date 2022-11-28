@@ -73,7 +73,7 @@ class PickupPointRepositoryTest {
     // Create test pickup
     pickupPointRepository.createPickupPoint(TestPickupPointFactory.create(1));
     lastInsertedPickupPoint = pickupPointRepository.last();
-    lastInsertedPickupPoint.setAddressId();
+    //lastInsertedPickupPoint.setAddressId();
   }
 
   @AfterAll

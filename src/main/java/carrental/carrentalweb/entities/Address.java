@@ -31,6 +31,14 @@ public class Address {
     this.updatedAt = updatedAt;
   }
 
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
   public Address(String street, String city, String zipCode, String country, LocalDateTime createdAt) {
     this.street = street;
     this.city = city;
