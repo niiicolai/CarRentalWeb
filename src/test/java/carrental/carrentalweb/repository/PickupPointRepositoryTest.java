@@ -118,34 +118,6 @@ class PickupPointRepositoryTest {
     @Test
     void last() {
     }
-
-
-    /*
-       * A user used created by the test user factory.
-       * Its id is therefore equal to 0.
-       * 'lastInsertedUser' is the database version
-       * of the 'testUser' variable.
-       *
-       * It is different from the database version
-       * because it is used to test against the
-       * values of the database version.
-       /
-      private static PickupPoint testPickupPoint;
-
-      /
-       * The database version of the
-       * 'testPoint' variable.
-       /
-      private static PickupPoint lastInsertedPoint;
-
-      /
-       * The repository that is being tested.
-       /
-      private static PickupPointRepository repository;
-
-      /
-       * The database service connected to
-       * a seperate test database version of the
-       * original database.
-       */
+*/
 }
+
