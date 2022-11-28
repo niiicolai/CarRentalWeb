@@ -16,7 +16,7 @@ public class AddressController {
     this.ar = ar;
   }
 
-  @GetMapping("/bookings")
+  @GetMapping("/address")
   public String index(Model model){
 
     model.addAttribute("addresslist", ar.getAddressList());
@@ -24,7 +24,7 @@ public class AddressController {
     return "address/index";
   }
 
-  @GetMapping("/bookings/create")
+  @GetMapping("/address/create")
   public String showCreate(Model model){
     model.addAttribute("address", new Address());
     return "address/create";
