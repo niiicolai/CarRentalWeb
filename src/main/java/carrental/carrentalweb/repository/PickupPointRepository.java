@@ -1,7 +1,9 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.Address;
+import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.PickupPoint;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +11,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,8 +27,18 @@ public class PickupPointRepository {
 		this.databaseService = databaseService;
 	}
 
-	public void createPickupPoint(PickupPoint newPickupPoint) {
-		try {
+	public boolean createPickupPoint(PickupPoint newPickupPoint) {
+		String query = "INSERT INTO pickup_points (name, address_id, created_at, updated_at) VALUES (?, ?, ?, ?)";
+
+		DatabaseRequestBody requestBody = new DatabaseRequestBody(
+				newPickupPoint.getName(),
+				newPickupPoint.getAddressId(),
+				newPickupPoint.getCreatedAt(),
+				newPickupPoint.getUpdatedAt());
+
+		DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
+		return databaseResponse.isSuccessful();
+		/*try {
 		Connection conn = databaseService.getConnection();
 		String query = "INSERT INTO pickup_points (name, address_id) VALUES (?, ?)";
 		PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -33,10 +49,14 @@ public class PickupPointRepository {
 		preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 		e.printStackTrace();
-		}
+		}*/
 	}
 
 	public List<PickupPoint> getPickupPointsList() {
+		String query = "SELECT * FROM pickup_points";
+		DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
+		return parseResponse(databaseResponse);
+		/*
 		List<PickupPoint> pickupPoints = new ArrayList<>();
 		try {
 		Connection conn = databaseService.getConnection();
@@ -58,10 +78,15 @@ public class PickupPointRepository {
 		} catch (SQLException e) {
 		e.printStackTrace();
 		}
-		return pickupPoints;
+		return pickupPoints;*/
 	}
 
-	public PickupPoint findPickupPointById(long id) {
+	public PickupPoint findPickupPointById(Long id) {
+		String sql = "SELECT * FROM pickup_points WHERE id= ?";
+		DatabaseRequestBody body = new DatabaseRequestBody(id);
+		DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+		return parseResponseFirst(databaseResponse);
+		/*
 		PickupPoint pickupPoint = new PickupPoint();
 
 		try {
@@ -83,7 +108,7 @@ public class PickupPointRepository {
 		} catch (SQLException e) {
 		e.printStackTrace();
 		}
-		return pickupPoint;
+		return pickupPoint;*/
 	}
 
 	public void updatePickupPoint(PickupPoint pickupPoint) {
@@ -139,4 +164,29 @@ public class PickupPointRepository {
 
 		return pickup;
     }
+
+	public PickupPoint parseResponseFirst(DatabaseResponse databaseResponse) {
+		List<PickupPoint> pickupPoints = parseResponse(databaseResponse);
+		if (pickupPoints.size() == 0) return null;
+		else return pickupPoints.get(0);
+	}
+
+	private List<PickupPoint> parseResponse(DatabaseResponse databaseResponse) {
+		List<PickupPoint> pickuppoints = new LinkedList<PickupPoint>();
+		while (databaseResponse.hasNext()) {
+			DatabaseRecord record = databaseResponse.next();
+
+			pickuppoints.add(
+					new PickupPoint(
+							(Long) record.map().get("id"),
+							(String) record.map().get("name"),
+							(long) record.map().get("address_id"),
+							(LocalDateTime) record.map().get("created_at"),
+							(LocalDateTime) record.map().get("updated_at")
+
+			));
+		}
+
+		return pickuppoints;
+	}
 }
