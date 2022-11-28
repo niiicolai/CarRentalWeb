@@ -22,7 +22,6 @@ import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.services.UserService;
 
 /*
- * @SpringBootTest
  * Define the class as Test class.
  * 
  * @ExtendWith(DatabaseParameterResolver.class)
@@ -32,7 +31,6 @@ import carrental.carrentalweb.services.UserService;
  * Enable's the @Order(int) annotation allowing
  * to set the order the tests should be executed in.
  */
-@SpringBootTest
 @ExtendWith(DatabaseParameterResolver.class)
 @TestMethodOrder(OrderAnnotation.class)
 public class UserServiceTest {
