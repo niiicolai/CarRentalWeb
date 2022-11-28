@@ -17,42 +17,41 @@ public class CarController {
     CarRepository carRepository;
 
     @GetMapping("/cars")
-    public String cars(Model model){
+    public String cars(Model model) {
         model.addAttribute("cars", carRepository.getAllCars());
         return "car/car_list";
     }
 
     @GetMapping("/add-car")
-    public String addCarGet(Model model){
+    public String addCarGet(Model model) {
         model.addAttribute("car", new Car());
         return "car/add_car";
     }
 
     @PostMapping("/add-car")
-    public String addCarPost(@ModelAttribute("car") Car newCar){
+    public String addCarPost(@ModelAttribute("car") Car newCar) {
         carRepository.createCar(newCar);
         return "redirect:/add-car?success";
     }
 
     @GetMapping("/edit-car")
-    public String updateCarGet(@PathVariable("vehicle-number") long vehicleNumber, Model model){
+    public String updateCarGet(@PathVariable("vehicle-number") long vehicleNumber, Model model) {
         model.addAttribute("cars", carRepository.findCarByVehicleNumber(vehicleNumber));
         return "car/edit-car";
     }
 
     @RequestMapping(value = "/edit-car/{vehicle-number}", method = RequestMethod.PUT)
-    public void updateCarPost(@PathVariable("vehicle-number") long vehicleNumber){
-        if (carRepository.findCarByVehicleNumber(vehicleNumber) != null){
+    public void updateCarPost(@PathVariable("vehicle-number") long vehicleNumber) {
+        if (carRepository.findCarByVehicleNumber(vehicleNumber) != null) {
             Car car = carRepository.findCarByVehicleNumber(vehicleNumber);
             carRepository.updateCar(car);
         }
     }
 
     @DeleteMapping(value = "/delete-car/{vehicle-number}")
-    public void deleteCar(@PathVariable("vehicle-number") long vehicleNumber){
-        if (carRepository.findCarByVehicleNumber(vehicleNumber) != null){
-            carRepository.deleteCarByVehicleNumber(vehicleNumber);
-        }
+    public String deleteCarPost(@PathVariable("vehicle-number") long vehicleNumber) {
+        carRepository.deleteCarByVehicleNumber(vehicleNumber);
+        System.out.println("Deleted car");
+        return "redirect:/delete_car?success";
     }
-
 }

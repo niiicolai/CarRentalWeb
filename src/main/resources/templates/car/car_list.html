@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1>Car list</h1>
+<table>
+    <thead>
+    <tr>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${cars.empty}">
+        <td colspan="2">No cars available</td>
+    </tr>
+    </tbody>
+    <tr th:each="car : ${cars}">
+        <td th:text="${message.vehicleNumber}">Vehicle Number</td>
+        <td th:text="${message.frameNumber}">Frame Number</td>
+    </tr>
+
+
+</table>
 
 </body>
 </html>
