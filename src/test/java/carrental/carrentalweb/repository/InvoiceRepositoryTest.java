@@ -32,6 +32,7 @@ import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 
+
 /*
  * @SpringBootTest
  * Define the class as Test class.
