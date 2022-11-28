@@ -31,7 +31,7 @@ public class InvoicePDFService {
         try {
             String invoiceTitle = String.format("Faktura", invoice.getBookingId());
             String companyInformation = String.format("%s\n%s\n%s\n%s", companyName, companyStreet, companyCity, companyCountry);
-            String invoiceMeta = String.format("Faktura Nr.\n%s\n\nDato\n%s\n\nBetalingsdato\n%s", invoice.getCreatedAt(), invoice.getCreatedAt(), invoice.getDue());
+            String invoiceMeta = String.format("Faktura Nr.\n%s\n\nDato\n%s\n\nBetalingsdato\n%s", invoice.getCreatedAt(), invoice.getCreatedAt(), invoice.getDueDate());
 
             builder = PDFBuilder.create("faktura.pdf", PageSize.A4);
 

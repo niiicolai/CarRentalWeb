@@ -96,11 +96,7 @@ public class BookingRepository {
     String sql = String.format("SELECT * FROM bookings WHERE %s=?", column);
     DatabaseRequestBody body = new DatabaseRequestBody(value);
     DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
-    List<Booking> bookings = parseResponse(databaseResponse);
-    if (bookings.size() == 0)
-      return null;
-    else
-      return bookings.get(0);
+    return parseResponseFirst(databaseResponse);
 }
 
   public Booking findBookingId(Long id) {
@@ -109,7 +105,7 @@ public class BookingRepository {
     DatabaseRequestBody requestBody = new DatabaseRequestBody(id);
     DatabaseResponse databaseResponse = databaseService.executeQuery(sql, requestBody);
 
-    return parseResponse(databaseResponse).get(0);
+    return parseResponseFirst(databaseResponse);
 
     //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
 /*
@@ -172,9 +168,24 @@ public class BookingRepository {
  */
   }
 
-  public Booking last() {
-    return null;
+  public boolean delete(Booking booking) {
+    String query = String.format("DELETE FROM bookings WHERE id = ?");
+    DatabaseRequestBody requestBody = new DatabaseRequestBody(booking.getId());
+    DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
+    return databaseResponse.isSuccessful();
   }
+
+  public Booking last() {
+      String sql = "SELECT * FROM bookings ORDER BY created_at DESC LIMIT 1";
+      DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+      return parseResponseFirst(databaseResponse);
+  }
+
+  public Booking parseResponseFirst(DatabaseResponse databaseResponse) {
+    List<Booking> bookings = parseResponse(databaseResponse);
+    if (bookings.size() == 0) return null;
+    else return bookings.get(0);
+}
 
   private List<Booking> parseResponse(DatabaseResponse databaseResponse) {
     List<Booking> bookings = new LinkedList<Booking>();

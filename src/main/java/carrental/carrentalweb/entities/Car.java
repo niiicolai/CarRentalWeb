@@ -13,7 +13,6 @@ public class Car {
     private double registrationFee;
     private double co2Discharge;
     private boolean inspected;
-    private long bookingId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -32,7 +31,7 @@ public class Car {
 
     public Car(){}
 
-    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, long bookingId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.vehicleNumber = vehicleNumber;
         this.frameNumber = frameNumber;
         this.brand = brand;
@@ -43,7 +42,6 @@ public class Car {
         this.registrationFee = registrationFee;
         this.co2Discharge = co2Discharge;
         this.inspected = inspected;
-        this.bookingId = bookingId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -54,14 +52,6 @@ public class Car {
 
     public void setInspected(boolean inspected){
         this.inspected = inspected;
-    }
-
-    public long getBookingId(){
-        return this.bookingId;
-    }
-
-    public void setBookingId(long bookingId){
-        this.bookingId = bookingId;
     }
 
     public long getVehicleNumber() {
@@ -170,7 +160,6 @@ public class Car {
                 ", Registration-fee: " + registrationFee +
                 ", Co2-fischarge: " + co2Discharge + "\n" +
                 ", Inspected: " + inspectedYN +
-                ", Booking id: " + bookingId +
                 ", Created at: " + createdAt +
                 ", Updated at: " + updatedAt;
     }

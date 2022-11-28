@@ -27,31 +27,46 @@ public class InvoiceRepository {
         String sql = String.format("SELECT * FROM invoices WHERE %s=?", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
     }
     
     public boolean insert(Invoice invoice) {
-        String sql = "INSERT INTO invoices (booking_id, due, paid_at) (?, ?, ?)";
-        DatabaseRequestBody body = new DatabaseRequestBody(invoice.getBookingId(), invoice.getDue(), invoice.getPaidAt());
+        String sql = "INSERT INTO invoices (booking_id, due_date, paid_at) VALUES (?, ?, ?)";
+        DatabaseRequestBody body = new DatabaseRequestBody(invoice.getBookingId(), invoice.getDueDate(), invoice.getPaidAt());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         return databaseResponse.isSuccessful();
     }
 
     public Invoice last() {
-        String sql = "SELECT * FROM invoices ORDER BY created_at DESC LIMIT 1";
+        String sql = "SELECT * FROM invoices ORDER BY id DESC LIMIT 1";
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
     }
 
-    private List<Invoice> parseResponse(DatabaseResponse databaseResponse) {
+    public boolean delete(Invoice invoice) {
+        String sql = "DELETE FROM invoices WHERE id = ?";
+        DatabaseRequestBody requestBody = new DatabaseRequestBody(invoice.getId());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
+        
+        return databaseResponse.isSuccessful();
+    }
+
+    public Invoice parseResponseFirst(DatabaseResponse databaseResponse) {
+        List<Invoice> invoices = parseResponse(databaseResponse);
+        if (invoices.size() == 0) return null;
+        else return invoices.get(0);
+    }
+
+    public List<Invoice> parseResponse(DatabaseResponse databaseResponse) {
         List<Invoice> invoices = new LinkedList<Invoice>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
 
             invoices.add(
                 new Invoice(
+                    (long) record.map().get("id"),
                     (long) record.map().get("booking_id"),
-                    (LocalDateTime) record.map().get("due"),
+                    (LocalDateTime) record.map().get("due_date"),
                     (LocalDateTime) record.map().get("paid_at")
                 )
             );
@@ -59,4 +74,6 @@ public class InvoiceRepository {
 
         return invoices;
     }
+
+    
 }

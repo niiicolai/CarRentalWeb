@@ -100,4 +100,43 @@ public class PickupPointRepository {
 		e.printStackTrace();
 		}
 	}
+
+	public void delete(PickupPoint pickupPoint) {
+		try {
+			Connection conn = databaseService.getConnection();
+			String query = "DELETE FROM pickup_points WHERE id = ?";
+			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setObject(1, pickupPoint.getId());
+			System.out.println(preparedStatement);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public PickupPoint last() {
+		PickupPoint pickup = null;
+
+		try {
+			Connection conn = databaseService.getConnection();
+			String query = "SELECT * FROM pickup_points ORDER BY created_at DESC LIMIT 1";
+			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				long id = resultSet.getLong("id");
+				String name = resultSet.getString("name");
+				long addressId = resultSet.getLong("address_id");
+				LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
+				LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
+
+				pickup = new PickupPoint(id, name, addressId, createdAt, updatedAt);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return pickup;
+    }
 }
