@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-@SpringBootTest
 @ExtendWith(DatabaseParameterResolver.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 

@@ -30,7 +30,8 @@ public class AddressController {
     return "address/create";
   }
 
-  @PostMapping("/bookings/create")
+  //Added extra e to resolve conflict
+  @PostMapping("/bookings/createe")
   public String create(Address address) {
     ar.createAddress(address);
     return "redirect:/address";
