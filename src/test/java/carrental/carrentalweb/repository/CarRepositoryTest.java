@@ -1,34 +1,14 @@
 package carrental.carrentalweb.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.LinkedList;
-import java.util.List;
-
 import carrental.carrentalweb.entities.Car;
-import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.entity_factories.TestCarFactory;
-import carrental.carrentalweb.entity_factories.TestCreditRatingFactory;
-import carrental.carrentalweb.enums.CreditRatingState;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import carrental.carrentalweb.entities.User;
-import carrental.carrentalweb.entity_factories.TestUserFactory;
 import carrental.carrentalweb.parameter_resolvers.DatabaseParameterResolver;
-import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
-import carrental.carrentalweb.utilities.DatabaseResponse;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(DatabaseParameterResolver.class)
@@ -40,13 +20,9 @@ public class CarRepositoryTest {
 
     private static CarRepository carRepository;
 
-    private static DatabaseService database;
-
-
 
     @BeforeAll
     public static void init(DatabaseService databaseService){
-        database = databaseService;
 
         carRepository = new CarRepository(databaseService);
     }
@@ -124,20 +100,14 @@ public class CarRepositoryTest {
         assertNotEquals(lastInsertedCar.getInspected(), updatedCar.getInspected(), "inspected must not be equal");
 
     }
-
-    /*
     @Test
     @Order(4)
     public void testDelete_SavesToDatabase() {
         // Act
-        creditRatingRepository.delete(lastInsertedCreditRating);
-        CreditRating creditRating = creditRatingRepository.find("user_id", lastInsertedCreditRating.getUserId());
+        carRepository.deleteCarByVehicleNumber(lastInsertedCar.getVehicleNumber());
+        Car car = carRepository.findCarByVehicleNumber(lastInsertedCar.getVehicleNumber());
 
         // Assert
-        assertEquals(null, creditRating, "creditRating must be null");
+        assertNotNull(car, "Car must be null");
     }
-
-     */
-
-
 }
