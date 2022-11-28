@@ -1,9 +1,5 @@
 package carrental.carrentalweb.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
@@ -29,6 +25,8 @@ import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(DatabaseParameterResolver.class)
@@ -124,20 +122,14 @@ public class CarRepositoryTest {
         assertNotEquals(lastInsertedCar.getInspected(), updatedCar.getInspected(), "inspected must not be equal");
 
     }
-
-    /*
     @Test
     @Order(4)
     public void testDelete_SavesToDatabase() {
         // Act
-        creditRatingRepository.delete(lastInsertedCreditRating);
-        CreditRating creditRating = creditRatingRepository.find("user_id", lastInsertedCreditRating.getUserId());
+        carRepository.deleteCarByVehicleNumber(lastInsertedCar.getVehicleNumber());
+        Car car = carRepository.findCarByVehicleNumber(lastInsertedCar.getVehicleNumber());
 
         // Assert
-        assertEquals(null, creditRating, "creditRating must be null");
+        assertNotNull(car, "Car must be null");
     }
-
-     */
-
-
 }
