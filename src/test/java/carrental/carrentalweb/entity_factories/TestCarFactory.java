@@ -1,6 +1,8 @@
 package carrental.carrentalweb.entity_factories;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 import carrental.carrentalweb.builder.CarBuilder;
@@ -8,23 +10,32 @@ import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.records.DatabaseRecord;
 
 public class TestCarFactory {
-    
+
+    private static int number = 1;
+
     /*
      * Creates a test car that
      * can be used in Unit and integration tests.
      */
+
     public static Car create(boolean inspected) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+
         LocalDateTime now = LocalDateTime.now();
+        String formatDateTime = now.format(formatter);
+        now = LocalDateTime.parse(formatDateTime, formatter);
+
         return new CarBuilder()
             .vehicleNumber(0)
             .frameNumber(now.toString())
             .brand(now.toString())
             .model(now.toString())
             .color(now.toString())
-            .equipmentLevel(1)
-            .steelPrice(200)
-            .registrationFee(200)
-            .co2Discharge(200)
+            .equipmentLevel(number++)
+            .steelPrice(number++)
+            .registrationFee(number++)
+            .co2Discharge(number++)
             .inspected(inspected)
             .createdAt(now)
             .updatedAt(now)
