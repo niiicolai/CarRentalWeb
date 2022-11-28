@@ -1,30 +1,12 @@
 package carrental.carrentalweb.repository;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.LinkedList;
-import java.util.List;
-
 import carrental.carrentalweb.entities.Car;
-import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.entity_factories.TestCarFactory;
-import carrental.carrentalweb.entity_factories.TestCreditRatingFactory;
-import carrental.carrentalweb.enums.CreditRatingState;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import carrental.carrentalweb.entities.User;
-import carrental.carrentalweb.entity_factories.TestUserFactory;
 import carrental.carrentalweb.parameter_resolvers.DatabaseParameterResolver;
-import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
-import carrental.carrentalweb.utilities.DatabaseResponse;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,13 +20,9 @@ public class CarRepositoryTest {
 
     private static CarRepository carRepository;
 
-    private static DatabaseService database;
-
-
 
     @BeforeAll
     public static void init(DatabaseService databaseService){
-        database = databaseService;
 
         carRepository = new CarRepository(databaseService);
     }
