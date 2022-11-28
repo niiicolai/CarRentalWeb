@@ -4,12 +4,23 @@ import java.time.LocalDateTime;
 
 public class Address {
 
+  private Long id;
   private String street;
   private String city;
   private String zipCode;
   private String country;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
+
+  public Address(Long id, String street, String city, String zipCode, String country, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    this.id = id;
+    this.street = street;
+    this.city = city;
+    this.zipCode = zipCode;
+    this.country = country;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
 
   public Address(String street, String city, String zipCode, String country, LocalDateTime createdAt, LocalDateTime updatedAt) {
     this.street = street;
@@ -26,6 +37,9 @@ public class Address {
     this.zipCode = zipCode;
     this.country = country;
     this.createdAt = createdAt;
+  }
+
+  public Address() {
   }
 
   public String getStreet() {
