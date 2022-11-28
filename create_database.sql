@@ -56,21 +56,23 @@ CREATE TABLE IF NOT EXISTS credit_ratings (
 );
 -- Nicolai (one-to-one, bookings)
 CREATE TABLE IF NOT EXISTS invoices (
-    booking_id          BIGINT PRIMARY KEY,
+    id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    booking_id          BIGINT,
     due_date            DATETIME NOT NULL,
     paid_at             DATETIME,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(booking_id) REFERENCES bookings(id)
 );
 -- Nicolai
 CREATE TABLE IF NOT EXISTS invoice_specifications (
-    id                  INT AUTO_INCREMENT PRIMARY KEY,
+    id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
     description         VARCHAR(255) NOT NULL,
     price               DOUBLE NOT NULL,
     updated_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    booking_id          BIGINT NOT NULL,
-    FOREIGN KEY(booking_id) REFERENCES invoices(booking_id)
+    invoice_id          BIGINT NOT NULL,
+    FOREIGN KEY(invoice_id) REFERENCES invoices(id)
 );
 -- Thomas
 CREATE TABLE IF NOT EXISTS address  (

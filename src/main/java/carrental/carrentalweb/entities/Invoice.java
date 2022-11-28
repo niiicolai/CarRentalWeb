@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
 
 
 public class Invoice {
+    private long id;
     private long bookingId;
-    private LocalDateTime due;
+    private LocalDateTime dueDate;
     private LocalDateTime paidAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -17,27 +18,33 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(long bookingId, LocalDateTime due, LocalDateTime paidAt) {
+    public Invoice(long id, long bookingId, LocalDateTime dueDate, LocalDateTime paidAt) {
+        this.id = id;
         this.bookingId = bookingId;
-        this.due = due;
+        this.dueDate = dueDate;
         this.paidAt = paidAt;
     }
 
-    public Invoice(long bookingId, LocalDateTime due, LocalDateTime paidAt, 
+    public Invoice(long id, long bookingId, LocalDateTime dueDate, LocalDateTime paidAt, 
             LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
         this.bookingId = bookingId;
-        this.due = due;
+        this.dueDate = dueDate;
         this.paidAt = paidAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setBookingId(long bookingId) {
         this.bookingId = bookingId;
     }
 
-    public void setDue(LocalDateTime due) {
-        this.due = due;
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
     }
 
     public void setPaidAt(LocalDateTime paidAt) {
@@ -56,8 +63,12 @@ public class Invoice {
         return bookingId;
     }
 
-    public LocalDateTime getDue() {
-        return due;
+    public long getId() {
+        return id;
+    }
+
+    public LocalDateTime getDueDate() {
+        return dueDate;
     }
 
     public LocalDateTime getPaidAt() {

@@ -88,7 +88,7 @@ public class UserRepositoryTest {
     }
 
     /*
-     * Method: insert(user); last(user);
+     * Method: insert(user); last();
      * Test if the method insert saves the user to the database.
      * It uses the method last to check if the user is saved, and
      * at the same time test if the last method works.
@@ -320,7 +320,7 @@ public class UserRepositoryTest {
         User user = repository.find("id", lastInsertedUser.getId());
 
         // Assert
-        assertEquals(null, user, "last must be null");
+        assertEquals(null, user, "user must be null");
     }
 
     /*

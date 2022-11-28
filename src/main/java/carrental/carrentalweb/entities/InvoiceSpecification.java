@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
  */
 
 public class InvoiceSpecification {
-    private long bookingId;
+    private long id;
+    private long invoiceId;
     private String description;
     private double price;
     private LocalDateTime createdAt;
@@ -16,31 +17,32 @@ public class InvoiceSpecification {
     public InvoiceSpecification() {
     }
 
-    public InvoiceSpecification(long bookingId, String description, double price) {
-        this.bookingId = bookingId;
+    public InvoiceSpecification(long id, long invoiceId, String description, double price) {
+        this.id = id;
+        this.invoiceId = invoiceId;
         this.description = description;
         this.price = price;
     }
 
-    public InvoiceSpecification(long bookingId, String description) {
-        this.bookingId = bookingId;
-        this.description = description;
-    }
-
-    public InvoiceSpecification(long bookingId, String description, 
+    public InvoiceSpecification(long id, long invoiceId, String description, 
             LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.bookingId = bookingId;
+        this.id = id;
+        this.invoiceId = invoiceId;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public void setBookingId(long bookingId) {
-        this.bookingId = bookingId;
+    public void setInvoiceId(long invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setDescription(String description) {
@@ -55,12 +57,16 @@ public class InvoiceSpecification {
         this.updatedAt = updatedAt;
     }
 
-    public long getBookingId() {
-        return bookingId;
+    public long getInvoiceId() {
+        return invoiceId;
     }
 
     public double getPrice() {
         return price;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getDescription() {

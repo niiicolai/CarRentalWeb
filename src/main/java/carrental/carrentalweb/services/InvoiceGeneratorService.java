@@ -19,11 +19,11 @@ public class InvoiceGeneratorService {
         /* Build invoice */
         Invoice invoice = new Invoice();
         invoice.setBookingId(bookingId);
-        invoice.setDue(due);
+        invoice.setDueDate(due);
 
         /* Add invoice specification */
         InvoiceSpecification specification = new InvoiceSpecification();
-        specification.setBookingId(bookingId);
+        specification.setInvoiceId(bookingId);
         specification.setDescription(subscription.getName());
         specification.setPrice(subscription.getPrice());
         

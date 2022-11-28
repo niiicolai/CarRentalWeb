@@ -50,13 +50,21 @@ public class CreditRatingRepository {
         return parseResponseFirst(databaseResponse);
     }
 
-    private CreditRating parseResponseFirst(DatabaseResponse databaseResponse) {
+    public boolean delete(CreditRating creditRating) {
+        String sql = "DELETE FROM credit_ratings WHERE user_id = ?";
+        DatabaseRequestBody requestBody = new DatabaseRequestBody(creditRating.getUserId());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
+        
+        return databaseResponse.isSuccessful();
+    }
+
+    public CreditRating parseResponseFirst(DatabaseResponse databaseResponse) {
         List<CreditRating> creditRatings = parseResponse(databaseResponse);
         if (creditRatings.size() == 0) return null;
         else return creditRatings.get(0);
     }
 
-    private List<CreditRating> parseResponse(DatabaseResponse databaseResponse) {
+    public List<CreditRating> parseResponse(DatabaseResponse databaseResponse) {
         List<CreditRating> creditRatings = new LinkedList<CreditRating>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();

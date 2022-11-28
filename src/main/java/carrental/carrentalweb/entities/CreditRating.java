@@ -14,6 +14,9 @@ public class CreditRating {
     private CreditRatingState state;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public CreditRating() {
+    }
     
     public CreditRating(CreditRatingState state, long userId) {
         this.state = state;

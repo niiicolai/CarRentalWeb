@@ -25,7 +25,7 @@ public class InvoiceSpecificationRepository {
         String sql = String.format("SELECT * FROM invoice_specifications WHERE %s=?", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
     }
 
     public List<InvoiceSpecification> findCollection(String column, Object value) {
@@ -36,31 +36,47 @@ public class InvoiceSpecificationRepository {
     }
     
     public boolean insert(InvoiceSpecification specification) {
-        String sql = "INSERT INTO invoice_specifications (booking_id, description, price) (?, ?)";
-        DatabaseRequestBody body = new DatabaseRequestBody(specification.getBookingId(), specification.getDescription(), 
+        String sql = "INSERT INTO invoice_specifications (invoice_id, description, price) VALUES (?, ?, ?)";
+        DatabaseRequestBody body = new DatabaseRequestBody(specification.getInvoiceId(), specification.getDescription(), 
             specification.getPrice());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         return databaseResponse.isSuccessful();
     }
 
     public InvoiceSpecification last() {
-        String sql = "SELECT * FROM invoice_specifications ORDER BY created_at DESC LIMIT 1";
+        String sql = "SELECT * FROM invoice_specifications ORDER BY id DESC LIMIT 1";
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
     }
 
-    private List<InvoiceSpecification> parseResponse(DatabaseResponse databaseResponse) {
-        List<InvoiceSpecification> invoices = new LinkedList<InvoiceSpecification>();
+    public boolean delete(InvoiceSpecification specification) {
+        String sql = "DELETE FROM invoice_specifications WHERE id = ?";
+        DatabaseRequestBody requestBody = new DatabaseRequestBody(specification.getId());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
+        
+        return databaseResponse.isSuccessful();
+    }
+
+    public InvoiceSpecification parseResponseFirst(DatabaseResponse databaseResponse) {
+        List<InvoiceSpecification> specifications = parseResponse(databaseResponse);
+        if (specifications.size() == 0) return null;
+        else return specifications.get(0);
+    }
+
+    public List<InvoiceSpecification> parseResponse(DatabaseResponse databaseResponse) {
+        List<InvoiceSpecification> specifications = new LinkedList<InvoiceSpecification>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
 
-            invoices.add(
+            specifications.add(
                 new InvoiceSpecification(
-                    (long) record.map().get("booking_id"),
-                    (String) record.map().get("description")
+                    (long) record.map().get("id"),
+                    (long) record.map().get("invoice_id"),
+                    (String) record.map().get("description"),
+                    (double) record.map().get("price")
                 )
             );
         }
-        return invoices;
+        return specifications;
     }
 }

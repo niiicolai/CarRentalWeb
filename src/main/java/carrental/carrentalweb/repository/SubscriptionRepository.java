@@ -21,7 +21,7 @@ public class SubscriptionRepository {
         String sql = String.format("SELECT * FROM subscriptions WHERE %s=?", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
     }
     public List<Subscription> getAll() {
         String query = "SELECT * FROM subscriptions";
@@ -42,6 +42,27 @@ public class SubscriptionRepository {
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
+
+    public boolean delete(Subscription subscription) {
+        String sql = "DELETE FROM subscriptions WHERE name = ?";
+        DatabaseRequestBody requestBody = new DatabaseRequestBody(subscription.getName());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
+        
+        return databaseResponse.isSuccessful();
+    }
+
+    public Subscription last() {
+        String sql = "SELECT * FROM subscriptions ORDER BY created_at DESC LIMIT 1";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+        return parseResponseFirst(databaseResponse);
+    }
+
+    public Subscription parseResponseFirst(DatabaseResponse databaseResponse) {
+        List<Subscription> subscriptions = parseResponse(databaseResponse);
+        if (subscriptions.size() == 0) return null;
+        else return subscriptions.get(0);
+    }
+
     private List<Subscription> parseResponse(DatabaseResponse databaseResponse) {
         List<Subscription> subscriptions = new LinkedList<Subscription>();
         while (databaseResponse.hasNext()) {
