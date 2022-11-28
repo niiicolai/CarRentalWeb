@@ -35,6 +35,11 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder email(String email) {
+        user.setEmail(email);
+        return this;
+    }
+
     public UserBuilder encodedPassword() {
         user.encodedPassword();
         return this;

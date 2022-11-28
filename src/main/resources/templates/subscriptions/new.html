@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body layout:fragment="content">
+    <form th:action="@{/subscriptions/new}" th:object="${subscription}" th:method="post">
+        
+        <input th:field="*{name}" type="text" placeholder="name" required>
+        <input th:field="*{days}" type="text" placeholder="days" required>
+        <input th:field="*{price}" type="text" placeholder="price" required>
 
+        <span>is available:</span>
+        <input th:field="*{available}" type="checkbox">
+
+        <input type="submit" value="update">
+
+    </form>
 </body>
 </html>

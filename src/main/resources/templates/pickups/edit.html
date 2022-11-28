@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body layout:fragment="content">
+    <form th:action="@{/pickups/edit}" th:object="${pickupPoint}" th:method="patch">
+        
+        <input th:field="*{id}" type="hidden" required>
+        <input th:field="*{name}" type="text" placeholder="name" required>
+        <input th:field="*{addressId}" type="text" placeholder="addressId" required>
+        
+        <input type="submit" value="update">
+    
+    </form>
+</body>
+</html>

@@ -1,30 +1,53 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.DamageReport;
-import carrental.carrentalweb.entities.DamageSpecification;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 // Mads
 @Repository
 public class DamageReportRepository {
 
-    @Autowired
-    DatabaseService databaseService;
+    private final DatabaseService databaseService;
 
-    public DamageReport getByBookingId(Long id) {
-        return new DamageReport();
+    public DamageReportRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
     }
 
-    public void update(DamageReport damageReport) {
+    public DamageReport get(String column, Object value) {
+        String sql = String.format("SELECT * FROM damage_reports WHERE %s=? ", column);
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        return parseResponse(databaseResponse).get(0);
+    }
 
+    public boolean create(DamageReport damageReport) {
+        String query = "INSERT INTO damage_reports (booking_id) VALUES (?)";
+        DatabaseRequestBody body = new DatabaseRequestBody(damageReport.getBookingId());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+        return databaseResponse.isSuccessful();
+
+    }
+
+    private List<DamageReport> parseResponse(DatabaseResponse databaseResponse) {
+        List<DamageReport> dmgReports = new LinkedList<DamageReport>();
+        while (databaseResponse.hasNext()) {
+            DatabaseRecord record = databaseResponse.next();
+            dmgReports.add(
+                    new DamageReport(
+                            (long) record.map().get("booking_id"),
+                            (LocalDateTime) record.map().get("created_at"),
+                            (LocalDateTime) record.map().get("updated_at")
+                    )
+            );
+        }
+        return dmgReports;
     }
 }

@@ -1,130 +1,59 @@
 package carrental.carrentalweb.repository;
 
-import carrental.carrentalweb.entities.Address;
 import carrental.carrentalweb.entities.DamageSpecification;
-import carrental.carrentalweb.entities.PickupPoint;
-import carrental.carrentalweb.entities.Subscription;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 // Mads
 @Repository
 public class DamageSpecificationRepository {
-    
-    @Autowired
-    DatabaseService databaseService;
-
+    private final DatabaseService databaseService;
+    public DamageSpecificationRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
+    public DamageSpecification get(String column, Object value) {
+        String query = String.format("SELECT * FROM damage_specifications WHERE %s=?", column);
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, body);
+        return parseResponse(databaseResponse).get(0);
+    }
     public List<DamageSpecification> getAll() {
-        List<DamageSpecification> specifications = new ArrayList<>();
-        try {
-            Connection conn = databaseService.getConnection();
-            String query = "SELECT * FROM damage_specifications";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String description = resultSet.getString(1);
-                boolean damaged = resultSet.getBoolean(2);
-                double price = resultSet.getDouble(3);
-                LocalDateTime createdAt = (LocalDateTime) resultSet.getObject(4);
-                LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject(5);
-                specifications.add(new DamageSpecification(
-                        description,
-                        damaged,
-                        price,
-                        createdAt,
-                        updatedAt));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return specifications;
+        String query = "SELECT * FROM damage_specifications";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
+        return parseResponse(databaseResponse);
     }
-
-    public void create(DamageSpecification dmgSpec) {
-        try {
-            Connection conn = databaseService.getConnection();
-            String query = "INSERT INTO damage_specifications (" +
-                    "description," +
-                    "damaged," +
-                    "price," +
-                    "created_at," +
-                    "updated_at)" +
-                    "VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-
-            preparedStatement.setString(1, dmgSpec.getDescription());
-            preparedStatement.setBoolean(2, dmgSpec.isDamaged());
-            preparedStatement.setDouble(3, dmgSpec.getPrice());
-            preparedStatement.setObject(4, LocalDateTime.now());
-            preparedStatement.setObject(5, LocalDateTime.now());
-
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public boolean create(DamageSpecification dmgSpec) {
+        String query = "INSERT INTO damage_specifications (description, damaged, price) VALUES (?, ?, ?, ?, ?)";
+        DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.isDamaged(), dmgSpec.getPrice());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+        return databaseResponse.isSuccessful();
     }
-
-    public void update(DamageSpecification dmgSpec) {
-
-        try {
-            Connection conn = databaseService.getConnection();
-            String query = "UPDATE damage_specifications " +
-                    "SET damaged=?," +
-                    "price=?," +
-                    "updated_at=?";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-
-            preparedStatement.setBoolean(1, dmgSpec.isDamaged());
-            preparedStatement.setDouble(2, dmgSpec.getPrice());
-            preparedStatement.setObject(3, LocalDateTime.now());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public boolean update(DamageSpecification dmgSpec) {
+        String query = "UPDATE damage_specifications SET damaged=?, price=?";
+        DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.isDamaged(), dmgSpec.getPrice());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+        return databaseResponse.isSuccessful();
     }
-
-    public DamageSpecification getByDescription(String description) {
-        DamageSpecification dmgSpec = new DamageSpecification();
-
-        try {
-            Connection conn = databaseService.getConnection();
-            String query = "SELECT * FROM damage_specifications WHERE description=?";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-
-            preparedStatement.setString(1, description);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()){
-                String desc = resultSet.getString(1);
-                boolean damaged = resultSet.getBoolean(2);
-                double price = resultSet.getDouble(3);
-                LocalDateTime createdAt =  (LocalDateTime) resultSet.getObject(4);
-                LocalDateTime updatedAt =  (LocalDateTime) resultSet.getObject(5);
-
-                dmgSpec = new DamageSpecification(desc,
-                        damaged,
-                        price,
-                        createdAt,
-                        updatedAt);
-            }
-        } catch(SQLException e){
-            e.printStackTrace();
+    private List<DamageSpecification> parseResponse(DatabaseResponse databaseResponse) {
+        List<DamageSpecification> dmgSpecs = new LinkedList<DamageSpecification>();
+        while (databaseResponse.hasNext()) {
+            DatabaseRecord record = databaseResponse.next();
+            dmgSpecs.add(
+                    new DamageSpecification(
+                            (String) record.map().get("description"),
+                            (boolean) record.map().get("damaged"),
+                            (double) record.map().get("price"),
+                            (LocalDateTime) record.map().get("created_at"),
+                            (LocalDateTime) record.map().get("updated_at")
+                    )
+            );
         }
-        return dmgSpec;
+        return dmgSpecs;
     }
 }

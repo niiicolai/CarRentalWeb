@@ -1,102 +1,83 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.Subscription;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 // Mads
 @Repository
 public class SubscriptionRepository {
-
-    @Autowired
-    DatabaseService databaseService;
-
-    // TODO: create find method
-    public Subscription find(String subscriptionName) {
-        return new Subscription();
+    private final DatabaseService databaseService;
+    public SubscriptionRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
     }
-
-    public Subscription create(Subscription subscription) {
-        try {
-            Connection conn = databaseService.getConnection();
-            String query = "INSERT INTO subscriptions (" +
-                    "name," +
-                    "days," +
-                    "price," +
-                    "available," +
-                    "created_at," +
-                    "updated_at)" +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-
-            preparedStatement.setString(1, subscription.getName());
-            preparedStatement.setDouble(2, subscription.getDays());
-            preparedStatement.setDouble(3, subscription.getPrice());
-            preparedStatement.setBoolean(4, subscription.isAvailable());
-            preparedStatement.setObject(5, LocalDateTime.now());
-            preparedStatement.setObject(6, LocalDateTime.now());
-
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Subscription get(String column, Object value) {
+        String sql = String.format("SELECT * FROM subscriptions WHERE %s=?", column);
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        return parseResponseFirst(databaseResponse);
     }
     public List<Subscription> getAll() {
+        String query = "SELECT * FROM subscriptions";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
+        return parseResponse(databaseResponse);
+    }
+    public boolean create(Subscription subscription) {
+        String query = "INSERT INTO subscriptions (name, days, price, available) VALUES (?, ?, ?, ?)";
+        DatabaseRequestBody body = new DatabaseRequestBody(subscription.getName(), subscription.getDays(),
+            subscription.getPrice(), subscription.isAvailable());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+        return databaseResponse.isSuccessful();
+    }
+    public boolean update(Subscription subscription){
+        String query = "UPDATE subscriptions SET price = ?, days = ?, available = ? WHERE name = ?";
+        DatabaseRequestBody body = new DatabaseRequestBody(subscription.getPrice(), subscription.getDays(),
+            subscription.isAvailable(), subscription.getName());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+        return databaseResponse.isSuccessful();
+    }
+
+    public boolean delete(Subscription subscription) {
+        String sql = "DELETE FROM subscriptions WHERE name = ?";
+        DatabaseRequestBody requestBody = new DatabaseRequestBody(subscription.getName());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
         
-        List<Subscription> subscriptions = new ArrayList<>();
-        try {
-            Connection conn = databaseService.getConnection();
-            String query = "SELECT * FROM subscriptions";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        return databaseResponse.isSuccessful();
+    }
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+    public Subscription last() {
+        String sql = "SELECT * FROM subscriptions ORDER BY created_at DESC LIMIT 1";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+        return parseResponseFirst(databaseResponse);
+    }
 
-            while (resultSet.next()) {
-                String name = resultSet.getString(1);
-                double days = resultSet.getDouble(2);
-                double price = resultSet.getDouble(3);
-                boolean available = resultSet.getBoolean(4);
-                LocalDateTime createdAt = (LocalDateTime) resultSet.getObject(5);
-                LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject(6);
-                subscriptions.add(new Subscription(
-                        name,
-                        days,
-                        price,
-                        available,
-                        createdAt,
-                        updatedAt));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public Subscription parseResponseFirst(DatabaseResponse databaseResponse) {
+        List<Subscription> subscriptions = parseResponse(databaseResponse);
+        if (subscriptions.size() == 0) return null;
+        else return subscriptions.get(0);
+    }
+
+    private List<Subscription> parseResponse(DatabaseResponse databaseResponse) {
+        List<Subscription> subscriptions = new LinkedList<Subscription>();
+        while (databaseResponse.hasNext()) {
+            DatabaseRecord record = databaseResponse.next();
+            subscriptions.add(
+                new Subscription(
+                    (String) record.map().get("name"),
+                    (long) record.map().get("days"),
+                    (double) record.map().get("price"),
+                    (boolean) record.map().get("available"),
+                    (LocalDateTime) record.map().get("created_at"),
+                    (LocalDateTime) record.map().get("updated_at")
+                )
+            );
         }
         return subscriptions;
-    }
-    public void update(Subscription subscription){
-        try {
-            Connection conn = databaseService.getConnection();
-            String query = "UPDATE subscriptions " +
-                    "SET available=?," +
-                    "updated_at=?";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-
-            preparedStatement.setBoolean(1, subscription.isAvailable());
-            preparedStatement.setObject(2, LocalDateTime.now());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

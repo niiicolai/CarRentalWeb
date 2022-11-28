@@ -4,9 +4,7 @@ import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.services.DatabaseService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +16,11 @@ import java.util.List;
 @Repository
 public class CarRepository {
 
-    @Autowired
-    DatabaseService databaseService;
+    private final DatabaseService databaseService;
+
+    public CarRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
 
     public Car createCar(Car newCar) {
 
@@ -35,11 +36,8 @@ public class CarRepository {
                     "steel_price," +
                     "registration_fee," +
                     "co2_discharge," +
-                    "inspected," +
-                    "booking, " +
-                    "created_at," +
-                    "updated_at)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "inspected) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             System.out.println("Created query");
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             System.out.println("Created preparedStatement");
@@ -54,10 +52,6 @@ public class CarRepository {
             preparedStatement.setDouble(8, newCar.getRegistrationFee());
             preparedStatement.setDouble(9, newCar.getCo2Discharge());
             preparedStatement.setBoolean(10, newCar.getInspected());
-            preparedStatement.setObject(11, newCar.getBooking());
-            preparedStatement.setObject(12, LocalDateTime.now());
-            preparedStatement.setObject(13, LocalDateTime.now());
-
             preparedStatement.executeUpdate();
 
         } catch (SQLException e){
@@ -75,29 +69,27 @@ public class CarRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                long vehicleNumber = resultSet.getLong(1);
-                String frameNumber = resultSet.getString(2);
-                String brandNumber = resultSet.getString(3);
-                String model = resultSet.getString(4);
-                String color = resultSet.getString(5);
-                int equipmentLevel = resultSet.getInt(6);
-                double steelPrice = resultSet.getDouble(7);
-                double registrationFee = resultSet.getDouble(8);
-                double co2Discharge = resultSet.getDouble(9);
-                boolean inspected = resultSet.getBoolean(10);
-                Booking booking = (Booking) resultSet.getObject(11);
-                LocalDateTime createdAt = (LocalDateTime) resultSet.getObject(12);
-                LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject(13);
+                long vehicleNumber = resultSet.getLong("vehicle_number");
+                String frameNumber = resultSet.getString("frame_number");
+                String brand = resultSet.getString("brand");
+                String model = resultSet.getString("model");
+                String color = resultSet.getString("color");
+                int equipmentLevel = resultSet.getInt("equipment_level");
+                double steelPrice = resultSet.getDouble("steel_price");
+                double registrationFee = resultSet.getDouble("registration_fee");
+                double co2Discharge = resultSet.getDouble("co2_discharge");
+                boolean inspected = resultSet.getBoolean("inspected");
+                LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
+                LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 cars.add(new Car(vehicleNumber,
                         frameNumber,
-                        brandNumber,
+                        brand,
                         model, color,
                         equipmentLevel,
                         steelPrice,
                         registrationFee,
                         co2Discharge,
                         inspected,
-                        booking,
                         createdAt,
                         updatedAt));
             }
@@ -120,19 +112,18 @@ public class CarRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                long vehicleNumber = resultSet.getLong(1);
-                String frameNumber = resultSet.getString(2);
-                String brand = resultSet.getString(3);
-                String model = resultSet.getString(4);
-                String color = resultSet.getString(5);
-                int equipmentLevel = resultSet.getInt(6);
-                double steelPrice = resultSet.getDouble(7);
-                double registrationFee = resultSet.getDouble(8);
-                double co2Discharge = resultSet.getDouble(9);
-                boolean inspected = resultSet.getBoolean(11);
-                Booking booking = (Booking) resultSet.getObject(10);
-                LocalDateTime createdAt = (LocalDateTime) resultSet.getObject(12);
-                LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject(13);
+                long vehicleNumber = resultSet.getLong("vehicle_number");
+                String frameNumber = resultSet.getString("frame_number");
+                String brand = resultSet.getString("brand");
+                String model = resultSet.getString("model");
+                String color = resultSet.getString("color");
+                int equipmentLevel = resultSet.getInt("equipment_level");
+                double steelPrice = resultSet.getDouble("steel_price");
+                double registrationFee = resultSet.getDouble("registration_fee");
+                double co2Discharge = resultSet.getDouble("co2_discharge");
+                boolean inspected = resultSet.getBoolean("inspected");
+                LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
+                LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 foundCar = new Car(vehicleNumber,
                         frameNumber,
                         brand,
@@ -143,7 +134,6 @@ public class CarRepository {
                         registrationFee,
                         co2Discharge,
                         inspected,
-                        booking,
                         createdAt,
                         updatedAt);
             }
@@ -163,7 +153,8 @@ public class CarRepository {
                     "registration_fee=?," +
                     "co2_discharge=?," +
                     "inspected=?," +
-                    "booking=?," +
+                    "model=?," +
+                    "brand=?," +
                     "updated_at=?" +
                     "WHERE vehicle_number=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -174,9 +165,10 @@ public class CarRepository {
             preparedStatement.setDouble(4, car.getRegistrationFee());
             preparedStatement.setDouble(5, car.getCo2Discharge());
             preparedStatement.setBoolean(6, car.getInspected());
-            preparedStatement.setObject(7, car.getBooking());
-            preparedStatement.setObject(8, LocalDateTime.now());
-            preparedStatement.setLong(9, car.getVehicleNumber());
+            preparedStatement.setString(7, car.getModel());
+            preparedStatement.setString(8, car.getBrand());
+            preparedStatement.setObject(9, LocalDateTime.now());
+            preparedStatement.setLong(10, car.getVehicleNumber());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e){
@@ -195,5 +187,47 @@ public class CarRepository {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public Car last() {
+		Car foundCar = null;
+
+		try {
+			Connection conn = databaseService.getConnection();
+			String query = "SELECT * FROM cars ORDER BY created_at DESC LIMIT 1";
+			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()){
+                long vehicleNumber = resultSet.getLong("vehicle_number");
+                String frameNumber = resultSet.getString("frame_number");
+                String brand = resultSet.getString("brand");
+                String model = resultSet.getString("model");
+                String color = resultSet.getString("color");
+                int equipmentLevel = resultSet.getInt("equipment_level");
+                double steelPrice = resultSet.getDouble("steel_price");
+                double registrationFee = resultSet.getDouble("registration_fee");
+                double co2Discharge = resultSet.getDouble("co2_discharge");
+                boolean inspected = resultSet.getBoolean("inspected");
+                LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
+                LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
+                foundCar = new Car(vehicleNumber,
+                        frameNumber,
+                        brand,
+                        model,
+                        color,
+                        equipmentLevel,
+                        steelPrice,
+                        registrationFee,
+                        co2Discharge,
+                        inspected,
+                        createdAt,
+                        updatedAt);
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return foundCar;
     }
 }

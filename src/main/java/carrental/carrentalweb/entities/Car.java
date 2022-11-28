@@ -13,7 +13,6 @@ public class Car {
     private double registrationFee;
     private double co2Discharge;
     private boolean inspected;
-    private Booking booking;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -32,7 +31,7 @@ public class Car {
 
     public Car(){}
 
-    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, Booking booking, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.vehicleNumber = vehicleNumber;
         this.frameNumber = frameNumber;
         this.brand = brand;
@@ -43,7 +42,6 @@ public class Car {
         this.registrationFee = registrationFee;
         this.co2Discharge = co2Discharge;
         this.inspected = inspected;
-        this.booking = booking;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -54,14 +52,6 @@ public class Car {
 
     public void setInspected(boolean inspected){
         this.inspected = inspected;
-    }
-
-    public Booking getBooking(){
-        return this.booking;
-    }
-
-    public void setBooking(Booking booking){
-        this.booking = booking;
     }
 
     public long getVehicleNumber() {
@@ -152,6 +142,10 @@ public class Car {
         this.updatedAt = updatedAt;
     }
 
+    public boolean isInspected() {
+        return inspected;
+    }
+
     public String toString(){
 
         String inspectedYN = inspected ? "Yes" : "No";
@@ -166,7 +160,6 @@ public class Car {
                 ", Registration-fee: " + registrationFee +
                 ", Co2-fischarge: " + co2Discharge + "\n" +
                 ", Inspected: " + inspectedYN +
-                ", Booking: " + booking +
                 ", Created at: " + createdAt +
                 ", Updated at: " + updatedAt;
     }

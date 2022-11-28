@@ -1,14 +1,18 @@
 package carrental.carrentalweb.controller;
 
+import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
+import carrental.carrentalweb.entities.User;
+import carrental.carrentalweb.repository.BookingRepository;
 import carrental.carrentalweb.repository.CarRepository;
+import carrental.carrentalweb.repository.CreditRatingRepository;
+import carrental.carrentalweb.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class CarController {
@@ -16,42 +20,51 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    CreditRatingRepository creditRatingRepository;
+
     @GetMapping("/cars")
-    public String cars(Model model) {
+    public String cars(Model model, @AuthenticationPrincipal User user){
+
         model.addAttribute("cars", carRepository.getAllCars());
+        model.addAttribute("user", userRepository.find("id", user.getId()));
+        model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
+        model.addAttribute("booking", new Booking());
         return "car/car_list";
     }
 
     @GetMapping("/add-car")
-    public String addCarGet(Model model) {
+    public String addCarGet(Model model){
         model.addAttribute("car", new Car());
         return "car/add_car";
     }
 
     @PostMapping("/add-car")
-    public String addCarPost(@ModelAttribute("car") Car newCar) {
+    public String addCarPost(@ModelAttribute("car") Car newCar){
         carRepository.createCar(newCar);
         return "redirect:/add-car?success";
     }
 
-    @GetMapping("/edit-car")
-    public String updateCarGet(@PathVariable("vehicle-number") long vehicleNumber, Model model) {
-        model.addAttribute("cars", carRepository.findCarByVehicleNumber(vehicleNumber));
-        return "car/edit-car";
+    @GetMapping("/edit-car/{vehicle-number}")
+    public String updateCarGet(@PathVariable("vehicle-number") long vehicleNumber, Model model){
+        model.addAttribute("car", carRepository.findCarByVehicleNumber(vehicleNumber));
+        return "car/edit_car";
     }
 
-    @RequestMapping(value = "/edit-car/{vehicle-number}", method = RequestMethod.PUT)
-    public void updateCarPost(@PathVariable("vehicle-number") long vehicleNumber) {
-        if (carRepository.findCarByVehicleNumber(vehicleNumber) != null) {
-            Car car = carRepository.findCarByVehicleNumber(vehicleNumber);
-            carRepository.updateCar(car);
+    @PatchMapping("/edit-car")
+    public String updateCarPost(Car car){
+        carRepository.updateCar(car);
+        return "redirect:/edit-car/" + car.getVehicleNumber() + "?success";
+    }
+
+    @DeleteMapping("/delete-car/{vehicle-number}")
+    public void deleteCar(@PathVariable("vehicle-number") long vehicleNumber){
+        if (carRepository.findCarByVehicleNumber(vehicleNumber) != null){
+            carRepository.deleteCarByVehicleNumber(vehicleNumber);
         }
     }
 
-    @DeleteMapping(value = "/delete-car/{vehicle-number}")
-    public String deleteCarPost(@PathVariable("vehicle-number") long vehicleNumber) {
-        carRepository.deleteCarByVehicleNumber(vehicleNumber);
-        System.out.println("Deleted car");
-        return "redirect:/delete_car?success";
-    }
 }

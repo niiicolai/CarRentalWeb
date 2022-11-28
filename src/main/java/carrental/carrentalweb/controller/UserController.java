@@ -3,12 +3,7 @@ package carrental.carrentalweb.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +11,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 
 import carrental.carrentalweb.entities.User;
+import carrental.carrentalweb.repository.CreditRatingRepository;
 import carrental.carrentalweb.repository.UserRepository;
 
 /*
@@ -33,10 +26,14 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CreditRatingRepository creditRatingRepository;
+
     @GetMapping("/user")
     public String show(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("user", userRepository.find("id", user.getId()));
-		return "user/show";
+        model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
+        return "user/show";
     }
 
     @GetMapping("/user/edit")

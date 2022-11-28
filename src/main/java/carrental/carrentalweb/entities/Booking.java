@@ -4,45 +4,23 @@ import java.time.LocalDateTime;
 
 public class Booking {
     private long id;
+    private long userId;
+    private long vehicleNumber;
+    private long pickupPointId;
 
-    private User user;
-    private Car car;
     private String subscriptionName;
-    private CreditRating creditRating;
-    private PickupPoint pickupPoint;
-    private DamageReport damageReport;
+    
+
     private LocalDateTime deliveredAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Booking(long id, User user, Car car, String subscriptionName, CreditRating creditRating, PickupPoint pickupPoint, DamageReport damageReport, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.user = user;
+    public Booking(long id, long userId, long vehicleNumber, String subscriptionName, long pickupPointId, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.car = car;
+        this.userId = userId;
+        this.vehicleNumber = vehicleNumber;
         this.subscriptionName = subscriptionName;
-        this.creditRating = creditRating;
-        this.pickupPoint = pickupPoint;
-        this.damageReport = damageReport;
-        this.deliveredAt = deliveredAt;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public Booking(User user, Car car, String subscriptionName, CreditRating creditRating, PickupPoint pickupPoint, DamageReport damageReport, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.user = user;
-        this.car = car;
-        this.subscriptionName = subscriptionName;
-        this.creditRating = creditRating;
-        this.pickupPoint = pickupPoint;
-        this.damageReport = damageReport;
+        this.pickupPointId = pickupPointId;
         this.deliveredAt = deliveredAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -51,20 +29,20 @@ public class Booking {
     public Booking() {
     }
 
-    public Car getCar() {
-        return car;
+    public long getUserId() {
+        return userId;
     }
 
-    public CreditRating getCreditRating() {
-        return creditRating;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public PickupPoint getPickupPoint() {
-        return pickupPoint;
+    public long getVehicleNumber() {
+        return vehicleNumber;
     }
 
-    public DamageReport getDamageReport() {
-        return damageReport;
+    public long getPickupPointId() {
+        return pickupPointId;
     }
 
     public LocalDateTime getDeliveredAt() {
@@ -87,24 +65,16 @@ public class Booking {
         this.id = id;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setVehicleNumber(long vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
     }
 
     public void setSubscriptionName(String subscriptionName) {
         this.subscriptionName = subscriptionName;
     }
 
-    public void setCreditRating(CreditRating creditRating) {
-        this.creditRating = creditRating;
-    }
-
-    public void setPickupPoint(PickupPoint pickupPoint) {
-        this.pickupPoint = pickupPoint;
-    }
-
-    public void setDamageReport(DamageReport damageReport) {
-        this.damageReport = damageReport;
+    public void setPickupPointId(long pickupPointId) {
+        this.pickupPointId = pickupPointId;
     }
 
     public void setDeliveredAt(LocalDateTime deliveredAt) {

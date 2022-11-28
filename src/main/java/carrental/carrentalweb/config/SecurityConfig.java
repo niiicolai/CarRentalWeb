@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 import carrental.carrentalweb.services.UserService;
 
@@ -24,7 +23,7 @@ public class SecurityConfig {
 
     /* Client properties */
     private static final String CLIENT_ROLE = "CLIENT";
-    private static final String[] CLIENT_PATHS = {"/user"};
+    private static final String[] CLIENT_PATHS = {"/user", "/credit/rating", "/pickuppoints**"};
 
     /* Employee properties */
     private static final String EMPLOYEE_ROLE = "EMPLOYEE";
@@ -58,7 +57,6 @@ public class SecurityConfig {
                 .permitAll()
             .and()
                 .authorizeRequests()           
-                .antMatchers(EMPLOYEE_PATHS).hasRole(EMPLOYEE_ROLE)
                 .antMatchers(CLIENT_PATHS).hasRole(CLIENT_ROLE)
                 .anyRequest()
                 .authenticated()

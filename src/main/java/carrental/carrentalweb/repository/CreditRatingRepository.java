@@ -1,14 +1,14 @@
 package carrental.carrentalweb.repository;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.enums.CreditRatingState;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 
 /*
  * Written by Nicolai Berg Andersen.
@@ -17,47 +17,66 @@ import carrental.carrentalweb.services.DatabaseService;
 @Repository
 public class CreditRatingRepository {
 
-    @Autowired
-    DatabaseService databaseService;
+    private final DatabaseService databaseService;
+
+    public CreditRatingRepository(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
 
     public CreditRating find(String column, Object value) {
         String sql = String.format("SELECT * FROM credit_ratings WHERE %s=?", column);
-        
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(value);
-        
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(sql, values);
-        if (resultList == null) return null;
-
-        return parseFromMap(resultList.get(0));
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        return parseResponseFirst(databaseResponse);
     }
     
     public boolean insert(CreditRating creditRating) {
-        String sql = "INSERT INTO credit_ratings (state, booking_id) (?, ?)";
+        String sql = "INSERT INTO credit_ratings (state, user_id) VALUES (?, ?)";        
+        DatabaseRequestBody body = new DatabaseRequestBody(creditRating.getState().name(), creditRating.getUserId());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
+        return databaseResponse.isSuccessful();
+    }
 
-        LinkedList<Object> values = new LinkedList<>();
-        values.add(creditRating.getState());
-        values.add(creditRating.getBookingId());
-
-        databaseService.executeUpdate(sql, values);
-
-        return true;
+    public boolean update(CreditRating creditRating) {
+        String sql = "UPDATE credit_ratings SET state = ? WHERE user_id = ?";
+        DatabaseRequestBody body = new DatabaseRequestBody(creditRating.getState().name(), creditRating.getUserId());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
+        return databaseResponse.isSuccessful();
     }
 
     public CreditRating last() {
-        String sql = String.format("SELECT * FROM credit_ratings ORDER BY created_at DESC LIMIT 1");
-        
-        List<HashMap<String, Object>> resultList = databaseService.executeQuery(sql, new LinkedList<>());
-        if (resultList == null) return null;
-
-        return parseFromMap(resultList.get(0));
+        String sql = "SELECT * FROM credit_ratings ORDER BY created_at DESC LIMIT 1";        
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+        return parseResponseFirst(databaseResponse);
     }
 
-    private CreditRating parseFromMap(HashMap<String, Object> map) {
-        if (map == null) return null;
-        return new CreditRating(
-            (CreditRatingState) map.get("state"),
-            (Long) map.get("booking_id")
-        );
+    public boolean delete(CreditRating creditRating) {
+        String sql = "DELETE FROM credit_ratings WHERE user_id = ?";
+        DatabaseRequestBody requestBody = new DatabaseRequestBody(creditRating.getUserId());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
+        
+        return databaseResponse.isSuccessful();
+    }
+
+    public CreditRating parseResponseFirst(DatabaseResponse databaseResponse) {
+        List<CreditRating> creditRatings = parseResponse(databaseResponse);
+        if (creditRatings.size() == 0) return null;
+        else return creditRatings.get(0);
+    }
+
+    public List<CreditRating> parseResponse(DatabaseResponse databaseResponse) {
+        List<CreditRating> creditRatings = new LinkedList<CreditRating>();
+        while (databaseResponse.hasNext()) {
+            DatabaseRecord record = databaseResponse.next();
+            
+            creditRatings.add(
+                new CreditRating(
+                    CreditRatingState.valueOf((String) record.map().get("state")),
+                    (Long) record.map().get("user_id")
+                )
+            );
+        }
+
+        return creditRatings;
     }
 }

@@ -1,11 +1,9 @@
 package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 // Mads
 public class DamageReport {
-    private List<DamageSpecification> damageSpecifications;
     private Long bookingId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -13,19 +11,10 @@ public class DamageReport {
     public DamageReport() {
     }
 
-    public DamageReport(List<DamageSpecification> damageSpecifications, Long bookingId, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.damageSpecifications = damageSpecifications;
+    public DamageReport(Long bookingId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.bookingId = bookingId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-    }
-
-    public List<DamageSpecification> getDamageSpecifications() {
-        return damageSpecifications;
-    }
-
-    public void setDamageSpecifications(List<DamageSpecification> damageSpecifications) {
-        this.damageSpecifications = damageSpecifications;
     }
 
     public Long getBookingId() {
