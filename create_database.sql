@@ -155,7 +155,4 @@ CREATE TABLE IF NOT EXISTS damage_report_specifications
     spec_description VARCHAR(255),
     updated_at       DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     created_at       DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    PRIMARY KEY (report_id, spec_description),
-    FOREIGN KEY (report_id) REFERENCES damage_reports (booking_id),
-    FOREIGN KEY (spec_description) REFERENCES damage_specifications (description)
 );
