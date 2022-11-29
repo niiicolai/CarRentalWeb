@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AddressController {
 
-  private final AddressRepository ar;
+  private AddressRepository ar;
 
   public AddressController(AddressRepository ar) {
     this.ar = ar;
