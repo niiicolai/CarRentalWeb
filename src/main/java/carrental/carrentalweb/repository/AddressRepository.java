@@ -2,12 +2,12 @@ package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.Address;
 
-import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
+
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -24,15 +24,15 @@ public class AddressRepository {
 
 
   public boolean createAddress(Address newAddress) {
-    String query = "INSERT INTO address(street, city, zipCode, country, updated_at, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String query = "INSERT INTO address(street, city, zipCode, country, updated_at, created_at) VALUES (?, ?, ?, ?, ?, ?)";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(
         newAddress.getStreet(),
         newAddress.getCity(),
         newAddress.getZipCode(),
-        newAddress.getCountry());
-        newAddress.getCreatedAt();
-        newAddress.getUpdatedAt();
+        newAddress.getCountry(),
+        newAddress.getCreatedAt(),
+        newAddress.getUpdatedAt());
 
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
@@ -45,11 +45,26 @@ public class AddressRepository {
   }
 
   public Address findAddressById(Long id) {
-    String sql = "SELECT * FROM pickup_points WHERE id= ?";
+    String sql = "SELECT * FROM address WHERE id= ?";
     DatabaseRequestBody body = new DatabaseRequestBody(id);
     DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
     return parseResponseFirst(databaseResponse);
   }
+
+  public Address last() {
+    String sql = "SELECT * FROM address ORDER BY created_at DESC LIMIT 1";
+    DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+    return parseResponseFirst(databaseResponse);
+  }
+
+  public boolean deleteAddress(Long id) {
+    String sql = "DELETE FROM address WHERE id = ?";
+    DatabaseRequestBody requestBody = new DatabaseRequestBody(id);
+    DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
+
+    return databaseResponse.isSuccessful();
+  }
+
 
   public Address parseResponseFirst(DatabaseResponse databaseResponse) {
     List<Address> addresses = parseResponse(databaseResponse);
