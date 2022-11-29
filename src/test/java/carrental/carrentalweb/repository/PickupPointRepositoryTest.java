@@ -1,7 +1,7 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.*;
-import carrental.carrentalweb.entity_factories.TestPickupPointFactory;
+import carrental.carrentalweb.entity_factories.*;
 import carrental.carrentalweb.parameter_resolvers.DatabaseParameterResolver;
 import carrental.carrentalweb.services.DatabaseService;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,61 +18,34 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-
-
-
-
 @ExtendWith(DatabaseParameterResolver.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class PickupPointRepositoryTest {
 
-
-
-
-class PickupPointRepositoryTest {
 
   private static PickupPoint testPickupPoint;
-
-
+  private static Address testAddress;
   private static PickupPoint lastInsertedPickupPoint;
-  private static User lastInsertedUser;
 
-
-  private static BookingRepository bookingRepository;
-  private static SubscriptionRepository subscriptionRepository;
-  private static CarRepository carRepository;
+  private static Address lastInsertedAddress;
   private static PickupPointRepository pickupPointRepository;
-  private static UserRepository userRepository;
-
-
-
-  /*
-   * The database service connected to
-   * a seperate test database version of the
-   * original database.
-   */
+  private static AddressRepository addressRepository;
   private static DatabaseService database;
-
-  /*
-   * Executed before all tests.
-   * Caches the injected database service, and
-   * creates an instance of the user repository.
-   *
-   * It also contains the arrange part
-   * of several tests' AAA pattern.
-   */
 
   @BeforeAll
   public static void init(DatabaseService databaseService) {
     database = databaseService;
 
     // Arrange
+    // Create test repositories
     pickupPointRepository = new PickupPointRepository(database);
-    Address address = new Address("Gade", "Valby", "2500", "Danmark", LocalDateTime.now(), LocalDateTime.now());
+    addressRepository = new AddressRepository(database);
 
-    // Create test pickup
-    pickupPointRepository.createPickupPoint(TestPickupPointFactory.create(1));
-    lastInsertedPickupPoint = pickupPointRepository.last();
-    //lastInsertedPickupPoint.setAddressId();
+    //create test address
+    addressRepository.createAddress(TestAddressFactory.create());
+    lastInsertedAddress = addressRepository.last();
+
+
   }
 
   @AfterAll
@@ -85,38 +58,67 @@ class PickupPointRepositoryTest {
 
     @Test
     @Order(1)
-    void createPickupPoint() {
+    void testCreateAndLast_SaveToDatabase_AndReturnDataBaseObject() {
          // Arrange
-        testPickupPoint = TestPickupPointFactory.create(lastInsertedPickupPoint.getId());
+        testPickupPoint = TestPickupPointFactory.create(lastInsertedAddress.getId());
 
       // Act
       pickupPointRepository.createPickupPoint(testPickupPoint);
       lastInsertedPickupPoint = pickupPointRepository.last();
 
       // Assert
-      assertEquals(0L, lastInsertedPickupPoint.getId(), "Id must not be 0");
+      assertNotEquals(0L, lastInsertedPickupPoint.getId(), "Id must not be 0");
+      assertEquals(testPickupPoint.getName(), lastInsertedPickupPoint.getName(), "Name must be the same");
+      assertEquals(testPickupPoint.getAddressId(), lastInsertedPickupPoint.getAddressId(), "Address_id must be the same");
 
-    }
-/*
-    @Test
-    void getPickupPointsList() {
-    }
 
-    @Test
-    void findPickupPointById() {
     }
 
     @Test
+    @Order(2)
+    void testFindPickupPointById() {
+      //act
+      PickupPoint findPickupPoint = pickupPointRepository.findPickupPointById(lastInsertedPickupPoint.getId());
+
+
+      //assert
+      assertEquals(lastInsertedPickupPoint.getId(), findPickupPoint.getId(), "Id must be the same");
+      assertEquals(lastInsertedPickupPoint.getName(), findPickupPoint.getName(), "Name must be the same");
+      assertEquals(lastInsertedPickupPoint.getAddressId(), findPickupPoint.getAddressId(), "Address_id must be the same");
+
+    }
+
+    @Test
+    @Order(3)
     void updatePickupPoint() {
+      // Arrange
+      addressRepository.createAddress(TestAddressFactory.create());
+      Address updatedAddress = addressRepository.last();
+      PickupPoint updatedPickup = TestPickupPointFactory.create(updatedAddress.getId());
+      updatedPickup.setId(lastInsertedPickupPoint.getId());
+
+      // Act
+      pickupPointRepository.updatePickupPoint(updatedPickup);
+      //lastInsertedPickupPoint = pickupPointRepository.last();
+
+      // Assert
+      assertEquals(lastInsertedPickupPoint.getId(), updatedPickup.getId(), "Id must be the same");
+      assertNotEquals(lastInsertedPickupPoint.getName(), updatedPickup.getName(), "Name must not be the same");
+      assertNotEquals(lastInsertedPickupPoint.getAddressId(), updatedPickup.getAddressId(), "Address_id must not be the same");
+
     }
 
     @Test
+    @Order(4)
     void delete() {
+      //act
+      pickupPointRepository.delete(lastInsertedPickupPoint);
+      PickupPoint pickupPoint = pickupPointRepository.findPickupPointById(lastInsertedPickupPoint.getId());
+
+      //assert
+      assertEquals(null, pickupPoint, "Must be null");
     }
 
-    @Test
-    void last() {
-    }
-*/
+
 }
 

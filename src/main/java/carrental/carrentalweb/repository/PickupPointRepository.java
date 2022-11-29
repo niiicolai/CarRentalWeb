@@ -116,7 +116,7 @@ public class PickupPointRepository {
 		Connection conn = databaseService.getConnection();
 		String query = "UPDATE pickup_points SET address_id = ?, name = ? WHERE id = ?";
 		PreparedStatement preparedStatement = conn.prepareStatement(query);
-		preparedStatement.setObject(1, pickupPoint.getAddressId());
+		preparedStatement.setLong(1, pickupPoint.getAddressId());
 		preparedStatement.setString(2, pickupPoint.getName());
 		preparedStatement.setLong(3, pickupPoint.getId());
 		System.out.println(preparedStatement);

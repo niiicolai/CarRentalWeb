@@ -14,10 +14,10 @@ public class AddressBuilder {
     this.address = new Address();
   }
 
-  public AddressBuilder id(long id) {
+  /*public AddressBuilder id(long id) {
     address.setId(id);
     return this;
-  }
+  }*/
 
 
   public AddressBuilder street(String street) {
