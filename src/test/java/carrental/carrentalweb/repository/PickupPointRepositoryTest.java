@@ -76,6 +76,15 @@ public class PickupPointRepositoryTest {
 
     @Test
     @Order(2)
+    void testGetPickupPointList(){
+
+
+    assertNotEquals(0, pickupPointRepository.getPickupPointsList().size(), "Size must nok be 0");
+    assertNotEquals(0L, lastInsertedPickupPoint.getId(), "Id must not be 0");
+    }
+
+    @Test
+    @Order(3)
     void testFindPickupPointById() {
       //act
       PickupPoint findPickupPoint = pickupPointRepository.findPickupPointById(lastInsertedPickupPoint.getId());
@@ -89,7 +98,7 @@ public class PickupPointRepositoryTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void updatePickupPoint() {
       // Arrange
       addressRepository.createAddress(TestAddressFactory.create());
@@ -109,7 +118,7 @@ public class PickupPointRepositoryTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void delete() {
       //act
       pickupPointRepository.delete(lastInsertedPickupPoint);

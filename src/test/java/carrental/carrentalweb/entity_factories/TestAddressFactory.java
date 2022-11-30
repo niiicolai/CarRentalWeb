@@ -13,7 +13,6 @@ public class TestAddressFactory {
   public static Address create () {
     LocalDateTime now = LocalDateTime.now();
     return new AddressBuilder()
-        .id(0)
         .street(now.toString())
         .city(now.toString())
         .zipCode(now.toString())
