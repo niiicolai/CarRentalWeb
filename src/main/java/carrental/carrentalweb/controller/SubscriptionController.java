@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class SubscriptionController {
 
-    @Autowired
-    SubscriptionRepository subRepo;
+    private final SubscriptionRepository subRepo;
+
+    public SubscriptionController(SubscriptionRepository subRepo) {
+        this.subRepo = subRepo;
+    }
 
     @GetMapping("/subscriptions")
     public String index(Model model) {
@@ -38,13 +41,13 @@ public class SubscriptionController {
     }
 
     @GetMapping("/subscriptions/edit/{name}")
-	public String updatePickupPoint(Model model, @PathVariable("name") String name) {
+	public String update(Model model, @PathVariable("name") String name) {
 		model.addAttribute("subscription", subRepo.get("name", name));
 		return "subscriptions/edit";
 	}
 
 	@PatchMapping("/subscriptions/edit")
-	public String editPickupPoint(Subscription subscription) {
+	public String edit(Subscription subscription) {
 		subRepo.update(subscription);
 		return "redirect:/subscriptions";
 	}

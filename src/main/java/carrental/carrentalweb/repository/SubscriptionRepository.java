@@ -18,9 +18,9 @@ public class SubscriptionRepository {
         this.databaseService = databaseService;
     }
     public Subscription get(String column, Object value) {
-        String sql = String.format("SELECT * FROM subscriptions WHERE %s=?", column);
+        String query = String.format("SELECT * FROM subscriptions WHERE %s=?", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
-        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, body);
         return parseResponseFirst(databaseResponse);
     }
     public List<Subscription> getAll() {
@@ -36,41 +36,36 @@ public class SubscriptionRepository {
         return databaseResponse.isSuccessful();
     }
     public boolean update(Subscription subscription){
-        String query = "UPDATE subscriptions SET price = ?, days = ?, available = ? WHERE name = ?";
+        String query = "UPDATE subscriptions SET price=?, days=?, available=? WHERE name=?";
         DatabaseRequestBody body = new DatabaseRequestBody(subscription.getPrice(), subscription.getDays(),
             subscription.isAvailable(), subscription.getName());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
-
     public boolean delete(Subscription subscription) {
-        String sql = "DELETE FROM subscriptions WHERE name = ?";
+        String query = "DELETE FROM subscriptions WHERE name=?";
         DatabaseRequestBody requestBody = new DatabaseRequestBody(subscription.getName());
-        DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
-        
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
         return databaseResponse.isSuccessful();
     }
-
     public Subscription last() {
-        String sql = "SELECT * FROM subscriptions ORDER BY created_at DESC LIMIT 1";
-        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+        String query = "SELECT * FROM subscriptions ORDER BY created_at DESC LIMIT 1";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
         return parseResponseFirst(databaseResponse);
     }
-
     public Subscription parseResponseFirst(DatabaseResponse databaseResponse) {
         List<Subscription> subscriptions = parseResponse(databaseResponse);
         if (subscriptions.size() == 0) return null;
         else return subscriptions.get(0);
     }
-
-    private List<Subscription> parseResponse(DatabaseResponse databaseResponse) {
+    public List<Subscription> parseResponse(DatabaseResponse databaseResponse) {
         List<Subscription> subscriptions = new LinkedList<Subscription>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
             subscriptions.add(
                 new Subscription(
                     (String) record.map().get("name"),
-                    (long) record.map().get("days"),
+                    (double) record.map().get("days"),
                     (double) record.map().get("price"),
                     (boolean) record.map().get("available"),
                     (LocalDateTime) record.map().get("created_at"),
