@@ -24,9 +24,6 @@ import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 
 /*
- * @SpringBootTest
- * Define the class as Test class.
- * 
  * @ExtendWith(DatabaseParameterResolver.class)
  * Injects the Database Service object.
  * 
@@ -34,7 +31,6 @@ import carrental.carrentalweb.utilities.DatabaseResponse;
  * Enable's the @Order(int) annotation allowing
  * to set the order the tests should be executed in.
  */
-@SpringBootTest
 @ExtendWith(DatabaseParameterResolver.class)
 @TestMethodOrder(OrderAnnotation.class)
 public class CreditRatingRepositoryTest {

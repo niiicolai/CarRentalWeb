@@ -3,7 +3,6 @@ package carrental.carrentalweb.controller;
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.BookingRepository;
-import carrental.carrentalweb.services.InvoiceGeneratorService;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class BookingController {
 
-	private final BookingRepository br;
+	private BookingRepository br;
 
 	public BookingController(BookingRepository br) {
 		this.br = br;
@@ -37,5 +36,17 @@ public class BookingController {
 	public String create(Booking booking) {
 		br.createBooking(booking);
 		return "redirect:/cars";
+	}
+
+	@GetMapping("/bookings/edit/{id}")
+	public String updateBooking(Model model, @AuthenticationPrincipal Long id) {
+		model.addAttribute("bookings", br.findByBookingId(id));
+		return "bookings/edit";
+	}
+
+	@PatchMapping("/bookings/edit")
+	public String editBooking(Booking booking) {
+		br.updateBooking(booking);
+		return "redirect:/bookings";
 	}
 }

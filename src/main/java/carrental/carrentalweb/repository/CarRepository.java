@@ -27,8 +27,7 @@ public class CarRepository {
         try {
             Connection conn = databaseService.getConnection();
             String query = "INSERT INTO cars " +
-                    "(vehicle_number," +
-                    "frame_number," +
+                    "(frame_number," +
                     "brand," +
                     "model," +
                     "color," +
@@ -37,22 +36,25 @@ public class CarRepository {
                     "registration_fee," +
                     "co2_discharge," +
                     "inspected) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             System.out.println("Created query");
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             System.out.println("Created preparedStatement");
 
-            preparedStatement.setLong(1, newCar.getVehicleNumber());
-            preparedStatement.setString(2, newCar.getFrameNumber());
-            preparedStatement.setString(3, newCar.getBrand());
-            preparedStatement.setString(4, newCar.getModel());
-            preparedStatement.setString(5, newCar.getColor());
-            preparedStatement.setInt(6, newCar.getEquipmentLevel());
-            preparedStatement.setDouble(7, newCar.getSteelPrice());
-            preparedStatement.setDouble(8, newCar.getRegistrationFee());
-            preparedStatement.setDouble(9, newCar.getCo2Discharge());
-            preparedStatement.setBoolean(10, newCar.getInspected());
+            preparedStatement.setString(1, newCar.getFrameNumber());
+            preparedStatement.setString(2, newCar.getBrand());
+            preparedStatement.setString(3, newCar.getModel());
+            preparedStatement.setString(4, newCar.getColor());
+            preparedStatement.setInt(5, newCar.getEquipmentLevel());
+            preparedStatement.setDouble(6, newCar.getSteelPrice());
+            preparedStatement.setDouble(7, newCar.getRegistrationFee());
+            preparedStatement.setDouble(8, newCar.getCo2Discharge());
+            preparedStatement.setBoolean(9, newCar.getInspected());
+            System.out.println(preparedStatement);
+
+
             preparedStatement.executeUpdate();
+
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -169,6 +171,8 @@ public class CarRepository {
             preparedStatement.setString(8, car.getBrand());
             preparedStatement.setObject(9, LocalDateTime.now());
             preparedStatement.setLong(10, car.getVehicleNumber());
+
+            System.out.println(preparedStatement);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e){

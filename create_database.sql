@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS carrental;
+
+CREATE DATABASE IF NOT EXISTS carrental;
+USE carrental;
 
 -- Nicolai
 CREATE TABLE IF NOT EXISTS users

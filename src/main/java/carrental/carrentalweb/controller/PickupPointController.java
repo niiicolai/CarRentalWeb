@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class PickupPointController {
 
-	private final PickupPointRepository ppRepo;
+	private PickupPointRepository ppRepo;
 
 	public PickupPointController(PickupPointRepository ppRepo) {
 		this.ppRepo = ppRepo;
@@ -43,5 +43,12 @@ public class PickupPointController {
 	public String editPickupPoint(PickupPoint pickupPoint) {
 		ppRepo.updatePickupPoint(pickupPoint);
 		return "redirect:/pickups";
+	}
+
+	@DeleteMapping("/delete/{pickupPoint_id}")
+	public void deletePickupPoint(@PathVariable("pickupPoint_id") long id){
+		if (ppRepo.findPickupPointById(id) != null){
+			ppRepo.findPickupPointById(id);
+		}
 	}
 }
