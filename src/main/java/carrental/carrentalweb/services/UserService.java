@@ -20,6 +20,10 @@ public class UserService implements UserDetailsService {
     public UserService () {
     }
 
+    public UserService (UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.find(USERNAME_COLUMN, username);
