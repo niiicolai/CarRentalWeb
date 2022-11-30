@@ -23,16 +23,16 @@ public class TestAddressFactory {
         .build();
   }
 
-  public static DatabaseRecord createDatabaseRecord(Long id, String street, String city, String zipCode, String country) {
+  public static DatabaseRecord createDatabaseRecord() {
     LocalDateTime now = LocalDateTime.now();
     HashMap<String, Object> map = new HashMap<>();
     map.put("id", 0);
-    map.put("street", street);
-    map.put("city", city);
-    map.put("zipCode", zipCode);
-    map.put("country", country);
-    map.put("created_at", now);
-    map.put("updated_at", now);
+    map.put("street", now.toString());
+    map.put("city", now.toString());
+    map.put("zipCode", now.toString());
+    map.put("country", now.toString());
+    map.put("created_at", now.toString());
+    map.put("updated_at", now.toString());
     return new DatabaseRecord(map);
   }
 }

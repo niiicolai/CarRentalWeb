@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class BookingController {
 
-	private final BookingRepository br;
+	private BookingRepository br;
 
 	public BookingController(BookingRepository br) {
 		this.br = br;
