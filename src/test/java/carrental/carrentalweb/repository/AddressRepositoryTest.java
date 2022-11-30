@@ -64,7 +64,8 @@ class AddressRepositoryTest {
   @Test
   @Order(2)
   void getAddressList() {
-
+    assertNotEquals(0, addressRepository.getAddressList().size(), "Size must nok be 0");
+    assertNotEquals(0L, lastInsertedAddress.getId(), "Id must not be 0");
   }
 
   @Test

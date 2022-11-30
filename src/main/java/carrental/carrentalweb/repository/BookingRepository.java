@@ -99,9 +99,9 @@ public class BookingRepository {
     return parseResponseFirst(databaseResponse);
 }
 
-  public Booking findBookingId(Long id) {
+  public Booking findByBookingId(Long id) {
 
-    String sql = "SELECT * FROM subscriptions WHERE id=?";
+    String sql = "SELECT * FROM bookings WHERE id = ?";
     DatabaseRequestBody requestBody = new DatabaseRequestBody(id);
     DatabaseResponse databaseResponse = databaseService.executeQuery(sql, requestBody);
 
@@ -136,11 +136,10 @@ public class BookingRepository {
 
   public boolean updateBooking(Booking booking) {
 
-    String query = String.format("UPDATE bookings " +
-        "SET user_id = ?, vehicle_number = ?, subscription_name =?, pickup_point_id = ?, delivered_at = ?, created_at = ?, updated_at = ? WHERE id=?");
+    String query = "UPDATE bookings SET user_id = ?, vehicle_number = ?, subscription_name = ?, pickup_point_id = ?, delivered_at = ?, created_at = ?, updated_at = ? WHERE id=?";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(booking.getUserId(), booking.getVehicleNumber(),
-        booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getCreatedAt(), booking.getUpdatedAt());
+        booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getCreatedAt(), booking.getUpdatedAt(), booking.getId());
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
 /*
