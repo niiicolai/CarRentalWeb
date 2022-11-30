@@ -31,7 +31,7 @@ public class AddressController {
   }
 
   //Added extra e to resolve conflict
-  @PostMapping("/bookings/create")
+  @PostMapping("/bookings/createe")
   public String create(Address address) {
     ar.createAddress(address);
     return "redirect:/address";
