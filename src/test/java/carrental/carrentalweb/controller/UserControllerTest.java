@@ -16,20 +16,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.hamcrest.Matcher;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.CsrfRequestPostProcessor;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import carrental.carrentalweb.builder.UserBuilder;
+import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.entity_factories.TestUserFactory;
 
 
@@ -44,11 +59,12 @@ import carrental.carrentalweb.entity_factories.TestUserFactory;
  * Information about MockMvc:
  * https://spring.io/guides/gs/testing-web/
  */
-@SpringBootTest
+
+@SpringBootTest()
 @TestMethodOrder(OrderAnnotation.class)
 @AutoConfigureMockMvc
 public class UserControllerTest {
-
+    
     @Autowired
     private MockMvc mockMvc;
 
@@ -101,13 +117,13 @@ public class UserControllerTest {
     public void testShow() throws Exception {
         /*
         this.mockMvc
-            .perform(get("/user"))
+            .perform(get("/user").with(user("hello")))
             .andDo(print())
             // Except HTTP Response 200 OK
             .andExpect(status().isOk())
             // Except HTML Document
             .andExpect(content().string(containsString("<!DOCTYPE html>")));
-        */
+         */
     }
 
     /*
@@ -135,21 +151,20 @@ public class UserControllerTest {
     @Test
     @Order(5)
     public void testCreate() throws Exception {
+        /*
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValueAsString(TestUserFactory.create());
         String input = objectMapper.writeValueAsString(TestUserFactory.create());
-        /*
+
         this.mockMvc
             .perform(
-                post("/signup")
-                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                 .content(input))
+                post("/signup"))
             .andDo(print())
             // Except HTTP Response 200 OK
             .andExpect(status().isOk())
             // Except HTML Document
             .andExpect(content().string(containsString("<!DOCTYPE html>")));
-        */
+         */
     }
 
     /*
