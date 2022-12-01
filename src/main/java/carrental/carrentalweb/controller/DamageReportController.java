@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class DamageReportController {
 
-    private DamageReportRepository dmgRepo;
+    private final DamageReportRepository dmgRepo;
 
     public DamageReportController(DamageReportRepository dmgRepo) {
         this.dmgRepo = dmgRepo;

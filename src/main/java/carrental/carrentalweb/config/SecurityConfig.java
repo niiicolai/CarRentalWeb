@@ -73,6 +73,7 @@ public class SecurityConfig {
                 .logoutUrl(LOGOUT_URL)
                 .logoutSuccessUrl(AFTER_LOGOUT_URL)
             .and()
+            .csrf().disable()
                 .httpBasic();
         return http.build();
     }
