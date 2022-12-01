@@ -91,10 +91,10 @@ class BookingRepositoryTest {
 
   @Test
   @Order(2)
-  void testGetBookingListAndFindByBooking() {
+  void testGetBookingListAndFind() {
 
     assertNotEquals(0, bookingRepository.getBookingList(lastInsertedUser).size(), "Size must nok be 0");
-    assertNotEquals(0L, bookingRepository.findByBookingId(lastInsertedBooking.getId()), "Id must not be 0");
+    assertNotEquals(0L, bookingRepository.find("id", bookingRepository.getBookingList(lastInsertedUser).get(0).getId()), "Id must not be 0");
   }
 
   @Test

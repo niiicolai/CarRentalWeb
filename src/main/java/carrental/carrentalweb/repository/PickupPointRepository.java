@@ -30,14 +30,20 @@ public class PickupPointRepository {
 	public boolean createPickupPoint(PickupPoint newPickupPoint) {
 		String query = "INSERT INTO pickup_points (name, address_id, created_at, updated_at) VALUES (?, ?, ?, ?)";
 
+		//Laves til et array af objects i DatabaseRequestBody
 		DatabaseRequestBody requestBody = new DatabaseRequestBody(
 				newPickupPoint.getName(),
 				newPickupPoint.getAddressId(),
 				newPickupPoint.getCreatedAt(),
 				newPickupPoint.getUpdatedAt());
 
+		//databaseService kører executeUpdate med query'en og requestBody som er en Object array der er blevet iterated
+		//i DatabaseRequestBody. I executeUpdate metoden. De tilføjes som arguments i et prepared statement med query string.
+		//De objects, eller her både objects (LocalDateTime) og primitive data types (her Long og String), indføres så i rækkefølge
+		//som angivet i den query der er defineret.
 		DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
 		return databaseResponse.isSuccessful();
+
 		/*try {
 		Connection conn = databaseService.getConnection();
 		String query = "INSERT INTO pickup_points (name, address_id) VALUES (?, ?)";
@@ -111,8 +117,13 @@ public class PickupPointRepository {
 		return pickupPoint;*/
 	}
 
-	public void updatePickupPoint(PickupPoint pickupPoint) {
-		try {
+	public boolean updatePickupPoint(PickupPoint pickupPoint) {
+		String query = "UPDATE pickup_points SET address_id=?, name=? WHERE id = ?";
+		DatabaseRequestBody body = new DatabaseRequestBody(pickupPoint.getAddressId(), pickupPoint.getName(), pickupPoint.getId());
+		DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
+		return databaseResponse.isSuccessful();
+
+/*		try {
 		Connection conn = databaseService.getConnection();
 		String query = "UPDATE pickup_points SET address_id = ?, name = ? WHERE id = ?";
 		PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -123,11 +134,17 @@ public class PickupPointRepository {
 		preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 		e.printStackTrace();
-		}
+		}*/
 	}
 
-	public void delete(PickupPoint pickupPoint) {
-		try {
+	public boolean delete(PickupPoint pickupPoint) {
+		String sql = "DELETE FROM pickup_points WHERE id = ?";
+		DatabaseRequestBody requestBody = new DatabaseRequestBody(pickupPoint.getId());
+		DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
+
+		return databaseResponse.isSuccessful();
+
+/*		try {
 			Connection conn = databaseService.getConnection();
 			String query = "DELETE FROM pickup_points WHERE id = ?";
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -136,13 +153,15 @@ public class PickupPointRepository {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public PickupPoint last() {
-		PickupPoint pickup = null;
-
-		try {
+/*		PickupPoint pickup = null;*/
+		String sql = "SELECT * FROM pickup_points ORDER BY created_at DESC LIMIT 1";
+		DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+		return parseResponseFirst(databaseResponse);
+/*		try {
 			Connection conn = databaseService.getConnection();
 			String query = "SELECT * FROM pickup_points ORDER BY created_at DESC LIMIT 1";
 			PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -162,7 +181,7 @@ public class PickupPointRepository {
 			e.printStackTrace();
 		}
 
-		return pickup;
+		return pickup;*/
     }
 
 	public PickupPoint parseResponseFirst(DatabaseResponse databaseResponse) {
