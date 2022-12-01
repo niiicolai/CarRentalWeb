@@ -9,8 +9,7 @@ public class PickupPoint {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
-  public PickupPoint(long id, String name, long addressId) {
-    this.id = id;
+  public PickupPoint(String name, long addressId) {
     this.name = name;
     this.addressId = addressId;
   }
