@@ -35,7 +35,7 @@ public class SubscriptionRepository {
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
-    public boolean update(Subscription subscription){
+    public boolean update(Subscription subscription) {
         String query = "UPDATE subscriptions SET price=?, days=?, available=? WHERE name=?";
         DatabaseRequestBody body = new DatabaseRequestBody(subscription.getPrice(), subscription.getDays(),
             subscription.isAvailable(), subscription.getName());

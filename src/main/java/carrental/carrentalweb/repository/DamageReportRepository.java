@@ -1,6 +1,7 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.DamageReport;
+import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
@@ -14,9 +15,7 @@ import java.util.List;
 // Mads
 @Repository
 public class DamageReportRepository {
-
     private final DatabaseService databaseService;
-
     public DamageReportRepository(DatabaseService databaseService) {
         this.databaseService = databaseService;
     }
@@ -27,7 +26,6 @@ public class DamageReportRepository {
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
         return parseResponse(databaseResponse).get(0);
     }
-
     public boolean create(DamageReport damageReport) {
         String query = "INSERT INTO damage_reports (booking_id) VALUES (?)";
         DatabaseRequestBody body = new DatabaseRequestBody(damageReport.getBookingId());
@@ -35,8 +33,17 @@ public class DamageReportRepository {
         return databaseResponse.isSuccessful();
 
     }
-
-    private List<DamageReport> parseResponse(DatabaseResponse databaseResponse) {
+    public DamageReport last() {
+        String query = "SELECT * FROM damage_reports ORDER BY created_at DESC LIMIT 1";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
+        return parseResponseFirst(databaseResponse);
+    }
+    public DamageReport parseResponseFirst(DatabaseResponse databaseResponse) {
+        List<DamageReport> damageReports = parseResponse(databaseResponse);
+        if (damageReports.size() == 0) return null;
+        else return damageReports.get(0);
+    }
+    public List<DamageReport> parseResponse(DatabaseResponse databaseResponse) {
         List<DamageReport> dmgReports = new LinkedList<DamageReport>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
