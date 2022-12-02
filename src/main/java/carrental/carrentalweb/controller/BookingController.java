@@ -40,7 +40,7 @@ public class BookingController {
 
 	@GetMapping("/bookings/edit/{id}")
 	public String updateBooking(Model model, @AuthenticationPrincipal Long id) {
-		model.addAttribute("bookings", br.findByBookingId(id));
+		model.addAttribute("bookings", br.find("id", id));
 		return "bookings/edit";
 	}
 
