@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS carrental;
 
 CREATE DATABASE IF NOT EXISTS carrental;
 USE carrental;
+
 -- Nicolai
 CREATE TABLE IF NOT EXISTS users
 (
@@ -46,7 +47,7 @@ CREATE TABLE IF NOT EXISTS cars
 CREATE TABLE IF NOT EXISTS subscriptions
 (
     name       VARCHAR(255) PRIMARY KEY NOT NULL UNIQUE,
-    days       BIGINT                   NOT NULL,
+    days       DOUBLE                   NOT NULL,
     price      DOUBLE                   NOT NULL,
     available  BIT(1),
     created_at DATETIME(6)              NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -154,5 +155,5 @@ CREATE TABLE IF NOT EXISTS damage_report_specifications
     report_id        BIGINT,
     spec_description VARCHAR(255),
     updated_at       DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    created_at       DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    created_at       DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );

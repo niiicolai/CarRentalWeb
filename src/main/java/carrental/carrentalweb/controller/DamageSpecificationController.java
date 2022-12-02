@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class DamageSpecificationController {
 
-    private DamageSpecificationRepository dmgSpecRepo;
+    private final DamageSpecificationRepository dmgSpecRepo;
 
     public DamageSpecificationController(DamageSpecificationRepository dmgSpecRepo) {
         this.dmgSpecRepo = dmgSpecRepo;

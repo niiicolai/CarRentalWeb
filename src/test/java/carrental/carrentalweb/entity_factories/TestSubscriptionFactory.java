@@ -34,8 +34,8 @@ public class TestSubscriptionFactory {
         LocalDateTime now = LocalDateTime.now();
         HashMap<String, Object> map = new HashMap<>();
         map.put("name", now.toString());
-        map.put("price", 200);
-        map.put("days", 180);
+        map.put("price", 200d);
+        map.put("days", 180d);
         map.put("available", available);
         map.put("created_at", now);
         map.put("updated_at", now);
