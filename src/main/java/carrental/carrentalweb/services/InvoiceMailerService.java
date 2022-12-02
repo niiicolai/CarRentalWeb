@@ -25,7 +25,7 @@ public class InvoiceMailerService {
         String mailTo = user.getEmail();
 
         try {
-            mailerService.sendMessageWithAttachment(mailTo, String.format(subject, invoice.getBookingId()), description, file);
+            mailerService.send(mailTo, String.format(subject, invoice.getBookingId()), description, file);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
