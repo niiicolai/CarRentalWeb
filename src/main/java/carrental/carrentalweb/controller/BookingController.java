@@ -33,13 +33,13 @@ public class BookingController {
 	}
 
 	@PostMapping("/bookings/create")
-	public String create(Booking booking) {
+	public String create(@ModelAttribute("booking") Booking booking) {
 		br.createBooking(booking);
 		return "redirect:/cars";
 	}
 
 	@GetMapping("/bookings/edit/{id}")
-	public String updateBooking(Model model, @AuthenticationPrincipal Long id) {
+	public String updateBooking(Model model, @PathVariable Long id) {
 		model.addAttribute("bookings", br.find("id", id));
 		return "bookings/edit";
 	}

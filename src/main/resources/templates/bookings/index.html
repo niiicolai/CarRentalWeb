@@ -7,14 +7,15 @@
     <h3>List of bookings</h3>
     <ul th:each="b : ${bookinglist}">
         <li>
-            <p th:text="${b.getId()}"></p>
-            <p th:text="${b.getSubscriptionName()}"></p>
-            <p th:text="${b.getPickupPointId()}"></p>
-            <p th:text="${b.getVehicleNumber()}"></p>
-            <p th:text="${b.getUserId()}"></p>
-            <p th:text="${b.getDeliveredAt()}"></p>
-            <p th:text="${b.getCreatedAt()}"></p>
-            <p th:text="${b.getUpdatedAt()}"></p>
+        <p th:text="${b.id}"></p>
+        <p th:text="${b.subscriptionName}"></p>
+        <p th:text="${b.pickupPointId}"></p>
+        <p th:text="${b.vehicleNumber}"></p>
+        <p th:text="${b.userId}"></p>
+        <p th:text="${b.deliveredAt}"></p>
+        <p th:text="${b.createdAt}"></p>
+        <p th:text="${b.updatedAt}"></p>
+            <a th:href="@{/bookings/edit/{id}(id = ${b.id})}">Edit</a>
         </li>
     </ul>
 </body>

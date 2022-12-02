@@ -7,13 +7,16 @@
     <title>Title</title>
 </head>
 <body layout:fragment="content">
-    <h1>Pickups (<a th:href="@{/pickups/create}">new</a>)</h1>
-    <ul th:each="pickupPoint: ${pickupPoints}">
-        <li>
-            <p>Name: <span th:text="${pickupPoint.getName()}" /></p>
-            <p>Address id: <span th:text="${pickupPoint.getAddressId()}" /></p>
-            <a th:href="@{/pickups/edit/{id}(id = ${pickupPoint.getId()})}">Edit</a>
-        </li>
-    </ul>
+    <h1>Pickups (<a th:href="@{/pickups/index.html}">new</a>)</h1>
+
+        <ul th:each="p : ${pickupPoints}">
+            <li>
+            <p th:text="${p.id}"></p>
+            <p th:text="${p.name}"></p>
+            <p th:text="${p.addressId}"></p>
+            <p th:text="${p.createdAt}"></p>
+            <p th:text="${p.updatedAt}"></p>
+            </li>
+        </ul>
 </body>
 </html>
