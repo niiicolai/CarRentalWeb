@@ -52,7 +52,7 @@ public class BookingController {
 
 	@GetMapping("/bookings/show/{id}")
 	public String showBooking(Model model, @AuthenticationPrincipal Long id) {
-		model.addAttribute("bookings", br.find("id", id));
+		model.addAttribute("booking", br.find("id", id));
 		return "bookings/show";
 	}
 }

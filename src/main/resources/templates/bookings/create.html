@@ -7,22 +7,43 @@
     <title>Title</title>
 </head>
 <body  layout:fragment="content">
+
+<h3 class="text-box secondary text-center">Opret ny booking</h3>
+
+<div class="text-box secondary text-center">
+    <span class="line-1"></span>
+    <span class="line-2"></span>
+    <span class="line-3"></span>
+    <span class="line-4"></span>
+    <span class="line-5"></span>
+    <span class="line-6"></span>
+    <span class="line-7"></span>
+    <span class="line-8"></span>
+
 <form th:action="@{/bookings/create}" method="post" th:object="${booking}" class="form">
-    <div class="text-field">¨
+    <div class="text-field">
+
+        <div class="input-control">
+            <label for="vnumber">Vognummer: </label>
+        <input th:field="*{vehicleNumber}" id="vnumber" type="text" placeholder="Vehicle number" required>
+        </div>
+
+        <div class="input-control">
+            <label for="stype">Subscription: </label>
+        <input th:field="*{subscriptionName}" id="stype" type="text" placeholder="Subscription name" required>
+        </div>
 
 
-        <input th:field="*{vehicleNumber}" type="text" placeholder="Vehicle number" required>
-
-
-        <input th:field="*{subscriptionName}" type="text" placeholder="Subscription name" required>
-
-
-        <input th:field="*{pickupPointId}" type="text" placeholder="Pickup point id" required>
-
-
-        <input class="button" type="submit" value="Create booking">
+            <div class="input-control">
+                <label for="pickupId">Afhentningssted ID: </label>
+        <input th:field="*{pickupPointId}" id="pickupId" type="text" placeholder="Pickup point id" required>
+            </div>
+            <br>
+        <input class="button primary medium" type="submit" value="Opret booking">
 
     </div>
+
 </form>
+</div>
 </body>
 </html>
