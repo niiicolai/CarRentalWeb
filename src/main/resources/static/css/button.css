@@ -1,13 +1,25 @@
 /*
  * Buttons.
+ * Lavet af alle i gruppen.
  */
 
 .button {
     /* Remove underline from links */
     text-decoration: none;
-}
 
-/* Normal */
+    /* Set button padding */
+    padding: 5px 10px;
+
+    /* Modify button borders */
+    border-style: solid;
+    border-width: 1px;  
+    border-radius: 2px;
+
+    /* Change the cursor graphic */
+    cursor: pointer;
+
+    box-shadow: 2px 2px 3px rgb(201, 201, 201);
+}
 
 .button.primary {
     background-color: var(--primary);
@@ -48,45 +60,46 @@
 /* Normal:hover */ 
 
 .button.primary:hover {
-    background-color: var(--primary);
+    background-color: var(--white);
     border-color: var(--primary);
-    color: var(--white);
+    color: var(--primary);
 }
 
 .button.secondary:hover {
-    background-color: var(--secondary);
+    background-color: var(--white);
     border-color: var(--secondary);
-    color: var(--white);
+    color: var(--secondary);
 }
 
 .button.info:hover {
-    background-color: var(--info);
+    background-color: var(--white);
     border-color: var(--info);
-    color: var(--white);
+    color: var(--info);
 }
 
 .button.success:hover {
-    background-color: var(--success);
+    background-color: var(--white);
     border-color: var(--success);
-    color: var(--white);
+    color: var(--success);
 }
 
 .button.danger:hover {    
-    background-color: var(--danger);
+    background-color: var(--white);
     border-color: var(--danger);
-    color: var(--white);
+    color: var(--danger);
 }
 
 .button.warning:hover {    
-    background-color: var(--warning);
+    background-color: var(--white);
     border-color: var(--warning);
-    color: var(--white);
+    color: var(--warning);
 }
 
 /* rounded */
 
 .button.rounded {
     border-radius: 100%;
+    padding: 10px 12px;
 }
 
 /* size */

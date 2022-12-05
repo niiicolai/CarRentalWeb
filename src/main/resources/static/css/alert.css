@@ -3,8 +3,9 @@
  */
 
 .alert {
-    padding: var(--padding);
+    padding: 5px 10px;
     margin-bottom: var(--margin);
+    font-size: 0.9em;
 }
 
 .alert.primary {
