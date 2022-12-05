@@ -6,116 +6,63 @@
 
 <body layout:fragment="content">
 
-    <div class="text-box secondary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-
-        <h3>Velkommen tilbage <strong th:text="${user.getUsername()}" />!</h3>
-        <p>Du har lige nu <strong>0</strong> igangværende bookinger.</p>
-    </div>
-
-    <div class="text-box primary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-
-        <div th:replace="credit_rating/fragments/show.html :: show(${creditRating})" />
-        <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})" />
-    </div>
-
-    <div class="text-box secondary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-
-        <h3>Opdater profil</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <a class="button primary small" href="/user/edit">Opdater profil</a>
-        <br><br>
-    </div>
-
-    <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
-        <div class="text-box secondary">
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
-            <span class="line-4"></span>
-            <span class="line-5"></span>
-            <span class="line-6"></span>
-            <span class="line-7"></span>
-            <span class="line-8"></span>
-    
-            <h3>Administrer afhentningslokationer</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <a class="button primary small" href="/pickups">Afhentningslokationer</a>
-            <br><br>
-        </div>
-    
-        <div class="text-box secondary">
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
-            <span class="line-4"></span>
-            <span class="line-5"></span>
-            <span class="line-6"></span>
-            <span class="line-7"></span>
-            <span class="line-8"></span>
-    
-            <h3>Administrer abonnementer</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <a class="button primary small" href="/subscriptions">Abonnementer</a>
-            <br><br>
-        </div>
-    
-        <div class="text-box secondary">
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
-            <span class="line-4"></span>
-            <span class="line-5"></span>
-            <span class="line-6"></span>
-            <span class="line-7"></span>
-            <span class="line-8"></span>
-    
-            <h3>Administrer bookinger</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <a class="button primary small" href="/bookings">Bookinger</a>
-            <br><br>
-        </div>
-    
-        <div class="text-box secondary">
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
-            <span class="line-4"></span>
-            <span class="line-5"></span>
-            <span class="line-6"></span>
-            <span class="line-7"></span>
-            <span class="line-8"></span>
-    
-            <h3>Administrer skaderapporter</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <a class="button primary small" href="/damage-reports">Skaderapporter</a>
-            <br><br>
+    <div class="background-image cover" th:style="'background-image:url(' + @{${timeOfDayImage}} + ');'">
+        <div class="overlay">
+            <p class="text-white">
+                <span><span th:text="${timeOfDayGreeting}" /> <strong th:text="${user.getUsername()}" />.<br>
+                    <small>Velkommen til dit dashboard.</small></span><br>
+                <br>
+                <small>
+                    <span>Rolle(r):</span>
+                    <span th:each="authority: ${user.getAuthorities()}">
+                        <strong th:if="${authority.toString() == 'ROLE_CLIENT'}">Kunde;</strong>
+                        <strong th:if="${authority.toString() == 'ROLE_EMPLOYEE'}">Medarbejder;</strong>
+                    </span>
+                </small>
+            </p>
         </div>
     </div>
 
+    <div class="flex justify-space-between gap-8">
+        <a class="button primary large text-center min-height-185" href="/user/edit">
+            <p><strong><i class="fa-solid fa-user-pen"></i><br> Profil</strong></p>
+            <small>Du modtager lige<br> nu faktura på <strong th:text="${user.getEmail()}" /></small><br><br>
+        </a>
+        <a class="button primary large text-center min-height-185" href="/bookings">
+            <p><strong><i class="fa-solid fa-car-side"></i><br> Udlejningsaftaler</strong></p>
+            <small>Du har lige nu <strong>0</strong> udlejningsaftaler.</small><br><br>
+        </a>
+        <a class="button primary large text-center min-height-185" href="/pickups">
+            <p><strong><i class="fa-solid fa-location-dot"></i><br> Afhentningslokationer</strong></p>
+            <small>Der findes lige nu <strong>0</strong> afhentningslokationer.</small><br><br>
+        </a>
+        <a class="button primary large text-center min-height-185" href="/subscriptions">
+            <p><strong><i class="fa-solid fa-tags"></i><br> Abonnementer</strong></p>
+            <small>Der findes lige nu <strong>0</strong> abonnementer.</small><br><br>
+        </a>
+    </div>
+    <br>
+    <div class="flex justify-space-between gap-8">
+        <a class="button primary large text-center min-height-185" href="/bookings">
+            <p><strong><i class="fa-solid fa-car"></i><br> Biler</strong></p>
+            <small>Vi har lige <strong>0</strong> biler til udlejning.</small><br><br>
+        </a>
+        <a class="button primary large text-center min-height-185" href="/pickups">
+            <p><strong><i class="fa-regular fa-handshake"></i><br> Handelsbetingelser</strong></p>
+            <small>Find information<br> om vores handelsbetingelser.</small><br><br>
+        </a>
+        <a class="button primary large text-center min-height-185" href="/subscriptions">
+            <p><strong><i class="fa-regular fa-address-card"></i><br> Om os</strong></p>
+            <small>Find mere information om vores virksomhed.</small><br><br>
+        </a>
+        <form th:action="@{/logout}" th:method="post" class="display inline">
+            <button type="submit" class="button primary large text-center min-height-185">
+                <p><strong><i class="fa-sharp fa-solid fa-right-from-bracket"></i><br> Log ud</strong></p>
+                <small>Du kan altid logge på igen, så længe du kan huske din kode.</small><br><br>
+            </button>
+        </form>
+    </div>
+    <br><br>
 </body>
 
 </html>
