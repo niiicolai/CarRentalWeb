@@ -4,7 +4,7 @@
     layout:decorate="~{/layout/layout}">
 <head></head>
 <body layout:fragment="content">
-    <h3>List of bookings</h3>
+    <h1>List of bookings</h1>
     <ul th:each="b : ${bookinglist}">
         <li>
         <p th:text="${b.id}"></p>

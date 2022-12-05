@@ -7,13 +7,27 @@
     <title>Title</title>
 </head>
 <body layout:fragment="content">
+<h3>Create new pickup point</h3>
     <form th:action="@{/pickups/create}" th:object="${pickupPoint}" th:method="post">
-        
-        <input th:field="*{name}" type="text" placeholder="name" required>
-        <input th:field="*{addressId}" type="text" placeholder="addressId" required>
-        
+
+        <label for="name">Name:</label> <br>
+        <input th:field="*{name}" type="text" placeholder="name" id="name" required> <br>
+
+        <label for="address-id">Address id:</label> <br>
+        <input th:field="*{addressId}" type="text" placeholder="addressId" id="address-id" required> <br>
+
         <input type="submit" value="create">
 
     </form>
+
+    <ul th:each="a : ${addressList}">
+        <li>
+            <p th:text="${a.id}"></p>
+            <p th:text="${a.street}"></p>
+            <p th:text="${a.city}"></p>
+            <p th:text="${a.zipCode}"></p>
+            <p th:text="${a.country}"></p>
+        </li>
+    </ul>
 </body>
 </html>
