@@ -4,19 +4,42 @@
     layout:decorate="~{/layout/layout}">
 <head></head>
 <body layout:fragment="content">
-    <h1>List of bookings</h1>
-    <ul th:each="b : ${bookinglist}">
-        <li>
-        <p th:text="${b.id}"></p>
-        <p th:text="${b.subscriptionName}"></p>
-        <p th:text="${b.pickupPointId}"></p>
-        <p th:text="${b.vehicleNumber}"></p>
-        <p th:text="${b.userId}"></p>
-        <p th:text="${b.deliveredAt}"></p>
-        <p th:text="${b.createdAt}"></p>
-        <p th:text="${b.updatedAt}"></p>
-            <a th:href="@{/bookings/edit/{id}(id = ${b.id})}">Edit</a>
-        </li>
-    </ul>
+    <h3 class="text-box secondary text-center">List of bookings</h3>
+
+    <div class="text-box secondary text-center">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+        <table class="table">
+        <tr>
+            <th>Booking ID</th>
+            <th>Subscription</th>
+            <th>Afhentningssted ID</th>
+            <th>Vognnummer</th>
+            <th>User ID</th>
+            <th>Leveret d.</th>
+            <th>Leveret d.</th>
+            <th>Oprettet d.</th>
+            <th>Opdateret d.</th>
+        </tr>
+    <tr th:each="booking : ${bookinglist}">
+            <td th:text="${booking.getId()}"></td>
+            <td th:text="${booking.getSubscriptionName()}"></td>
+            <td th:text="${booking.getPickupPointId()}"></td>
+            <td th:text="${booking.getVehicleNumber()}"></td>
+            <td th:text="${booking.getUserId()}"></td>
+            <td th:text="${booking.getDeliveredAt()}"></td>
+            <td th:text="${booking.getCreatedAt()}"></td>
+            <td th:text="${booking.getUpdatedAt()}"></td>
+        <td><a class="button primary small" th:href="@{/bookings/edit/{id}(id = ${booking.getId()})}">Edit</a></td>
+    </tr>
+    </table>
+        </div>
 </body>
 </html>

@@ -1,17 +1,121 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
-    <head></head>
-    <body layout:fragment="content">
-        <div class="card p-3 mb-3 mt-3">
-            <h1 th:text="${user.getUsername()}" />
-            <a class="navbar-link btn btn-outline-secondary btn-sm" href="/user/edit">
-                Edit Profile
-            </a>
 
-            <div th:replace="credit_rating/fragments/show.html :: show(${creditRating})" />
-            <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})" />
+<head></head>
+
+<body layout:fragment="content">
+
+    <div class="text-box secondary">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+        <h3>Velkommen tilbage <strong th:text="${user.getUsername()}" />!</h3>
+        <p>Du har lige nu <strong>0</strong> igangværende bookinger.</p>
+    </div>
+
+    <div class="text-box primary">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+        <div th:replace="credit_rating/fragments/show.html :: show(${creditRating})" />
+        <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})" />
+    </div>
+
+    <div class="text-box secondary">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+        <h3>Opdater profil</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="button primary small" href="/user/edit">Opdater profil</a>
+        <br><br>
+    </div>
+
+    <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+        <div class="text-box secondary">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+    
+            <h3>Administrer afhentningslokationer</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="button primary small" href="/pickups">Afhentningslokationer</a>
+            <br><br>
         </div>
-    </body>
+    
+        <div class="text-box secondary">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+    
+            <h3>Administrer abonnementer</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="button primary small" href="/subscriptions">Abonnementer</a>
+            <br><br>
+        </div>
+    
+        <div class="text-box secondary">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+    
+            <h3>Administrer bookinger</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="button primary small" href="/bookings">Bookinger</a>
+            <br><br>
+        </div>
+    
+        <div class="text-box secondary">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+    
+            <h3>Administrer skaderapporter</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="button primary small" href="/damage-reports">Skaderapporter</a>
+            <br><br>
+        </div>
+    </div>
+
+</body>
+
 </html>

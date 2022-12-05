@@ -1,0 +1,24 @@
+/*
+ * Flex.
+ * Lavet af alle i gruppen.
+ */
+
+.flex {
+    display: flex;
+}
+
+.flex.align-items-center {
+    align-items: center;
+}
+
+.flex.justify-space-between {
+    justify-content: space-between;
+}
+
+.flex.justify-space-evenly {
+    justify-content: space-evenly;
+}
+
+.flex.gap-5 {
+    gap: 5px;
+}

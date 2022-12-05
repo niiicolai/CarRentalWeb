@@ -1,6 +1,7 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.DamageSpecification;
+import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
@@ -29,7 +30,7 @@ public class DamageSpecificationRepository {
         return parseResponse(databaseResponse);
     }
     public boolean create(DamageSpecification dmgSpec) {
-        String query = "INSERT INTO damage_specifications (description, damaged, price) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO damage_specifications (description, damaged, price) VALUES (?, ?, ?)";
         DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.isDamaged(), dmgSpec.getPrice());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
@@ -40,7 +41,24 @@ public class DamageSpecificationRepository {
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
-    private List<DamageSpecification> parseResponse(DatabaseResponse databaseResponse) {
+
+    public boolean delete(DamageSpecification dmgSpec) {
+        String query = "DELETE FROM damage_specifications WHERE description=?";
+        DatabaseRequestBody requestBody = new DatabaseRequestBody(dmgSpec.getDescription());
+        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
+        return databaseResponse.isSuccessful();
+    }
+    public DamageSpecification last() {
+        String query = "SELECT * FROM damage_specifications ORDER BY created_at DESC LIMIT 1";
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
+        return parseResponseFirst(databaseResponse);
+    }
+    public DamageSpecification parseResponseFirst(DatabaseResponse databaseResponse) {
+        List<DamageSpecification> damageSpecifications = parseResponse(databaseResponse);
+        if (damageSpecifications.size() == 0) return null;
+        else return damageSpecifications.get(0);
+    }
+    public List<DamageSpecification> parseResponse(DatabaseResponse databaseResponse) {
         List<DamageSpecification> dmgSpecs = new LinkedList<DamageSpecification>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();

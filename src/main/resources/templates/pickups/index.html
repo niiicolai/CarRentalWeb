@@ -7,17 +7,32 @@
     <title>Title</title>
 </head>
 <body layout:fragment="content">
-    <h1>Pickups (<a th:href="@{/pickups/create}">new</a>)</h1>
+    <h3 class="text-box secondary text-center">Afhentningssteder (<a th:href="@{/pickups/create}">Opret ny</a>)</h3>
 
-        <ul th:each="p : ${pickupPoints}">
-            <li>
-            <p th:text="${p.id}"></p>
-            <p th:text="${p.name}"></p>
-            <p th:text="${p.addressId}"></p>
-            <p th:text="${p.createdAt}"></p>
-            <p th:text="${p.updatedAt}"></p>
-                <a th:href="@{/pickups/edit/{id}(id = ${p.id})}">Edit</a>
-            </li>
-        </ul>
+    <div class="text-box secondary text-center">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+
+        <table class="table">
+        <tr>
+            <th>Lokation</th>
+            <th>Adresse id</th>
+            <th>Rediger</th>
+        </tr>
+
+        <tr th:each="pickupPoint: ${pickupPoints}">
+            <td th:text="${pickupPoint.getName()}"> </td>
+            <td th:text="${pickupPoint.getAddressId()}"></td>
+            <td><a class="button primary small" th:href="@{/pickups/edit/{id}(id = ${pickupPoint.getId()})}">Rediger</a></td>
+        </tr>
+    </table>
+        </div>
 </body>
 </html>

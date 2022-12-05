@@ -9,6 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+ * Written by Thomas S. Andersen.
+ */
+
 @ExtendWith(DatabaseParameterResolver.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BookingRepositoryTest {
@@ -73,6 +77,7 @@ class BookingRepositoryTest {
   @Test
   @Order(1)
   void testCreateAndLast_SaveToDatabase_AndReturnDataBaseObject() {
+    //arrange
     testBooking = TestBookingFactory.create(lastInsertedPickupPoint.getId(), lastInsertedSubscription.getName(),
         lastInsertedUser.getId(), lastInsertedCar.getVehicleNumber());
 

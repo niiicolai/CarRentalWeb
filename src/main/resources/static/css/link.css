@@ -1,0 +1,20 @@
+/*
+ * Link.
+ * Lavet af alle i gruppen.
+ */
+ 
+a {
+    color: var(--info);
+}
+
+a:hover {
+    color: var(--info);
+}
+
+a:visited {
+    color: var(--info);
+}
+
+a:focus {
+    color: var(--info);   
+}

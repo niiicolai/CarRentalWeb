@@ -21,16 +21,17 @@ import carrental.carrentalweb.services.UserService;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    /* Client properties */
-    private static final String CLIENT_ROLE = "CLIENT";
-    private static final String[] CLIENT_PATHS = {"/user", "/credit/rating", "/pickuppoints**"};
+    private static final String[] employeePaths = {};
+    private static final String employeeRole = "ROLE_EMPLOYEE";
 
-    /* Employee properties */
-    private static final String EMPLOYEE_ROLE = "EMPLOYEE";
-    private static final String[] EMPLOYEE_PATHS = {"/user"};
+    private static final String[] clientPaths = {};
+    private static final String clientRole = "ROLE_CLIENT";
+
+    /* Shared authories properties */
+    private static final String[] sharedPaths = {"/user", "/credit/rating", "/pickuppoints**"};
     
     /* Unauthorized properties */
-    private static final String[] unauthorizedPaths = {"/", "/signup", "/login**"};
+    private static final String[] unauthorizedPaths = {"/", "/signup", "/login**", "/css/**", "/images/**", "/css_framework"};
 
 
     private static final String LOGIN_PAGE = "/login";
@@ -40,9 +41,6 @@ public class SecurityConfig {
 
     private static final String AFTER_LOGOUT_URL = "/";
     private static final String LOGOUT_URL = "/logout";
-
-    
-    
     
     /* Encryption */
     public static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
@@ -56,8 +54,10 @@ public class SecurityConfig {
                 .antMatchers(unauthorizedPaths)
                 .permitAll()
             .and()
-                .authorizeRequests()           
-                .antMatchers(CLIENT_PATHS).hasRole(CLIENT_ROLE)
+                .authorizeRequests()
+                .antMatchers(employeePaths).hasAuthority(employeeRole) 
+                .antMatchers(clientPaths).hasAuthority(clientRole) 
+                .antMatchers(sharedPaths).hasAnyAuthority(employeeRole, clientRole)
                 .anyRequest()
                 .authenticated()
             .and()

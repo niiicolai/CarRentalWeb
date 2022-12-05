@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+ * Written by Thomas S. Andersen.
+ */
+
 @Repository
 public class BookingRepository {
 
@@ -29,7 +33,9 @@ public class BookingRepository {
       newBooking.getVehicleNumber(), 
       newBooking.getSubscriptionName(), 
       newBooking.getPickupPointId(), 
-      newBooking.getDeliveredAt());
+      newBooking.getDeliveredAt(),
+      newBooking.getReturnedAt(),
+      newBooking.getKilometerDriven());
 
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
@@ -136,10 +142,10 @@ public class BookingRepository {
 
   public boolean updateBooking(Booking booking) {
 
-    String query = "UPDATE bookings SET user_id = ?, vehicle_number = ?, subscription_name = ?, pickup_point_id = ?, delivered_at = ?, created_at = ?, updated_at = ? WHERE id=?";
+    String query = "UPDATE bookings SET user_id = ?, vehicle_number = ?, subscription_name = ?, pickup_point_id = ?, delivered_at = ?, returned_at = ?, updated_at = ?, kilometer_driven = ? WHERE id=?";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(booking.getUserId(), booking.getVehicleNumber(),
-        booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getCreatedAt(), booking.getUpdatedAt(), booking.getId());
+        booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getReturnedAt(), booking.getUpdatedAt(), booking.getKilometerDriven(), booking.getId());
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
 /*
@@ -200,8 +206,9 @@ public class BookingRepository {
             (long) record.map().get("pickup_point_id"),
             (LocalDateTime) record.map().get("delivered_at"),
             (LocalDateTime) record.map().get("created_at"),
-            (LocalDateTime) record.map().get("updated_at")
-
+            (LocalDateTime) record.map().get("updated_at"),
+            (LocalDateTime) record.map().get("returned_at"),
+            (double) record.map().get("kilometer_driven")
           )
       );
     }

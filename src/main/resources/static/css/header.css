@@ -1,0 +1,23 @@
+/*
+ * Header.
+ * Lavet af alle i gruppen.
+ */
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding);
+    margin-bottom: var(--margin);
+
+    border-bottom: 1px solid var(--secondary);
+}
+
+.header .wrapper {
+    width: 100%;
+}
+
+.header img {
+    height: 40px;
+}

@@ -1,0 +1,108 @@
+/*
+ * Text box.
+ * Lavet af alle i gruppen.
+ */
+
+:root {
+    --border-length: 20px;
+    --border-width: 1px;
+}
+
+.text-box {
+    padding: var(--padding);
+    margin-bottom: var(--margin);
+
+    position: relative;
+}
+
+.text-box .line-1,
+.text-box .line-2,
+.text-box .line-3,
+.text-box .line-4,
+.text-box .line-5,
+.text-box .line-6,
+.text-box .line-7,
+.text-box .line-8 {
+    position: absolute;
+    border: 1px solid var(--secondary);
+}
+
+.text-box .line-1 {
+    top: 0;
+    left: 0;
+    height: var(--border-width);
+    width: var(--border-length);
+}
+
+.text-box .line-2 {
+    top: 0;
+    left: 0;
+    height: var(--border-length);
+    width: var(--border-width);
+}
+
+.text-box .line-3 {
+    top: 0;
+    right: 0;
+    height: var(--border-length);
+    width: var(--border-width);
+}
+
+.text-box .line-4 {
+    top: 0;
+    right: 0;
+    height: var(--border-width);
+    width: var(--border-length);
+}
+
+.text-box .line-5 {
+    bottom: 0;
+    left: 0;
+    height: var(--border-width);
+    width: var(--border-length);
+}
+
+.text-box .line-6 {
+    bottom: 0;
+    left: 0;
+    height: var(--border-length);
+    width: var(--border-width);
+}
+
+.text-box .line-7 {
+    bottom: 0;
+    right: 0;
+    height: var(--border-length);
+    width: var(--border-width);
+}
+
+.text-box .line-8 {
+    bottom: 0;
+    right: 0;
+    height: var(--border-width);
+    width: var(--border-length);
+}
+
+.text-box.primary {
+    color: var(--primary);
+}
+
+.text-box.secondary {
+    color: var(--secondary);
+}
+
+.text-box.info {
+    color: var(--info);
+}
+
+.text-box.success {
+    color: var(--success);
+}
+
+.text-box.danger {    
+    color: var(--danger);
+}
+
+.text-box.warning {    
+    color: var(--warning);
+}

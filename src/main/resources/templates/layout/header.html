@@ -1,28 +1,25 @@
-<header th:fragment="header" 
-        xmlns:th="http://www.thymeleaf.org">
-        
-    <nav class="navbar navbar-expand-lg navbar-white bg-white">
-        <div class="container">
-            <a class="navbar-brand" href="/">Car Rental</a>
-            <div class="d-flex gap-2">
-                <a class="navbar-link btn btn-outline-secondary btn-sm" href="/">Home</a>
-                <a class="navbar-link btn btn-outline-secondary btn-sm" href="/cars">Cars</a>
-                <a class="navbar-link btn btn-outline-secondary btn-sm" href="/pickups">Pickups</a>
-                <a class="navbar-link btn btn-outline-secondary btn-sm" href="/subscriptions">Subscriptions</a>
-                <a class="navbar-link btn btn-outline-secondary btn-sm" href="/bookings">Bookings</a>
+<div th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+    <header class="header">
+        <div class="wrapper flex align-items-center justify-space-between">
+            <a href="/"><img src="/images/logo.png" alt="logo"></a>
+            <nav class="flex align-items-center justify-space-between gap-5">
+                <a class="button primary medium" href="/">Home</a>
+                <a class="button primary medium" href="/cars">Cars</a>                
 
-                <div sec:authorize="hasRole('ROLE_CLIENT')" class="d-flex gap-2">
+                <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_EMPLOYEE')" class="flex align-items-center justify-space-evenly gap-5">
 
                     <div class="vr"></div>
 
-                    <a class="navbar-link btn btn-outline-secondary btn-sm" href="/user">
-                        Profile
-                    </a>                    
+                    <a class="button secondary rounded small" href="/user">
+                        <i class="fa-sharp fa-solid fa-user"></i>
+                    </a>
                     <form th:action="@{/logout}" th:method="post" class="d-inline">
-                        <input type="submit" class="navbar-link btn btn-outline-danger btn-sm" value="logout" />
+                        <button type="submit" class="button secondary rounded small">
+                            <i class="fa-sharp fa-solid fa-right-from-bracket"></i>
+                        </button>
                     </form>
                 </div>
-            </div>
+            </nav>
         </div>
-    </nav>
-</header>
+    </header>
+</div>

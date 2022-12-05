@@ -1,0 +1,26 @@
+/*
+ * Global variables.
+ * Lavet af alle i gruppen.
+ */
+
+:root {
+    --primary: #2173F9;
+    --secondary: #707070;
+    --info: #5793f5;
+    --success: #17A649;
+    --danger: #D94343;
+    --warning: #F2BA52;
+
+    --white: white;
+    --black: black;
+    --transparent: rgba(255, 255, 255, 0);
+
+    --primary-txt: black;
+    --secondary-txt: grey;
+
+    --primary-font: 'Montserrat', sans-serif;
+    --secondary-font: 'Montserrat', sans-serif;
+
+    --padding: 15px;
+    --margin: 15px;
+}

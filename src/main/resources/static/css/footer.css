@@ -1,0 +1,9 @@
+/*
+ * Footer.
+ * Lavet af alle i gruppen.
+ */
+
+footer {
+    border-top: 1px solid var(--secondary);
+    padding: var(--padding);
+}
