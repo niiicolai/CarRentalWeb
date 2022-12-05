@@ -50,71 +50,71 @@
         <br><br>
     </div>
 
-    <div class="text-box secondary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-
-        <h3>Administrer afhentningslokationer</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <a class="button primary small" href="/pickups">Afhentningslokationer</a>
-        <br><br>
-    </div>
-
-    <div class="text-box secondary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-
-        <h3>Administrer abonnementer</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <a class="button primary small" href="/subscriptions">Abonnementer</a>
-        <br><br>
-    </div>
-
-    <div class="text-box secondary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-
-        <h3>Administrer bookinger</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <a class="button primary small" href="/bookings">Bookinger</a>
-        <br><br>
-    </div>
-
-    <div class="text-box secondary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-
-        <h3>Administrer skaderapporter</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <a class="button primary small" href="/damage-reports">Skaderapporter</a>
-        <br><br>
-    </div>
-
+    <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+        <div class="text-box secondary">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
     
+            <h3>Administrer afhentningslokationer</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="button primary small" href="/pickups">Afhentningslokationer</a>
+            <br><br>
+        </div>
+    
+        <div class="text-box secondary">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+    
+            <h3>Administrer abonnementer</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="button primary small" href="/subscriptions">Abonnementer</a>
+            <br><br>
+        </div>
+    
+        <div class="text-box secondary">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+    
+            <h3>Administrer bookinger</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="button primary small" href="/bookings">Bookinger</a>
+            <br><br>
+        </div>
+    
+        <div class="text-box secondary">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+    
+            <h3>Administrer skaderapporter</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="button primary small" href="/damage-reports">Skaderapporter</a>
+            <br><br>
+        </div>
+    </div>
 
 </body>
 
