@@ -1,0 +1,74 @@
+/*
+ * Header.
+ */
+
+ .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding);
+    margin-bottom: var(--margin);
+}
+
+.header.primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+}
+
+.header.secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+.header.info {
+    background-color: var(--info);
+    border-color: var(--info);
+    color: var(--white);
+}
+
+.header.success {
+    background-color: var(--success);
+    border-color: var(--success);
+    color: var(--white);
+}
+
+.header.danger {    
+    background-color: var(--danger);
+    border-color: var(--danger);
+    color: var(--white);
+}
+
+.header.warning {    
+    background-color: var(--warning);
+    border-color: var(--warning);
+    color: var(--white);
+}
+
+/* h1 */
+
+.header.primary h1 {
+    color: var(--white);
+}
+
+.header.secondary h1 {
+    color: var(--white);
+}
+
+.header.info h1 {
+    color: var(--white);
+}
+
+.header.success h1 {
+    color: var(--white);
+}
+
+.header.danger h1 {
+    color: var(--white);
+}
+
+.header.warning h1 {
+    color: var(--white);
+}
