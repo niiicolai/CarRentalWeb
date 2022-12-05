@@ -34,10 +34,16 @@
     width: var(--border-length);
 }
 
-.booked-list{
-    width: 450px;
+.booked-list, .damaged-list{
+    width: 400px;
     height: 250px;
     font-size: small;
+}
+
+.damaged-list{
+    position:relative;
+    left:425px;
+    bottom:265px;
 }
 
 

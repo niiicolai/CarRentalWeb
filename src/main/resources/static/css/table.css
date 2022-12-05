@@ -3,8 +3,8 @@
  * Lavet af alle i gruppen.
  */
 
-
-.table td{
+.table th, .table td{
+    text-align: left;
     padding: 8px;
 }
 
