@@ -9,13 +9,16 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Order;
 
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+/*
+ * Written by Thomas S. Andersen.
+ */
 
 
 @ExtendWith(DatabaseParameterResolver.class)

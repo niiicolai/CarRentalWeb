@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+ * Written by Thomas S. Andersen.
+ */
+
 @Repository
 public class AddressRepository {
 
