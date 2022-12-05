@@ -23,11 +23,14 @@ public class SecurityConfig {
 
     /* Client properties */
     private static final String CLIENT_ROLE = "CLIENT";
-    private static final String[] CLIENT_PATHS = {"/user", "/credit/rating", "/pickuppoints**"};
+    private static final String[] CLIENT_PATHS = {};
 
     /* Employee properties */
     private static final String EMPLOYEE_ROLE = "EMPLOYEE";
-    private static final String[] EMPLOYEE_PATHS = {"/user"};
+    private static final String[] EMPLOYEE_PATHS = {};
+
+    /* Shared authories properties */
+    private static final String[] SHARED_PATHS = {"/user", "/credit/rating", "/pickuppoints**"};
     
     /* Unauthorized properties */
     private static final String[] unauthorizedPaths = {"/", "/signup", "/login**", "/css/**", "/images/**", "/css_framework"};
@@ -42,8 +45,6 @@ public class SecurityConfig {
     private static final String LOGOUT_URL = "/logout";
 
     
-    
-    
     /* Encryption */
     public static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 
@@ -56,8 +57,10 @@ public class SecurityConfig {
                 .antMatchers(unauthorizedPaths)
                 .permitAll()
             .and()
-                .authorizeRequests()           
+                .authorizeRequests()   
                 .antMatchers(CLIENT_PATHS).hasRole(CLIENT_ROLE)
+                .antMatchers(EMPLOYEE_PATHS).hasRole(EMPLOYEE_ROLE)
+                .antMatchers(SHARED_PATHS).hasAnyRole(CLIENT_ROLE, EMPLOYEE_ROLE) 
                 .anyRequest()
                 .authenticated()
             .and()
