@@ -26,14 +26,16 @@ public class BookingRepository {
 
   public boolean createBooking(Booking newBooking) {
 
-    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at) VALUES (?, ?, ?, ?, ?)";
+    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(
       newBooking.getUserId(), 
       newBooking.getVehicleNumber(), 
       newBooking.getSubscriptionName(), 
       newBooking.getPickupPointId(), 
-      newBooking.getDeliveredAt());
+      newBooking.getDeliveredAt(),
+        LocalDateTime.now(),
+        LocalDateTime.now());
 
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
@@ -143,7 +145,7 @@ public class BookingRepository {
     String query = "UPDATE bookings SET user_id = ?, vehicle_number = ?, subscription_name = ?, pickup_point_id = ?, delivered_at = ?, created_at = ?, updated_at = ? WHERE id=?";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(booking.getUserId(), booking.getVehicleNumber(),
-        booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getCreatedAt(), booking.getUpdatedAt(), booking.getId());
+        booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getCreatedAt(), LocalDateTime.now(), booking.getId());
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
 /*

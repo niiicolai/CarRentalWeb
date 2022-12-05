@@ -29,13 +29,14 @@ public class PickupPointRepository {
 
 	public boolean createPickupPoint(PickupPoint newPickupPoint) {
 		String query = "INSERT INTO pickup_points (name, address_id, created_at, updated_at) VALUES (?, ?, ?, ?)";
-
+		/*newPickupPoint.setCreatedAt(LocalDateTime.now());
+		newPickupPoint.setUpdatedAt(LocalDateTime.now());*/
 		//Laves til et array af objects i DatabaseRequestBody
 		DatabaseRequestBody requestBody = new DatabaseRequestBody(
 				newPickupPoint.getName(),
 				newPickupPoint.getAddressId(),
-				newPickupPoint.getCreatedAt(),
-				newPickupPoint.getUpdatedAt());
+				LocalDateTime.now(),
+				LocalDateTime.now());
 
 		//databaseService kører executeUpdate med query'en og requestBody som er en Object array der er blevet iterated
 		//i DatabaseRequestBody. I executeUpdate metoden. De tilføjes som arguments i et prepared statement med query string.
@@ -118,8 +119,8 @@ public class PickupPointRepository {
 	}
 
 	public boolean updatePickupPoint(PickupPoint pickupPoint) {
-		String query = "UPDATE pickup_points SET address_id=?, name=? WHERE id = ?";
-		DatabaseRequestBody body = new DatabaseRequestBody(pickupPoint.getAddressId(), pickupPoint.getName(), pickupPoint.getId());
+		String query = "UPDATE pickup_points SET address_id=?, name=?, updated_at=? WHERE id = ?";
+		DatabaseRequestBody body = new DatabaseRequestBody(pickupPoint.getAddressId(), pickupPoint.getName(), LocalDateTime.now(), pickupPoint.getId());
 		DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
 		return databaseResponse.isSuccessful();
 

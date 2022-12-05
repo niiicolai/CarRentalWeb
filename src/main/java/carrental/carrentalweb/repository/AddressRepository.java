@@ -35,8 +35,8 @@ public class AddressRepository {
         newAddress.getCity(),
         newAddress.getZipCode(),
         newAddress.getCountry(),
-        newAddress.getCreatedAt(),
-        newAddress.getUpdatedAt());
+        LocalDateTime.now(),
+        LocalDateTime.now());
 
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();

@@ -8,12 +8,17 @@
 </head>
 <body layout:fragment="content">
     <h1>Pickups (<a th:href="@{/pickups/create}">new</a>)</h1>
-    <ul th:each="pickupPoint: ${pickupPoints}">
-        <li>
-            <p>Name: <span th:text="${pickupPoint.getName()}" /></p>
-            <p>Address id: <span th:text="${pickupPoint.getAddressId()}" /></p>
-            <a th:href="@{/pickups/edit/{id}(id = ${pickupPoint.getId()})}">Edit</a>
-        </li>
-    </ul>
+    <table class="table.">
+        <tr>
+            <th>Lokation</th>
+            <th>Adresse id</th>
+        </tr>
+
+        <tr th:each="pickupPoint: ${pickupPoints}">
+            <td th:text="${pickupPoint.getName()}"> </td>
+            <td th:text="${pickupPoint.getAddressId()}"></td>
+            <td><a class="button" th:href="@{/pickups/edit/{id}(id = ${pickupPoint.getId()})}">Edit</a></td>
+        </tr>
+    </table>
 </body>
 </html>

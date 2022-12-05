@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body  layout:fragment="content">
+<form th:action="@{/bookings/create}" method="post" th:object="${booking}" class="form">
+    <div class="text-field">¨
+
+
+        <input th:field="*{vehicleNumber}" type="text" placeholder="Vehicle number" required>
+
+
+        <input th:field="*{subscriptionName}" type="text" placeholder="Subscription name" required>
+
+
+        <input th:field="*{pickupPointId}" type="text" placeholder="Pickup point id" required>
+
+
+        <input class="button" type="submit" value="Create booking">
+
+    </div>
+</form>
+</body>
+</html>

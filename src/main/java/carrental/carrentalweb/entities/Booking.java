@@ -26,6 +26,14 @@ public class Booking {
         this.updatedAt = updatedAt;
     }
 
+    public Booking(long userId, long vehicleNumber, long pickupPointId, String subscriptionName, LocalDateTime deliveredAt) {
+        this.userId = userId;
+        this.vehicleNumber = vehicleNumber;
+        this.pickupPointId = pickupPointId;
+        this.subscriptionName = subscriptionName;
+        this.deliveredAt = deliveredAt;
+    }
+
     public Booking() {
     }
 
