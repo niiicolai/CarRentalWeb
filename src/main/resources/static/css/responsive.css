@@ -10,9 +10,8 @@
         margin: auto;
     }
 
-    .text-box {
+    .container {
         width: 800px;
         margin: auto;
-        margin-bottom: var(--margin);
     }
 }
