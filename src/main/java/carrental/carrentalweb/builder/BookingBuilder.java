@@ -22,6 +22,16 @@ public class BookingBuilder {
         return this;
     }
 
+    public BookingBuilder returnedAt(LocalDateTime returnedAt) {
+        booking.setReturnedAt(returnedAt);
+        return this;
+    }
+
+    public BookingBuilder kilometerDriven(double kilometerDriven) {
+        booking.setKilometerDriven(kilometerDriven);
+        return this;
+    }
+
     public BookingBuilder pickupPointId(long pickupPointId) {
         booking.setPickupPointId(pickupPointId);
         return this;
