@@ -1,0 +1,17 @@
+/*
+ * Responsive properties.
+ * Lavet af alle i gruppen.
+ */
+
+
+@media screen and (min-width: 800px) {
+    .header .wrapper {
+        width: 800px;
+        margin: auto;
+    }
+
+    .container {
+        width: 800px;
+        margin: auto;
+    }
+}

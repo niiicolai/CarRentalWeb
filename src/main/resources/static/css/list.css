@@ -1,10 +1,12 @@
 /*
  * List.
+ * Lavet af alle i gruppen.
  */
- 
-.list {
-    
+
+/*
+.list { 
 }
+*/
 
 .list.no-style {
     list-style: none;
