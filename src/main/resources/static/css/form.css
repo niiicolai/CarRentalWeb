@@ -1,0 +1,15 @@
+/*
+ * Form.
+ */
+
+.form {
+    padding: var(--padding);
+}
+
+.form input {
+    padding: var(--padding);
+}
+
+.form .input-control {
+    margin-bottom: var(--margin);
+}

@@ -1,0 +1,25 @@
+/*
+ * Global variables.
+ */
+
+:root {
+    --primary: black;
+    --secondary: grey;
+    --info: blue;
+    --success: green;
+    --danger: red;
+    --warning: orange;
+
+    --white: white;
+    --black: black;
+    --transparent: rgba(255, 255, 255, 0);
+
+    --primary-txt: black;
+    --secondary-txt: grey;
+
+    --primary-font: Arial, Helvetica, sans-serif;
+    --secondary-font: Arial, Helvetica, sans-serif;
+
+    --padding: 20px;
+    --margin: 20px;
+}

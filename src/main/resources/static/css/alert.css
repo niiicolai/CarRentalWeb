@@ -1,0 +1,44 @@
+/*
+ * Alert.
+ */
+
+.alert {
+    padding: var(--padding);
+    margin-bottom: var(--margin);
+}
+
+.alert.primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+}
+
+.alert.secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+.alert.info {
+    background-color: var(--info);
+    border-color: var(--info);
+    color: var(--white);
+}
+
+.alert.success {
+    background-color: var(--success);
+    border-color: var(--success);
+    color: var(--white);
+}
+
+.alert.danger {    
+    background-color: var(--danger);
+    border-color: var(--danger);
+    color: var(--white);
+}
+
+.alert.warning {    
+    background-color: var(--warning);
+    border-color: var(--warning);
+    color: var(--white);
+}

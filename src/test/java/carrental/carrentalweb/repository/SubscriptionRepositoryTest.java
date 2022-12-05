@@ -1,25 +1,18 @@
 package carrental.carrentalweb.repository;
 
-import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.entities.Subscription;
-import carrental.carrentalweb.entity_factories.TestCreditRatingFactory;
 import carrental.carrentalweb.entity_factories.TestSubscriptionFactory;
-import carrental.carrentalweb.enums.CreditRatingState;
 import carrental.carrentalweb.parameter_resolvers.DatabaseParameterResolver;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
 // Mads
-@SpringBootTest
 @ExtendWith(DatabaseParameterResolver.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SubscriptionRepositoryTest {
@@ -50,11 +43,10 @@ public class SubscriptionRepositoryTest {
 
     /*
      * @BeforeAll bliver kørt før alle tests.
-     * Caches the injected database service, and
-     * creates an instance of the user repository.
+     * Cacher den injectede database service
      *
-     * It also contains the arrange part
-     * of several tests' AAA pattern.
+     * Indeholder også Arrange delen for flere af
+     * testenes AAA pattern.
      */
     @BeforeAll
     public static void init(DatabaseService databaseService) {
@@ -63,12 +55,11 @@ public class SubscriptionRepositoryTest {
         // Arrange
         repository = new SubscriptionRepository(database);
     }
+
     /*
-     * Method: create(testSubscription); last();
-     * Test if the method insert saves the credit rating to the database.
-     * It uses the method last to check if the credit rating is saved, and
-     * at the same time test if the last method works.
-     */
+    * Test af SubscriptionRepository.create()
+    * tester om metoden opretter en række i database tabellen.
+    */
     @Test
     @Order(1)
     public void testInsertAndLast_SaveToDatabase_AndReturnDatabaseObject() {
@@ -85,20 +76,26 @@ public class SubscriptionRepositoryTest {
         assertEquals(testSubscription.getPrice(), lastInsertedSubscription.getPrice(), "Prices must be equal");
     }
 
+    /*
+     * Test af SubscriptionRepository.get()
+     * tester om metoden returnerer et Subscription objekt.
+     */
     @Test
     @Order(2)
-    public void testFind_ReturnsSubscriptionObjectFromDatabase() {
+    public void testGet_ReturnsSubscriptionObjectFromDatabase() {
         // Act
         repository.create(testSubscription);
         lastInsertedSubscription = repository.last();
         Subscription subscription = repository.get("name", lastInsertedSubscription.getName());
 
         // Assert
-        assertEquals(lastInsertedSubscription.getName(), subscription.getName(), "Name must be equal");
-        assertEquals(lastInsertedSubscription.getPrice(), subscription.getPrice(), "Price must be equal");
-        assertEquals(lastInsertedSubscription.getDays(), subscription.getDays(), "Days must be equal");
+        assertNotNull(subscription, "Subscription object not returned.");
     }
 
+    /*
+     * Test af SubscriptionRepository.update()
+     * tester om metoden opdaterer en række i database tabellen.
+     */
     @Test
     @Order(3)
     public void testUpdate_SavesToDatabase() {
@@ -116,7 +113,10 @@ public class SubscriptionRepositoryTest {
         assertEquals(lastInsertedSubscription.getPrice(), updatedSubscription.getPrice(), "Price must be equal");
     }
 
-
+    /*
+     * Test af SubscriptionRepository.delete()
+     * tester om metoden fjerner en række i database tabellen.
+     */
     @Test
     @Order(4)
     public void testDelete_SavesToDatabase() {
@@ -128,6 +128,10 @@ public class SubscriptionRepositoryTest {
         assertNull(subscription, "Subscription must be null");
     }
 
+    /*
+     * Test af SubscriptionRepository.parseReponseFirst()
+     * tester om metoden parser DatabaseResponse rigtigt.
+     */
     @Test
     @Order(5)
     public void testParseResponseFirst_ReturnNullIfNoSubscriptionWasFound() {
@@ -138,9 +142,13 @@ public class SubscriptionRepositoryTest {
         Subscription subscription = repository.parseResponseFirst(response);
 
         // Assert
-        assertNull(subscription, "Subscription rating must be null");
+        assertNull(subscription, "Subscription must be null");
     }
 
+    /*
+     * Test af SubscriptionRepository.parseReponseFirst()
+     * tester om metoden parser DatabaseResponse rigtigt.
+     */
     @Test
     @Order(6)
     public void testParseResponseFirst_ReturnSubscriptionIfSubscriptionWasFound() {
@@ -158,6 +166,10 @@ public class SubscriptionRepositoryTest {
         assertEquals((double) record.map().get("days"), subscription.getDays(), "Days must be equal");
     }
 
+    /*
+     * Test af SubscriptionRepository.parseReponse()
+     * tester om metoden parser DatabaseResponse rigtigt.
+     */
     @Test
     @Order(7)
     public void testParseResponse_ReturnSubscriptionsIfSubscriptionsWereFound() {
@@ -170,8 +182,7 @@ public class SubscriptionRepositoryTest {
         List<Subscription> subscriptions = repository.parseResponse(response);
 
         // Assert
-        for (int i = 0; i < subscriptions.size(); i++) {
-            Subscription subscription = subscriptions.get(i);
+        for (Subscription subscription : subscriptions) {
             assertEquals(record.map().get("name"), subscription.getName(), "Names must be equal");
             assertEquals((double) record.map().get("price"), subscription.getPrice(), "Prices must be equal");
             assertEquals((double) record.map().get("days"), subscription.getDays(), "Days must be equal");

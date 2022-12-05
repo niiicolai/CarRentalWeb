@@ -1,0 +1,104 @@
+/*
+ * Buttons.
+ */
+
+.button {
+    /* Remove underline from links */
+    text-decoration: none;
+}
+
+/* Normal */
+
+.button.primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+}
+
+.button.secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+.button.info {
+    background-color: var(--info);
+    border-color: var(--info);
+    color: var(--white);
+}
+
+.button.success {
+    background-color: var(--success);
+    border-color: var(--success);
+    color: var(--white);
+}
+
+.button.danger {    
+    background-color: var(--danger);
+    border-color: var(--danger);
+    color: var(--white);
+}
+
+.button.warning {    
+    background-color: var(--warning);
+    border-color: var(--warning);
+    color: var(--white);
+}
+
+/* Normal:hover */ 
+
+.button.primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+}
+
+.button.secondary:hover {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--white);
+}
+
+.button.info:hover {
+    background-color: var(--info);
+    border-color: var(--info);
+    color: var(--white);
+}
+
+.button.success:hover {
+    background-color: var(--success);
+    border-color: var(--success);
+    color: var(--white);
+}
+
+.button.danger:hover {    
+    background-color: var(--danger);
+    border-color: var(--danger);
+    color: var(--white);
+}
+
+.button.warning:hover {    
+    background-color: var(--warning);
+    border-color: var(--warning);
+    color: var(--white);
+}
+
+/* rounded */
+
+.button.rounded {
+    border-radius: 100%;
+}
+
+/* size */
+
+.button.small {
+    font-size: small;
+}
+
+.button.medium {
+    font-size: medium;
+}
+
+.button.large {
+    font-size: large;
+}
