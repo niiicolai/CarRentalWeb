@@ -30,7 +30,7 @@ public class SecurityConfig {
     private static final String[] EMPLOYEE_PATHS = {"/user"};
     
     /* Unauthorized properties */
-    private static final String[] unauthorizedPaths = {"/", "/signup", "/login**"};
+    private static final String[] unauthorizedPaths = {"/", "/signup", "/login**", "/css/**", "/css_framework"};
 
 
     private static final String LOGIN_PAGE = "/login";

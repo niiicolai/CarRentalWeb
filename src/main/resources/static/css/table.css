@@ -1,0 +1,13 @@
+/*
+ * Table.
+ */
+ 
+ .table {
+    
+}
+
+.table.border,
+.table.border th,
+.table.border td {
+    border: 1px solid var(--primary);
+}
