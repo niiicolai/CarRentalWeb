@@ -1,13 +1,27 @@
 /*
  * Form.
+ * Lavet af alle i gruppen.
  */
 
 .form {
     padding: var(--padding);
 }
 
-.form input {
-    padding: var(--padding);
+.form label {
+    display: block;
+    padding-bottom: 10px;    
+}
+
+.form input,
+.form textarea {
+    padding: 10px;
+    border: 1px solid var(--secondary);
+    box-shadow: inset 2px 2px 3px var(--secondary);
+    border-radius: 2px;
+}
+
+.form textarea {
+    resize: none;
 }
 
 .form .input-control {

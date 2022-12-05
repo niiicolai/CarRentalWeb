@@ -1,14 +1,15 @@
 /*
  * Global variables.
+ * Lavet af alle i gruppen.
  */
 
 :root {
-    --primary: black;
-    --secondary: grey;
-    --info: blue;
-    --success: green;
-    --danger: red;
-    --warning: orange;
+    --primary: #2173F9;
+    --secondary: #707070;
+    --info: #5793f5;
+    --success: #17A649;
+    --danger: #D94343;
+    --warning: #F2BA52;
 
     --white: white;
     --black: black;
@@ -17,9 +18,9 @@
     --primary-txt: black;
     --secondary-txt: grey;
 
-    --primary-font: Arial, Helvetica, sans-serif;
-    --secondary-font: Arial, Helvetica, sans-serif;
+    --primary-font: 'Montserrat', sans-serif;
+    --secondary-font: 'Montserrat', sans-serif;
 
-    --padding: 20px;
-    --margin: 20px;
+    --padding: 15px;
+    --margin: 15px;
 }

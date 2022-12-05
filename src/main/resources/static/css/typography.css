@@ -1,5 +1,6 @@
 /*
  * Typography.
+ * Lavet af alle i gruppen.
  */
 
 body {
@@ -42,4 +43,18 @@ h5 {
 
 h6 {
     font-size: smaller;
+}
+
+/* Aligment */
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
 }

@@ -9,10 +9,15 @@
 <body layout:fragment="content">
 <h1>New Car</h1>
 
-<form th:action="@{/add-car}" method="post" th:object="${car}">
-    <div class="text-field">
-        <input id="frame-number" th:field="*{frameNumber}" type="text" required>
-        <label for="frame-number">Frame number: </label>
+<form th:action="@{/add-car}" method="post" th:object="${car}" class="form">
+    <div class="text-field">¨
+
+        <div class="input-control">
+            <label for="frame-number">Frame number: </label>
+            <input id="frame-number" th:field="*{frameNumber}" type="text" required>
+        </div>
+
+       
         <input id="brand" th:field="*{brand}" type="text" required>
         <label for="brand">Brand: </label>
         <input id="model" th:field="*{model}" type="text" required>
