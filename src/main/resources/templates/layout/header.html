@@ -6,7 +6,7 @@
                 <a class="button primary medium" href="/">Home</a>
                 <a class="button primary medium" href="/cars">Cars</a>                
 
-                <div sec:authorize="hasRole('ROLE_CLIENT')" class="flex align-items-center justify-space-evenly gap-5">
+                <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_EMPLOYEE')" class="flex align-items-center justify-space-evenly gap-5">
 
                     <div class="vr"></div>
 
