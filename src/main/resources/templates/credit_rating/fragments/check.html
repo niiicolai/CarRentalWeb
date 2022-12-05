@@ -1,5 +1,6 @@
 <div th:fragment="check(creditRating)" xmlns:th="http://www.thymeleaf.org">
-     <form th:action="@{/credit/rating}" th:object="${creditRating}" th:method="post">
-        <input type="submit" class="button primary small" value="Udfør kreditvurdering" />
+     <form th:action="@{/credit/rating}" th:object="${creditRating}" th:method="post" class="display inline">
+        <button type="submit" class="button rounded primary small"><i class="fa-solid fa-rotate"></i></button>
     </form>
+    <br>
 </div>

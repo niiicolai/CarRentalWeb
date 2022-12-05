@@ -6,3 +6,25 @@
 .image.fit {
     max-width: 100%;
 }
+
+.background-image.cover {
+    width: 100%;
+    height: 150px;
+    background-repeat: no-repeat;
+    background-position-y: -338px;
+    background-size: cover;
+    background-attachment: fixed;
+    margin-bottom: var(--margin);
+    border: 1px solid;
+    position: relative;
+}
+
+.background-image .overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #0000008c;
+    padding: var(--padding);
+}

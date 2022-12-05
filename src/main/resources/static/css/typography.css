@@ -84,3 +84,11 @@ h6 {
 .text-warning {
     color: var(--warning);
 }
+
+.text-black {
+    color: var(--black);
+}
+
+.text-white {
+    color: var(--white);
+}
