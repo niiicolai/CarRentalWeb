@@ -8,6 +8,10 @@
     width: 60%;
 }
 
-.min-height-185 {
-    min-height: 185px;
+.width-percent-25 {
+    width: 25%;
+}
+
+.min-height-205 {
+    min-height: 205px;
 }
