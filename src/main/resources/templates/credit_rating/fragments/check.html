@@ -1,6 +1,14 @@
 <div th:fragment="check(creditRating)" xmlns:th="http://www.thymeleaf.org">
      <form th:action="@{/credit/rating}" th:object="${creditRating}" th:method="post" class="display inline">
-        <button type="submit" class="button rounded primary small"><i class="fa-solid fa-rotate"></i></button>
+        <button th:if="${creditRating == null}" class="button danger small no-shadow">
+            Kreditvurdering: <i class="fa-regular fa-circle-xmark"></i>
+        </button> 
+        <button th:if="${creditRating != null && creditRating.getState().toString() == 'Reject'}" class="button danger small no-shadow">
+            Kreditvurdering: <i class="fa-regular fa-circle-xmark"></i>
+        </button> 
+        <button th:if="${creditRating != null && creditRating.getState().toString() == 'Approve'}" class="button success small no-shadow">
+            Kreditvurdering: <i class="fa-regular fa-circle-check"></i>
+        </button> 
     </form>
     <br>
 </div>
