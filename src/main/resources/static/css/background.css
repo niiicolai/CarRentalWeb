@@ -1,0 +1,28 @@
+/*
+ * Backgrounds.
+ * Lavet af alle i gruppen.
+ */
+
+.bg.primary {
+    background-color: var(--primary);
+}
+
+.bg.secondary {
+    background-color: var(--secondary);
+}
+
+.bg.info {
+    background-color: var(--info);
+}
+
+.bg.success {
+    background-color: var(--success);
+}
+
+.bg.danger {
+    background-color: var(--danger);
+}
+
+.bg.warning {
+    background-color: var(--warning);
+}

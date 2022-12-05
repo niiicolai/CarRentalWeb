@@ -27,3 +27,7 @@
 .form .input-control {
     margin-bottom: var(--margin);
 }
+
+.form .input-control input.fill {
+    width: 100%;
+}

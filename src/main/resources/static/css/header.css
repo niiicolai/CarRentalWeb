@@ -3,7 +3,7 @@
  * Lavet af alle i gruppen.
  */
 
- .header {
+.header {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -12,6 +12,10 @@
     margin-bottom: var(--margin);
 
     border-bottom: 1px solid var(--secondary);
+}
+
+.header .wrapper {
+    width: 100%;
 }
 
 .header img {
