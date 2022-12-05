@@ -18,3 +18,7 @@
 .flex.justify-space-evenly {
     justify-content: space-evenly;
 }
+
+.flex.gap-5 {
+    gap: 5px;
+}
