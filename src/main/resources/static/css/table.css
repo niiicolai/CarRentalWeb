@@ -3,11 +3,11 @@
  * Lavet af alle i gruppen.
  */
 
-/*
-.table {
-    
+
+.table td{
+    padding: 8px;
 }
-*/
+
 
 .table.border,
 .table.border th,

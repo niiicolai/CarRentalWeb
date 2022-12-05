@@ -34,6 +34,14 @@
     width: var(--border-length);
 }
 
+.booked-list{
+    width: 450px;
+    height: 250px;
+    font-size: small;
+}
+
+
+
 .text-box .line-2 {
     top: 0;
     left: 0;
