@@ -26,7 +26,7 @@ public class BookingRepository {
 
   public boolean createBooking(Booking newBooking) {
 
-    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at) VALUES (?, ?, ?, ?, ?)";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(
       newBooking.getUserId(), 
@@ -34,8 +34,8 @@ public class BookingRepository {
       newBooking.getSubscriptionName(), 
       newBooking.getPickupPointId(), 
       newBooking.getDeliveredAt(),
-        LocalDateTime.now(),
-        LocalDateTime.now());
+      newBooking.getReturnedAt(),
+      newBooking.getKilometerDriven());
 
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
@@ -142,10 +142,10 @@ public class BookingRepository {
 
   public boolean updateBooking(Booking booking) {
 
-    String query = "UPDATE bookings SET user_id = ?, vehicle_number = ?, subscription_name = ?, pickup_point_id = ?, delivered_at = ?, created_at = ?, updated_at = ? WHERE id=?";
+    String query = "UPDATE bookings SET user_id = ?, vehicle_number = ?, subscription_name = ?, pickup_point_id = ?, delivered_at = ?, returned_at = ?, updated_at = ?, kilometer_driven = ? WHERE id=?";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(booking.getUserId(), booking.getVehicleNumber(),
-        booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getCreatedAt(), LocalDateTime.now(), booking.getId());
+        booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getReturnedAt(), booking.getUpdatedAt(), booking.getKilometerDriven(), booking.getId());
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
 /*
@@ -206,8 +206,9 @@ public class BookingRepository {
             (long) record.map().get("pickup_point_id"),
             (LocalDateTime) record.map().get("delivered_at"),
             (LocalDateTime) record.map().get("created_at"),
-            (LocalDateTime) record.map().get("updated_at")
-
+            (LocalDateTime) record.map().get("updated_at"),
+            (LocalDateTime) record.map().get("returned_at"),
+            (double) record.map().get("kilometer_driven")
           )
       );
     }

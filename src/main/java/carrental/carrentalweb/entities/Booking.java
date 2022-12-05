@@ -9,13 +9,14 @@ public class Booking {
     private long pickupPointId;
 
     private String subscriptionName;
+    private double kilometerDriven;
     
-
+    private LocalDateTime returnedAt;
     private LocalDateTime deliveredAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Booking(long id, long userId, long vehicleNumber, String subscriptionName, long pickupPointId, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Booking(long id, long userId, long vehicleNumber, String subscriptionName, long pickupPointId, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime returnedAt, double kilometerDriven) {
         this.id = id;
         this.userId = userId;
         this.vehicleNumber = vehicleNumber;
@@ -24,6 +25,8 @@ public class Booking {
         this.deliveredAt = deliveredAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.returnedAt = returnedAt;
+        this.kilometerDriven = kilometerDriven;
     }
 
     public Booking(long userId, long vehicleNumber, long pickupPointId, String subscriptionName, LocalDateTime deliveredAt) {
@@ -51,6 +54,14 @@ public class Booking {
 
     public long getPickupPointId() {
         return pickupPointId;
+    }
+
+    public double getKilometerDriven() {
+        return kilometerDriven;
+    }
+
+    public LocalDateTime getReturnedAt() {
+        return returnedAt;
     }
 
     public LocalDateTime getDeliveredAt() {
@@ -87,6 +98,14 @@ public class Booking {
 
     public void setDeliveredAt(LocalDateTime deliveredAt) {
         this.deliveredAt = deliveredAt;
+    }
+
+    public void setReturnedAt(LocalDateTime returnedAt) {
+        this.returnedAt = returnedAt;
+    }
+
+    public void setKilometerDriven(double kilometerDriven) {
+        this.kilometerDriven = kilometerDriven;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
