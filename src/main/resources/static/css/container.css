@@ -12,3 +12,11 @@
     margin-left: 0px !important;
     margin-right: 0px !important;
 }
+
+.container.histogram{
+    position: relative;
+    scale: 50%;
+    bottom: 850px;
+    left: 220px;
+}
+

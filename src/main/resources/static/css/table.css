@@ -3,11 +3,18 @@
  * Lavet af alle i gruppen.
  */
 
-/*
-.table {
-    
+.table.cars th,.table.cars td{
+    text-align: left;
+    padding: 8px;
 }
-*/
+
+.table-wrap {
+    overflow-y: scroll;
+    height: 230px;
+    width: 380px;
+    display: inline-block;
+}
+
 
 .table.border,
 .table.border th,

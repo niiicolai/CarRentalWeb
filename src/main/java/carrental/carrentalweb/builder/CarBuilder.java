@@ -62,6 +62,11 @@ public class CarBuilder {
         return this;
     }
 
+    public CarBuilder damaged(boolean damaged) {
+        car.setDamaged(damaged);
+        return this;
+    }
+
     public CarBuilder createdAt(LocalDateTime createdAt) {
         car.setCreatedAt(createdAt);
         return this;

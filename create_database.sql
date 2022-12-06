@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS cars
     registration_fee DOUBLE,
     co2_discharge    DOUBLE,
     inspected        BIT(1),
+    damaged          BOOLEAN,
     created_at       DATETIME(6)        NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at       DATETIME(6)        NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );

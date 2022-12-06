@@ -35,8 +35,9 @@ public class CarRepository {
                     "steel_price," +
                     "registration_fee," +
                     "co2_discharge," +
-                    "inspected) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "inspected," +
+                    "damaged)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             System.out.println("Created query");
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             System.out.println("Created preparedStatement");
@@ -50,6 +51,7 @@ public class CarRepository {
             preparedStatement.setDouble(7, newCar.getRegistrationFee());
             preparedStatement.setDouble(8, newCar.getCo2Discharge());
             preparedStatement.setBoolean(9, newCar.getInspected());
+            preparedStatement.setBoolean(10, false);
             System.out.println(preparedStatement);
 
 
@@ -81,6 +83,7 @@ public class CarRepository {
                 double registrationFee = resultSet.getDouble("registration_fee");
                 double co2Discharge = resultSet.getDouble("co2_discharge");
                 boolean inspected = resultSet.getBoolean("inspected");
+                boolean damaged = resultSet.getBoolean("damaged");
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 cars.add(new Car(vehicleNumber,
@@ -92,6 +95,7 @@ public class CarRepository {
                         registrationFee,
                         co2Discharge,
                         inspected,
+                        damaged,
                         createdAt,
                         updatedAt));
             }
@@ -124,6 +128,7 @@ public class CarRepository {
                 double registrationFee = resultSet.getDouble("registration_fee");
                 double co2Discharge = resultSet.getDouble("co2_discharge");
                 boolean inspected = resultSet.getBoolean("inspected");
+                boolean damaged = resultSet.getBoolean("damaged");
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 foundCar = new Car(vehicleNumber,
@@ -136,6 +141,7 @@ public class CarRepository {
                         registrationFee,
                         co2Discharge,
                         inspected,
+                        damaged,
                         createdAt,
                         updatedAt);
             }
@@ -157,7 +163,8 @@ public class CarRepository {
                     "inspected=?," +
                     "model=?," +
                     "brand=?," +
-                    "updated_at=?" +
+                    "updated_at=?," +
+                    "damaged=? " +
                     "WHERE vehicle_number=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
 
@@ -170,7 +177,8 @@ public class CarRepository {
             preparedStatement.setString(7, car.getModel());
             preparedStatement.setString(8, car.getBrand());
             preparedStatement.setObject(9, LocalDateTime.now());
-            preparedStatement.setLong(10, car.getVehicleNumber());
+            preparedStatement.setBoolean(10, car.getDamaged());
+            preparedStatement.setLong(11, car.getVehicleNumber());
 
             System.out.println(preparedStatement);
 
@@ -213,6 +221,7 @@ public class CarRepository {
                 double registrationFee = resultSet.getDouble("registration_fee");
                 double co2Discharge = resultSet.getDouble("co2_discharge");
                 boolean inspected = resultSet.getBoolean("inspected");
+                boolean damaged = resultSet.getBoolean("damaged");
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 foundCar = new Car(vehicleNumber,
@@ -225,6 +234,7 @@ public class CarRepository {
                         registrationFee,
                         co2Discharge,
                         inspected,
+                        damaged,
                         createdAt,
                         updatedAt);
             }

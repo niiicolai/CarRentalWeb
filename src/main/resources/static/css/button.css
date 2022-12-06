@@ -27,6 +27,12 @@
     color: var(--white);
 }
 
+.button.primary.cars{
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+}
+
 .button.secondary {
     background-color: var(--secondary);
     border-color: var(--secondary);

@@ -13,11 +13,12 @@ public class Car {
     private double registrationFee;
     private double co2Discharge;
     private boolean inspected;
+    private boolean damaged;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     //New car constructor (Does not need booking. createdAt and updatedAt are generated)
-    public Car(String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected) {
+    public Car(String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged) {
         this.frameNumber = frameNumber;
         this.brand = brand;
         this.model = model;
@@ -27,11 +28,12 @@ public class Car {
         this.registrationFee = registrationFee;
         this.co2Discharge = co2Discharge;
         this.inspected = inspected;
+        this.damaged = damaged;
     }
 
     public Car(){}
 
-    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.vehicleNumber = vehicleNumber;
         this.frameNumber = frameNumber;
         this.brand = brand;
@@ -42,8 +44,17 @@ public class Car {
         this.registrationFee = registrationFee;
         this.co2Discharge = co2Discharge;
         this.inspected = inspected;
+        this.damaged = damaged;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public boolean getDamaged(){
+        return this.damaged;
+    }
+
+    public void setDamaged(boolean damaged) {
+        this.damaged = damaged;
     }
 
     public boolean getInspected(){
