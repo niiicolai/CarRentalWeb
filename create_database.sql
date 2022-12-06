@@ -134,16 +134,15 @@ CREATE TABLE IF NOT EXISTS invoice_specifications
     invoice_id  BIGINT       NOT NULL,
     FOREIGN KEY (invoice_id) REFERENCES invoices (id)
 );
--- Mads
+-- Mads (one-to-one, bookings)
 CREATE TABLE IF NOT EXISTS damage_reports
 (
     booking_id BIGINT PRIMARY KEY,
     created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    CONSTRAINT booking_damage_report
-        FOREIGN KEY (booking_id) REFERENCES bookings (id)
+    FOREIGN KEY (booking_id) REFERENCES bookings (id)
 );
--- Mads
+-- Mads (many-to-many, damage_reports)
 CREATE TABLE IF NOT EXISTS damage_specifications
 (
     description VARCHAR(255) PRIMARY KEY,
@@ -155,8 +154,10 @@ CREATE TABLE IF NOT EXISTS damage_specifications
 -- Mads
 CREATE TABLE IF NOT EXISTS damage_report_specifications
 (
-    report_id        BIGINT,
-    spec_description VARCHAR(255),
+    report_id        BIGINT NOT NULL,
+    spec_description VARCHAR(255) NOT NULL,
     updated_at       DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    created_at       DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+    created_at       DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    FOREIGN KEY (report_id) REFERENCES damage_reports (booking_id),
+    FOREIGN KEY (spec_description) REFERENCES damage_specifications (description)
 );

@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.CreditRatingRepository;
 import carrental.carrentalweb.repository.UserRepository;
 import carrental.carrentalweb.services.TimeOfDayService;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 
 /*
  * Written by Nicolai Berg Andersen.
@@ -60,41 +62,66 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String create(User user) {
-        if (userRepository.insert(user)) {
+    public String create(User user, RedirectAttributes redirectAttributes) {
+        DatabaseResponse response = userRepository.insert(user);
+        if (response.isSuccessful()) {
+            redirectAttributes.addAttribute("response", "Bruger oprettet!");
+            redirectAttributes.addAttribute("state", response.getState());
             return "redirect:/login";        
-        } else
+        } else {
+            redirectAttributes.addAttribute("response", response.getDatabaseError().getHumanMessage());
+            redirectAttributes.addAttribute("state", response.getState());
             return "redirect:/signup";
+        }            
     }
 
     @PatchMapping("/user")
-    public String update(User user, @AuthenticationPrincipal User authUser) {
+    public String update(User user, @AuthenticationPrincipal User authUser, RedirectAttributes redirectAttributes) {
         /* Only allow the authenticated user to be modified. */
         user.setId(authUser.getId());
-        if (userRepository.update(user))
+        DatabaseResponse response = userRepository.update(user);
+        if (response.isSuccessful()) {
+            redirectAttributes.addAttribute("response", "Bruger opdateret!");
+            redirectAttributes.addAttribute("state", response.getState());
             return "redirect:/user";
-        else
+        } else {
+            redirectAttributes.addAttribute("response", response.getDatabaseError().getHumanMessage());
+            redirectAttributes.addAttribute("state", response.getState());
             return "redirect:/user/edit";
+        }          
     }
 
     @PatchMapping("/user/password")
-    public String updatePassword(User user, @AuthenticationPrincipal User authUser) {
+    public String updatePassword(User user, @AuthenticationPrincipal User authUser, RedirectAttributes redirectAttributes) {
         /* Only allow the authenticated user to be modified. */
         user.setId(authUser.getId());
-        if (userRepository.updatePassword(user))
+        DatabaseResponse response = userRepository.updatePassword(user);
+        if (response.isSuccessful()) {
+            redirectAttributes.addAttribute("response", "Adgangskode opdateret!");
+            redirectAttributes.addAttribute("state", response.getState());
             return "redirect:/user";
-        else
+        } else {
+            redirectAttributes.addAttribute("response", response.getDatabaseError().getHumanMessage());
+            redirectAttributes.addAttribute("state", response.getState());
             return "redirect:/user/edit";
+        }
     }
 
     @DeleteMapping("/user")
-    public String disable(User user, @AuthenticationPrincipal User authUser, HttpServletRequest request) {
+    public String disable(User user, @AuthenticationPrincipal User authUser, RedirectAttributes redirectAttributes) {
         /* Only allow the authenticated user to be modified. */
         user.setId(authUser.getId());
-        if (userRepository.disable(user)) {
-            SecurityContextHolder.clearContext();
+        DatabaseResponse response = userRepository.disable(user);
+        if (response.isSuccessful()) {
+            User.logout();
+            redirectAttributes.addAttribute("response", "Bruger deaktiveret! Kontakt support hvis dette var en fejl.");
+            redirectAttributes.addAttribute("state", "warning");
             return "redirect:/";
-        } else
+        } else {
+            redirectAttributes.addAttribute("response", response.getDatabaseError().getHumanMessage());
+            redirectAttributes.addAttribute("state", response.getState());
             return "redirect:/user/edit";
+        }
+            
     }
 }

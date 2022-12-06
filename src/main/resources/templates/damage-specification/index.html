@@ -3,10 +3,46 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
+    <!-- Mads -->
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Damage Specifications</title>
 </head>
 <body layout:fragment="content">
 
+<div class="flex justify-space-evenly text-center">
+    <div class="text-box primary">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+        <h2>Skade Specifikationer</h2>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Beskrivelse</th>
+                <th>Pris</th>
+                <th>Rediger</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ds : ${damageSpecs}">
+                <td th:text="${ds.description}">Beskrivelse</td>
+                <td th:text="${ds.price} + ' DKK'">Pris</td>
+                <td th:href="@{/damage-specification/edit/{desc}(desc = ${ds.description})}">Ændr</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <a th:href="@{/damage-specification/new}">
+            <input type="button" value="Tilføj ny specifikation" class="button primary medium">
+        </a>
+    </div>
+</div>
 </body>
 </html>

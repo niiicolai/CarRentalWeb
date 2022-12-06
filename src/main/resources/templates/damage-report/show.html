@@ -3,10 +3,50 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
+    <!-- Mads -->
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Show Damage Report</title>
 </head>
 <body layout:fragment="content">
 
+<div class="flex justify-space-evenly text-center">
+    <div class="text-box primary">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+    <h2>Skadesrapport</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Beskrivelse</th>
+            <th>Pris</th>
+            <th>Skadet</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ds : ${damageSpecs}">
+            <td th:text="${ds.description}">Beskrivelse</td>
+            <td th:text="${ds.price} + ' DKK'">Pris</td>
+            <td th:if="${ds.damaged}">Skadet</td>
+            <td th:unless="${ds.damaged}">Ikke skadet</td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="/bookings/show/ + bookingId">
+        <input type="button" value="Return to booking" class="button primary medium">
+    </a>
+    <div>
+        <i class="fa-solid fa-car-burst" style="size: 300px"></i>
+    </div>
+
+</div>
+</div>
 </body>
 </html>

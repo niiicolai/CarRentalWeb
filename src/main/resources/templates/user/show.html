@@ -9,7 +9,7 @@
     <div class="background-image cover" th:style="'background-image:url(' + @{${timeOfDayImage}} + ');'">
         <div class="overlay flex justify-space-between">
             <div class="text-white">
-                <span><span th:text="${timeOfDayGreeting}" /> <strong th:text="${user.getUsername()}" />.<br>
+                <span><span th:text="${timeOfDayGreeting}" />, <strong th:text="${user.getUsername()}" />.<br>
                     <small>Velkommen til dit dashboard.</small></span><br>
                 <br>
                 <small>
@@ -46,7 +46,7 @@
     </div>
     <br>
     <div class="flex justify-space-between gap-8">
-        <a class="button primary large text-center min-height-205 width-percent-25" href="/bookings">
+        <a class="button primary large text-center min-height-205 width-percent-25" href="/cars">
             <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
             <small>Vi har lige <strong>0</strong> biler til udlejning.</small><br><br>
         </a>

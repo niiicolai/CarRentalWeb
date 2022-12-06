@@ -13,7 +13,7 @@ public class TimeOfDayService {
         Calendar c = Calendar.getInstance();
         int hourOfDay = c.get(Calendar.HOUR_OF_DAY);
 
-        if (hourOfDay < 12){
+        if (hourOfDay > 5 && hourOfDay < 12){
             return TimeOfDay.Morning;       
         } else if (hourOfDay > 12 && hourOfDay < 16){
             return TimeOfDay.Afternoon;     

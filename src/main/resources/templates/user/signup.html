@@ -6,9 +6,6 @@
     <body layout:fragment="content">
         <div class="flex justify-space-evenly text-center">
             <div>
-                <div th:if="${param.error}">
-                    Invalid username or password.
-                </div>
                 <h2>Opret bruger</h2>
                 <form th:action="@{/signup}" th:object="${user}" th:method="post" class="form">
                     <div class="input-control">

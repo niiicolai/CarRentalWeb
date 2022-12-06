@@ -4,24 +4,25 @@
     layout:decorate="~{/layout/layout}">
     <head></head>
     <body layout:fragment="content">
+        <div th:if="${param.login_error}" class="alert danger">
+            <p>Forkert brugernavn eller adgangskode. Prøv igen.</p>
+        </div>
+
         <div class="flex justify-space-evenly text-center">
             <div>
-                <div th:if="${param.error}">
-                    Invalid username or password.
-                </div>
                 <h2>Login</h2>
                 <form th:action="@{/login}" th:method="post" class="form">
                     <div class="input-control">
-                        <label name="username">Username</label>
+                        <label name="username">Brugernavn</label>
                         <input type="text" name="username"
-                               placeholder="Username"
+                               placeholder="Brugernavn"
                                autocomplete="off"
                                required="required" />
                     </div>
                     <div class="input-control">
-                        <label name="password" class="form-label">Password</label>
+                        <label name="password" class="form-label">Adgangskode</label>
                         <input type="password" name="password" 
-                               placeholder="new password ..."
+                               placeholder="Adgangskode"
                                autocomplete="off"
                                required="required"
                                minlength="8" />

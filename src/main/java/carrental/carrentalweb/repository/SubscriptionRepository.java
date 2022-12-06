@@ -59,7 +59,7 @@ public class SubscriptionRepository {
         else return subscriptions.get(0);
     }
     public List<Subscription> parseResponse(DatabaseResponse databaseResponse) {
-        List<Subscription> subscriptions = new LinkedList<Subscription>();
+        List<Subscription> subscriptions = new LinkedList<>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
             subscriptions.add(

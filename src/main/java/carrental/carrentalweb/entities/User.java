@@ -121,4 +121,8 @@ public class User implements UserDetails {
             return null;
         }
     }
+
+    public static void logout() {
+        SecurityContextHolder.clearContext();
+    }
 }
