@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<head>
+  <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3 class="text-box secondary text-center">Booking</h3>
+<div class="text-box secondary text-center">
+  <span class="line-1"></span>
+  <span class="line-2"></span>
+  <span class="line-3"></span>
+  <span class="line-4"></span>
+  <span class="line-5"></span>
+  <span class="line-6"></span>
+  <span class="line-7"></span>
+  <span class="line-8"></span>
+
+<tr th:each="${booking}">
+  <td th:text="${booking.getId()}"></td>
+  <td th:text="${booking.getSubscriptionName()}"></td>
+  <td th:text="${booking.getPickupPointId()}"></td>
+  <td th:text="${booking.getVehicleNumber()}"></td>
+  <td th:text="${booking.getUserId()}"></td>
+  <td th:text="${booking.getDeliveredAt()}"></td>
+  <td th:text="${booking.getCreatedAt()}"></td>
+  <td th:text="${booking.getUpdatedAt()}"></td>
+</tr>
+</table>
+
+</div>
+
+</body>
+</html>

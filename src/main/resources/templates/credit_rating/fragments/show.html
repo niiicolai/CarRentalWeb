@@ -1,12 +1,11 @@
-<div th:fragment="show(creditRating)" xmlns:th="http://www.thymeleaf.org" class="mt-3">
-    <h3>Kreditvurdering</h3>
+<div th:fragment="show(creditRating)" xmlns:th="http://www.thymeleaf.org">
     <div th:if="${creditRating == null}">
-        <p>Du har endnu ingen kreditvurdering.</p>
+        <p>Kreditvurdering: <span class="text-danger"><i class="fa-regular fa-circle-xmark"></i></span></p>
     </div>
     <div th:if="${creditRating != null && creditRating.getState().toString() == 'Approve'}">
-        <p class="text-success">Godkendt</p>
+        <p>Kreditvurdering: <span class="text-success"><i class="fa-regular fa-circle-check"></i></span></p>
     </div>
     <div th:if="${creditRating != null && creditRating.getState().toString() == 'Reject'}">
-        <p class="text-danger">Afvist</p>
+        <p>Kreditvurdering: <span class="text-danger"><i class="fa-regular fa-circle-xmark"></i></span></p>
     </div>
 </div>

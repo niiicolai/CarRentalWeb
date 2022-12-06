@@ -29,6 +29,14 @@ public class Booking {
         this.kilometerDriven = kilometerDriven;
     }
 
+    public Booking(long userId, long vehicleNumber, long pickupPointId, String subscriptionName, LocalDateTime deliveredAt) {
+        this.userId = userId;
+        this.vehicleNumber = vehicleNumber;
+        this.pickupPointId = pickupPointId;
+        this.subscriptionName = subscriptionName;
+        this.deliveredAt = deliveredAt;
+    }
+
     public Booking() {
     }
 

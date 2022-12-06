@@ -7,13 +7,32 @@
     <title>Title</title>
 </head>
 <body layout:fragment="content">
-    <form th:action="@{/pickups/create}" th:object="${pickupPoint}" th:method="post">
-        
-        <input th:field="*{name}" type="text" placeholder="name" required>
-        <input th:field="*{addressId}" type="text" placeholder="addressId" required>
-        
-        <input type="submit" value="create">
+
+<h3 class="text-box secondary text-center">Opret nyt afhentningssted</h3>
+
+<div class="text-box secondary text-center">
+    <span class="line-1"></span>
+    <span class="line-2"></span>
+    <span class="line-3"></span>
+    <span class="line-4"></span>
+    <span class="line-5"></span>
+    <span class="line-6"></span>
+    <span class="line-7"></span>
+    <span class="line-8"></span>
+    <form th:action="@{/pickups/create}" th:object="${pickupPoint}" th:method="post" class="form">
+
+        <div class="input-control">
+            <label for="name">Navn: </label>
+        <input th:field="*{name}" id="name" type="text" placeholder="name" required>
+            </div>
+
+        <div class="input-control">
+            <label for="addressId">Adresse id: </label>
+        <input th:field="*{addressId}" id="addressId" type="text" placeholder="addressId" required>
+        </div>
+        <input class="button primary medium" type="submit" value="Opret nyt afhentningssted">
 
     </form>
+    </div>
 </body>
 </html>

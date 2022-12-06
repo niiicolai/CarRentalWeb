@@ -108,6 +108,12 @@
     padding: 10px 12px;
 }
 
+/* shadow */
+
+.button.no-shadow {
+    box-shadow: none;
+}
+
 /* size */
 
 .button.small {

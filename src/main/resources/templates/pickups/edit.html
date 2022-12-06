@@ -7,6 +7,17 @@
     <title>Title</title>
 </head>
 <body layout:fragment="content">
+
+<div class="text-box secondary text-center">
+    <span class="line-1"></span>
+    <span class="line-2"></span>
+    <span class="line-3"></span>
+    <span class="line-4"></span>
+    <span class="line-5"></span>
+    <span class="line-6"></span>
+    <span class="line-7"></span>
+    <span class="line-8"></span>
+
     <form th:action="@{/pickups/edit}" th:object="${pickupPoint}" th:method="patch">
         
         <input th:field="*{id}" type="hidden" required>
@@ -16,5 +27,6 @@
         <input type="submit" value="update">
     
     </form>
+    </div>
 </body>
 </html>

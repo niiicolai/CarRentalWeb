@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.CreditRatingRepository;
 import carrental.carrentalweb.repository.UserRepository;
+import carrental.carrentalweb.services.TimeOfDayService;
 
 /*
  * Written by Nicolai Berg Andersen.
@@ -29,10 +30,15 @@ public class UserController {
     @Autowired
     CreditRatingRepository creditRatingRepository;
 
+    @Autowired
+    TimeOfDayService timeOfDayService;
+
     @GetMapping("/user")
     public String show(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("user", userRepository.find("id", user.getId()));
         model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
+        model.addAttribute("timeOfDayImage", timeOfDayService.getImage());
+        model.addAttribute("timeOfDayGreeting", timeOfDayService.getGreeting());
         return "user/show";
     }
 

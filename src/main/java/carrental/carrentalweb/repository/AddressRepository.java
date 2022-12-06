@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+ * Written by Thomas S. Andersen.
+ */
+
 @Repository
 public class AddressRepository {
 
@@ -31,8 +35,8 @@ public class AddressRepository {
         newAddress.getCity(),
         newAddress.getZipCode(),
         newAddress.getCountry(),
-        newAddress.getCreatedAt(),
-        newAddress.getUpdatedAt());
+        LocalDateTime.now(),
+        LocalDateTime.now());
 
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();

@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+ * Written by Thomas S. Andersen.
+ */
+
 @Repository
 public class BookingRepository {
 
@@ -22,7 +26,7 @@ public class BookingRepository {
 
   public boolean createBooking(Booking newBooking) {
 
-    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at, returned_at, kilometer_driven) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at) VALUES (?, ?, ?, ?, ?)";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(
       newBooking.getUserId(), 

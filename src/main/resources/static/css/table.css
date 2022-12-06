@@ -21,3 +21,7 @@
 .table.border td {
     border: 1px solid var(--primary);
 }
+
+.table.fill {
+    width: 100%;
+}

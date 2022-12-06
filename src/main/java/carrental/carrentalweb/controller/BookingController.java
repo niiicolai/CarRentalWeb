@@ -33,13 +33,13 @@ public class BookingController {
 	}
 
 	@PostMapping("/bookings/create")
-	public String create(Booking booking) {
+	public String create(@ModelAttribute("booking") Booking booking) {
 		br.createBooking(booking);
 		return "redirect:/cars";
 	}
 
 	@GetMapping("/bookings/edit/{id}")
-	public String updateBooking(Model model, @AuthenticationPrincipal Long id) {
+	public String updateBooking(Model model, @PathVariable Long id) {
 		model.addAttribute("bookings", br.find("id", id));
 		return "bookings/edit";
 	}
@@ -48,5 +48,11 @@ public class BookingController {
 	public String editBooking(Booking booking) {
 		br.updateBooking(booking);
 		return "redirect:/bookings";
+	}
+
+	@GetMapping("/bookings/show/{id}")
+	public String showBooking(Model model, @AuthenticationPrincipal Long id) {
+		model.addAttribute("booking", br.find("id", id));
+		return "bookings/show";
 	}
 }
