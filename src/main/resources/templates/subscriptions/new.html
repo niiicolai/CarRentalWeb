@@ -3,22 +3,46 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
-    <-- Mads --/>
+    <!-- Mads -->
     <meta charset="UTF-8">
     <title>New Subscription</title>
 </head>
 <body layout:fragment="content">
+
+<div class="flex justify-space-evenly text-center">
+    <div class="text-box primary">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+        <h2>Opret Abonnement</h2>
     <form th:action="@{/subscriptions/new}" th:object="${subscription}" th:method="post" class="form">
-        
-        <input th:field="*{name}" type="text" placeholder="name" required>
-        <input th:field="*{days}" type="text" placeholder="days" required>
-        <input th:field="*{price}" type="text" placeholder="price" required>
+        <div class="input-control">
+            <label>Navn:
+                <input th:field="*{name}" type="text" placeholder="Indtast navn.." required>
+            </label>
 
-        <span>is available:</span>
-        <input th:field="*{available}" type="checkbox">
+            <label>Dage:
+                <input th:field="*{days}" type="text" required>
+            </label>
 
-        <input type="submit" value="update">
+            <label>Pris:
+                <input th:field="*{price}" type="text" style="margin-left: 1em" required>
+            </label>
+
+            <label>Tilgængelig:
+                <input th:field="*{available}" type="checkbox" style="margin-right: 8.5em; margin-left: 1em">
+            </label>
+        </div>
+        <input type="submit" value="Opret" class="button primary medium">
 
     </form>
+    </div>
+</div>
 </body>
 </html>
