@@ -8,56 +8,56 @@
 </head>
 <body layout:fragment="content">
 <h1>Car Administration (<a th:href="@{/add-car}">new</a>)</h1>
-
 <div sec:authorize="hasRole('ROLE_EMPLOYEE')" class="d-flex gap-2">
-
     <div class="text-box booked-list">
-        <h3>All cars</h3>
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-
-        <table class="table">
-            <tr>
-                <th>Vehicle #</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th></th>
-            </tr>
-            <ul th:each="car: ${cars}">
+        <div class="table-wrap">
+            <h3>All cars</h3>
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+            <table class="table cars">
                 <tr>
-                    <td><span th:text="${car.getVehicleNumber()}"/></td>
-                    <td><span th:text="${car.getBrand()}"/></td>
-                    <td><span th:text="${car.getModel()}"/></td>
-                    <td>
-                        <div class="input-control">
-                            <a class="button"
-                               th:href="@{/edit-car/{vehicleNumber}(vehicleNumber = ${car.getVehicleNumber()})}">Edit</a>
-                        </div>
-                    </td>
+                    <th>Vehicle #</th>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th></th>
                 </tr>
-
-            </ul>
-        </table>
+                <ul th:each="car: ${cars}">
+                    <tr>
+                        <td><span th:text="${car.getVehicleNumber()}"/></td>
+                        <td><span th:text="${car.getBrand()}"/></td>
+                        <td><span th:text="${car.getModel()}"/></td>
+                        <td>
+                            <div class="input-control">
+                                <a class="button"
+                                   th:href="@{/edit-car/{vehicleNumber}(vehicleNumber = ${car.getVehicleNumber()})}">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                </ul>
+            </table>
+            <div class="input-control">
+                <a class="button primary cars" th:href="@{/add-car}">Add car</a>
+            </div>
+        </div>
     </div>
-
     <div class="text-box booked-list">
-        <h3>Cars for inspection</h3>
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-        <div class="flex align-items-center justify-space-between gap-5">
-            <table class="table">
+        <div class="table-wrap">
+            <h3>Cars for inspection</h3>
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+            <table class="table cars">
                 <tr>
                     <th>Vehicle #</th>
                     <th>Brand</th>
@@ -80,8 +80,9 @@
             </table>
         </div>
     </div>
-
-    <div class="text-box damaged-list">
+</div>
+<div class="text-box damaged-list">
+    <div class="table-wrap">
         <h3>Damaged cars</h3>
         <span class="line-1"></span>
         <span class="line-2"></span>
@@ -92,7 +93,7 @@
         <span class="line-7"></span>
         <span class="line-8"></span>
         <div class="flex align-items-center justify-space-between gap-5">
-            <div class="table">
+            <div class="table cars">
                 <table>
                     <tr>
                         <th>Vehicle #</th>
@@ -101,7 +102,7 @@
                         <th></th>
                     </tr>
                     <ul th:each="car: ${cars}">
-                        <tr th:if="${car.getDamaged() != true}">
+                        <tr th:if="${car.getDamaged() == true}">
                             <td><span th:text="${car.getVehicleNumber()}"/></td>
                             <td><span th:text="${car.getBrand()}"/></td>
                             <td><span th:text="${car.getModel()}"/></td>
@@ -112,24 +113,17 @@
                                 </div>
                             </td>
                         </tr>
-
                     </ul>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
-
-
-<!-- CREDIT RATING -->
 <div sec:authorize="hasRole('ROLE_CLIENT')" class="d-flex gap-2">
-
     <div th:if="${creditRating == null || !creditRating.isApproved()}">
         <div th:replace="credit_rating/fragments/show.html :: show(${creditRating})"/>
         <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})"/>
     </div>
-
     <div th:if="${booking.getId() == 0 && creditRating != null && creditRating.isApproved()}">
         <form th:action="@{/bookings/create}" th:object="${booking}" th:method="post">
             <input name="vehicleNumber" type="hidden" th:value="${car.getVehicleNumber()}"/>

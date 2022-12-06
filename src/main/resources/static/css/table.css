@@ -3,9 +3,16 @@
  * Lavet af alle i gruppen.
  */
 
-.table th, .table td{
+.table.cars th,.table.cars td{
     text-align: left;
     padding: 8px;
+}
+
+.table-wrap {
+    overflow-y: scroll;
+    height: 230px;
+    width: 380px;
+    display: inline-block;
 }
 
 
