@@ -1,25 +1,25 @@
-<div th:fragment="header" xmlns:th="http://www.thymeleaf.org">
-    <header class="header">
-        <div class="wrapper flex align-items-center justify-space-between">
-            <a href="/"><img src="/images/logo.png" alt="logo"></a>
-            <nav class="flex align-items-center justify-space-between gap-5">
-                <a class="button primary medium" href="/">Home</a>
-                <a class="button primary medium" href="/cars">Cars</a>                
+<header th:fragment="header" xmlns:th="http://www.thymeleaf.org" class="header">
+    <div class="wrapper flex align-items-center justify-space-between">
+        <a href="/"><img src="/images/logo.png" alt="logo"></a>
+        
+        <nav class="flex align-items-center justify-space-between gap-5">
+            <a class="button primary medium" href="/">Home</a>
+            <a class="button primary medium" href="/cars">Cars</a>
 
-                <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_EMPLOYEE')" class="flex align-items-center justify-space-evenly gap-5">
+            <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_EMPLOYEE')"
+                class="flex align-items-center justify-space-evenly gap-5">
 
-                    <div class="vr"></div>
+                <div class="vr"></div>
 
-                    <a class="button secondary rounded small" href="/user">
-                        <i class="fa-sharp fa-solid fa-user"></i>
-                    </a>
-                    <form th:action="@{/logout}" th:method="post" class="d-inline">
-                        <button type="submit" class="button secondary rounded small">
-                            <i class="fa-sharp fa-solid fa-right-from-bracket"></i>
-                        </button>
-                    </form>
-                </div>
-            </nav>
-        </div>
-    </header>
-</div>
+                <a class="button secondary rounded small" href="/user">
+                    <i class="fa-sharp fa-solid fa-user"></i>
+                </a>
+                <form th:action="@{/logout}" th:method="post" class="d-inline">
+                    <button type="submit" class="button secondary rounded small">
+                        <i class="fa-sharp fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</header>
