@@ -39,6 +39,10 @@
     color: var(--white);
 }
 
+.button.creditMessage{
+    position: center;
+}
+
 .button.info {
     background-color: var(--info);
     border-color: var(--info);

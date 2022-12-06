@@ -7,9 +7,9 @@
     <title>Title</title>
 </head>
 <body layout:fragment="content">
-<h1>Car Administration </h1>
 
 <div sec:authorize="hasRole('ROLE_EMPLOYEE')" class="d-flex gap-2">
+    <h1>Bil Administration</h1>
     <div class="text-box booked-list">
         <div class="table-wrap">
             <h3>All cars</h3>
@@ -49,7 +49,7 @@
     </div>
     <div class="text-box booked-list">
         <div class="table-wrap">
-            <h3>Cars for inspection</h3>
+            <h3>Biler markeret for inspektion</h3>
             <div class="input-control">
                 <a class="button primary cars" th:href="@{/add-car}">Add car</a>
             </div>
@@ -86,7 +86,7 @@
     </div>
     <div class="text-box damaged-list">
         <div class="table-wrap">
-            <h3>Damaged cars</h3>
+            <h3>Defekte biler</h3>
             <div class="input-control">
                 <a class="button primary cars" th:href="@{/add-car}">Add car</a>
             </div>
@@ -132,18 +132,40 @@
 
 
 <div sec:authorize="hasRole('ROLE_CLIENT')" class="d-flex gap-2">
+    <h1>Biler til leje</h1>
     <div th:if="${creditRating == null || !creditRating.isApproved()}">
-        <div th:replace="credit_rating/fragments/show.html :: show(${creditRating})"/>
-        <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})"/>
+        <p class="text-box creditMessage">Du mangler en godkendt kreditvurdering</p>
+        <div class="container"></div>
+        <div class="button creditMessage" th:replace="credit_rating/fragments/check.html :: check(${creditRating})"/>
     </div>
-    <div th:if="${booking.getId() == 0 && creditRating != null && creditRating.isApproved()}">
-        <form th:action="@{/bookings/create}" th:object="${booking}" th:method="post">
-            <input name="vehicleNumber" type="hidden" th:value="${car.getVehicleNumber()}"/>
-            <input name="userId" type="hidden" th:value="${user.getId()}"/>
-            <input name="subscriptionName" type="text" placeholder="subscription name"/>
-            <input name="pickupPointId" type="text" placeholder="pickup point id"/>
-            <button type="submit" class="btn btn-outline-danger mt-2">Book car</button>
-        </form>
+    <div class="flex-wrap">
+        <ul th:each="car: ${cars}">
+            <div th:if="${booking.getId() == 0 && creditRating != null && creditRating.isApproved()}">
+                <fieldset>
+                    <form class="form" th:action="@{/bookings/create}" th:object="${booking}"
+                          th:method="post">
+                        <div class="flex align-items-center justify-space-between">
+                            <h1 th:text="${car.getBrand()}"></h1>
+                            <h2 th:text="${car.getModel()}"></h2>
+                            <h3 th:text="${car.getColor()}"></h3>
+                        </div>
+                        <input name="vehicleNumber" type="hidden" th:value="${car.getVehicleNumber()}"/>
+                        <input name="userId" type="hidden" th:value="${user.getId()}"/>
+                        <select name="subscriptionName" type="text" placeholder="subscription name" required>
+                            <option th:each="subscription: ${subscriptions}" th:text="subscription.getName()"
+                                    value="subscription.getName()"></option>
+                        </select>
+
+                        <select name="pickupPointId" type="text" placeholder="pickup point id" required>
+                            <option th:each="pickupPoint: ${pickupPoints}" th:text="pickupPoint.getName()"
+                                    value="pickupPoint.getId()"></option>
+                        </select>
+
+                        <button type="submit" class="btn btn-outline-danger mt-2 button primary">Book car</button>
+                    </form>
+                </fieldset>
+            </div>
+        </ul>
     </div>
 </div>
 
@@ -153,13 +175,16 @@
 <script>
     const ctx = document.getElementById('myChart');
 
+    var bookingAmounts = "${bookingAmounts}"
+
     new Chart(ctx, {
+
         type: 'bar',
         data: {
             labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             datasets: [{
                 label: 'Number of bookings',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [bookingAmounts],
                 borderWidth: 1
             }]
         },
