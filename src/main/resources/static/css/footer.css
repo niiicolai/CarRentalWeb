@@ -6,4 +6,7 @@
 footer {
     border-top: 1px solid var(--secondary);
     padding: var(--padding);
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
