@@ -40,9 +40,9 @@ public class DamageSpecificationController {
         return "damage-specification/edit";
     }
 
-    @PatchMapping("/damage-specification/edit/{desc}")
-    public String update(@PathVariable("desc") String description) {
-        dmgSpecRepo.update(dmgSpecRepo.get("description", description));
+    @PatchMapping("/damage-specification/edit")
+    public String update(DamageSpecification damageSpecification) {
+        dmgSpecRepo.update(damageSpecification);
         return "redirect:/damage-specifications";
     }
 }

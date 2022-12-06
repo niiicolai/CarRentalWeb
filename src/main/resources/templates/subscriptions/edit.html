@@ -21,28 +21,32 @@
         <span class="line-8"></span>
 
         <h2>Rediger Abonnement</h2>
-    <form th:action="@{/subscriptions/edit}" th:object="${subscription}" th:method="patch" class="form">
-        <div class="input-control">
-            <label>Navn:
-                <input th:field="*{name}" type="hidden" required>
-            </label>
 
-            <label>Dage:
-                <input th:field="*{days}" type="text" placeholder="days" required>
-            </label>
+        <form th:action="@{/subscriptions/edit}" th:object="${subscription}" th:method="patch" class="form">
+            <div class="input-control">
+                <label>Navn:
+                    <input th:field="*{name}" type="hidden" required>
+                </label>
 
-            <label>Pris:
-                <input th:field="*{price}" type="text" placeholder="price" style="margin-left: 1em" required>
-            </label>
+                <label>Dage:
+                    <input th:field="*{days}" type="text" placeholder="days" required>
+                </label>
 
-            <label>Tilgængelig:
-                <input th:field="*{available}" type="checkbox" th:checked="${subscription.available}">
-            </label>
-        </div>
+                <label>Pris:
+                    <input th:field="*{price}" type="text" placeholder="price" style="margin-left: 1em" required>
+                </label>
 
-        <input type="submit" value="Opdater" class="button primary medium">
+                <label>Tilgængelig:
+                    <input th:field="*{available}" type="checkbox" th:checked="${subscription.available}">
+                </label>
+            </div>
 
-    </form>
+            <button type="submit" class="button primary medium">Opdater</button>
+
+        </form>
+    </div>
+    <div>
+        <i class="fa-solid fa-clipboard" style="font-size: 300px; color: var(--primary)"></i>
     </div>
 </div>
 </body>
