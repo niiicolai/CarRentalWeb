@@ -6,10 +6,11 @@ import java.util.List;
 import carrental.carrentalweb.enums.DatabaseResponseState;
 import carrental.carrentalweb.records.DatabaseRecord;
 
-public class DatabaseResponse implements Iterator<DatabaseRecord> {
+public class DatabaseResponse implements Iterator<DatabaseRecord> {        
+    private DatabaseResponseState state = DatabaseResponseState.success;
     private List<DatabaseRecord> databaseRecords;    
-    private DatabaseResponseState state;
-    private String error;
+    private DatabaseError databaseError;
+    
     private int index = 0;
     
     public DatabaseResponse() {            
@@ -20,8 +21,8 @@ public class DatabaseResponse implements Iterator<DatabaseRecord> {
         this.state = state;
     }
 
-    public void setError(String error) {
-        this.error = error;       
+    public void setDatabaseError(DatabaseError databaseError) {
+        this.databaseError = databaseError;       
     }
 
     public void add(DatabaseRecord record) {
@@ -32,12 +33,12 @@ public class DatabaseResponse implements Iterator<DatabaseRecord> {
         return this.state;
     }
 
-    public String getError() {
-        return this.error;
+    public DatabaseError getDatabaseError() {
+        return databaseError;
     }
 
     public boolean isSuccessful() {
-        return this.state == DatabaseResponseState.Success;
+        return this.state == DatabaseResponseState.success;
     }
 
     @Override

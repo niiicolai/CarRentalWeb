@@ -36,7 +36,7 @@ public class SecurityConfig {
 
     private static final String LOGIN_PAGE = "/login";
     private static final String LOGIN_URL = "/login";
-    private static final String LOGIN_FAILURE_URL = "/login?error=true";
+    private static final String LOGIN_FAILURE_URL = "/login?login_error=true";
     private static final String AFTER_LOGIN_URL = "/user";
 
     private static final String AFTER_LOGOUT_URL = "/";

@@ -5,6 +5,7 @@ import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.enums.CreditRatingState;
 import carrental.carrentalweb.repository.CreditRatingRepository;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 
 /*
  * ## Author: 
@@ -78,7 +79,7 @@ public class CreditRatingService {
      */
     public CreditRating check(User user) {
         CreditRating creditRating = currentRating(user);
-        CreditRatingState state = nextState();
+        CreditRatingState state = nextState();        
 
         if (creditRating == null) {
             creditRating = new CreditRating(state, user.getId());

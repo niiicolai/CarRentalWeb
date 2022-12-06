@@ -33,7 +33,7 @@ public class UserRepository {
         return parseResponseFirst(databaseResponse);
     }
     
-    public boolean insert(User user) {
+    public DatabaseResponse insert(User user) {
         /* 
          * Ensure user password always is 
          * encoded before inserting 
@@ -50,10 +50,10 @@ public class UserRepository {
         
         databaseService.executeUpdate(roleSql, roleRequestbody);
 
-        return databaseResponse.isSuccessful();
+        return databaseResponse;
     }
 
-    public boolean update(User user) {
+    public DatabaseResponse update(User user) {
         /* 
          * Password encoding is not needed, 
          * because the password is not updated
@@ -62,7 +62,7 @@ public class UserRepository {
         DatabaseRequestBody body = new DatabaseRequestBody(user.getUsername(), user.getEmail(), user.getId());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         
-        return databaseResponse.isSuccessful();
+        return databaseResponse;
     }
 
     /* 
@@ -70,7 +70,7 @@ public class UserRepository {
      * having to update their password when they want to change
      * their name or something else.
      */
-    public boolean updatePassword(User user) {
+    public DatabaseResponse updatePassword(User user) {
         /* Ensure user passwords always is encoded before updating */
         user.encodedPassword();
 
@@ -78,18 +78,18 @@ public class UserRepository {
         DatabaseRequestBody body = new DatabaseRequestBody(user.getPassword(), user.getId());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         
-        return databaseResponse.isSuccessful();
+        return databaseResponse;
     }
 
-    public boolean disable(User user) {
+    public DatabaseResponse disable(User user) {
         String sql = "UPDATE users SET enabled = 0 WHERE id = ?";
         DatabaseRequestBody body = new DatabaseRequestBody(user.getId());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
         
-        return databaseResponse.isSuccessful();
+        return databaseResponse;
     }
 
-    public boolean delete(User user) {
+    public DatabaseResponse delete(User user) {
         String sql_role = "DELETE FROM user_role WHERE user_id = ?";
         String sql_user = "DELETE FROM users WHERE id = ?";
         DatabaseRequestBody userRequestBody = new DatabaseRequestBody(user.getId());
@@ -97,7 +97,7 @@ public class UserRepository {
         databaseService.executeUpdate(sql_role, roleRequestBody);
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql_user, userRequestBody);
         
-        return databaseResponse.isSuccessful();
+        return databaseResponse;
     }
 
     // From a running a lot of Unit test, I have concluded fetching last inserted database object by created_at

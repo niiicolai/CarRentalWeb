@@ -6,7 +6,10 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import carrental.carrentalweb.enums.DatabaseResponseState;
 import carrental.carrentalweb.records.DatabaseRecord;
+import carrental.carrentalweb.utilities.DatabaseError;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import java.sql.*;
@@ -54,8 +57,10 @@ public class DatabaseService {
         try {
             PreparedStatement statement = prepareStatement(sql, body);
             statement.executeUpdate();
+            
         } catch (SQLException e) {
-            response.setError(e.getMessage());
+            response.setState(DatabaseResponseState.danger);
+            response.setDatabaseError(new DatabaseError(e));
             e.printStackTrace();
         }
 
@@ -70,7 +75,8 @@ public class DatabaseService {
             parseResultSet(resultSet, response);
             
         } catch (SQLException e) {
-            response.setError(e.getMessage());
+            response.setState(DatabaseResponseState.danger);
+            response.setDatabaseError(new DatabaseError(e));
             e.printStackTrace();
         }
 

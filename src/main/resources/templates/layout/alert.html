@@ -1,0 +1,7 @@
+<div th:fragment="alert" xmlns:th="http://www.thymeleaf.org">
+    <!-- General alert -->
+    <div th:if="${param.response != null}" th:class="${'alert ' + param.state}">
+        <p th:text="${param.response}" />
+    </div>
+</div>
+

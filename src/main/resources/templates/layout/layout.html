@@ -34,9 +34,10 @@
         <link rel="stylesheet" th:href="@{/css/responsive.css}">
     </head>
     <body>
-        <div th:replace="layout/header.html :: header"></div>
+        <div th:replace="layout/header.html :: header" />        
         
         <div class="container">
+            <div th:replace="layout/alert.html :: alert" />
             <div layout:fragment="content"></div>
         </div>
         

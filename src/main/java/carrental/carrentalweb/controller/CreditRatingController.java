@@ -7,11 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.CreditRatingRepository;
 import carrental.carrentalweb.services.CreditRatingService;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 
 /*
  * Written by Nicolai Berg Andersen.
@@ -35,8 +37,16 @@ public class CreditRatingController {
     }
 
     @PostMapping("/credit/rating")
-    public String create(@AuthenticationPrincipal User user) {
-        creditRatingService.check(user);
+    public String create(@AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
+        CreditRating creditRating = creditRatingService.check(user);
+        if (creditRating.isApproved()) {
+            redirectAttributes.addAttribute("response", "Kreditvurdering godkendt.");
+            redirectAttributes.addAttribute("state", "success");
+        } else {
+            redirectAttributes.addAttribute("response", "Kreditvurdering afvist.");
+            redirectAttributes.addAttribute("state", "danger");
+        }
+
         return "redirect:/user";
     }
 }

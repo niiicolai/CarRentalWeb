@@ -30,18 +30,18 @@ public class CreditRatingRepository {
         return parseResponseFirst(databaseResponse);
     }
     
-    public boolean insert(CreditRating creditRating) {
+    public DatabaseResponse insert(CreditRating creditRating) {
         String sql = "INSERT INTO credit_ratings (state, user_id) VALUES (?, ?)";        
         DatabaseRequestBody body = new DatabaseRequestBody(creditRating.getState().name(), creditRating.getUserId());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
-        return databaseResponse.isSuccessful();
+        return databaseResponse;
     }
 
-    public boolean update(CreditRating creditRating) {
+    public DatabaseResponse update(CreditRating creditRating) {
         String sql = "UPDATE credit_ratings SET state = ? WHERE user_id = ?";
         DatabaseRequestBody body = new DatabaseRequestBody(creditRating.getState().name(), creditRating.getUserId());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, body);
-        return databaseResponse.isSuccessful();
+        return databaseResponse;
     }
 
     public CreditRating last() {
@@ -50,12 +50,12 @@ public class CreditRatingRepository {
         return parseResponseFirst(databaseResponse);
     }
 
-    public boolean delete(CreditRating creditRating) {
+    public DatabaseResponse delete(CreditRating creditRating) {
         String sql = "DELETE FROM credit_ratings WHERE user_id = ?";
         DatabaseRequestBody requestBody = new DatabaseRequestBody(creditRating.getUserId());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(sql, requestBody);
         
-        return databaseResponse.isSuccessful();
+        return databaseResponse;
     }
 
     public CreditRating parseResponseFirst(DatabaseResponse databaseResponse) {
