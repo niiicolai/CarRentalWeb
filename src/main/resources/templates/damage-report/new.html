@@ -26,7 +26,7 @@
             <div class="input-control">
                 <div th:each="ds : ${damageSpecs}">
                     <label th:text="${ds.description} + ':'">
-                        <input th:field="*{ds.damaged}" type="checkbox"> <!-- Denne linje skal løses så feltet kan tilgås og checkbox'en kommer frem -->
+                        <input th:field="${ds.damaged}" type="checkbox"> <!-- Denne linje skal løses så feltet kan tilgås og checkbox'en kommer frem -->
                     </label>
                 </div>
             </div>
@@ -36,7 +36,7 @@
         </form>
     </div>
     <div>
-        <i class="fa-solid fa-car-burst" style="font-size: 300px; color: var(--primary)"></i>
+        <i class="fa-solid fa-car-burst" style="font-size: 25vw; color: var(--primary); padding: var(--padding)"></i>
     </div>
 </div>
 </body>
