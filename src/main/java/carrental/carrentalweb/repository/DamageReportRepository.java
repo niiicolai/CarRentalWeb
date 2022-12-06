@@ -1,6 +1,7 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.DamageReport;
+import carrental.carrentalweb.entities.DamageSpecification;
 import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
@@ -24,14 +25,29 @@ public class DamageReportRepository {
         String sql = String.format("SELECT * FROM damage_reports WHERE %s=? ", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
     }
-    public boolean create(DamageReport damageReport) {
-        String query = "INSERT INTO damage_reports (booking_id) VALUES (?)";
-        DatabaseRequestBody body = new DatabaseRequestBody(damageReport.getBookingId());
-        DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
-        return databaseResponse.isSuccessful();
-
+    public boolean create(DamageReport damageReport, List<DamageSpecification> dmgSpecs) {
+        String reportQuery = "INSERT INTO damage_reports (booking_id) VALUES (?)";
+        DatabaseRequestBody reportBody = new DatabaseRequestBody(damageReport.getBookingId());
+        DatabaseResponse reportDatabaseResponse = databaseService.executeUpdate(reportQuery, reportBody);
+        for (DamageSpecification dmgSpec : dmgSpecs) {
+            String specQuery = "INSERT INTO damage_report_specifications (report_id, spec_description) VALUES (?, ?)";
+            DatabaseRequestBody specBody = new DatabaseRequestBody(damageReport.getBookingId(), dmgSpec.getDescription());
+            databaseService.executeUpdate(specQuery, specBody);
+        }
+        return reportDatabaseResponse.isSuccessful();
+    }
+    public boolean update(DamageReport damageReport, List<DamageSpecification> dmgSpecs) {
+        String reportQuery = "UPDATE damage_reports SET booking_id=?";
+        DatabaseRequestBody reportBody = new DatabaseRequestBody(damageReport.getBookingId());
+        DatabaseResponse reportDatabaseResponse = databaseService.executeUpdate(reportQuery, reportBody);
+        for (DamageSpecification dmgSpec : dmgSpecs) {
+            String specQuery = "UPDATE damage_report_specifications SET report_id=?, spec_description=?";
+            DatabaseRequestBody specBody = new DatabaseRequestBody(damageReport.getBookingId(), dmgSpec.getDescription());
+            databaseService.executeUpdate(specQuery, specBody);
+        }
+        return reportDatabaseResponse.isSuccessful();
     }
     public DamageReport last() {
         String query = "SELECT * FROM damage_reports ORDER BY created_at DESC LIMIT 1";
@@ -44,7 +60,7 @@ public class DamageReportRepository {
         else return damageReports.get(0);
     }
     public List<DamageReport> parseResponse(DatabaseResponse databaseResponse) {
-        List<DamageReport> dmgReports = new LinkedList<DamageReport>();
+        List<DamageReport> dmgReports = new LinkedList<>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
             dmgReports.add(
