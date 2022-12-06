@@ -21,25 +21,26 @@
         <span class="line-8"></span>
 
         <h2>Rediger Skade Specifikation</h2>
-
-        <form th:action="/damage-specification/edit/ + ${damageSpec.description}" th:method="patch" th:object="${damageSpec}" class="form">
+        <form th:action="@{/damage-specification/edit}" th:object="${damageSpec}" th:method="patch" class="form">
             <div class="input-control">
-                <label>Description:
-                    <input th:field="${damageSpec.description}" type="text">
-                </label>
-
+                <h3 th:text="${damageSpec.description}"></h3>
                 <label>Pris:
-                    <input th:field="${damageSpec.price}" type="text">
+                    <input th:field="*{price}" style="margin-left: 4.8em" type="text">
                 </label>
-
+                <input th:field="*{description}" type="text" hidden>
+                <!--
                 <label>Skadet:
                     <input th:field="${damageSpec.damaged}" type="checkbox">
                 </label>
+                -->
             </div>
             <div>
-                <button type="submit" value="Opdater" class="button primary medium"></button>
+                <button type="submit" class="button primary medium">Opdater</button>
             </div>
         </form>
+    </div>
+    <div>
+        <i class="fa-solid fa-circle-exclamation" style="font-size: 300px; color: var(--primary)"></i>
     </div>
 </div>
 

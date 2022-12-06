@@ -45,8 +45,8 @@ public class DamageSpecificationRepository {
         return databaseResponse.isSuccessful();
     }
     public boolean update(DamageSpecification dmgSpec) {
-        String query = "UPDATE damage_specifications SET damaged=?, price=?";
-        DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.isDamaged(), dmgSpec.getPrice());
+        String query = "UPDATE damage_specifications SET price=? WHERE description=?";
+        DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getPrice(), dmgSpec.getDescription());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
