@@ -27,6 +27,10 @@
     border: 1px solid var(--secondary);
 }
 
+.text-box.creditMessage{
+    text-align:center;
+}
+
 .text-box .line-1 {
     top: 0;
     left: 0;

@@ -12,6 +12,11 @@
     padding-bottom: 10px;    
 }
 
+.form.booking-form{
+    border: black 8px;
+}
+
+
 .form input,
 .form textarea {
     padding: 10px;

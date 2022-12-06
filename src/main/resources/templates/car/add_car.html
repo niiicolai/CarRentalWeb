@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Create Car</title>
@@ -10,40 +10,43 @@
 <h1>New Car</h1>
 
 <form th:action="@{/add-car}" method="post" th:object="${car}" class="form">
+
     <div class="text-field">
+        <input th:field="*{vehicleNumber}" type="hidden">
 
-        <div class="input-control">
-            <label for="frame-number">Frame number: </label>
-            <input id="frame-number" th:field="*{frameNumber}" type="text" required>
-        </div>
+        <label for="frame-number">Frame number: </label>
+        <input id="frame-number" th:field="*{frameNumber}" type="text" required>
 
-       
         <input id="brand" th:field="*{brand}" type="text" required>
         <label for="brand">Brand: </label>
+
         <input id="model" th:field="*{model}" type="text" required>
         <label for="model">Model: </label>
+
         <input id="color" th:field="*{color}" type="text" required>
         <label for="color">Color: </label>
+
         <input id="equipment-level" th:field="*{equipmentLevel}" type="number" required>
         <label for="equipment-level">Equipment level: </label>
+
         <input id="steel-price" th:field="*{steelPrice}" type="number" required>
         <label for="steel-price">Steel price: </label>
+
         <input id="registration-fee" th:field="*{registrationFee}" type="number" required>
         <label for="registration-fee">Registration price:</label>
+
         <input id="co2-discharge" th:field="*{co2Discharge}" type="number" required>
         <label for="co2-discharge">Co2 discharge:</label>
+
         <input id="inspected" th:field="*{inspected}" type="checkbox">
         <label for="inspected">Inspected: </label>
 
-        <input type="submit" id="submitForm" value="Add car">
+        <input class="button primary" type="submit" id="submitForm" value="Add car">
 
-        <div class="successPrompt" th:if="${param.success}">
-            <p>Car created successfully</p>
-        </div>
-
+        <p class="successPrompt" th:if="${param.success}">Car created successfully</p>
     </div>
-</form>
 
+</form>
 
 
 </body>

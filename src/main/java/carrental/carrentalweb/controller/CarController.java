@@ -2,12 +2,11 @@ package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
+import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.entities.User;
-import carrental.carrentalweb.repository.BookingRepository;
-import carrental.carrentalweb.repository.CarRepository;
-import carrental.carrentalweb.repository.CreditRatingRepository;
-import carrental.carrentalweb.repository.UserRepository;
+import carrental.carrentalweb.repository.*;
 
+import carrental.carrentalweb.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,15 @@ public class CarController {
     @Autowired
     CreditRatingRepository creditRatingRepository;
 
+    @Autowired
+    PickupPointRepository pickupPointRepository;
+
+    @Autowired
+    SubscriptionRepository subscriptionRepository;
+
+    @Autowired
+    BookingService bookingService;
+
     @GetMapping("/cars")
     public String cars(Model model, @AuthenticationPrincipal User user){
 
@@ -33,6 +41,9 @@ public class CarController {
         model.addAttribute("user", userRepository.find("id", user.getId()));
         model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
         model.addAttribute("booking", new Booking());
+        model.addAttribute("pickupPoints", pickupPointRepository.getPickupPointsList());
+        model.addAttribute("subscriptions", subscriptionRepository.getAll());
+        model.addAttribute("bookingAmounts", bookingService.getBookingAmountsOfTheWeek());
         return "car/car_list";
     }
 
