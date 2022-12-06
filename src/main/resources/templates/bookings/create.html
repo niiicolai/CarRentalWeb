@@ -6,13 +6,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<!-- Thomas -->
 <body  layout:fragment="content">
 
 
 <!--
 bookings/create er overflødig nu hvor booking oprettes via car_list. Skal slettes senere.
 -->
-<h3 class="text-box secondary text-center">Opret ny booking</h3>
+<div class="flex justify-space-evenly text-center">
 
 <div class="text-box secondary text-center">
     <span class="line-1"></span>
@@ -23,6 +24,8 @@ bookings/create er overflødig nu hvor booking oprettes via car_list. Skal slett
     <span class="line-6"></span>
     <span class="line-7"></span>
     <span class="line-8"></span>
+
+    <h2 class="text-box secondary text-center">Opret ny booking</h2>
 
 <form th:action="@{/bookings/create}" method="post" th:object="${booking}" class="form">
     <div class="text-field">
@@ -48,6 +51,10 @@ bookings/create er overflødig nu hvor booking oprettes via car_list. Skal slett
     </div>
 
 </form>
+</div>
+<div>
+    <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+</div>
 </div>
 </body>
 </html>
