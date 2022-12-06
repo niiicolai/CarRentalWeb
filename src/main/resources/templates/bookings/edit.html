@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<!-- Thomas -->
 <body>
 
-<h3 class="text-box secondary text-center">Rediger booking</h3>
+<div class="flex justify-space-evenly text-center">
+
 <div class="text-box secondary text-center">
   <span class="line-1"></span>
   <span class="line-2"></span>
@@ -16,6 +18,8 @@
   <span class="line-6"></span>
   <span class="line-7"></span>
   <span class="line-8"></span>
+
+    <h2 class="text-box secondary text-center">Rediger booking</h2>
 
 <form th:action="/bookings/edit/ + ${booking.id}" th:object="${booking}" th:method="patch" class="form">
 
@@ -42,6 +46,10 @@
 
 
 </form>
+</div>
+    <div>
+        <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+    </div>
 </div>
 </body>
 </html>

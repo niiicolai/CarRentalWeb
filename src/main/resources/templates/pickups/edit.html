@@ -8,6 +8,8 @@
 </head>
 <body layout:fragment="content">
 
+<div class="flex justify-space-evenly text-center">
+
 <div class="text-box secondary text-center">
     <span class="line-1"></span>
     <span class="line-2"></span>
@@ -18,15 +20,31 @@
     <span class="line-7"></span>
     <span class="line-8"></span>
 
-    <form th:action="@{/pickups/edit}" th:object="${pickupPoint}" th:method="patch">
-        
+    <h3 class="text-box secondary text-center">Rediger afhentningssted</h3>
+
+    <form th:action="@{/pickups/edit}" th:object="${pickupPoint}" th:method="patch" class="form">
+        <div class="input-control">
         <input th:field="*{id}" type="hidden" required>
-        <input th:field="*{name}" type="text" placeholder="name" required>
-        <input th:field="*{addressId}" type="text" placeholder="addressId" required>
-        
-        <input type="submit" value="update">
-    
+        </div>
+
+        <div class="input-control">
+            <label for="name">Navn: </label>
+        <input th:field="*{name}" type="text" id="name" placeholder="name" required>
+        </div>
+            <div class="input-control">
+                <label for="id">Adresse ID: </label>
+        <input th:field="*{addressId}" id="id" type="text" placeholder="addressId" required>
+            </div>
+        <br>
+                <div class="input-control">
+        <input class="button primary medium" type="submit" value="Registrer">
+                </div>
     </form>
     </div>
+
+<div>
+    <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+</div>
+</div>
 </body>
 </html>

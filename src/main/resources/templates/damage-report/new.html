@@ -25,7 +25,7 @@
         <form th:action="@{/damage-report/new}" method="post" th:object="${damageSpecs}" class="form">
             <div th:each="ds : ${damageSpecs}" class="input-control">
                 <label th:text="${ds.description} + ':'">
-                    <input th:field="*{ds.damaged}" type="checkbox"> <!-- Denne linje skal løses så feltet kan tilgås og checkbox'en kommer frem -->
+                    <input th:field="${ds.damaged}" type="checkbox"> <!-- Denne linje skal løses så feltet kan tilgås og checkbox'en kommer frem -->
                 </label>
             </div>
             <div>
