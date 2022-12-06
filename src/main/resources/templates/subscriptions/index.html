@@ -22,7 +22,7 @@
 
         <h2>Abonnementer</h2>
 
-        <table class="table">
+        <table class="table border">
             <thead>
             <tr>
                 <th>Navn</th>
@@ -38,17 +38,17 @@
                 <td th:text="${sub.days}">Dage</td>
                 <td th:text="${sub.price} + ' DKK'">Pris</td>
                 <td th:text="${sub.available} ? 'Ja' : 'Nej'">Tilgængelig</td>
-                <td><a th:href="@{/subscriptions/edit/{name}(name = ${sub.name})}">Ændr</a></td>
+                <td><a th:href="@{/subscriptions/edit/{name}(name = ${sub.name})}"><button class="button primary medium">Rediger</button></a></td>
             </tr>
             </tbody>
         </table>
         <br>
         <a th:href="@{/subscriptions/new}">
-            <input type="button" value="Tilføj nyt abonnement" class="button primary medium">
+            <button class="button primary medium">Tilføj nyt abonnement</button>
         </a>
     </div>
     <div>
-        <i class="fa-solid fa-clipboard" style="font-size: 300px; color: var(--primary)"></i>
+        <i class="fa-solid fa-clipboard" style="font-size: 25vw; color: var(--primary); padding: var(--padding)"></i>
     </div>
 </div>
 </body>
