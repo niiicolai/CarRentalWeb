@@ -2,9 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
-<head></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <!-- Thomas -->
 <body layout:fragment="content">
-    <h3 class="text-box secondary text-center">List of bookings</h3>
+
 
     <div class="text-box secondary text-center">
         <span class="line-1"></span>
@@ -16,30 +20,30 @@
         <span class="line-7"></span>
         <span class="line-8"></span>
 
-        <table class="table">
+        <h2 class="text-box secondary text-center">List of bookings</h2>
+<div class="table border">
+        <table>
         <tr>
             <th>Booking ID</th>
             <th>Subscription</th>
             <th>Afhentningssted ID</th>
             <th>Vognnummer</th>
-            <th>User ID</th>
-            <th>Leveret d.</th>
             <th>Leveret d.</th>
             <th>Oprettet d.</th>
-            <th>Opdateret d.</th>
+            <th>Rediger</th>
+
         </tr>
     <tr th:each="booking : ${bookinglist}">
             <td th:text="${booking.getId()}"></td>
             <td th:text="${booking.getSubscriptionName()}"></td>
             <td th:text="${booking.getPickupPointId()}"></td>
             <td th:text="${booking.getVehicleNumber()}"></td>
-            <td th:text="${booking.getUserId()}"></td>
             <td th:text="${booking.getDeliveredAt()}"></td>
             <td th:text="${booking.getCreatedAt()}"></td>
-            <td th:text="${booking.getUpdatedAt()}"></td>
-        <td><a class="button primary small" th:href="@{/bookings/edit/{id}(id = ${booking.getId()})}">Edit</a></td>
+        <td><a class="button table primary small" th:href="@{/bookings/edit/{id}(id = ${booking.getId()})}">Rediger</a></td>
     </tr>
     </table>
+</div>
         </div>
 </body>
 </html>

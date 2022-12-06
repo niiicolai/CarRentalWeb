@@ -127,3 +127,21 @@
 .button.large {
     font-size: large;
 }
+
+.button.table {
+    /* Remove underline from links */
+    text-decoration: none;
+
+    /* Set button padding */
+    padding: 2px 7px;
+
+    /* Modify button borders */
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+
+    /* Change the cursor graphic */
+    cursor: pointer;
+
+    box-shadow: 2px 2px 3px rgb(201, 201, 201);
+}

@@ -34,7 +34,7 @@
             <tr th:each="ds : ${damageSpecs}">
                 <td th:text="${ds.description}">Beskrivelse</td>
                 <td th:text="${ds.price} + ' DKK'">Pris</td>
-                <td th:href="@{/damage-specification/edit/{desc}(desc = ${ds.description})}">Ændr</td>
+                <td><a th:href="@{/damage-specification/edit/{desc}(desc = ${ds.description})}">Ændr</a></td>
             </tr>
             </tbody>
         </table>
@@ -42,6 +42,9 @@
         <a th:href="@{/damage-specification/new}">
             <input type="button" value="Tilføj ny specifikation" class="button primary medium">
         </a>
+    </div>
+    <div>
+        <i class="fa-solid fa-circle-exclamation" style="font-size: 300px; color: var(--primary)"></i>
     </div>
 </div>
 </body>

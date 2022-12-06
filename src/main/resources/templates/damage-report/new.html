@@ -23,10 +23,12 @@
         <h2>Skadesrapport</h2>
 
         <form th:action="@{/damage-report/new}" method="post" th:object="${damageSpecs}" class="form">
-            <div th:each="ds : ${damageSpecs}" class="input-control">
-                <label th:text="${ds.description} + ':'">
-                    <input th:field="*{ds.damaged}" type="checkbox"> <!-- Denne linje skal løses så feltet kan tilgås og checkbox'en kommer frem -->
-                </label>
+            <div class="input-control">
+                <div th:each="ds : ${damageSpecs}">
+                    <label th:text="${ds.description} + ':'">
+                        <input th:field="*{ds.damaged}" type="checkbox"> <!-- Denne linje skal løses så feltet kan tilgås og checkbox'en kommer frem -->
+                    </label>
+                </div>
             </div>
             <div>
                 <button type="submit" class="button primary medium">Indberet</button>
@@ -34,7 +36,7 @@
         </form>
     </div>
     <div>
-        <i class="fa-solid fa-car-burst" style="size: 300px"></i> <!-- Resizing af <i> hvordan? size virker ikke. Lav om til img element i stedet? -->
+        <i class="fa-solid fa-car-burst" style="font-size: 300px; color: var(--primary)"></i>
     </div>
 </div>
 </body>

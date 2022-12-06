@@ -6,8 +6,9 @@
   <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<!-- Thomas -->
 <body>
-<h3 class="text-box secondary text-center">Booking</h3>
+
 <div class="text-box secondary text-center">
   <span class="line-1"></span>
   <span class="line-2"></span>
@@ -18,15 +19,26 @@
   <span class="line-7"></span>
   <span class="line-8"></span>
 
+  <h2 class="text-box secondary text-center">Booking</h2>
+
+  <table class="table">
+    <tr>
+      <th>Booking ID</th>
+      <th>Subscription</th>
+      <th>Afhentningssted ID</th>
+      <th>Vognnummer</th>
+      <th>Leveret d.</th>
+      <th>Oprettet d.</th>
+
+    </tr>
 <tr th:each="${booking}">
   <td th:text="${booking.getId()}"></td>
   <td th:text="${booking.getSubscriptionName()}"></td>
   <td th:text="${booking.getPickupPointId()}"></td>
   <td th:text="${booking.getVehicleNumber()}"></td>
-  <td th:text="${booking.getUserId()}"></td>
   <td th:text="${booking.getDeliveredAt()}"></td>
   <td th:text="${booking.getCreatedAt()}"></td>
-  <td th:text="${booking.getUpdatedAt()}"></td>
+
 </tr>
 </table>
 
