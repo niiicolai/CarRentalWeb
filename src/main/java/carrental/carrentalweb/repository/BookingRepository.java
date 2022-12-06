@@ -8,6 +8,7 @@ import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,6 +62,17 @@ public class BookingRepository {
     } catch (SQLException e){
       e.printStackTrace();
     }*/
+  }
+
+  public int getAmountOfBookingsAtDate(LocalDateTime date){
+    int amount = 0;
+    String query = "SELECT * FROM bookings WHERE created_at BETWEEN ? AND ?";
+    DatabaseRequestBody body = new DatabaseRequestBody(date, date.plusDays(1));
+    DatabaseResponse databaseResponse = databaseService.executeQuery(query, body);
+    while (databaseResponse.hasNext()){
+        amount++;
+    }
+    return amount;
   }
 
 
