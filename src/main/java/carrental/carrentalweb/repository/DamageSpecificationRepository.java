@@ -22,11 +22,20 @@ public class DamageSpecificationRepository {
         String query = String.format("SELECT * FROM damage_specifications WHERE %s=?", column);
         DatabaseRequestBody body = new DatabaseRequestBody(value);
         DatabaseResponse databaseResponse = databaseService.executeQuery(query, body);
-        return parseResponse(databaseResponse).get(0);
+        return parseResponseFirst(databaseResponse);
     }
     public List<DamageSpecification> getAll() {
         String query = "SELECT * FROM damage_specifications";
         DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
+        return parseResponse(databaseResponse);
+    }
+    public List<DamageSpecification> getAllById(Object value) {
+        String query = "SELECT * FROM damage_report_specifications " +
+                "JOIN damage_specifications " +
+                "ON damage_report_specifications.spec_description=damage_specifications.description " +
+                "WHERE damage_report_specifications.report_id=?";
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(query, body);
         return parseResponse(databaseResponse);
     }
     public boolean create(DamageSpecification dmgSpec) {
@@ -59,7 +68,7 @@ public class DamageSpecificationRepository {
         else return damageSpecifications.get(0);
     }
     public List<DamageSpecification> parseResponse(DatabaseResponse databaseResponse) {
-        List<DamageSpecification> dmgSpecs = new LinkedList<DamageSpecification>();
+        List<DamageSpecification> dmgSpecs = new LinkedList<>();
         while (databaseResponse.hasNext()) {
             DatabaseRecord record = databaseResponse.next();
             dmgSpecs.add(

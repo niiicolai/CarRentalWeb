@@ -3,10 +3,39 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
+    <-- Mads --/>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>New Damage Report</title>
 </head>
 <body layout:fragment="content">
 
+<div class="flex justify-space-evenly text-center">
+    <div class="text-box primary">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+        <h2>Skadesrapport</h2>
+
+        <form th:action="@{/damage-report/new}" method="post" th:object="${damageSpecs}" class="form">
+            <div th:each="ds : ${damageSpecs}" class="input-control">
+                <label th:text="${ds.description} + ':'">Spec name:
+                    <input th:field="${ds.damaged}" type="checkbox">
+                </label>
+            </div>
+            <div>
+                <button type="submit" class="button primary medium">Indberet skader</button>
+            </div>
+        </form>
+        <div>
+            <i class="fa-solid fa-car-burst" style="size: 300px"></i>
+        </div>
+    </div>
+</div>
 </body>
 </html>

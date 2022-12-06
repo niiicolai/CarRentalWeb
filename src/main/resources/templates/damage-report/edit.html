@@ -5,7 +5,7 @@
 <head>
     <-- Mads --/>
     <meta charset="UTF-8">
-    <title>New Damage Specification</title>
+    <title>Edit Damage Report</title>
 </head>
 <body layout:fragment="content">
 
@@ -19,29 +19,22 @@
         <span class="line-6"></span>
         <span class="line-7"></span>
         <span class="line-8"></span>
+        <h2>Rediger Skadesrapport</h2>
 
-        <h2>Rediger Skade Specifikation</h2>
-
-        <form th:action="@{/damage-specification/new}" th:method="post" th:object="${damageSpec}" class="form">
-            <div class="input-control">
-                <label>Description:
-                    <input th:field="${damageSpec.description}" type="text">
-                </label>
-
-                <label>Pris:
-                    <input th:field="${damageSpec.price}" type="text">
-                </label>
-
-                <label>Skadet:
-                    <input th:field="${damageSpec.damaged}" type="checkbox">
+        <form th:action="/damage-report/edit/ + ${bookingId}" th:method="patch" th:object="${damageSpecs}" class="form">
+            <div th:each="ds : ${damageSpecs}" class="input-control">
+                <label th:text="${ds.description} + ':'">Spec name:
+                    <input th:field="${ds.damaged}" type="checkbox">
                 </label>
             </div>
             <div>
-                <button type="submit" class="button primary medium">Opret skade specifikation</button>
+                <button type="submit" class="button primary medium">Opdater skadesrapport</button>
             </div>
         </form>
     </div>
+    <div>
+        <i class="fa-solid fa-car-burst" style="size: 300px"></i>
+    </div>
 </div>
-
 </body>
 </html>

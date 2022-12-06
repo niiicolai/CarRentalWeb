@@ -3,11 +3,12 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
+    <-- Mads --/>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>New Subscription</title>
 </head>
 <body layout:fragment="content">
-    <form th:action="@{/subscriptions/new}" th:object="${subscription}" th:method="post">
+    <form th:action="@{/subscriptions/new}" th:object="${subscription}" th:method="post" class="form">
         
         <input th:field="*{name}" type="text" placeholder="name" required>
         <input th:field="*{days}" type="text" placeholder="days" required>
