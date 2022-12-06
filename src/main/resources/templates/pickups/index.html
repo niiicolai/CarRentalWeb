@@ -19,8 +19,8 @@
         <span class="line-7"></span>
         <span class="line-8"></span>
 
-
-        <table class="table">
+<div class="text-center">
+        <table class=".table">
         <tr>
             <th>Lokation</th>
             <th>Adresse id</th>
@@ -30,9 +30,12 @@
         <tr th:each="pickupPoint: ${pickupPoints}">
             <td th:text="${pickupPoint.getName()}"> </td>
             <td th:text="${pickupPoint.getAddressId()}"></td>
+            <div class="input-control">
             <td><a class="button primary small" th:href="@{/pickups/edit/{id}(id = ${pickupPoint.getId()})}">Rediger</a></td>
+            </div>
         </tr>
     </table>
         </div>
+    </div>
 </body>
 </html>

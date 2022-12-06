@@ -35,19 +35,19 @@ public class BookingController {
 	@PostMapping("/bookings/create")
 	public String create(@ModelAttribute("booking") Booking booking) {
 		br.createBooking(booking);
-		return "redirect:/cars";
+		return "redirect:/bookings/show/" + br.last().getId();
 	}
 
 	@GetMapping("/bookings/edit/{id}")
 	public String updateBooking(Model model, @PathVariable Long id) {
-		model.addAttribute("bookings", br.find("id", id));
+		model.addAttribute("booking", br.find("id", id));
 		return "bookings/edit";
 	}
 
-	@PatchMapping("/bookings/edit")
+	@PatchMapping("/bookings/edit/{id}")
 	public String editBooking(Booking booking) {
 		br.updateBooking(booking);
-		return "redirect:/bookings";
+		return "redirect:/bookings/show/" + booking.getId();
 	}
 
 	@GetMapping("/bookings/show/{id}")
