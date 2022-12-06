@@ -22,7 +22,7 @@
 
         <h2>Skade Specifikationer</h2>
 
-        <table class="table">
+        <table class="table border">
             <thead>
             <tr>
                 <th>Beskrivelse</th>
@@ -34,7 +34,7 @@
             <tr th:each="ds : ${damageSpecs}">
                 <td th:text="${ds.description}">Beskrivelse</td>
                 <td th:text="${ds.price} + ' DKK'">Pris</td>
-                <td><a th:href="@{/damage-specification/edit/{desc}(desc = ${ds.description})}">Ændr</a></td>
+                <td><a th:href="@{/damage-specification/edit/{desc}(desc = ${ds.description})}"><button class="button primary medium">Rediger</button></a></td>
             </tr>
             </tbody>
         </table>
@@ -44,7 +44,7 @@
         </a>
     </div>
     <div>
-        <i class="fa-solid fa-circle-exclamation" style="font-size: 300px; color: var(--primary)"></i>
+        <i class="fa-solid fa-circle-exclamation" style="font-size: 25vw; color: var(--primary); padding: var(--padding)"></i>
     </div>
 </div>
 </body>
