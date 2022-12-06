@@ -3,20 +3,50 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
-    <-- Mads --/>
+    <!-- Mads -->
     <meta charset="UTF-8">
     <title>Subscriptions</title>
 </head>
 <body layout:fragment="content">
-    <h1>Subscriptions (<a th:href="@{/subscriptions/new}">new</a>)</h1>
-    <ul th:each="subscription: ${subscriptions}">
-        <li>
-            <p>Name: <span th:text="${subscription.getName()}" /></p>
-            <p>Days: <span th:text="${subscription.getDays()}" /></p>
-            <p>Price: <span th:text="${subscription.getPrice()}" /></p>
-            <p>Available: <span th:text="${subscription.isAvailable() ? 'TRUE' : 'FALSE'}" /></p>
-            <a th:href="@{/subscriptions/edit/{name}(name = ${subscription.getName()})}">Edit</a>
-        </li>
-    </ul>
+
+<div class="flex justify-space-evenly text-center">
+    <div class="text-box primary">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
+
+        <h2>Abonnementer</h2>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Dage</th>
+                <th>Pris</th>
+                <th>Tilgængelig</th>
+                <th>Rediger</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sub : ${subscriptions}">
+                <td th:text="${sub.name}">Beskrivelse</td>
+                <td th:text="${sub.days}">Dage</td>
+                <td th:text="${sub.price} + ' DKK'">Pris</td>
+                <td th:text="${sub.available} ? 'Ja' : 'Nej'">Tilgængelig</td>
+                <td><a th:href="@{/subscriptions/edit/{name}(name = ${sub.name})}">Ændr</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <a th:href="@{/subscriptions/new}">
+            <input type="button" value="Tilføj nyt abonnement" class="button primary medium">
+        </a>
+    </div>
+</div>
 </body>
 </html>

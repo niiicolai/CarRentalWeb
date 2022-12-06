@@ -3,7 +3,7 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
-    <-- Mads --/>
+    <!-- Mads -->
     <meta charset="UTF-8">
     <title>New Damage Report</title>
 </head>
@@ -24,17 +24,17 @@
 
         <form th:action="@{/damage-report/new}" method="post" th:object="${damageSpecs}" class="form">
             <div th:each="ds : ${damageSpecs}" class="input-control">
-                <label th:text="${ds.description} + ':'">Spec name:
-                    <input th:field="${ds.damaged}" type="checkbox">
+                <label th:text="${ds.description} + ':'">
+                    <input th:field="*{ds.damaged}" type="checkbox"> <!-- Denne linje skal løses så feltet kan tilgås og checkbox'en kommer frem -->
                 </label>
             </div>
             <div>
-                <button type="submit" class="button primary medium">Indberet skader</button>
+                <button type="submit" class="button primary medium">Indberet</button>
             </div>
         </form>
-        <div>
-            <i class="fa-solid fa-car-burst" style="size: 300px"></i>
-        </div>
+    </div>
+    <div>
+        <i class="fa-solid fa-car-burst" style="size: 300px"></i> <!-- Resizing af <i> hvordan? size virker ikke. Lav om til img element i stedet? -->
     </div>
 </div>
 </body>

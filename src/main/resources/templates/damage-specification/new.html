@@ -3,7 +3,7 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
-    <-- Mads --/>
+    <!-- Mads -->
     <meta charset="UTF-8">
     <title>New Damage Specification</title>
 </head>
@@ -20,24 +20,25 @@
         <span class="line-7"></span>
         <span class="line-8"></span>
 
-        <h2>Rediger Skade Specifikation</h2>
+        <h2>Opret Skade Specifikation</h2>
 
         <form th:action="@{/damage-specification/new}" th:method="post" th:object="${damageSpec}" class="form">
             <div class="input-control">
                 <label>Description:
-                    <input th:field="${damageSpec.description}" type="text">
+                    <input th:field="${damageSpec.description}" type="text" required>
                 </label>
 
                 <label>Pris:
-                    <input th:field="${damageSpec.price}" type="text">
+                    <input th:field="${damageSpec.price}" type="text" style="margin-left: 5em" required>
                 </label>
-
+                <!--
                 <label>Skadet:
-                    <input th:field="${damageSpec.damaged}" type="checkbox">
+                    <input th:field="${damageSpec.damaged}" type="checkbox" style="margin-right: 10.5em; margin-left: 6em">
                 </label>
+                -->
             </div>
             <div>
-                <button type="submit" class="button primary medium">Opret skade specifikation</button>
+                <button type="submit" class="button primary medium">Opret</button>
             </div>
         </form>
     </div>

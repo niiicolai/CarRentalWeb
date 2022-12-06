@@ -22,6 +22,7 @@ public class DamageReportRepositoryTest {
      * oprettet i databasen.
      */
     private static DamageReport testDamageReport;
+    private static List<DamageSpecification> testDamageSpecifications;
 
     /*
      * Database versionen af
@@ -114,9 +115,11 @@ public class DamageReportRepositoryTest {
     public void testCreateAndLast_SaveToDatabase_AndReturnDatabaseObject() {
         // Arrange
         testDamageReport = TestDamageReportFactory.create(lastInsertedBooking.getId());
+        testDamageSpecifications.add(TestDamageSpecificationFactory.create(true));
+        testDamageSpecifications.add(TestDamageSpecificationFactory.create(false));
 
         // Act
-        repository.create(testDamageReport);
+        repository.create(testDamageReport, testDamageSpecifications);
         lastInsertedDamageReport = repository.last();
 
         // Assert
@@ -131,7 +134,7 @@ public class DamageReportRepositoryTest {
     @Order(2)
     public void testGet_ReturnsDamageReportObjectFromDatabase() {
         // Act
-        repository.create(testDamageReport);
+        repository.create(testDamageReport, testDamageSpecifications);
         lastInsertedDamageReport = repository.last();
         DamageReport damageReport = repository.get("booking_id", lastInsertedDamageReport.getBookingId());
 
