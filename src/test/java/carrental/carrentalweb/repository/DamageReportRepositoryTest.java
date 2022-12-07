@@ -115,8 +115,8 @@ public class DamageReportRepositoryTest {
     public void testCreateAndLast_SaveToDatabase_AndReturnDatabaseObject() {
         // Arrange
         testDamageReport = TestDamageReportFactory.create(lastInsertedBooking.getId());
-        testDamageSpecifications.add(TestDamageSpecificationFactory.create(true));
-        testDamageSpecifications.add(TestDamageSpecificationFactory.create(false));
+        testDamageSpecifications.add(TestDamageSpecificationFactory.create());
+        testDamageSpecifications.add(TestDamageSpecificationFactory.create());
 
         // Act
         repository.create(testDamageReport, testDamageSpecifications);

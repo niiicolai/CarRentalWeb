@@ -10,11 +10,10 @@ import java.util.HashMap;
 // Mads
 public class TestDamageSpecificationFactory {
 
-    public static DamageSpecification create(boolean damaged) {
+    public static DamageSpecification create() {
         LocalDateTime now = LocalDateTime.now();
         return new DamageSpecificationBuilder()
                 .description(now.toString())
-                .damaged(damaged)
                 .price(100)
                 .build();
     }

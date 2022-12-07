@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 // Mads
 public class DamageSpecification {
     private String description;
-    private boolean damaged;
     private double price;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -13,9 +12,8 @@ public class DamageSpecification {
     public DamageSpecification() {
     }
 
-    public DamageSpecification(String description, boolean damaged, double price, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public DamageSpecification(String description, double price, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.description = description;
-        this.damaged = damaged;
         this.price = price;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -27,14 +25,6 @@ public class DamageSpecification {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public boolean isDamaged() {
-        return damaged;
-    }
-
-    public void setDamaged(boolean damaged) {
-        this.damaged = damaged;
     }
 
     public double getPrice() {

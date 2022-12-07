@@ -65,7 +65,7 @@ public class DamageSpecificationRepositoryTest {
     @Order(1)
     public void testCreateAndLast_SaveToDatabase_AndReturnDatabaseObject() {
         // Arrange
-        testDamageSpecification = TestDamageSpecificationFactory.create(true);
+        testDamageSpecification = TestDamageSpecificationFactory.create();
 
         // Act
         repository.create(testDamageSpecification);

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-    layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
 <head>
     <!-- Mads -->
     <meta charset="UTF-8">
@@ -21,31 +21,33 @@
         <span class="line-8"></span>
 
         <h2>Opret Abonnement</h2>
-    <form th:action="@{/subscriptions/new}" th:object="${subscription}" th:method="post" class="form">
-        <div class="input-control">
-            <label>Navn:
+        <form th:action="@{/subscriptions/new}" th:object="${subscription}" th:method="post" class="form">
+            <div class="input-control">
+                <label>Navn:</label>
                 <input th:field="*{name}" type="text" placeholder="Indtast navn.." required>
-            </label>
-
-            <label>Dage:
+            </div>
+            <div class="input-control">
+                <label>Dage:</label>
                 <input th:field="*{days}" type="text" required>
-            </label>
+            </div>
+            <div class="input-control">
+                <label>Pris:</label>
+                <input th:field="*{price}" type="text" required>
+            </div>
+            <div class="input-control">
+                <label>Tilgængelig:
+                    <input th:field="*{available}" type="checkbox">
+                </label>
+            </div>
+            <button type="submit" class="button primary medium">Opret</button>
 
-            <label>Pris:
-                <input th:field="*{price}" type="text" style="margin-left: 1em" required>
-            </label>
-
-            <label>Tilgængelig:
-                <input th:field="*{available}" type="checkbox" style="margin-right: 8.5em; margin-left: 1em">
-            </label>
-        </div>
-        <button type="submit" class="button primary medium">Opret</button>
-
-    </form>
-        <a th:href="@{/subscriptions}"><button class="button primary medium">Tilbage</button></a>
+        </form>
+        <a th:href="@{/subscriptions}">
+            <button class="button primary medium">Tilbage</button>
+        </a>
     </div>
     <div>
-        <i class="fa-solid fa-clipboard" style="font-size: 25vw; color: var(--primary); padding: var(--padding)"></i>
+        <i class="fa-solid fa-clipboard" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
     </div>
 </div>
 </body>
