@@ -1,7 +1,6 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.DamageSpecification;
-import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;

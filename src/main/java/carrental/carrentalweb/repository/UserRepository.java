@@ -2,7 +2,6 @@ package carrental.carrentalweb.repository;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 import carrental.carrentalweb.builder.UserBuilder;

@@ -7,7 +7,6 @@ import com.lowagie.text.*;
 import carrental.carrentalweb.builder.PDFBuilder;
 import carrental.carrentalweb.entities.Invoice;
 import carrental.carrentalweb.entities.InvoiceSpecification;
-
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,9 +1,7 @@
 package carrental.carrentalweb.repository;
 
-import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.services.DatabaseService;
-
 import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
