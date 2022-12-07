@@ -24,18 +24,12 @@
 
         <form th:action="@{/damage-specification/new}" th:method="post" th:object="${damageSpec}" class="form">
             <div class="input-control">
-                <label>Description:
-                    <input th:field="${damageSpec.description}" type="text" required>
-                </label>
-
-                <label>Pris:
-                    <input th:field="${damageSpec.price}" type="text" style="margin-left: 5em" required>
-                </label>
-                <!--
-                <label>Skadet:
-                    <input th:field="${damageSpec.damaged}" type="checkbox" style="margin-right: 10.5em; margin-left: 6em">
-                </label>
-                -->
+                <label>Beskrivelse:</label>
+                <input th:field="${damageSpec.description}" type="text" required>
+            </div>
+            <div class="input-control">
+                <label>Pris:</label>
+                <input th:field="${damageSpec.price}" type="text" required>
             </div>
             <div>
                 <button type="submit" class="button primary medium">Opret</button>
@@ -44,7 +38,7 @@
         <a th:href="@{/damage-specifications}"><button class="button primary medium">Tilbage</button></a>
     </div>
     <div>
-        <i class="fa-solid fa-circle-exclamation" style="font-size: 25vw; color: var(--primary); padding: var(--padding)"></i>
+        <i class="fa-solid fa-circle-exclamation" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
     </div>
 </div>
 

@@ -26,17 +26,20 @@
             <div class="input-control">
                 <div th:each="ds : ${damageSpecs}">
                     <label th:text="${ds.description} + ':'">
-                        <input th:field="${ds.damaged}" type="checkbox"> <!-- Denne linje skal løses så feltet kan tilgås og checkbox'en kommer frem -->
+                        <input type="checkbox">
                     </label>
                 </div>
             </div>
-            <div>
-                <button type="submit" class="button primary medium">Indberet</button>
-            </div>
+            <button type="submit" class="button primary medium">Indberet</button>
         </form>
+        <!--
+        <a th:href="/bookings/show/ + bookingId">
+            <button class="button primary medium">Tilbage til booking</button>
+        </a>
+        -->
     </div>
     <div>
-        <i class="fa-solid fa-car-burst" style="font-size: 25vw; color: var(--primary); padding: var(--padding)"></i>
+        <i class="fa-solid fa-car-burst" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
     </div>
 </div>
 </body>

@@ -146,11 +146,20 @@ CREATE TABLE IF NOT EXISTS damage_reports
 CREATE TABLE IF NOT EXISTS damage_specifications
 (
     description VARCHAR(255) PRIMARY KEY,
-    damaged     BIT(1),
     price       DOUBLE,
     created_at  DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at  DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
+INSERT INTO damage_specifications (description, price)
+VALUES ('Bule', 2000);
+INSERT INTO damage_specifications (description, price)
+VALUES ('Ridse', 1000);
+INSERT INTO damage_specifications (description, price)
+VALUES ('Smadret rude', 3000);
+INSERT INTO damage_specifications (description, price)
+VALUES ('Ødelagt forsæde', 1500);
+INSERT INTO damage_specifications (description, price)
+VALUES ('Ødelagt bagsæde', 2500);
 -- Mads
 CREATE TABLE IF NOT EXISTS damage_report_specifications
 (

@@ -20,10 +20,6 @@ public class DamageSpecificationBuilder {
         damageSpecification.setPrice(price);
         return this;
     }
-    public DamageSpecificationBuilder damaged(boolean damaged) {
-        damageSpecification.setDamaged(damaged);
-        return this;
-    }
     public DamageSpecificationBuilder createdAt(LocalDateTime createdAt) {
         damageSpecification.setCreatedAt(createdAt);
         return this;
