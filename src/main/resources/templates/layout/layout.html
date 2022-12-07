@@ -1,38 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-        <!-- Include Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-        <!-- Include Montserrat -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-        <!-- IMPORTANT variables.css must be read first. -->
-        <link rel="stylesheet" th:href="@{/css/variables.css}">
-        <link rel="stylesheet" th:href="@{/css/global.css}">
-        <link rel="stylesheet" th:href="@{/css/typography.css}">
-        <link rel="stylesheet" th:href="@{/css/link.css}">
-        <link rel="stylesheet" th:href="@{/css/container.css}">
-        <link rel="stylesheet" th:href="@{/css/alert.css}">
-        <link rel="stylesheet" th:href="@{/css/button.css}">
-        <link rel="stylesheet" th:href="@{/css/header.css}">
-        <link rel="stylesheet" th:href="@{/css/form.css}">
-        <link rel="stylesheet" th:href="@{/css/list.css}">
-        <link rel="stylesheet" th:href="@{/css/table.css}">
-        <link rel="stylesheet" th:href="@{/css/text-box.css}">
-        <link rel="stylesheet" th:href="@{/css/flex.css}">
-        <link rel="stylesheet" th:href="@{/css/images.css}">
-        <link rel="stylesheet" th:href="@{/css/background.css}">
-        <link rel="stylesheet" th:href="@{/css/line.css}">
-        <link rel="stylesheet" th:href="@{/css/footer.css}">
-        <link rel="stylesheet" th:href="@{/css/display.css}">
-        <link rel="stylesheet" th:href="@{/css/widget.css}">
-        <link rel="stylesheet" th:href="@{/css/responsive.css}">
-    </head>
+    <head th:replace="layout/head.html :: head('random title')" />
     <body>
         <div th:replace="layout/header.html :: header" />        
         

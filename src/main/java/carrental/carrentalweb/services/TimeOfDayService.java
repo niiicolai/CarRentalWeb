@@ -32,7 +32,7 @@ public class TimeOfDayService {
             case Evening:
                 return "Godaften";
             default:
-                return "Godnat";
+                return "Godaften";
         }
     }
 

@@ -11,6 +11,10 @@ public class DamageReport {
     public DamageReport() {
     }
 
+    public DamageReport(Long bookingId) {
+        this.bookingId = bookingId;
+    }
+
     public DamageReport(Long bookingId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.bookingId = bookingId;
         this.createdAt = createdAt;

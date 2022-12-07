@@ -25,7 +25,7 @@ public class BookingRepository {
 
   public boolean createBooking(Booking newBooking) {
 
-    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at) VALUES (?, ?, ?, ?, ?)";
+    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at, returned_at, kilometer_driven) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(
       newBooking.getUserId(), 

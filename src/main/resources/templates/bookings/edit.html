@@ -1,55 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/layout/layout}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <!-- Thomas -->
-<body>
 
-<div class="flex justify-space-evenly text-center">
+<body layout:fragment="content">
 
-<div class="text-box secondary text-center">
-  <span class="line-1"></span>
-  <span class="line-2"></span>
-  <span class="line-3"></span>
-  <span class="line-4"></span>
-  <span class="line-5"></span>
-  <span class="line-6"></span>
-  <span class="line-7"></span>
-  <span class="line-8"></span>
+    <div class="flex justify-space-evenly text-center">
 
-    <h2 class="text-box secondary text-center">Rediger booking</h2>
+        <div class="text-box secondary text-center">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
 
-<form th:action="/bookings/edit/ + ${booking.id}" th:object="${booking}" th:method="patch" class="form">
+            <h2 class="text-box secondary text-center">Rediger booking</h2>
+
+            <form th:action="@{/bookings/edit/{id}(id=${booking.getId()})}" th:object="${booking}" th:method="patch"
+                class="form">
 
 
-    <div class="input-control">
-      <label for="vnumber">Vognummer: </label>
-      <input th:field="*{booking.vehicleNumber}" id="vnumber" type="text" placeholder="Vognnummer" required>
+                <div class="input-control">
+                    <label for="vnumber">Vognummer: </label>
+                    <input th:field="*{vehicleNumber}" id="vnumber" type="text" placeholder="Vognnummer" required>
+                </div>
+
+                <div class="input-control">
+                    <label for="stype">Subscription: </label>
+                    <input th:field="*{subscriptionName}" id="stype" type="text" placeholder="Subscription name"
+                        required>
+                </div>
+
+
+                <div class="input-control">
+                    <label for="pickupId">Afhentningssted ID: </label>
+                    <input th:field="*{pickupPointId}" id="pickupId" type="text" placeholder="Pickup point id" required>
+                </div>
+                <br>
+                <input class="button primary medium" type="submit" value="Registrer ændringer">
+
+
+
+
+            </form>
+        </div>
+        <div>
+            <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+        </div>
     </div>
-
-    <div class="input-control">
-      <label for="stype">Subscription: </label>
-      <input th:field="*{booking.subscriptionName}" id="stype" type="text" placeholder="Subscription name" required>
-    </div>
-
-
-    <div class="input-control">
-      <label for="pickupId">Afhentningssted ID: </label>
-      <input th:field="*{booking.pickupPointId}" id="pickupId" type="text" placeholder="Pickup point id" required>
-    </div>
-    <br>
-    <input class="button primary medium" type="submit" value="Registrer ændringer">
-
-
-
-
-</form>
-</div>
-    <div>
-        <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
-    </div>
-</div>
 </body>
+
 </html>

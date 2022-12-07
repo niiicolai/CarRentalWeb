@@ -33,22 +33,22 @@
         </a>
         <a class="button primary large text-center min-height-205 width-percent-25" href="/bookings">
             <p><strong><i class="fa-solid fa-car-side"></i><br><br> Aftaler</strong></p>
-            <small>Du har lige nu <strong>0</strong> udlejningsaftaler.</small><br><br>
+            <small>Du har lige nu <strong th:text="${bookings.size()}" /> udlejningsaftaler.</small><br><br>
         </a>
         <a class="button primary large text-center min-height-205 width-percent-25" href="/pickups">
             <p><strong><i class="fa-solid fa-location-dot"></i><br><br> Afhentning</strong></p>
-            <small>Der findes lige nu <strong>0</strong> afhentningslokationer.</small><br><br>
+            <small>Der findes lige nu <strong th:text="${pickups.size()}" /> afhentningslokationer.</small><br><br>
         </a>
         <a class="button primary large text-center min-height-205 width-percent-25" href="/subscriptions">
             <p><strong><i class="fa-solid fa-tags"></i><br><br> Abonnementer</strong></p>
-            <small>Der findes lige nu <strong>0</strong> abonnementer.</small><br><br>
+            <small>Der findes lige nu <strong th:text="${subscriptions.size()}" /> abonnementer.</small><br><br>
         </a>
     </div>
     <br>
     <div class="flex justify-space-between gap-8">
         <a class="button primary large text-center min-height-205 width-percent-25" href="/cars">
             <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
-            <small>Vi har lige <strong>0</strong> biler til udlejning.</small><br><br>
+            <small>Vi har lige <strong th:text="${cars.size()}" /> biler til udlejning.</small><br><br>
         </a>
         <a class="button primary large text-center min-height-205 width-percent-25" href="/pickups">
             <p><strong><i class="fa-regular fa-handshake"></i><br><br> Betingelser</strong></p>

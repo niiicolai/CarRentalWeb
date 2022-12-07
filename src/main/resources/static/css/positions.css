@@ -1,0 +1,25 @@
+
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.left {
+    left: var(--padding);
+}
+
+.right {
+    right: var(--padding);
+}
+
+.bottom {
+    bottom: var(--padding);
+}
+
+.top {
+    top: var(--padding);
+}

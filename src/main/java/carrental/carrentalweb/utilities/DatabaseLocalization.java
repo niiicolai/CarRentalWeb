@@ -12,6 +12,8 @@ public class DatabaseLocalization {
         mappings.put("username", "brugernavnet");
         mappings.put("email", "e-mail");
 
+        mappings.put("damage_reports", "skaderapport");
+
         return mappings;
     }
 
