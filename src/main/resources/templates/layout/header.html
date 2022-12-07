@@ -3,8 +3,10 @@
         <a href="/"><img src="/images/logo.png" alt="logo"></a>
         
         <nav class="flex align-items-center justify-space-between gap-5">
-            <a class="button primary medium" href="/">Home</a>
-            <a class="button primary medium" href="/cars">Cars</a>
+            <a class="button primary medium" href="/">Forside</a>
+            <a class="button primary medium" href="/cars">Biler</a>
+            <a class="button primary medium" href="/subscriptions">Abonnementer</a>
+            <a class="button primary medium" href="/contact">Kontakt</a>
 
             <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_EMPLOYEE')"
                 class="flex align-items-center justify-space-evenly gap-5">

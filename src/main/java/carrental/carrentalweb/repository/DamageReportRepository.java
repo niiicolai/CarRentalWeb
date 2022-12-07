@@ -26,16 +26,16 @@ public class DamageReportRepository {
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
         return parseResponseFirst(databaseResponse);
     }
-    public boolean create(DamageReport damageReport, List<DamageSpecification> dmgSpecs) {
+    public DatabaseResponse create(List<String> descriptions, Long bookingId) {
         String reportQuery = "INSERT INTO damage_reports (booking_id) VALUES (?)";
-        DatabaseRequestBody reportBody = new DatabaseRequestBody(damageReport.getBookingId());
+        DatabaseRequestBody reportBody = new DatabaseRequestBody(bookingId);
         DatabaseResponse reportDatabaseResponse = databaseService.executeUpdate(reportQuery, reportBody);
-        for (DamageSpecification dmgSpec : dmgSpecs) {
+        for (String description : descriptions) {
             String specQuery = "INSERT INTO damage_report_specifications (report_id, spec_description) VALUES (?, ?)";
-            DatabaseRequestBody specBody = new DatabaseRequestBody(damageReport.getBookingId(), dmgSpec.getDescription());
+            DatabaseRequestBody specBody = new DatabaseRequestBody(bookingId, description);
             databaseService.executeUpdate(specQuery, specBody);
         }
-        return reportDatabaseResponse.isSuccessful();
+        return reportDatabaseResponse;
     }
     public boolean update(DamageReport damageReport, List<DamageSpecification> dmgSpecs) {
         String reportQuery = "UPDATE damage_reports SET booking_id=?";

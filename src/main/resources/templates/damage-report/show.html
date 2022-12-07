@@ -38,7 +38,7 @@
         </tr>
         </tbody>
     </table>
-    <a th:href="/bookings/show/ + bookingId">
+    <a th:href="@{/bookings/show/{id}(id=${bookingId})}">
         <button class="button primary medium">Tilbage til booking</button>
     </a>
     <div>

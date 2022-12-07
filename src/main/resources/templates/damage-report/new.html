@@ -1,46 +1,197 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
+
 <head>
     <!-- Mads -->
     <meta charset="UTF-8">
     <title>New Damage Report</title>
 </head>
+
 <body layout:fragment="content">
 
-<div class="flex justify-space-evenly text-center">
-    <div class="text-box primary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
+    <!-- Det her div element returner en alert, hvis noget går galt når der oprettes en damage report. -->
+    <div id="report-result"></div>
 
-        <h2>Skadesrapport</h2>
+    <div class="flex justify-space-evenly text-center">
+        <div class="text-box text-black">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
 
-        <form th:action="@{/damage-report/new}" method="post" th:object="${damageSpecs}" class="form">
-            <div class="input-control">
-                <div th:each="ds : ${damageSpecs}">
-                    <label th:text="${ds.description} + ':'">
-                        <input type="checkbox">
-                    </label>
+            <div>
+                <h2>Skadesrapport</h2>
+                <p>Markér de skader som findes på bilen efter indlevering.</p>
+
+                <div>
+                    <!--Et input element som indeholder booking id, brugt til at oprette en damage report. -->
+                    <input type="hidden" id="booking-id" th:value="${bookingId}" />
+
+                    <!-- Et loop der viser hver 'mulige' skade specifikation. -->
+                    <div th:each="damageSpecification : ${damageSpecs}" class="flex justify-space-between">
+
+                        <!-- En beskrivelse af skaden. -->
+                        <label th:text="${damageSpecification.description} + ':'" class="width-percent-60 text-left" />
+
+                        <small class="width-percent-25">
+                            <span th:text="${damageSpecification.price}" />
+                            <span>DKK</span>
+                        </small>
+
+                        <!-- En checkbox der skal markeres, hvis bilen har den skade beskrivelsen angiver. -->
+                        <div class="width-percent-25">
+                            <input type="checkbox" th:data-id="${damageSpecification.description}" class="damage-specification" />
+                        </div>
+                    </div>
+                    
+                    <br>
+                    <button type="submit" class="button primary medium" id="damage-report-button">Indberet</button>
+                    <a th:href="@{/bookings/show/{id}(id=${bookingId})}" class="button danger medium" id="damage-report-button">Annuller</a>
                 </div>
+                
+                <script>
+                    // Definer JS objekt der bruges til at indkapsle hjælper metoder.
+                    const helperMethods = {};
+
+                    // En metode der kan bruges til at sende et post request.
+                    helperMethods.post = (url, content, callback) => {
+                        const body = JSON.stringify(content);
+                        const xhr = new XMLHttpRequest();
+
+                        xhr.open("POST", url, true);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+
+                        xhr.onreadystatechange = () => {
+                            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                const response = JSON.parse(xhr.response);
+                                callback(response);
+                            }
+                        }
+
+                        xhr.send(body);
+                    }
+
+                    // En metode der kan bruges til at finde markerede checkboxes ud fra en liste af checkboxes.
+                    helperMethods.getCheckedCheckboxes = (checkboxes) => {
+                        const checkedCheckboxes = [];
+
+                        for (let i = 0; i < checkboxes.length; i++) {
+                            if (checkboxes[i].checked) checkedCheckboxes.push(checkboxes[i]);
+                        }
+
+                        return checkedCheckboxes;
+                    } 
+
+                    // En metode der kan bruges til aflæse en data attribute på en liste af html elementer 
+                    helperMethods.getDataAttributes = (elements, attribute) => {
+                        const data = [];
+
+                        for (let i = 0; i < elements.length; i++) {
+                            const value = elements[i].getAttribute(attribute);
+                            data.push(value);
+                        }
+
+                        return data;
+                    } 
+
+                    // En metode der kan bruges til 'hide' et element
+                    helperMethods.hide = (element) => {
+                        element.className = "display hide";
+                    }
+
+                    // En metode der kan bruges til redirect til en anden side
+                    helperMethods.redirectTo = (url) => {
+                        window.location.replace(url);
+                    }
+
+                    class DamageReportCreator {
+                        constructor(bookingId, checkboxes, resultDiv) {
+                            this.bookingId = bookingId;
+                            this.checkboxes = checkboxes;
+                            this.resultDiv = resultDiv;
+                        }
+
+                        // En state returneret fra serveren, hvis en rapport bliver oprettet succesfuldt. 
+                        getSuccessState() {
+                            return 'success';
+                        }
+
+                        // En url hvor der kan sendes et post request for at oprette en damage report. 
+                        getCreateUrl() {
+                            return `/damage-report/new/${this.bookingId}`;
+                        }
+
+                        // En url der kan redirectes til for at vise en damage report.
+                        getShowUrl() {
+                            return `/damage-report/show/${this.bookingId}`;
+                        }
+
+                        // En metode der kan bruges til at oprette en damage report.
+                        create() {
+                            const createUrl = this.getCreateUrl();
+                            const checked = helperMethods.getCheckedCheckboxes(this.checkboxes);
+                            const descriptions = helperMethods.getDataAttributes(checked, "data-id");
+                            helperMethods.post(createUrl, descriptions, this.createCallback.bind(this));
+                        }
+
+                        // En metode der kaldes automatisk når et post request afsluttes.
+                        createCallback(response) {
+                            if (response.state == this.getSuccessState()) {
+                                helperMethods.redirectTo(this.getShowUrl());
+                            } else {
+                                this.resultDiv.className = `alert ${response.state}`;
+                                this.resultDiv.innerHTML = `<p>${response.response}</p>`;
+                            }
+                        }
+                    }
+
+                    // En metode der kan bruges til at oprette et DamageReportCreator object.
+                    DamageReportCreator.create = (bookingCSSId, checkboxesClassname, resultDivCSSId) => {
+                        const resultDiv = document.getElementById(resultDivCSSId);
+                        if (resultDiv == null) {
+                            throw Error(`Cannot find element with id: ${resultDivCSSId}}`)
+                        }
+
+                        let bookingId = 0;
+                        const bookingInput = document.getElementById(bookingCSSId);
+                        if (bookingInput == null) {
+                            throw Error(`Cannot find element with id: ${bookingCSSId}}`)
+                        }
+
+                        bookingId = bookingInput.value;
+                        if (bookingId < 1) {
+                            throw Error(`The booking input element must contain an id greater than 0`);
+                        }
+
+                        const checkboxes = document.getElementsByClassName(checkboxesClassname);
+                        if (checkboxes.length == 0) {
+                            throw Error(`Cannot find any elements with classname: ${checkboxesClassname}}`)
+                        }
+                        
+                        return new DamageReportCreator(bookingId, checkboxes, resultDiv)
+                    }
+
+                    // Lav et damage report objekt.
+                    const creator = DamageReportCreator.create("booking-id", "damage-specification", "report-result");
+                    
+                    // Find knappen som bruges til at submit damage report
+                    const button = document.getElementById("damage-report-button");
+
+                    // Add click event listener som opretter en damage report.
+                    button.addEventListener("click", creator.create.bind(creator));
+                </script>
             </div>
-            <button type="submit" class="button primary medium">Indberet</button>
-        </form>
-        <!--
-        <a th:href="/bookings/show/ + bookingId">
-            <button class="button primary medium">Tilbage til booking</button>
-        </a>
-        -->
+        </div>
+        <div>
+            <i class="fa-solid fa-car-burst" id="car"
+                style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
+        </div>
     </div>
-    <div>
-        <i class="fa-solid fa-car-burst" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
-    </div>
-</div>
 </body>
+
 </html>

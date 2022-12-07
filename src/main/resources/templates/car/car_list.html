@@ -152,13 +152,13 @@
                         <input name="vehicleNumber" type="hidden" th:value="${car.getVehicleNumber()}"/>
                         <input name="userId" type="hidden" th:value="${user.getId()}"/>
                         <select name="subscriptionName" type="text" placeholder="subscription name" required>
-                            <option th:each="subscription: ${subscriptions}" th:text="subscription.getName()"
-                                    value="subscription.getName()"></option>
+                            <option th:each="subscription: ${subscriptions}" th:text="${subscription.getName()}"
+                                th:value="${subscription.getName()}"></option>
                         </select>
 
                         <select name="pickupPointId" type="text" placeholder="pickup point id" required>
-                            <option th:each="pickupPoint: ${pickupPoints}" th:text="pickupPoint.getName()"
-                                    value="pickupPoint.getId()"></option>
+                            <option th:each="pickupPoint: ${pickupPoints}" th:text="${pickupPoint.getName()}"
+                                th:value="${pickupPoint.getId()}"></option>
                         </select>
 
                         <button type="submit" class="btn btn-outline-danger mt-2 button primary">Book car</button>
