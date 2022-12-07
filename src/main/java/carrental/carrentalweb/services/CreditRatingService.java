@@ -5,7 +5,6 @@ import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.enums.CreditRatingState;
 import carrental.carrentalweb.repository.CreditRatingRepository;
-import carrental.carrentalweb.utilities.DatabaseResponse;
 
 /*
  * ## Author: 

@@ -1,9 +1,7 @@
 package carrental.carrentalweb.services;
 
 import java.util.Calendar;
-
 import org.springframework.stereotype.Service;
-
 import carrental.carrentalweb.enums.TimeOfDay;
 
 @Service

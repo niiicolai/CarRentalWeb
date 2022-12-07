@@ -1,19 +1,11 @@
 package carrental.carrentalweb.repository;
 
-import carrental.carrentalweb.entities.Address;
-import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;

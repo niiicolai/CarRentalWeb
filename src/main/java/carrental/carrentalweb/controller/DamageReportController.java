@@ -7,7 +7,6 @@ import carrental.carrentalweb.repository.DamageSpecificationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 // Mads
