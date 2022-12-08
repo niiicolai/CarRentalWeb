@@ -2,7 +2,9 @@ package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
 
-// Mads
+/*
+ * Written by Mads Kristian Pedersen
+ */
 public class DamageSpecification {
     private String description;
     private double price;

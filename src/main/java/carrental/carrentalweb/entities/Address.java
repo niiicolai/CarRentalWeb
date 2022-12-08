@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import groovyjarjarantlr4.v4.parse.ANTLRParser.prequelConstruct_return;
 
+/*
+ * Written by Thomas S. Andersen
+ */
 public class Address {
 
   private Long id;

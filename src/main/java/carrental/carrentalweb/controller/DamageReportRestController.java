@@ -15,6 +15,9 @@ import carrental.carrentalweb.repository.DamageSpecificationRepository;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import groovyjarjarantlr4.v4.parse.ANTLRParser.elementEntry_return;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 @RestController
 public class DamageReportRestController {
 

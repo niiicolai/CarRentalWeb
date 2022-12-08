@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.io.File;
 
-// Mads
+/*
+ * Written by Mads Kristian Pedersen & Nicolai Berg Andersen
+ */
 @Service
 public class MailerService {
     private final JavaMailSender emailSender;

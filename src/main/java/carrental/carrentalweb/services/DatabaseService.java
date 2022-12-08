@@ -11,6 +11,9 @@ import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import java.sql.*;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 @Service
 public class DatabaseService {
 

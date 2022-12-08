@@ -3,7 +3,7 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
-    <!-- Mads -->
+    <!-- Written by Mads Kristian Pedersen -->
     <meta charset="UTF-8">
     <title>Edit Subscription</title>
 </head>
@@ -26,7 +26,7 @@
                 <h3 th:text="${subscription.name}"></h3>
                 <input th:field="*{name}" type="hidden" required>
                 <label>Dage:</label>
-                <input th:field="*{days}" type="text" placeholder="days" required>
+                <input th:field="*{days}" type="text" placeholder="days" required autofocus>
             </div>
             <div class="input-control">
                 <label>Pris:</label>

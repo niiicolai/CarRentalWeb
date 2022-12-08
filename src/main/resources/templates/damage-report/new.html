@@ -3,7 +3,7 @@
     layout:decorate="~{/layout/layout}">
 
 <head>
-    <!-- Mads -->
+    <!-- HTML written by Mads Kristian Pedersen -->
     <meta charset="UTF-8">
     <title>New Damage Report</title>
 </head>
@@ -51,10 +51,13 @@
                     
                     <br>
                     <button type="submit" class="button primary medium" id="damage-report-button">Indberet</button>
-                    <a th:href="@{/bookings/show/{id}(id=${bookingId})}" class="button danger medium" id="damage-report-button">Annuller</a>
+                    <a th:href="@{/bookings/show/{id}(id=${bookingId})}" class="button danger medium">Annuller</a>
                 </div>
                 
                 <script>
+                    /*
+                     * JavaScript written by Nicolai Berg Andersen
+                     */
                     // Definer JS objekt der bruges til at indkapsle hjælper metoder.
                     const helperMethods = {};
 

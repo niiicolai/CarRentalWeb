@@ -9,6 +9,9 @@ import carrental.carrentalweb.entities.Invoice;
 import carrental.carrentalweb.entities.InvoiceSpecification;
 import org.springframework.stereotype.Service;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 @Service
 public class InvoicePDFService {
 

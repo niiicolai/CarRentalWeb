@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class DatabaseError {
     private SQLException sqlException;
 

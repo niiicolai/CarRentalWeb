@@ -2,6 +2,9 @@ package carrental.carrentalweb.utilities;
 
 import java.util.HashMap;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class DatabaseLocalization {    
     private static HashMap<String, String> mappings = create();
 

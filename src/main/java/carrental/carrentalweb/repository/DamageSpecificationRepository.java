@@ -10,7 +10,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-// Mads
+
+/*
+ * Written by Mads Kristian Pedersen
+ */
 @Repository
 public class DamageSpecificationRepository {
     private final DatabaseService databaseService;

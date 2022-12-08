@@ -4,6 +4,9 @@ import java.util.Calendar;
 import org.springframework.stereotype.Service;
 import carrental.carrentalweb.enums.TimeOfDay;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 @Service
 public class TimeOfDayService {
     

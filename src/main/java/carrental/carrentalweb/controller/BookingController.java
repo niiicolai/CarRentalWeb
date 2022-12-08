@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/*
+ * Written by Thomas S. Andersen
+ */
 @Controller
 public class BookingController {
 

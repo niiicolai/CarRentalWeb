@@ -8,6 +8,9 @@ import carrental.carrentalweb.entities.Invoice;
 import carrental.carrentalweb.entities.InvoiceSpecification;
 import carrental.carrentalweb.entities.User;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 @Service
 public class InvoiceMailerService {
 

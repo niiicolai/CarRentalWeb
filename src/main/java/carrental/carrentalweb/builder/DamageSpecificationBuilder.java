@@ -4,7 +4,9 @@ import carrental.carrentalweb.entities.DamageSpecification;
 
 import java.time.LocalDateTime;
 
-// Mads
+/*
+ * Written by Mads Kristian Pedersen
+ */
 public class DamageSpecificationBuilder {
     private DamageSpecification damageSpecification;
 

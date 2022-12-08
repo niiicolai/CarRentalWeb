@@ -6,6 +6,9 @@ import java.util.List;
 import carrental.carrentalweb.enums.DatabaseResponseState;
 import carrental.carrentalweb.records.DatabaseRecord;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class DatabaseResponse implements Iterator<DatabaseRecord> {        
     private DatabaseResponseState state = DatabaseResponseState.success;
     private List<DatabaseRecord> databaseRecords;    
