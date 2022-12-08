@@ -2,6 +2,8 @@ package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
 
+import groovyjarjarantlr4.v4.parse.ANTLRParser.prequelConstruct_return;
+
 public class Address {
 
   private Long id;
@@ -9,11 +11,41 @@ public class Address {
   private String city;
   private String zipCode;
   private String country;
+  private Double latitude;
+  private Double longitude;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
-  public Address(Long id, String street, String city, String zipCode, String country, LocalDateTime createdAt, LocalDateTime updatedAt) {
+  public Address(
+    Long id,
+    String street,
+    String city,
+    String zipCode,
+    String country,
+	Double latitude,
+	Double longitude,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
+  ) {
     this.id = id;
+    this.street = street;
+    this.city = city;
+    this.zipCode = zipCode;
+    this.country = country;
+	this.latitude = latitude;
+	this.longitude = longitude;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
+
+  public Address(
+    String street,
+    String city,
+    String zipCode,
+    String country,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
+  ) {
     this.street = street;
     this.city = city;
     this.zipCode = zipCode;
@@ -22,13 +54,32 @@ public class Address {
     this.updatedAt = updatedAt;
   }
 
-  public Address(String street, String city, String zipCode, String country, LocalDateTime createdAt, LocalDateTime updatedAt) {
+  public Address(String street, String city, String zipCode, String country, 
+  		Double latitude, Double longitude) {
     this.street = street;
     this.city = city;
     this.zipCode = zipCode;
     this.country = country;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+	this.latitude = latitude;
+	this.longitude = longitude;
+  }
+
+  public Address() {}
+
+  public double getLatitude() {
+    return latitude;
+  }
+
+  public void setLatitude(double latitude) {
+    this.latitude = latitude;
+  }
+
+  public double getLongitude() {
+    return longitude;
+  }
+
+  public void setLongitude(double longitude) {
+    this.longitude = longitude;
   }
 
   public Long getId() {
@@ -37,17 +88,6 @@ public class Address {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public Address(String street, String city, String zipCode, String country, LocalDateTime createdAt) {
-    this.street = street;
-    this.city = city;
-    this.zipCode = zipCode;
-    this.country = country;
-    this.createdAt = createdAt;
-  }
-
-  public Address() {
   }
 
   public String getStreet() {
@@ -96,5 +136,9 @@ public class Address {
 
   public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
+  }
+  
+  public String toString() {
+	return String.format("%s, %s, %s, %s", street, city, zipCode, country);
   }
 }

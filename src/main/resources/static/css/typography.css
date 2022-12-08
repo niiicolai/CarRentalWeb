@@ -18,7 +18,6 @@ h4,
 h5,
 h6 {
     font-family: var(--secondary-font);
-    color: var(--secondary-txt);
 }
 
 h1 {

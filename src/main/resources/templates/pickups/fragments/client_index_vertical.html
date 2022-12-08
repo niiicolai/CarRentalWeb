@@ -1,0 +1,24 @@
+<div th:fragment="clientIndex(title)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div>
+        <div class="text-black text-center">
+            <h1 class="margin-bottom" th:text="${title}" />
+            <p class="margin-bottom">Klik på knappenålen ud fra en afhentningslokation for at se stedet på kortet.</p>
+        </div>
+        <br />
+
+        <div class="flex justify-space-between gap-20">
+
+            <div class="flex justify-space-evenly direction-row direction-wrap gap-8 width-percent-100 margin-bottom">
+                <div th:each="pickupPoint: ${pickupPoints}" class="width-percent-25">
+                    <div th:replace="pickups/fragments/pickup.html :: pickup(${pickupPoint})" />
+                </div>
+            </div>
+
+            <div id="map" class="border black"></div>
+            <script>
+                // See /static/js/map.js
+                InitMap("map", "pickup-buttons", "pickup-name", "pickup-latitude", "pickup-longitude", "pickup-address");
+            </script>
+        </div>
+    </div>
+</div>

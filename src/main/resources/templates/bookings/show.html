@@ -1,48 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/layout/layout}">
+
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <!-- Thomas -->
+
 <body>
 
-<div class="text-box secondary text-center">
-  <span class="line-1"></span>
-  <span class="line-2"></span>
-  <span class="line-3"></span>
-  <span class="line-4"></span>
-  <span class="line-5"></span>
-  <span class="line-6"></span>
-  <span class="line-7"></span>
-  <span class="line-8"></span>
+    <div class="text-box secondary text-center">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+        <span class="line-4"></span>
+        <span class="line-5"></span>
+        <span class="line-6"></span>
+        <span class="line-7"></span>
+        <span class="line-8"></span>
 
-  <h2 class="text-box secondary text-center">Booking</h2>
+        <h2 class="text-box secondary text-center">Booking</h2>
 
-  <table class="table border" style="width: 100%">
-    <tr>
-      <th>Booking ID</th>
-      <th>Subscription</th>
-      <th>Afhentningssted ID</th>
-      <th>Vognnummer</th>
-      <th>Leveret d.</th>
-      <th>Oprettet d.</th>
+        <table class="table border" style="width: 100%">
+            <tr>
+                <th>Booking ID</th>
+                <th>Subscription</th>
+                <th>Afhentningssted ID</th>
+                <th>Vognnummer</th>
+                <th>Leveret d.</th>
+                <th>Oprettet d.</th>
 
-    </tr>
-<tr th:each="${booking}">
-  <td th:text="${booking.getId()}"></td>
-  <td th:text="${booking.getSubscriptionName()}"></td>
-  <td th:text="${booking.getPickupPointId()}"></td>
-  <td th:text="${booking.getVehicleNumber()}"></td>
-  <td th:text="${booking.getDeliveredAt()}"></td>
-  <td th:text="${booking.getCreatedAt()}"></td>
+            </tr>
+            <tr th:each="${booking}">
+                <td th:text="${booking.getId()}"></td>
+                <td th:text="${booking.getSubscriptionName()}"></td>
+                <td th:text="${booking.getPickupPointId()}"></td>
+                <td th:text="${booking.getVehicleNumber()}"></td>
+                <td th:text="${booking.getDeliveredAt()}"></td>
+                <td th:text="${booking.getCreatedAt()}"></td>
+            </tr>
+        </table>
 
-</tr>
-</table>
-
-</div>
+    </div>
 
 </body>
+
 </html>

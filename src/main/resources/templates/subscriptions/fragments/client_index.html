@@ -1,0 +1,31 @@
+<div th:fragment="clientIndex(title)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div>
+        <div class="text-center">
+            <h1 class="margin-bottom" th:text="${title}" />
+            <p class="margin-bottom">Find markedets bedste priser på biludlejning.</p>
+        </div>
+        <br />
+
+         <div class="flex justify-space-evenly direction-row direction-wrap gap-8">
+            <div class="padding border black width-percent-25 text-center" th:each="subscription : ${subscriptions}">
+                
+                <h2  class="text-box black">
+                    <div th:replace="layout/fragments/lines.html :: lines" />
+                    <span th:text="${subscription.name}" />
+                </h2>
+                <hr class="border black">
+                <div class="flex justify-space-evenly gap-8 text-left">
+                    <div>
+                        <div>Dage:</div>
+                        <strong th:text="${subscription.days}" />
+                    </div>
+                    <div>
+                        <div>Pris:</div>
+                        <strong th:text="${subscription.price} + ' DKK'" />
+                    </div>
+                </div>
+             </div>
+         </div>
+
+    </div>
+</div>

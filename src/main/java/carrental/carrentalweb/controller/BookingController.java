@@ -3,7 +3,6 @@ package carrental.carrentalweb.controller;
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.BookingRepository;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,10 +1,7 @@
 package carrental.carrentalweb.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,9 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import carrental.carrentalweb.entities.User;
+import carrental.carrentalweb.repository.BookingRepository;
+import carrental.carrentalweb.repository.CarRepository;
 import carrental.carrentalweb.repository.CreditRatingRepository;
+import carrental.carrentalweb.repository.PickupPointRepository;
+import carrental.carrentalweb.repository.SubscriptionRepository;
 import carrental.carrentalweb.repository.UserRepository;
 import carrental.carrentalweb.services.TimeOfDayService;
 import carrental.carrentalweb.utilities.DatabaseResponse;
@@ -33,10 +33,27 @@ public class UserController {
     CreditRatingRepository creditRatingRepository;
 
     @Autowired
+    CarRepository carRepository;
+
+    @Autowired
+    PickupPointRepository pickupPointRepository;
+
+    @Autowired
+    SubscriptionRepository subscriptionRepository;
+
+    @Autowired
+    BookingRepository bookingRepository;
+
+    @Autowired
     TimeOfDayService timeOfDayService;
 
     @GetMapping("/user")
     public String show(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("bookings", bookingRepository.getBookingList(user));
+        model.addAttribute("cars", carRepository.getAllCars());
+        model.addAttribute("pickups", pickupPointRepository.getPickupPointsList());
+        model.addAttribute("subscriptions", subscriptionRepository.getAll());
+
         model.addAttribute("user", userRepository.find("id", user.getId()));
         model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
         model.addAttribute("timeOfDayImage", timeOfDayService.getImage());
@@ -51,13 +68,17 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("timeOfDayImage", timeOfDayService.getImage());
+        model.addAttribute("timeOfDayGreeting", timeOfDayService.getGreeting());
 		return "user/login";
     }
 
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("timeOfDayImage", timeOfDayService.getImage());
+        model.addAttribute("timeOfDayGreeting", timeOfDayService.getGreeting());
 		return "user/signup";
     }
 

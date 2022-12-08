@@ -9,6 +9,8 @@ import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -115,11 +117,15 @@ public class DamageReportRepositoryTest {
     public void testCreateAndLast_SaveToDatabase_AndReturnDatabaseObject() {
         // Arrange
         testDamageReport = TestDamageReportFactory.create(lastInsertedBooking.getId());
-        testDamageSpecifications.add(TestDamageSpecificationFactory.create(true));
-        testDamageSpecifications.add(TestDamageSpecificationFactory.create(false));
+        testDamageSpecifications.add(TestDamageSpecificationFactory.create());
+        testDamageSpecifications.add(TestDamageSpecificationFactory.create());
+
+        List<String> descriptions = new ArrayList<String>();
+        descriptions.add(testDamageSpecifications.get(0).getDescription());
+        descriptions.add(testDamageSpecifications.get(1).getDescription());
 
         // Act
-        repository.create(testDamageReport, testDamageSpecifications);
+        repository.create(descriptions, lastInsertedBooking.getId());
         lastInsertedDamageReport = repository.last();
 
         // Assert
@@ -133,8 +139,12 @@ public class DamageReportRepositoryTest {
     @Test
     @Order(2)
     public void testGet_ReturnsDamageReportObjectFromDatabase() {
+        List<String> descriptions = new ArrayList<String>();
+        descriptions.add(testDamageSpecifications.get(0).getDescription());
+        descriptions.add(testDamageSpecifications.get(1).getDescription());
+
         // Act
-        repository.create(testDamageReport, testDamageSpecifications);
+        repository.create(descriptions, lastInsertedBooking.getId());
         lastInsertedDamageReport = repository.last();
         DamageReport damageReport = repository.get("booking_id", lastInsertedDamageReport.getBookingId());
 

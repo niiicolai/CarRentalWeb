@@ -1,7 +1,6 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.DamageSpecification;
-import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
@@ -39,8 +38,8 @@ public class DamageSpecificationRepository {
         return parseResponse(databaseResponse);
     }
     public boolean create(DamageSpecification dmgSpec) {
-        String query = "INSERT INTO damage_specifications (description, damaged, price) VALUES (?, ?, ?)";
-        DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.isDamaged(), dmgSpec.getPrice());
+        String query = "INSERT INTO damage_specifications (description, price) VALUES (?, ?, ?)";
+        DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.getPrice());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();
     }
@@ -74,7 +73,6 @@ public class DamageSpecificationRepository {
             dmgSpecs.add(
                     new DamageSpecification(
                             (String) record.map().get("description"),
-                            (boolean) record.map().get("damaged"),
                             (double) record.map().get("price"),
                             (LocalDateTime) record.map().get("created_at"),
                             (LocalDateTime) record.map().get("updated_at")

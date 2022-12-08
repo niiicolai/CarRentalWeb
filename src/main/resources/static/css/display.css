@@ -4,12 +4,40 @@
     display: inline;
 }
 
+.display.hide {
+    display: none;
+}
+
+.display.block {
+    display: block;
+}
+
+.width-percent-100 {
+    width: 100%;
+}
+
+.width-percent-80 {
+    width: 80%;
+}
+
 .width-percent-60 {
     width: 60%;
 }
 
+.width-percent-50 {
+    width: 50%;
+}
+
 .width-percent-25 {
     width: 25%;
+}
+
+.width-percent-33 {
+    width: 33%;
+}
+
+.height-100-vh {
+    height: 100vh;
 }
 
 .min-height-205 {

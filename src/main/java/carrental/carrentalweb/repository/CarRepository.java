@@ -1,9 +1,7 @@
 package carrental.carrentalweb.repository;
 
-import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.services.DatabaseService;
-
 import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -243,5 +241,48 @@ public class CarRepository {
 		}
 
 		return foundCar;
+    }
+
+    public List<Car> last(int number) {
+        List<Car> cars = new ArrayList<>();
+
+		try {
+			Connection conn = databaseService.getConnection();
+			String query = "SELECT * FROM cars ORDER BY created_at DESC LIMIT %d";
+			PreparedStatement preparedStatement = conn.prepareStatement(String.format(query, number));
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                long vehicleNumber = resultSet.getLong("vehicle_number");
+                String frameNumber = resultSet.getString("frame_number");
+                String brand = resultSet.getString("brand");
+                String model = resultSet.getString("model");
+                String color = resultSet.getString("color");
+                int equipmentLevel = resultSet.getInt("equipment_level");
+                double steelPrice = resultSet.getDouble("steel_price");
+                double registrationFee = resultSet.getDouble("registration_fee");
+                double co2Discharge = resultSet.getDouble("co2_discharge");
+                boolean inspected = resultSet.getBoolean("inspected");
+                boolean damaged = resultSet.getBoolean("damaged");
+                LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
+                LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
+                cars.add(new Car(vehicleNumber,
+                        frameNumber,
+                        brand,
+                        model, color,
+                        equipmentLevel,
+                        steelPrice,
+                        registrationFee,
+                        co2Discharge,
+                        inspected,
+                        damaged,
+                        createdAt,
+                        updatedAt));
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return cars;
     }
 }

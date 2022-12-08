@@ -1,41 +1,30 @@
 package carrental.carrentalweb.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import javax.mail.Authenticator;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.util.Properties;
 
 // Mads
 @Service
 public class MailerService {
-
-    @Autowired
-    JavaMailSender emailSender;
-
-    @Autowired
-    SimpleMailMessage simpleMailMessage;
-
-    @Autowired
-    MimeMessageHelper mimeMessageHelper;
-
+    private final JavaMailSender emailSender;
+    private final SimpleMailMessage simpleMailMessage;
+    private final MimeMessageHelper mimeMessageHelper;
+    public MailerService(JavaMailSender emailSender, SimpleMailMessage simpleMailMessage, MimeMessageHelper mimeMessageHelper) {
+        this.emailSender = emailSender;
+        this.simpleMailMessage = simpleMailMessage;
+        this.mimeMessageHelper = mimeMessageHelper;
+    }
     public void send(String to, String subject, String text) {
         simpleMailMessage.setTo(to);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(text);
         emailSender.send(simpleMailMessage);
     }
-
     public void send(String to, String subject, String text, File file) throws MessagingException {
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setSubject(subject);

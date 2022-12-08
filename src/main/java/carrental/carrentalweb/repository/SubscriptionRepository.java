@@ -53,6 +53,13 @@ public class SubscriptionRepository {
         DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
         return parseResponseFirst(databaseResponse);
     }
+
+    public List<Subscription> last(int number) {
+		String sql = "SELECT * FROM subscriptions ORDER BY created_at DESC LIMIT %d";
+		DatabaseResponse databaseResponse = databaseService.executeQuery(String.format(sql, number), new DatabaseRequestBody());
+		return parseResponse(databaseResponse);
+	}
+    
     public Subscription parseResponseFirst(DatabaseResponse databaseResponse) {
         List<Subscription> subscriptions = parseResponse(databaseResponse);
         if (subscriptions.size() == 0) return null;

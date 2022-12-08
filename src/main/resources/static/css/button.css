@@ -19,6 +19,8 @@
     cursor: pointer;
 
     box-shadow: 2px 2px 3px rgb(201, 201, 201);
+
+    display: inline-block;
 }
 
 .button.primary {
@@ -67,6 +69,12 @@
     color: var(--white);
 }
 
+.button.white {    
+    background-color: var(--white);
+    border-color: var(--white);
+    color: var(--black);
+}
+
 /* Normal:hover */ 
 
 .button.primary:hover {
@@ -105,11 +113,19 @@
     color: var(--warning);
 }
 
+.button.white:hover {    
+    background-color: var(--black);
+    border-color: var(--black);
+    color: var(--white);
+}
+
 /* rounded */
 
 .button.rounded {
     border-radius: 100%;
     padding: 10px 12px;
+    min-width: 43px;
+    text-align: center;
 }
 
 /* shadow */

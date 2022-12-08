@@ -1,16 +1,79 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-    layout:decorate="~{/layout/layout}">
-    <head></head>
-    <body layout:fragment="content">    
-        
-        <div class="alert alert-secondary">
-            <h1>Welcome</h1>
-            <p>Rent a car today by creating a free account!</p>
-            <a th:href="@{/login}" class="button button-primary button-small">Login</a>
-            
-            <a th:href="@{/signup}" class="btn btn-outline-success btn-sm">Signup</a>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/fragments/head.html :: head('Biludlejning')" />
+<body>
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
+
+    <div class="container fluid padding background-image cover" th:style="'background-image:url(' + @{${timeOfDayImage}} + ');height:310px;'">
+        <div class="overlay">
+            <div class="container text-black">
+                <h1 class="margin-bottom text-white">Find din næste bil i dag</h1>
+                <p class="margin-bottom text-white">
+                    Det har aldrig været nemmere at leje en ny bil. 
+                    Blot find drømmebilen, vælg afhentningslokation, 
+                    og tag ud og hent din nye bil indenfor 3 dage.
+                    Alt det kræver er du opretter en gratis bruger,
+                    og gennemfører en kreditvurdering, hvilket normalt,
+                    tager 1-2 minutter.
+                </p>
+                <a th:href="@{/login}" class="button danger large no-shadow">Login</a>
+                <a th:href="@{/signup}" class="button success large no-shadow">Opret Bruger</a>
+            </div>
         </div>
-    </body>
+    </div>
+
+    <div class="container fluid bg white">
+        <!-- Vis de seneste biler -->
+        <div th:replace="car/fragments/client_index.html :: clientIndex('Find vores nyeste biler')" />
+        <br />
+        <br />
+        <div class="text-center">
+            <a class="button danger medium" href="/cars">Find flere biler</a>
+        </div>
+        <br />
+        <br />
+    </div>
+
+    <div class="container fluid bg danger padding text-white">
+        <!-- Vis de seneste abonnementer -->
+        <div th:replace="subscriptions/fragments/client_index.html :: clientIndex('Find vores nyeste abonnementer')" />
+        <br />
+        <br />
+        <div class="text-center">
+            <a class="button white medium no-shadow" href="/subscriptions">Find flere abonnementer</a>
+        </div>
+        <br />
+    </div>
+
+    <div class="container fluid bg white">
+        <!-- Vis de seneste pickups -->
+        <div th:replace="pickups/fragments/client_index.html :: clientIndex('Find vores seneste afhentningslokationer')" />
+        <br />
+        <br />
+        <div class="text-center">
+            <a class="button danger medium" href="/pickups">Find flere afhentningslokationer</a>
+        </div>
+        <br />
+        <br />
+    </div>
+
+    <div class="container fluid bg danger padding text-white">
+        <!-- Vis kontakt widget -->
+        <div th:replace="home/fragments/contact_widget.html :: contactWidget('Kontakt os')" />
+        <br />
+        <br />
+        <div class="text-center">
+            <a class="button white medium no-shadow" href="/contact">Find mere information</a>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+
+    <div th:replace="layout/fragments/footer.html :: footer" />
+</body>
+
 </html>

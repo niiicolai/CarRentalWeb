@@ -19,12 +19,28 @@
     justify-content: space-evenly;
 }
 
+.flex.justify-space-center {
+    justify-content: center;
+}
+
+.flex.direction-row {
+    flex-direction: row;
+}
+
+.flex.direction-wrap {
+    flex-wrap: wrap;
+}
+
 .flex.gap-5 {
     gap: 5px;
 }
 
 .flex.gap-8 {
     gap: 8px;
+}
+
+.flex.gap-20 {
+    gap: 20px;
 }
 
 .flex-grow-1 {

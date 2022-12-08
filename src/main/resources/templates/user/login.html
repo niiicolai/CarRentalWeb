@@ -1,41 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-    layout:decorate="~{/layout/layout}">
-    <head></head>
-    <body layout:fragment="content">
-        <div th:if="${param.login_error}" class="alert danger">
-            <p>Forkert brugernavn eller adgangskode. Prøv igen.</p>
-        </div>
+<html xmlns:th="http://www.thymeleaf.org">
 
-        <div class="flex justify-space-evenly text-center">
-            <div>
-                <h2>Login</h2>
-                <form th:action="@{/login}" th:method="post" class="form">
+<head th:replace="layout/fragments/head.html :: head('Opret bruger')" />
+<body>
+    <div class="flex justify-space-evenly">
+        <div class="width-percent-50 height-100-vh padding relative ">
+            <a href="/"><img src="/images/logo.png" alt="logo" class="margin logo"></a>
+            <div th:if="${param.login_error}" th:class="${'alert danger'}">
+                <p>Forkert brugernavn eller adgangskode.</p>
+            </div>
+
+            <div class="absolute left right bottom">
+                <h2 class="text-black">Login</h2>
+                <p>
+                    <span th:text="${timeOfDayGreeting}" />,    
+                    <span>Indtast dine oplysninger nedenunder for at logge ind.</span>
+                </p><br />
+
+                <form th:action="@{/login}" th:object="${user}" th:method="post" class="form">
+
                     <div class="input-control">
-                        <label name="username">Brugernavn</label>
-                        <input type="text" name="username"
-                               placeholder="Brugernavn"
-                               autocomplete="off"
-                               required="required" />
+                        <input type="text" name="username" placeholder="Brugernavn" autocomplete="off"
+                            required="required" class="width-percent-100" />
                     </div>
+                    <br />
+
                     <div class="input-control">
-                        <label name="password" class="form-label">Adgangskode</label>
-                        <input type="password" name="password" 
-                               placeholder="Adgangskode"
-                               autocomplete="off"
-                               required="required"
-                               minlength="8" />
+                        <input type="password" name="password" placeholder="Adgangskode" autocomplete="off"
+                            required="required" minlength="8" class="width-percent-100" />
                     </div>
+                    <br />
+
                     <div>
-                        <button type="submit" class="button primary medium">Login</button>
+                        <button type="submit" class="button success medium width-percent-100 no-shadow">Login</button>
                     </div>
                 </form>
             </div>
-            <div>
-                <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+        </div>
+        <div class="width-percent-100 height-100-vh relative text-white background-image cover2"
+            th:style="'background-image:url(' + @{${timeOfDayImage}} + ');'">
+            <div class="overlay">
+                <div class="flex justify-space-between absolute bottom left right">
+                    <a class="button danger medium no-shadow" href="/signup">Mangler du en bruger?</a>
+                    <a class="button danger medium no-shadow" href="/">Forside</a>
+                </div>
+                <h1 class="margin text-white">Find din næste bil</h1>
             </div>
         </div>
+    </div>
+</body>
 
-    </body>
 </html>

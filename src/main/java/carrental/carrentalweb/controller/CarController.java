@@ -2,10 +2,8 @@ package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Car;
-import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.*;
-
 import carrental.carrentalweb.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,8 +36,8 @@ public class CarController {
     public String cars(Model model, @AuthenticationPrincipal User user){
 
         model.addAttribute("cars", carRepository.getAllCars());
-        model.addAttribute("user", userRepository.find("id", user.getId()));
-        model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
+        model.addAttribute("user", user);
+        model.addAttribute("creditRating", user == null ? null : creditRatingRepository.find("user_id", user.getId()));
         model.addAttribute("booking", new Booking());
         model.addAttribute("pickupPoints", pickupPointRepository.getPickupPointsList());
         model.addAttribute("subscriptions", subscriptionRepository.getAll());

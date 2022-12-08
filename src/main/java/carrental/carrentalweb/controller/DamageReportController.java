@@ -7,7 +7,6 @@ import carrental.carrentalweb.repository.DamageSpecificationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 // Mads
@@ -30,19 +29,15 @@ public class DamageReportController {
         return "damage-report/show";
     }
 
-    @GetMapping("/damage-report/new")
-    public String instantiate(Model model) {
+    @GetMapping("/damage-report/new/{id}")
+    public String instantiate(Model model, @PathVariable("id") long id) {
         model.addAttribute("damageReport", new DamageReport());
         model.addAttribute("damageSpecs", dmgSpecRepo.getAll());
+        model.addAttribute("bookingId", id);
         return "damage-report/new";
     }
 
-    @PostMapping("/damage-report/new")
-    public String create(@ModelAttribute("damageReport") DamageReport dmgReport,
-    @ModelAttribute("damageSpecs") List<DamageSpecification> dmgSpecs) {
-        dmgRepo.create(dmgReport, dmgSpecs);
-        return "redirect:/damage-report/show/" + dmgReport.getBookingId();
-    }
+    
 
     @GetMapping("/damage-report/edit/{id}")
     public String edit(@PathVariable("id") long id, Model model) {

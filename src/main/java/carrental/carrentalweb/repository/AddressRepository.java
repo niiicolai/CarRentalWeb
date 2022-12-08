@@ -1,14 +1,11 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.Address;
-
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
-
-
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,6 +86,8 @@ public class AddressRepository {
               (String) record.map().get("city"),
               (String) record.map().get("zipCode"),
               (String) record.map().get("country"),
+              (Double) record.map().get("latitude"),
+              (Double) record.map().get("longitude"),
               (LocalDateTime) record.map().get("created_at"),
               (LocalDateTime) record.map().get("updated_at")
           ));

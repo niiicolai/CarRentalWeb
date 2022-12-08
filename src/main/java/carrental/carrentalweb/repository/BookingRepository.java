@@ -3,12 +3,10 @@ package carrental.carrentalweb.repository;
 import carrental.carrentalweb.entities.*;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
-
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class BookingRepository {
 
   public boolean createBooking(Booking newBooking) {
 
-    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at) VALUES (?, ?, ?, ?, ?)";
+    String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at, returned_at, kilometer_driven) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(
       newBooking.getUserId(), 
