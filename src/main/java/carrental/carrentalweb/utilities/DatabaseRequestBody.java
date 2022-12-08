@@ -2,6 +2,9 @@ package carrental.carrentalweb.utilities;
 
 import java.util.Iterator;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class DatabaseRequestBody implements Iterator<Object> {
     private Object[] objects;
     private int index = 0;

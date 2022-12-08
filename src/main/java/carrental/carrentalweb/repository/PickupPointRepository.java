@@ -11,6 +11,9 @@ import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
 
+/*
+ * Written by Thomas S. Andersen
+ */
 @Repository
 public class PickupPointRepository {
 

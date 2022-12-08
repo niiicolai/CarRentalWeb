@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import carrental.carrentalweb.entities.InvoiceSpecification;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class InvoiceSpecificationBuilder {
     
     private InvoiceSpecification invoiceSpecification;

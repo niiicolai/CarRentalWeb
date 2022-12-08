@@ -34,6 +34,9 @@ import carrental.carrentalweb.repository.CreditRatingRepository;
  * 
  */
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 @Service
 public class CreditRatingService {
 

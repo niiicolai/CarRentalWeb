@@ -14,6 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 @Controller
 public class HomeController {
 
@@ -40,7 +43,6 @@ public class HomeController {
         // Used by car booking widget.
         model.addAttribute("user", user);
         model.addAttribute("creditRating", user == null ? null : creditRatingRepository.find("user_id", user.getId()));
-        
         model.addAttribute("cars", carRepository.last(3));
         model.addAttribute("pickupPoints", pickupPointRepository.last(3));
         model.addAttribute("subscriptions", subscriptionRepository.last(3));

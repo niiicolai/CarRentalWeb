@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/*
+ * Written by Mikkel Aabo Simonsen
+ */
 @Controller
 public class CarController {
 

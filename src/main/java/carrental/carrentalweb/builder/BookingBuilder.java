@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import carrental.carrentalweb.entities.Booking;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class BookingBuilder {
     
     private Booking booking;

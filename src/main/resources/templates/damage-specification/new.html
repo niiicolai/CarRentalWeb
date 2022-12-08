@@ -3,7 +3,7 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
 <head>
-    <!-- Mads -->
+    <!-- Written by Mads Kristian Pedersen -->
     <meta charset="UTF-8">
     <title>New Damage Specification</title>
 </head>
@@ -25,7 +25,7 @@
         <form th:action="@{/damage-specification/new}" th:method="post" th:object="${damageSpec}" class="form">
             <div class="input-control">
                 <label>Beskrivelse:</label>
-                <input th:field="${damageSpec.description}" type="text" required>
+                <input th:field="${damageSpec.description}" type="text" required autofocus>
             </div>
             <div class="input-control">
                 <label>Pris:</label>

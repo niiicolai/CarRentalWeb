@@ -2,6 +2,9 @@ package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
 
+/*
+ * Written by Thomas S. Andersen
+ */
 public class PickupPoint {
 
   private long id;

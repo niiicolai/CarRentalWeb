@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import carrental.carrentalweb.entities.PickupPoint;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class PickupPointBuilder {
     
     private PickupPoint pickupPoint;

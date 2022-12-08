@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import carrental.carrentalweb.entities.Subscription;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class SubscriptionBuilder {
     
     private Subscription subscription;

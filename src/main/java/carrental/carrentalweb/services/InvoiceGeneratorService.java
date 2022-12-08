@@ -12,6 +12,9 @@ import carrental.carrentalweb.entities.InvoiceSpecification;
 import carrental.carrentalweb.entities.Subscription;
 import carrental.carrentalweb.records.InvoiceRecord;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 @Service
 public class InvoiceGeneratorService {
     

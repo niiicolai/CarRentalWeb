@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import carrental.carrentalweb.entities.Car;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class CarBuilder {
     
     private Car car;

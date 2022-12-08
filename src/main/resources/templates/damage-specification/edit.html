@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout}">
 <head>
-    <!-- Mads -->
+    <!-- Written by Mads Kristian Pedersen -->
     <meta charset="UTF-8">
     <title>Edit Damage Specification</title>
 </head>
@@ -25,7 +25,7 @@
             <div class="input-control">
                 <h3 th:text="${damageSpec.description}"></h3>
                 <label>Pris:</label>
-                <input th:field="*{price}" type="text">
+                <input th:field="*{price}" type="text" autofocus>
             </div>
             <div class="input-control">
                 <input th:field="*{description}" type="text" hidden>

@@ -4,7 +4,9 @@ import carrental.carrentalweb.entities.DamageReport;
 
 import java.time.LocalDateTime;
 
-// Mads
+/*
+ * Written by Mads Kristian Pedersen
+ */
 public class DamageReportBuilder {
     private DamageReport damageReport;
 
