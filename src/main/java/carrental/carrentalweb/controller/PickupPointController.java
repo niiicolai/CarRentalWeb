@@ -1,6 +1,7 @@
 package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.PickupPoint;
+import carrental.carrentalweb.repository.AddressRepository;
 import carrental.carrentalweb.repository.PickupPointRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -36,8 +36,8 @@ public class CarController {
     public String cars(Model model, @AuthenticationPrincipal User user){
 
         model.addAttribute("cars", carRepository.getAllCars());
-        model.addAttribute("user", userRepository.find("id", user.getId()));
-        model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
+        model.addAttribute("user", user);
+        model.addAttribute("creditRating", user == null ? null : creditRatingRepository.find("user_id", user.getId()));
         model.addAttribute("booking", new Booking());
         model.addAttribute("pickupPoints", pickupPointRepository.getPickupPointsList());
         model.addAttribute("subscriptions", subscriptionRepository.getAll());

@@ -86,6 +86,8 @@ public class AddressRepository {
               (String) record.map().get("city"),
               (String) record.map().get("zipCode"),
               (String) record.map().get("country"),
+              (Double) record.map().get("latitude"),
+              (Double) record.map().get("longitude"),
               (LocalDateTime) record.map().get("created_at"),
               (LocalDateTime) record.map().get("updated_at")
           ));

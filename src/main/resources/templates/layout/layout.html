@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-    <head th:replace="layout/head.html :: head('random title')" />
-    <body>
-        <div th:replace="layout/header.html :: header" />        
-        
-        <div class="container">
-            <div th:replace="layout/alert.html :: alert" />
-            <div layout:fragment="content"></div>
-        </div>
-        
-        <footer class="text-center">
-            Copyright © 2022 Bilabonnement All rights reserved
-        </footer>
-    </body>
+
+<head th:replace="layout/fragments/head.html :: head('random title')" />
+<style>
+    /*
+     * Add 80px toward the bottom to counter the fixed footer element.
+     */
+    body {
+        margin-bottom: 80px;
+    }
+</style>
+
+<body>
+    <div th:replace="layout/fragments/header.html :: header" />
+
+    <div class="container">
+        <div th:replace="layout/fragments/alert.html :: alert" />
+        <div layout:fragment="content"></div>
+    </div>
+
+    <div th:replace="layout/fragments/footer.html :: footer" />
+</body>
+
 </html>

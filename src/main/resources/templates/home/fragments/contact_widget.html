@@ -1,0 +1,27 @@
+<div th:fragment="contactWidget(title)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div>
+        <div class="text-center">
+            <h1 class="margin-bottom" th:text="${title}" />
+            <p class="margin-bottom">Har du nogle spørgsmål, så kontakt os på en af mulighederne nedenunder.</p>
+        </div>
+        <br />
+
+        <div class="flex justify-space-center gap-20 width-percent-100">
+            <a href="" class="button rounded white large no-shadow">
+                <i class="fa-regular fa-envelope"></i>
+            </a>
+            <a href="" class="button rounded white large no-shadow">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="" class="button rounded white large no-shadow">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+            <a href="" class="button rounded white large no-shadow">
+                <i class="fa-brands fa-github-alt"></i>
+            </a>
+            <a href="" class="button rounded white large no-shadow">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+        </div>
+    </div>
+</div>

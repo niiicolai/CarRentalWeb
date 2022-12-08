@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/fragments/head.html :: head('Biludlejning')" />
+<style>
+    /*
+     * Add 80px toward the bottom to counter the fixed footer element.
+     */
+    body {
+        margin-bottom: 80px;
+    }
+</style>
+<body>
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
+    <div class="container fluid bg danger padding text-white">
+        <!-- Vis kontakt widget -->
+        <div th:replace="home/fragments/contact_widget.html :: contactWidget('Kontakt os')" />
+        <br />
+        <br />
+    </div>
+
+    <div class="container fluid bg white">
+        <!-- Vis de seneste pickups -->
+        <div th:replace="pickups/fragments/client_index.html :: clientIndex('Leder du efter afhentningslokationer?')" />
+        <br />
+        <br />
+        <div class="text-center">
+            <a class="button danger medium" href="/pickups">Find flere afhentningslokationer</a>
+        </div>
+    </div>
+
+    <div th:replace="layout/fragments/footer.html :: footer" />
+</body>
+
+</html>

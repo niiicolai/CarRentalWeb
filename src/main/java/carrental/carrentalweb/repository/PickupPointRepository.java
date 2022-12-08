@@ -1,5 +1,6 @@
 package carrental.carrentalweb.repository;
 
+import carrental.carrentalweb.entities.Address;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
@@ -52,7 +53,12 @@ public class PickupPointRepository {
 	}
 
 	public List<PickupPoint> getPickupPointsList() {
-		String query = "SELECT * FROM pickup_points";
+		/* 
+		 * Jeg har tilføjer "INNER JOIN address ON pickup_points.address_id=address.id"
+		 * for at få adresse informationen med.
+		 * ~ Nicolai
+		 */
+		String query = "SELECT * FROM pickup_points INNER JOIN address ON pickup_points.address_id=address.id";
 		DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
 		return parseResponse(databaseResponse);
 		/*
@@ -79,9 +85,10 @@ public class PickupPointRepository {
 		}
 		return pickupPoints;*/
 	}
+	
 
 	public PickupPoint findPickupPointById(Long id) {
-		String sql = "SELECT * FROM pickup_points WHERE id= ?";
+		String sql = "SELECT * FROM pickup_points INNER JOIN address ON pickup_points.address_id=address.id WHERE pickup_points.id= ?";
 		DatabaseRequestBody body = new DatabaseRequestBody(id);
 		DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
 		return parseResponseFirst(databaseResponse);
@@ -177,6 +184,12 @@ public class PickupPointRepository {
 		return pickup;*/
     }
 
+	public List<PickupPoint> last(int number) {
+		String sql = "SELECT * FROM pickup_points INNER JOIN address ON pickup_points.address_id=address.id ORDER BY pickup_points.created_at DESC LIMIT %d";
+		DatabaseResponse databaseResponse = databaseService.executeQuery(String.format(sql, number), new DatabaseRequestBody());
+		return parseResponse(databaseResponse);
+	}
+
 	public PickupPoint parseResponseFirst(DatabaseResponse databaseResponse) {
 		List<PickupPoint> pickupPoints = parseResponse(databaseResponse);
 		if (pickupPoints.size() == 0) return null;
@@ -188,13 +201,26 @@ public class PickupPointRepository {
 		while (databaseResponse.hasNext()) {
 			DatabaseRecord record = databaseResponse.next();
 
+			/* 
+			* Jeg har tilføjer parsing af en adresse her.
+			* ~ Nicolai
+			*/
+			Address address = new Address(
+				(String) record.map().get("street"),
+              	(String) record.map().get("city"),
+              	(String) record.map().get("zipCode"),
+              	(String) record.map().get("country"),
+				(Double) record.map().get("latitude"),
+				(Double) record.map().get("longitude"));
+
 			pickuppoints.add(
 					new PickupPoint(
 							(Long) record.map().get("id"),
 							(String) record.map().get("name"),
 							(long) record.map().get("address_id"),
 							(LocalDateTime) record.map().get("created_at"),
-							(LocalDateTime) record.map().get("updated_at")
+							(LocalDateTime) record.map().get("updated_at"),
+							address
 
 			));
 		}
