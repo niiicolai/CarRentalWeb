@@ -1,0 +1,70 @@
+<div th:fragment="clientIndex(title)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div>
+        <div class="text-black text-center">
+            <h1 class="margin-bottom" th:text="${title}" />
+            <p class="margin-bottom">Se alle vores biler nedunder.</p>
+        </div>
+        <br />
+
+        <div class="flex justify-space-evenly direction-row direction-wrap gap-8">
+            <div class="width-percent-40" th:each="car: ${cars}">
+                <div>
+                    <h1>
+                        <span th:text="${car.getBrand()}" />
+                        <span th:text="${car.getModel()}" />
+                    </h1>
+                    <div class="flex justify-space-between">
+                        <strong>Color:</strong>
+                        <span th:text="${car.getColor()}" />
+                    </div>
+                    <div class="flex justify-space-between">
+                         <strong>Udstyrsniveau:</strong>
+                        <span th:text="${car.getEquipmentLevel()}" />
+                    </div>
+                    <div class="flex justify-space-between">
+                        <strong>Registreringsafgift:</strong>
+                       <span th:text="${car.getRegistrationFee()}" />
+                   </div>
+                   <div class="flex justify-space-between">
+                        <strong>Co<sup>2</sup> udledning</strong>
+                       <span th:text="${car.getCo2Discharge()}" />
+                   </div>
+                </div>
+
+                <!-- Kun tillad brugere som er logget ind at oprette bookings -->
+
+                <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_EMPLOYEE')">
+                    <div th:if="${creditRating == null || !creditRating.isApproved()}">
+                        <p class="text-box creditMessage">Du mangler en godkendt kreditvurdering for leje en bil.</p>
+                        <div class="button creditMessage" th:replace="credit_rating/fragments/check.html :: check(${creditRating})"/>
+                    </div>
+
+                    <hr class="border black">
+                    <form th:if="${creditRating != null && creditRating.isApproved()}" class="form" th:action="@{/bookings/create}" th:object="${booking}"
+                        th:method="post">
+                        <input name="vehicleNumber" type="hidden" th:value="${car.getVehicleNumber()}"/>
+                        <input name="userId" type="hidden" th:value="${user.getId()}"/>
+
+                        <div class="margin-bottom">
+                            <label for="subscriptions">Vælg Abonnement</label>
+                            <select id="subscriptions" name="subscriptionName" type="text" placeholder="subscription name" required>
+                                <option th:each="subscription: ${subscriptions}" th:text="${subscription.getName()}"
+                                    th:value="${subscription.getName()}"></option>
+                            </select>
+                        </div>
+
+                        <div class="margin-bottom">
+                            <label for="pickup">Vælg afhentningslokation</label>
+                            <select id="pickup" name="pickupPointId" type="text" placeholder="pickup point id" required>
+                                <option th:each="pickupPoint: ${pickupPoints}" th:text="${pickupPoint.getName()}"
+                                    th:value="${pickupPoint.getId()}"></option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="button primary">Lej Bil</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

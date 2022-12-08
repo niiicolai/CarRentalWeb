@@ -1,47 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body layout:fragment="content">
+    <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')" th:replace="pickups/fragments/client_index_vertical.html :: clientIndex('Afhent din bil på følgende lokationer')" />
 
+    <!-- EMPLOYEE SETTINGS -->
+    <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+        <h2 class="margin text-center">Afhentningssteder</h2>
 
-    <div class="text-box secondary text-center">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
+        <div class="text-box secondary text-center">
+            <!-- Insætter <span class="line-1" /> ... -->
+            <div th:replace="layout/fragments/lines.html :: lines" />
 
-        <h2 class="text-box secondary text-center">Afhentningssteder</h2>
-
-<div class="text-center">
-
-    <div>
-    <table class="table border" style="width: 100%">
-        <tr>
-            <th>Lokation</th>
-            <th>Adresse id</th>
-            <th>Rediger</th>
-        </tr>
-
-        <tr th:each="pickupPoint: ${pickupPoints}">
-            <td th:text="${pickupPoint.getName()}"> </td>
-            <td th:text="${pickupPoint.getAddressId()}"></td>
-            <td><a class="button table primary small" th:href="@{/pickups/edit/{id}(id = ${pickupPoint.getId()})}">Rediger</a></td>
-        </tr>
-    </table>
+            <div class="text-center">
+                <div>
+                    <table class="table border" style="width: 100%">
+                        <tr>
+                            <th>Lokation</th>
+                            <th>Adresse</th>
+                            <th>Rediger</th>
+                        </tr>
+                        <tr th:each="pickupPoint: ${pickupPoints}">
+                            <td th:text="${pickupPoint.getName()}"> </td>
+                            <td th:text="${pickupPoint.getAddress().toString()}"></td>
+                            <td>
+                                <a class="button table primary small"
+                                    th:href="@{/pickups/edit/{id}(id = ${pickupPoint.getId()})}">Rediger</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br><br>
+            <a class="button primary medium" th:href="@{/pickups/create}">Opret</a>
         </div>
-        </div>
-        <br><br>
-        <a class="button primary medium" th:href="@{/pickups/create}">Opret ny</a>
-
     </div>
+
+
 </body>
+
 </html>

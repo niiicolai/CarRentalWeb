@@ -1,0 +1,33 @@
+
+
+.border {
+    border: 1px solid;
+}
+
+.border.primary {
+    border-color: var(--primary);
+}
+
+.border.secondary {
+    border-color: var(--secondary);
+}
+
+.border.info {
+    border-color: var(--info);
+}
+
+.border.success {
+    border-color: var(--success);
+}
+
+.border.danger {    
+    border-color: var(--danger);
+}
+
+.border.warning {    
+    border-color: var(--warning);
+}
+
+.border.white {    
+    border-color: var(--white);
+}

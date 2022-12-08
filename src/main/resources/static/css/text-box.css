@@ -24,7 +24,7 @@
 .text-box .line-7,
 .text-box .line-8 {
     position: absolute;
-    border: 1px solid var(--secondary);
+    border: 1px solid;
 }
 
 .text-box.creditMessage{
@@ -103,24 +103,30 @@
 
 .text-box.primary {
     color: var(--primary);
+    border-color: var(--primary);
 }
 
 .text-box.secondary {
     color: var(--secondary);
+    border-color: var(--secondary);
 }
 
 .text-box.info {
     color: var(--info);
+    border-color: var(--info);
 }
 
 .text-box.success {
     color: var(--success);
+    border-color: var(--success);
 }
 
 .text-box.danger {    
     color: var(--danger);
+    border-color: var(--danger);
 }
 
 .text-box.warning {    
     color: var(--warning);
+    border-color: var(--warning);
 }

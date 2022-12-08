@@ -31,7 +31,7 @@
                     <th>Vognnummer</th>
                     <th>Leveret d.</th>
                     <th>Oprettet d.</th>
-                    <th>Rediger</th>
+                    <th sec:authorize="hasRole('ROLE_EMPLOYEE')">Rediger</th>
                     <th sec:authorize="hasRole('ROLE_EMPLOYEE')">
                         Employee options
                     </th>
@@ -43,9 +43,9 @@
                     <td th:text="${booking.getVehicleNumber()}"></td>
                     <td th:text="${booking.getDeliveredAt()}"></td>
                     <td th:text="${booking.getCreatedAt()}"></td>
-                    <td><a class="button primary small"
-                            th:href="@{/bookings/edit/{id}(id = ${booking.getId()})}">Rediger</a></td>
-
+                    <td sec:authorize="hasRole('ROLE_EMPLOYEE')">
+                        <a class="button primary small" th:href="@{/bookings/edit/{id}(id = ${booking.getId()})}">Rediger</a>
+                    </td>
                     <td sec:authorize="hasRole('ROLE_EMPLOYEE')">
                         <a class="button primary small" th:href="@{/damage-report/new/{id}(id = ${booking.getId()})}">Udfør skaderapport</a>
                     </td>

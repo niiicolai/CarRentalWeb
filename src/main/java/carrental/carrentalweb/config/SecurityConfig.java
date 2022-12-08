@@ -31,7 +31,7 @@ public class SecurityConfig {
     private static final String[] sharedPaths = {"/user", "/credit/rating", "/pickuppoints**"};
     
     /* Unauthorized properties */
-    private static final String[] unauthorizedPaths = {"/", "/signup", "/login**", "/css/**", "/images/**", "/css_framework"};
+    private static final String[] unauthorizedPaths = {"/", "/cars", "/contact", "/pickups", "/subscriptions", "/signup", "/login**", "/css/**", "/js/**", "/images/**", "/css_framework"};
 
 
     private static final String LOGIN_PAGE = "/login";

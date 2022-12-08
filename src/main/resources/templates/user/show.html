@@ -27,39 +27,39 @@
     </div>
 
     <div class="flex justify-space-between gap-8">
-        <a class="button primary large text-center min-height-205 width-percent-25" href="/user/edit">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/user/edit">
             <p><strong><i class="fa-solid fa-user-pen"></i><br><br> Profil</strong></p>
             <small>Du modtager lige<br> nu faktura på <strong th:text="${user.getEmail()}" /></small><br><br>
         </a>
-        <a class="button primary large text-center min-height-205 width-percent-25" href="/bookings">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/bookings">
             <p><strong><i class="fa-solid fa-car-side"></i><br><br> Aftaler</strong></p>
             <small>Du har lige nu <strong th:text="${bookings.size()}" /> udlejningsaftaler.</small><br><br>
         </a>
-        <a class="button primary large text-center min-height-205 width-percent-25" href="/pickups">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/pickups">
             <p><strong><i class="fa-solid fa-location-dot"></i><br><br> Afhentning</strong></p>
             <small>Der findes lige nu <strong th:text="${pickups.size()}" /> afhentningslokationer.</small><br><br>
         </a>
-        <a class="button primary large text-center min-height-205 width-percent-25" href="/subscriptions">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/subscriptions">
             <p><strong><i class="fa-solid fa-tags"></i><br><br> Abonnementer</strong></p>
             <small>Der findes lige nu <strong th:text="${subscriptions.size()}" /> abonnementer.</small><br><br>
         </a>
     </div>
     <br>
     <div class="flex justify-space-between gap-8">
-        <a class="button primary large text-center min-height-205 width-percent-25" href="/cars">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/cars">
             <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
             <small>Vi har lige <strong th:text="${cars.size()}" /> biler til udlejning.</small><br><br>
         </a>
-        <a class="button primary large text-center min-height-205 width-percent-25" href="/pickups">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/pickups">
             <p><strong><i class="fa-regular fa-handshake"></i><br><br> Betingelser</strong></p>
             <small>Find vores handelsbetingelser.</small><br><br>
         </a>
-        <a class="button primary large text-center min-height-205 width-percent-25" href="/subscriptions">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/contact">
             <p><strong><i class="fa-regular fa-address-card"></i><br><br> Virksomhed</strong></p>
             <small>Find kontakt information.</small><br><br>
         </a>
         <form th:action="@{/logout}" th:method="post" class="display inline width-percent-25">
-            <button type="submit" class="button primary large text-center min-height-205">
+            <button type="submit" class="button danger large text-center min-height-205">
                 <p><strong><i class="fa-sharp fa-solid fa-right-from-bracket"></i><br><br> Log ud</strong></p>
                 <small>Du kan altid logge på igen, så længe du kan huske din kode.</small><br><br>
             </button>

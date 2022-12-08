@@ -14,6 +14,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,400;0,700;1,400&display=swap"
         rel="stylesheet">
 
+     <!-- Include LeafletJS custom method-->
+    <script th:src="@{/js/map.js}"></script>
+
+    <!-- Include LeafletJS-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+
+    
+
     <!-- IMPORTANT variables.css must be read first. -->
     <link rel="stylesheet" th:href="@{/css/variables.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
@@ -35,5 +49,6 @@
     <link rel="stylesheet" th:href="@{/css/display.css}">
     <link rel="stylesheet" th:href="@{/css/widget.css}">
     <link rel="stylesheet" th:href="@{/css/positions.css}">
+    <link rel="stylesheet" th:href="@{/css/border.css}">
     <link rel="stylesheet" th:href="@{/css/responsive.css}">
 </head>

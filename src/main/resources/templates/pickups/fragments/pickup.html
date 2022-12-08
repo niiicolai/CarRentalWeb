@@ -1,0 +1,17 @@
+<div th:fragment="pickup(pickupPoint)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div class="margin-bottom">
+        <strong th:text="${pickupPoint.getName()}" /><br />
+        <small th:text="${pickupPoint.getAddress().toString()}" />
+    </div>
+    <div class="text-center">
+        <button class="pickup-buttons button danger display block width-percent-100">
+            <i class="fa-solid fa-location-dot"></i>
+        </button>
+    </div>
+
+    <!-- pickup point information used by the name  -->
+    <input type="hidden" class="pickup-name" th:value="${pickupPoint.getName()}" />
+    <input type="hidden" class="pickup-latitude" th:value="${pickupPoint.getAddress().getLatitude()}" />
+    <input type="hidden" class="pickup-longitude" th:value="${pickupPoint.getAddress().getLongitude()}" />
+    <input type="hidden" class="pickup-address" th:value="${pickupPoint.getAddress().toString()}" />
+</div>

@@ -63,7 +63,6 @@ CREATE TABLE IF NOT EXISTS credit_ratings
     created_at DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
-
 -- Thomas
 CREATE TABLE IF NOT EXISTS address
 (
@@ -72,17 +71,19 @@ CREATE TABLE IF NOT EXISTS address
     city       VARCHAR(255) NOT NULL,
     zipCode    VARCHAR(255) NOT NULL,
     country    VARCHAR(255) NOT NULL,
+    latitude   DOUBLE NOT NULL,
+    longitude  DOUBLE NOT NULL,
     updated_at DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     created_at DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
-INSERT INTO address (street, city, zipCode, country)
-VALUES ('Street 1A', 'City A', '42311', 'Denmark');
-INSERT INTO address (street, city, zipCode, country)
-VALUES ('Street 1B', 'City B', '32545', 'Denmark');
-INSERT INTO address (street, city, zipCode, country)
-VALUES ('Street 1C', 'City C', '14324', 'Denmark');
-INSERT INTO address (street, city, zipCode, country)
-VALUES ('Street 1D', 'City D', '53463', 'Denmark');
+INSERT INTO address (street, city, zipCode, country, latitude, longitude)
+VALUES ('Street 1A', 'City A', '42311', 'Denmark', 55.696, 12.557);
+INSERT INTO address (street, city, zipCode, country, latitude, longitude)
+VALUES ('Street 1B', 'City B', '32545', 'Denmark', 55.696, 11.557);
+INSERT INTO address (street, city, zipCode, country, latitude, longitude)
+VALUES ('Street 1C', 'City C', '14324', 'Denmark', 54.696, 12.557);
+INSERT INTO address (street, city, zipCode, country, latitude, longitude)
+VALUES ('Street 1D', 'City D', '53463', 'Denmark', 55.696, 10.557);
 
 CREATE TABLE IF NOT EXISTS pickup_points
 (

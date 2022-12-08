@@ -124,6 +124,8 @@
 .button.rounded {
     border-radius: 100%;
     padding: 10px 12px;
+    min-width: 43px;
+    text-align: center;
 }
 
 /* shadow */
