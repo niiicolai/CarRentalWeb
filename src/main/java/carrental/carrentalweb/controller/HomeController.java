@@ -56,8 +56,8 @@ public class HomeController {
         return "home/contact";
     }
 
-    @GetMapping("/css_framework")
+    @GetMapping("/agreement")
     public String css_framework() {
-        return "home/css_framework";
+        return "home/agreement";
     }
 }

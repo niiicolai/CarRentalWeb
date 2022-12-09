@@ -51,6 +51,13 @@
                     
                     <br>
                     <button type="submit" class="button primary medium" id="damage-report-button">Indberet</button>
+                    <div id="spinner" class="display hide">
+                        <div class="padding border secondary margin-bottom">
+                            <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 40px;"></i><br />
+                            <br />
+                            Opretter skaderapport og sender faktura.
+                        </div>
+                    </div>
                     <a th:href="@{/bookings/show/{id}(id=${bookingId})}" class="button danger medium">Annuller</a>
                 </div>
                 
@@ -107,16 +114,23 @@
                         element.className = "display hide";
                     }
 
+                    // En metode der kan bruges til 'show' et element
+                    helperMethods.show = (element) => {
+                        element.className = "";
+                    }
+
                     // En metode der kan bruges til redirect til en anden side
                     helperMethods.redirectTo = (url) => {
                         window.location.replace(url);
                     }
 
                     class DamageReportCreator {
-                        constructor(bookingId, checkboxes, resultDiv) {
+                        constructor(bookingId, checkboxes, resultDiv, button, spinnerDiv) {
                             this.bookingId = bookingId;
                             this.checkboxes = checkboxes;
                             this.resultDiv = resultDiv;
+                            this.button = button;
+                            this.spinnerDiv = spinnerDiv;
                         }
 
                         // En state returneret fra serveren, hvis en rapport bliver oprettet succesfuldt. 
@@ -136,6 +150,9 @@
 
                         // En metode der kan bruges til at oprette en damage report.
                         create() {
+                            helperMethods.hide(this.button);
+                            helperMethods.show(this.spinnerDiv);
+
                             const createUrl = this.getCreateUrl();
                             const checked = helperMethods.getCheckedCheckboxes(this.checkboxes);
                             const descriptions = helperMethods.getDataAttributes(checked, "data-id");
@@ -144,6 +161,9 @@
 
                         // En metode der kaldes automatisk når et post request afsluttes.
                         createCallback(response) {
+                            helperMethods.show(this.button);
+                            helperMethods.hide(this.spinnerDiv);
+
                             if (response.state == this.getSuccessState()) {
                                 helperMethods.redirectTo(this.getShowUrl());
                             } else {
@@ -154,7 +174,7 @@
                     }
 
                     // En metode der kan bruges til at oprette et DamageReportCreator object.
-                    DamageReportCreator.create = (bookingCSSId, checkboxesClassname, resultDivCSSId) => {
+                    DamageReportCreator.create = (bookingCSSId, checkboxesClassname, resultDivCSSId, buttonCSSId, spinnerCSSId) => {
                         const resultDiv = document.getElementById(resultDivCSSId);
                         if (resultDiv == null) {
                             throw Error(`Cannot find element with id: ${resultDivCSSId}}`)
@@ -175,12 +195,22 @@
                         if (checkboxes.length == 0) {
                             throw Error(`Cannot find any elements with classname: ${checkboxesClassname}}`)
                         }
+
+                        const button = document.getElementById(buttonCSSId);
+                        if (button == null) {
+                            throw Error(`Cannot find element with id: ${buttonCSSId}}`)
+                        }
+
+                        const spinnerDiv = document.getElementById(spinnerCSSId);
+                        if (spinnerDiv == null) {
+                            throw Error(`Cannot find element with id: ${spinnerCSSId}}`)
+                        }
                         
-                        return new DamageReportCreator(bookingId, checkboxes, resultDiv)
+                        return new DamageReportCreator(bookingId, checkboxes, resultDiv, button, spinnerDiv);
                     }
 
                     // Lav et damage report objekt.
-                    const creator = DamageReportCreator.create("booking-id", "damage-specification", "report-result");
+                    const creator = DamageReportCreator.create("booking-id", "damage-specification", "report-result", "damage-report-button", "spinner");
                     
                     // Find knappen som bruges til at submit damage report
                     const button = document.getElementById("damage-report-button");

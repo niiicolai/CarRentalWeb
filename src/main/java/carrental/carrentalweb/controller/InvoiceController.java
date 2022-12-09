@@ -15,16 +15,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.Invoice;
 import carrental.carrentalweb.entities.InvoiceSpecification;
 import carrental.carrentalweb.entities.User;
-import carrental.carrentalweb.repository.BookingRepository;
 import carrental.carrentalweb.repository.InvoiceRepository;
 import carrental.carrentalweb.repository.InvoiceSpecificationRepository;
-import carrental.carrentalweb.repository.UserRepository;
 import carrental.carrentalweb.services.InvoicePDFService;
 
 /*
@@ -46,7 +42,7 @@ public class InvoiceController {
     public ResponseEntity<byte[]> show(@PathVariable Long id, @AuthenticationPrincipal User user) throws IOException {
         Invoice invoice = invoiceRepository.find("id", id);
         List<InvoiceSpecification> specifications = invoiceSpecificationRepository.findCollection("invoice_id", id);
-        
+        System.out.println(specifications.size());
         // Convert to array
         InvoiceSpecification[] specificationsArr = new InvoiceSpecification[specifications.size()];
         for (int i = 0; i < specifications.size(); i++)

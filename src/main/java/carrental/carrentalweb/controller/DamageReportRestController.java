@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import carrental.carrentalweb.entities.Booking;
+import carrental.carrentalweb.entities.Car;
+import carrental.carrentalweb.repository.BookingRepository;
+import carrental.carrentalweb.repository.CarRepository;
 import carrental.carrentalweb.repository.DamageReportRepository;
 import carrental.carrentalweb.services.DamageReportInvoiceService;
 import carrental.carrentalweb.utilities.DatabaseResponse;
@@ -26,6 +30,12 @@ public class DamageReportRestController {
 
     @Autowired
     DamageReportInvoiceService damageReportInvoiceService;
+
+    @Autowired
+    private CarRepository carRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
     
     @PostMapping("/damage-report/new/{booking_id}")
     public Map<String, String> create(@RequestBody List<String> descriptions, @PathVariable("booking_id") Long bookingId) {
@@ -33,7 +43,19 @@ public class DamageReportRestController {
 
         HashMap<String, String> results = new HashMap<>();
         if (response.isSuccessful()) {
-            damageReportInvoiceService.execute(bookingId);
+
+            // Kun send faktura, hvis der faktisk er nogle skader.
+            if (descriptions.size() > 0) {
+                damageReportInvoiceService.execute(bookingId);
+
+                Booking booking = bookingRepository.find("id", bookingId);
+
+                // Sæt bilen som damage, hvis der er nogle skader.
+                Car car = carRepository.findCarByVehicleNumber(booking.getVehicleNumber());
+                car.setDamaged(true);
+                carRepository.updateCar(car);
+            }
+                
             results.put("response", "Skaderapport oprettet!");
             results.put("state", "success");
         } else {

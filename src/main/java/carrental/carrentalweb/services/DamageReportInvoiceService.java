@@ -57,26 +57,23 @@ public class DamageReportInvoiceService {
         Invoice invoice = new Invoice();
         invoice.setBookingId(bookingId);
         invoice.setDueDate(due);
+        invoiceRepository.insert(invoice);
+
+        Invoice last = invoiceRepository.last();
         
         /* Add invoice specification */
         InvoiceSpecification[] specifications = new InvoiceSpecification[damageSpecifications.size()];
         for (int i = 0; i < damageSpecifications.size(); i++) {
             /* Add invoice specification */
             specifications[i] = new InvoiceSpecification();
-            specifications[i].setInvoiceId(bookingId);
+            specifications[i].setInvoiceId(last.getId());
             specifications[i].setDescription(damageSpecifications.get(i).getDescription());
             specifications[i].setPrice(damageSpecifications.get(i).getPrice());
+
+            invoiceSpecificationRepository.insert(specifications[i]);
         }
         
         return new InvoiceRecord(invoice, specifications);
-    }
-
-    private void saveInvoiceInformation(InvoiceRecord invoiceRecord) {
-        invoiceRepository.insert(invoiceRecord.invoice());
-
-        for (InvoiceSpecification invoiceSpecification : invoiceRecord.specifications()) {
-            invoiceSpecificationRepository.insert(invoiceSpecification);
-        }
     }
 
     private User getBookingOwner(long bookingId) {
@@ -96,9 +93,8 @@ public class DamageReportInvoiceService {
         List<DamageSpecification> specifications = damageSpecificationRepository.getAllById(bookingId);
 
         InvoiceRecord invoiceRecord = generateInvoiceRecord(report, specifications);
-        saveInvoiceInformation(invoiceRecord);
-
         User user = getBookingOwner(bookingId);
+        
         emailOwner(user, invoiceRecord);
     }
 }
