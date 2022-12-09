@@ -147,7 +147,7 @@ public class UserRepository {
                     .username((String) record.map().get("username"))
                     .password((String) record.map().get("password"))
                     .email((String) record.map().get("email"))
-                    .roles((String) record.map().get("role_name"))
+                    .roles("EMPLOYEE")
                     .isAccountNonExpired((int) record.map().get("account_non_expired") == 1)
                     .isAccountNonLocked((int) record.map().get("account_non_locked") == 1)
                     .isCredentialsNonExpired((int) record.map().get("credentials_non_expired") == 1)

@@ -9,32 +9,36 @@
 
 <body layout:fragment="content">
 
-    <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')" th:replace="car/fragments/client_index.html :: clientIndex('Find drømmebilen')" />
+    <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')"
+        th:replace="car/fragments/client_index.html :: clientIndex('Find drømmebilen')" />
 
     <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
         <h1 class="text-center">Bil Administration</h1>
         <p class="text-center">Find biler der har behov for inspektion.</p>
 
-        <div class="text-box booked-list">
-            <div class="table-wrap">
-                <h3>All cars</h3>
-                <div class="input-control">
-                    <a class="button primary cars" th:href="@{/add-car}">Add car</a>
+        <div class="text-box width-percent-100">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+            <div>
+                <div class="flex justify-space-between">
+                    <h3>Alle biler</h3>
+                    <div>
+                        <a class="button primary cars" th:href="@{/add-car}">Add car</a>
+                    </div>
                 </div>
-                <span class="line-1"></span>
-                <span class="line-2"></span>
-                <span class="line-3"></span>
-                <span class="line-4"></span>
-                <span class="line-5"></span>
-                <span class="line-6"></span>
-                <span class="line-7"></span>
-                <span class="line-8"></span>
-                <table class="table cars">
+
+                <table class="table border text-center width-percent-100">
                     <tr>
                         <th>Vehicle #</th>
                         <th>Brand</th>
                         <th>Model</th>
-                        <th></th>
+                        <th>Valgmulighed</th>
                     </tr>
                     <ul th:each="car: ${cars}">
                         <tr>
@@ -52,12 +56,8 @@
                 </table>
             </div>
         </div>
-        <div class="text-box booked-list">
-            <div class="table-wrap">
-                <h3>Biler markeret for inspektion</h3>
-                <div class="input-control">
-                    <a class="button primary cars" th:href="@{/add-car}">Add car</a>
-                </div>
+        <div class="text-box booked-list" style="overflow-y: scroll;">
+            <h3>Biler markeret for inspektion</h3>
                 <span class="line-1"></span>
                 <span class="line-2"></span>
                 <span class="line-3"></span>
@@ -66,19 +66,19 @@
                 <span class="line-6"></span>
                 <span class="line-7"></span>
                 <span class="line-8"></span>
-                <table class="table cars">
+                <table class="table border text-center width-percent-100">
                     <tr>
                         <th>Vehicle #</th>
                         <th>Brand</th>
                         <th>Model</th>
-                        <th></th>
+                        <th>Valgmulighed</th>
                     </tr>
                     <ul th:each="car: ${cars}">
                         <tr th:if="${car.getInspected() != true}">
                             <td><span th:text="${car.getVehicleNumber()}" /></td>
                             <td><span th:text="${car.getBrand()}" /></td>
                             <td><span th:text="${car.getModel()}" /></td>
-                            <td>
+                            <td>                                
                                 <div class="input-control">
                                     <a class="button secondary"
                                         th:href="@{/edit-car/{vehicleNumber}(vehicleNumber = ${car.getVehicleNumber()})}">Edit</a>
@@ -87,79 +87,38 @@
                         </tr>
                     </ul>
                 </table>
-            </div>
         </div>
-        <div class="text-box damaged-list">
-            <div class="table-wrap">
-                <h3>Defekte biler</h3>
-                <div class="input-control">
-                    <a class="button primary cars" th:href="@{/add-car}">Add car</a>
-                </div>
-                <span class="line-1"></span>
-                <span class="line-2"></span>
-                <span class="line-3"></span>
-                <span class="line-4"></span>
-                <span class="line-5"></span>
-                <span class="line-6"></span>
-                <span class="line-7"></span>
-                <span class="line-8"></span>
-                <div class="flex align-items-center justify-space-between gap-5">
-                    <div class="table cars">
-                        <table>
-                            <tr>
-                                <th>Vehicle #</th>
-                                <th>Brand</th>
-                                <th>Model</th>
-                                <th></th>
-                            </tr>
-                            <ul th:each="car: ${cars}">
-                                <tr th:if="${car.getDamaged() == true}">
-                                    <td><span th:text="${car.getVehicleNumber()}" /></td>
-                                    <td><span th:text="${car.getBrand()}" /></td>
-                                    <td><span th:text="${car.getModel()}" /></td>
-                                    <td>
-                                        <div class="input-control">
-                                            <a class="button secondary"
-                                                th:href="@{/edit-car/{vehicleNumber}(vehicleNumber = ${car.getVehicleNumber()})}">Edit</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ul>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="text-box damaged-list" style="overflow-y: scroll;">
+            <h3>Defekte biler</h3>
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+            <span class="line-4"></span>
+            <span class="line-5"></span>
+            <span class="line-6"></span>
+            <span class="line-7"></span>
+            <span class="line-8"></span>
+            <table class="table border text-center width-percent-100">
+                <tr>
+                    <th>Vehicle #</th>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Valgmulighed</th>
+                </tr>
+                <tr th:each="car: ${cars}" th:if="${car.getDamaged() == true}">
+                    <td><span th:text="${car.getVehicleNumber()}" /></td>
+                    <td><span th:text="${car.getBrand()}" /></td>
+                    <td><span th:text="${car.getModel()}" /></td>
+                    <td>
+                        <div class="input-control">
+                            <a class="button secondary"
+                                th:href="@{/edit-car/{vehicleNumber}(vehicleNumber = ${car.getVehicleNumber()})}">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <div>
-            <canvas class="container histogram" id="myChart"></canvas>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-        <script>
-            const ctx = document.getElementById('myChart');
-
-            var bookingAmounts = "${bookingAmounts}"
-
-            new Chart(ctx, {
-
-                type: 'bar',
-                data: {
-                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                    datasets: [{
-                        label: 'Number of bookings',
-                        data: [bookingAmounts],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        </script>
+    </div>
     </div>
 
 </body>

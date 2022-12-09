@@ -50,23 +50,20 @@ public class BookingInvoiceService {
         Invoice invoice = new Invoice();
         invoice.setBookingId(bookingId);
         invoice.setDueDate(due);
+        invoiceRepository.insert(invoice);
+
+        Invoice last = invoiceRepository.last();
 
         /* Add invoice specification */
         InvoiceSpecification[] specifications = new InvoiceSpecification[1];
         specifications[0] = new InvoiceSpecification();
-        specifications[0].setInvoiceId(bookingId);
+        specifications[0].setInvoiceId(last.getId());
         specifications[0].setDescription(subscription.getName());
         specifications[0].setPrice(subscription.getPrice());
+
+        invoiceSpecificationRepository.insert(specifications[0]);
         
         return new InvoiceRecord(invoice, specifications);
-    }
-    
-    private void saveInvoiceInformation(InvoiceRecord invoiceRecord) {
-        invoiceRepository.insert(invoiceRecord.invoice());
-
-        for (InvoiceSpecification invoiceSpecification : invoiceRecord.specifications()) {
-            invoiceSpecificationRepository.insert(invoiceSpecification);
-        }
     }
 
     private User getBookingOwner(long userId) {
@@ -85,9 +82,8 @@ public class BookingInvoiceService {
         Subscription subscription = subscriptionRepository.get("name", booking.getSubscriptionName());
 
         InvoiceRecord invoiceRecord = generateInvoiceRecord(booking, subscription);
-        saveInvoiceInformation(invoiceRecord);
-
         User user = getBookingOwner(booking.getUserId());
+
         emailOwner(user, invoiceRecord);
     }
 }
