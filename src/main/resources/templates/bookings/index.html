@@ -1,58 +1,93 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/layout}">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/fragments/head.html :: head('Udlejningsaftaler')" />
 <!-- Thomas -->
 
-<body layout:fragment="content">
+<body>
 
+    <div th:replace="layout/fragments/header.html :: header" />
 
-    <div class="text-box secondary text-center">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
+    <div class="margin">
+        <div th:replace="layout/fragments/alert.html :: alert" />
 
-        <h2 class="text-box secondary text-center">List of bookings</h2>
+        <h1 class="text-black text-center">Udlejningsaftaler</h1>
+
         <div>
-            <table class="table border" style="width: 100%">
-                <tr>
-                    <th>Booking ID</th>
-                    <th>Subscription</th>
-                    <th>Afhentningssted ID</th>
-                    <th>Vognnummer</th>
-                    <th>Leveret d.</th>
-                    <th>Oprettet d.</th>
-                    <th sec:authorize="hasRole('ROLE_EMPLOYEE')">Rediger</th>
-                    <th sec:authorize="hasRole('ROLE_EMPLOYEE')">
-                        Employee options
-                    </th>
-                </tr>
-                <tr th:each="booking : ${bookinglist}">
-                    <td th:text="${booking.getId()}"></td>
-                    <td th:text="${booking.getSubscriptionName()}"></td>
-                    <td th:text="${booking.getPickupPointId()}"></td>
-                    <td th:text="${booking.getVehicleNumber()}"></td>
-                    <td th:text="${booking.getDeliveredAt()}"></td>
-                    <td th:text="${booking.getCreatedAt()}"></td>
-                    <td sec:authorize="hasRole('ROLE_EMPLOYEE')">
-                        <a class="button primary small" th:href="@{/bookings/edit/{id}(id = ${booking.getId()})}">Rediger</a>
-                    </td>
-                    <td sec:authorize="hasRole('ROLE_EMPLOYEE')">
-                        <a class="button primary small" th:href="@{/damage-report/new/{id}(id = ${booking.getId()})}">Udfør skaderapport</a>
-                    </td>
-                </tr>
-            </table>
+            <p class="text-center">Se og administrer aftaler.</p>
+    
+            <div class="text-box secondary text-center">
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+                <span class="line-4"></span>
+                <span class="line-5"></span>
+                <span class="line-6"></span>
+                <span class="line-7"></span>
+                <span class="line-8"></span>
+                
+                <div>
+                    <table class="table border width-percent-100">
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Bil</th>
+                            <th>Abonnement</th>
+                            <th>State</th>
+                            <th>Oprettet</th>
+                            <th>Valgmulighed</th>
+                            <th sec:authorize="hasRole('ROLE_EMPLOYEE')">Aflever/Modtag</th>
+                            <th sec:authorize="hasRole('ROLE_EMPLOYEE')">Skaderapport</th>
+                        </tr>
+                        <tr th:each="booking : ${bookinglist}">
+                            <td th:text="${booking.getId()}" />
+                            <td>
+                                <span th:text="${booking.getCar().getBrand()}" />
+                                <span th:text="${booking.getCar().getModel()}" />
+                            </td>
+                            <td th:text="${booking.getSubscriptionName()}" />
+                            <td>
+                                <strong th:text="${booking.getState()}" />
+                            </td>
+                            <td th:text="${#temporals.format(booking.getCreatedAt(), 'dd-MM-yyyy HH:mm')}" />
+                            <td>
+                                <a th:href="@{/bookings/show/{id}(id = ${booking.getId()})}"
+                                    class="button primary medium">
+                                        Se aftale
+                                </a>
+                            </td>  
+                            <td sec:authorize="hasRole('ROLE_EMPLOYEE')"> 
+                                <a th:if="${booking.getDeliveredAt() == null}" 
+                                   th:href="@{/bookings/deliver/{id}(id = ${booking.getId()})}"
+                                   class="button danger medium">
+                                        Aflever til kunde
+                                </a>
+    
+                                <a th:if="${booking.getDeliveredAt() != null && booking.getReturnedAt() == null}" 
+                                   th:href="@{/bookings/return/{id}(id = ${booking.getId()})}"
+                                   class="button danger medium">
+                                        Modtag fra kunde
+                                </a>
+                            </td>
+                            <td sec:authorize="hasRole('ROLE_EMPLOYEE')">
+                                <a th:if="${booking.getDeliveredAt() != null && booking.getDamageReport() != null}"
+                                   th:href="@{/damage-report/show/{id}(id = ${booking.getId()})}"
+                                   class="button secondary medium">
+                                        Se skaderapport
+                                </a>
+                                <a th:if="${booking.getDeliveredAt() != null && booking.getDamageReport() == null}" 
+                                   th:href="@{/damage-report/new/{id}(id = ${booking.getId()})}"
+                                   class="button warning medium">
+                                        Udfør skaderapport
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div th:replace="layout/fragments/footer.html :: footer" />
+
 </body>
 
 </html>

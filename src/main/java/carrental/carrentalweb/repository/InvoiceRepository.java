@@ -29,6 +29,13 @@ public class InvoiceRepository {
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
         return parseResponseFirst(databaseResponse);
     }
+
+    public List<Invoice> where(String column, Object value) {
+        String sql = String.format("SELECT * FROM invoices WHERE %s=?", column);
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        return parseResponse(databaseResponse);
+    }
     
     public boolean insert(Invoice invoice) {
         String sql = "INSERT INTO invoices (booking_id, due_date, paid_at) VALUES (?, ?, ?)";
@@ -67,7 +74,9 @@ public class InvoiceRepository {
                     (long) record.map().get("id"),
                     (long) record.map().get("booking_id"),
                     (LocalDateTime) record.map().get("due_date"),
-                    (LocalDateTime) record.map().get("paid_at")
+                    (LocalDateTime) record.map().get("paid_at"),
+                    (LocalDateTime) record.map().get("created_at"),
+                    (LocalDateTime) record.map().get("updated_at")
                 )
             );
         }

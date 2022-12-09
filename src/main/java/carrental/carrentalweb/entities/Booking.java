@@ -1,6 +1,7 @@
 package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /*
  * Written by Thomas S. Andersen
@@ -18,6 +19,10 @@ public class Booking {
     private LocalDateTime deliveredAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private Subscription subscription;
+    private DamageReport damageReport;
+    private Car car;
 
     public Booking(long id, long userId, long vehicleNumber, String subscriptionName, long pickupPointId, LocalDateTime deliveredAt, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime returnedAt, double kilometerDriven) {
         this.id = id;
@@ -122,4 +127,44 @@ public class Booking {
     public String getSubscriptionName() {
         return subscriptionName;
     }
+
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
+    }
+
+    public void setDamageReport(DamageReport damageReport) {
+        this.damageReport = damageReport;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
+    }
+
+    public DamageReport getDamageReport() {
+        return damageReport;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public String getState() {
+        long now = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC); 
+        long end = LocalDateTime.now().plusDays((long) subscription.getDays()).toEpochSecond(ZoneOffset.UTC); 
+        
+        if (deliveredAt == null)
+            return "Afventer afhenting";
+        else if (returnedAt == null)
+            return "Aktiv";
+        else if ((end-now) < 0)
+            return "Aflevering mangler";
+        else if (damageReport == null)
+            return "Afventer skaderapport";
+        else
+            return "Afsluttet";
+    } 
 }

@@ -6,5 +6,5 @@ import carrental.carrentalweb.entities.InvoiceSpecification;
 /*
  * Written by Nicolai Berg Andersen
  */
-public record InvoiceRecord(Invoice invoice, InvoiceSpecification specification) {
+public record InvoiceRecord(Invoice invoice, InvoiceSpecification[] specifications) {
 }

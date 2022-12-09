@@ -25,6 +25,13 @@ public class Subscription {
         this.updatedAt = updatedAt;
     }
 
+    public Subscription(String name, double days, double price, boolean available) {
+        this.name = name;
+        this.days = days;
+        this.price = price;
+        this.available = available;
+    }
+
     public String getName() {
         return name;
     }

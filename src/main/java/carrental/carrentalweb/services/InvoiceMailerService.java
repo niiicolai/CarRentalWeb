@@ -20,8 +20,8 @@ public class InvoiceMailerService {
     @Autowired
     InvoicePDFService invoicePDFService;
 
-    private static final String subject = "Din faktura (#%d)";
-    private static final String description = "Tak for din køb.";
+    private static final String subject = "Faktura (#%d)";
+    private static final String description = "Tak for dit køb.";
 
     public void send(User user, Invoice invoice, InvoiceSpecification[] specifications) {
         File file = invoicePDFService.execute(invoice, specifications);
