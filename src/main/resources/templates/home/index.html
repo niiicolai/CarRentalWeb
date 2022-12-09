@@ -26,26 +26,30 @@
     </div>
 
     <div class="container fluid bg white">
-        <!-- Vis de seneste biler -->
-        <div th:replace="car/fragments/client_index.html :: clientIndex('Find vores nyeste biler')" />
-        <br />
-        <br />
-        <div class="text-center">
-            <a class="button danger medium" href="/cars">Find flere biler</a>
+        <div class="container">
+            <!-- Vis de seneste biler -->
+            <div th:replace="car/fragments/client_index.html :: clientIndex('Find vores nyeste biler')" />
+            <br />
+            <br />
+            <div class="text-center">
+                <a class="button danger medium" href="/cars">Find flere biler</a>
+            </div>
+            <br />
+            <br />
         </div>
-        <br />
-        <br />
     </div>
 
     <div class="container fluid bg danger padding text-white">
-        <!-- Vis de seneste abonnementer -->
-        <div th:replace="subscriptions/fragments/client_index.html :: clientIndex('Find vores nyeste abonnementer')" />
+        <div class="container">
+            <!-- Vis de seneste abonnementer -->
+            <div th:replace="subscriptions/fragments/client_index.html :: clientIndex('Find vores nyeste abonnementer')" />
+            <br />
+            <br />
+            <div class="text-center">
+                <a class="button white medium no-shadow" href="/subscriptions">Find flere abonnementer</a>
+            </div>
         <br />
-        <br />
-        <div class="text-center">
-            <a class="button white medium no-shadow" href="/subscriptions">Find flere abonnementer</a>
         </div>
-        <br />
     </div>
 
     <div class="container fluid bg white">
@@ -61,17 +65,19 @@
     </div>
 
     <div class="container fluid bg danger padding text-white">
-        <!-- Vis kontakt widget -->
-        <div th:replace="home/fragments/contact_widget.html :: contactWidget('Kontakt os')" />
-        <br />
-        <br />
-        <div class="text-center">
-            <a class="button white medium no-shadow" href="/contact">Find mere information</a>
+        <div class="container">
+            <!-- Vis kontakt widget -->
+            <div th:replace="home/fragments/contact_widget.html :: contactWidget('Kontakt os')" />
+            <br />
+            <br />
+            <div class="text-center">
+                <a class="button white medium no-shadow" href="/contact">Find mere information</a>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
     </div>
 
     <div th:replace="layout/fragments/footer.html :: footer" />
