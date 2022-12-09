@@ -76,7 +76,10 @@ public class BookingRepository {
 
   public List<Booking> getBookingList(User findByUser) {
 
-    String query = "SELECT * FROM bookings";
+    String query = "SELECT * FROM bookings "
+      + "INNER JOIN subscriptions ON bookings.subscription_name=subscriptions.name "
+      + "INNER JOIN cars ON bookings.vehicle_number=cars.vehicle_number "
+      + "LEFT JOIN damage_reports ON bookings.id=damage_reports.booking_id";
     DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
     return parseResponse(databaseResponse);
     /*
@@ -109,7 +112,12 @@ public class BookingRepository {
   }
 
   public Booking find(String column, Object value) {
-    String sql = String.format("SELECT * FROM bookings WHERE %s=?", column);
+	String sql = String.format(
+		  "SELECT * FROM bookings "
+		+ "INNER JOIN subscriptions ON bookings.subscription_name=subscriptions.name "
+      	+ "INNER JOIN cars ON bookings.vehicle_number=cars.vehicle_number "
+      	+ "LEFT JOIN damage_reports ON bookings.id=damage_reports.booking_id "
+		+ "WHERE %s=?", column);
     DatabaseRequestBody body = new DatabaseRequestBody(value);
     DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
     return parseResponseFirst(databaseResponse);
@@ -158,29 +166,20 @@ public class BookingRepository {
         booking.getSubscriptionName(), booking.getPickupPointId(), booking.getDeliveredAt(), booking.getReturnedAt(), booking.getUpdatedAt(), booking.getKilometerDriven(), booking.getId());
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
-/*
-    try {
-      Connection conn = databaseService.getConnection();
-      String queryCreate = "UPDATE bookings " +
-          "SET user_id = ?, vehicle_number = ?, subscription_name =?, pickup_point_name = ?, delivered_at = ?, created_at = ?, updated_at = ? WHERE id=?";
-      PreparedStatement preparedStatement = conn.prepareStatement(queryCreate);
+  }
 
-      preparedStatement.setObject(1, booking.getUserId());
-      preparedStatement.setObject(2, booking.getVehicleNumber());
-      preparedStatement.setString(3, booking.getSubscriptionName());
-      preparedStatement.setObject(4, booking.getPickupPointName());
-      preparedStatement.setObject(5, booking.getDeliveredAt());
-      preparedStatement.setObject(5, booking.getCreatedAt());
-      preparedStatement.setObject(5, LocalDateTime.now());
-      preparedStatement.setLong(6, booking.getId());
+  public boolean setDeliveredAt(long id) {
+    String query = "UPDATE bookings SET delivered_at = ? WHERE id=?";
+    DatabaseRequestBody requestBody = new DatabaseRequestBody(LocalDateTime.now(), id);
+    DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
+    return databaseResponse.isSuccessful();
+  }
 
-      preparedStatement.executeUpdate();
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
- */
+  public boolean setReturnedAt(long id) {
+    String query = "UPDATE bookings SET returned_at = ? WHERE id=?";
+    DatabaseRequestBody requestBody = new DatabaseRequestBody(LocalDateTime.now(), id);
+    DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
+    return databaseResponse.isSuccessful();
   }
 
   public boolean delete(Booking booking) {
@@ -203,24 +202,55 @@ public class BookingRepository {
 }
 
   private List<Booking> parseResponse(DatabaseResponse databaseResponse) {
-    List<Booking> bookings = new LinkedList<Booking>();
-    while (databaseResponse.hasNext()) {
-      DatabaseRecord record = databaseResponse.next();
+		List<Booking> bookings = new LinkedList<Booking>();
+		while (databaseResponse.hasNext()) {
+		DatabaseRecord record = databaseResponse.next();
 
-      bookings.add(
-          new Booking(
-            (long) record.map().get("id"),
-            (long) record.map().get("user_id"),
-            (long) record.map().get("vehicle_number"),
-            (String) record.map().get("subscription_name"),
-            (long) record.map().get("pickup_point_id"),
-            (LocalDateTime) record.map().get("delivered_at"),
-            (LocalDateTime) record.map().get("created_at"),
-            (LocalDateTime) record.map().get("updated_at"),
-            (LocalDateTime) record.map().get("returned_at"),
-            (double) record.map().get("kilometer_driven")
-          )
-      );
+		Booking booking = new Booking(
+			(long) record.map().get("id"),
+			(long) record.map().get("user_id"),
+			(long) record.map().get("vehicle_number"),
+			(String) record.map().get("subscription_name"),
+			(long) record.map().get("pickup_point_id"),
+			(LocalDateTime) record.map().get("delivered_at"),
+			(LocalDateTime) record.map().get("created_at"),
+			(LocalDateTime) record.map().get("updated_at"),
+			(LocalDateTime) record.map().get("returned_at"),
+			(double) record.map().get("kilometer_driven")
+		);
+		
+		if (record.map().get("name") != null) {
+			Subscription subscription = new Subscription(
+				(String) record.map().get("name"),
+				(double) record.map().get("days"),
+				(double) record.map().get("price"),
+				(Boolean) record.map().get("available")
+			);
+			booking.setSubscription(subscription);
+		}
+
+		if (record.map().get("frame_number") != null) {
+			Car car = new Car(
+				(String) record.map().get("frame_number"), 
+				(String) record.map().get("brand"), 
+				(String) record.map().get("model"), 
+				(String) record.map().get("color"), 
+				(int) record.map().get("equipment_level"), 
+				(double) record.map().get("steel_price"), 
+				(double) record.map().get("registration_fee"), 
+				(double) record.map().get("co2_discharge"), 
+				(Boolean) record.map().get("inspected"), 
+				(Boolean) record.map().get("damaged")
+			);
+			booking.setCar(car);
+		}
+
+		if (record.map().get("booking_id") != null) {
+			DamageReport damageReport = new DamageReport((long) record.map().get("booking_id"));
+			booking.setDamageReport(damageReport);
+		}
+
+		bookings.add(booking);
     }
 
     return bookings;

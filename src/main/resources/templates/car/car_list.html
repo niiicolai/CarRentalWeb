@@ -11,8 +11,10 @@
 
     <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')" th:replace="car/fragments/client_index.html :: clientIndex('Find drømmebilen')" />
 
-    <div sec:authorize="hasRole('ROLE_EMPLOYEE')" class="d-flex gap-2">
-        <h1>Bil Administration</h1>
+    <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+        <h1 class="text-center">Bil Administration</h1>
+        <p class="text-center">Find biler der har behov for inspektion.</p>
+
         <div class="text-box booked-list">
             <div class="table-wrap">
                 <h3>All cars</h3>
