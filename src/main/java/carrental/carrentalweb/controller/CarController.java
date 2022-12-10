@@ -35,6 +35,8 @@ public class CarController {
     @Autowired
     BookingService bookingService;
 
+    
+
     @GetMapping("/cars")
     public String cars(Model model, @AuthenticationPrincipal User user){
 
@@ -70,7 +72,7 @@ public class CarController {
     public String updateCarPost(Car car){
         carRepository.updateCar(car);
         return "redirect:/edit-car/" + car.getVehicleNumber() + "?success";
-    }
+    }    
 
     @DeleteMapping("/delete-car/{vehicle-number}")
     public void deleteCar(@PathVariable("vehicle-number") long vehicleNumber){

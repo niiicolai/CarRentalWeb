@@ -162,7 +162,7 @@ public class Booking {
             return "Aktiv";
         else if ((end-now) < 0)
             return "Aflevering mangler";
-        else if (damageReport == null)
+        else if (car != null && !car.getSold() && damageReport == null)
             return "Afventer skaderapport";
         else
             return "Afsluttet";

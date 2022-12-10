@@ -37,8 +37,10 @@ public class CarRepository {
                     "registration_fee," +
                     "co2_discharge," +
                     "inspected," +
-                    "damaged)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "damaged," +
+                    "sold," +
+                    "sell_price)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             System.out.println("Created query");
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             System.out.println("Created preparedStatement");
@@ -53,6 +55,8 @@ public class CarRepository {
             preparedStatement.setDouble(8, newCar.getCo2Discharge());
             preparedStatement.setBoolean(9, newCar.getInspected());
             preparedStatement.setBoolean(10, false);
+            preparedStatement.setBoolean(11, false);
+            preparedStatement.setDouble(12, newCar.getSellPrice());
             System.out.println(preparedStatement);
 
 
@@ -85,6 +89,8 @@ public class CarRepository {
                 double co2Discharge = resultSet.getDouble("co2_discharge");
                 boolean inspected = resultSet.getBoolean("inspected");
                 boolean damaged = resultSet.getBoolean("damaged");
+                boolean sold = resultSet.getBoolean("sold");
+                double sellPrice = resultSet.getDouble("sell_price");
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 cars.add(new Car(vehicleNumber,
@@ -97,6 +103,8 @@ public class CarRepository {
                         co2Discharge,
                         inspected,
                         damaged,
+                        sold,
+                        sellPrice,
                         createdAt,
                         updatedAt));
             }
@@ -130,6 +138,8 @@ public class CarRepository {
                 double co2Discharge = resultSet.getDouble("co2_discharge");
                 boolean inspected = resultSet.getBoolean("inspected");
                 boolean damaged = resultSet.getBoolean("damaged");
+                boolean sold = resultSet.getBoolean("sold");
+                double sellPrice = resultSet.getDouble("sell_price");
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 foundCar = new Car(vehicleNumber,
@@ -143,6 +153,8 @@ public class CarRepository {
                         co2Discharge,
                         inspected,
                         damaged,
+                        sold,
+                        sellPrice,
                         createdAt,
                         updatedAt);
             }
@@ -166,6 +178,8 @@ public class CarRepository {
                     "brand=?," +
                     "updated_at=?," +
                     "damaged=? " +
+                    "sold=?" +
+                    "sell_price=?" +
                     "WHERE vehicle_number=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
 
@@ -179,9 +193,25 @@ public class CarRepository {
             preparedStatement.setString(8, car.getBrand());
             preparedStatement.setObject(9, LocalDateTime.now());
             preparedStatement.setBoolean(10, car.getDamaged());
-            preparedStatement.setLong(11, car.getVehicleNumber());
+            preparedStatement.setBoolean(11, car.getSold());
+            preparedStatement.setDouble(12, car.getSellPrice());
+            preparedStatement.setLong(13, car.getVehicleNumber());
 
             System.out.println(preparedStatement);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void sellCar(long vehicleNumber){
+        String query = "UPDATE cars SET sold=1 WHERE vehicle_number=?";
+        try {
+            Connection conn = databaseService.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setObject(1, LocalDateTime.now());
+            preparedStatement.setLong(2, vehicleNumber);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e){
@@ -223,6 +253,8 @@ public class CarRepository {
                 double co2Discharge = resultSet.getDouble("co2_discharge");
                 boolean inspected = resultSet.getBoolean("inspected");
                 boolean damaged = resultSet.getBoolean("damaged");
+                boolean sold = resultSet.getBoolean("sold");
+                double sellPrice = resultSet.getDouble("sell_price");
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 foundCar = new Car(vehicleNumber,
@@ -236,6 +268,8 @@ public class CarRepository {
                         co2Discharge,
                         inspected,
                         damaged,
+                        sold,
+                        sellPrice,
                         createdAt,
                         updatedAt);
             }
@@ -267,6 +301,8 @@ public class CarRepository {
                 double co2Discharge = resultSet.getDouble("co2_discharge");
                 boolean inspected = resultSet.getBoolean("inspected");
                 boolean damaged = resultSet.getBoolean("damaged");
+                boolean sold = resultSet.getBoolean("sold");
+                double sellPrice = resultSet.getDouble("sell_price");
                 LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
                 LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
                 cars.add(new Car(vehicleNumber,
@@ -279,6 +315,8 @@ public class CarRepository {
                         co2Discharge,
                         inspected,
                         damaged,
+                        sold,
+                        sellPrice,
                         createdAt,
                         updatedAt));
             }

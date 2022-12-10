@@ -39,6 +39,8 @@ CREATE TABLE IF NOT EXISTS cars
     steel_price      DOUBLE,
     registration_fee DOUBLE,
     co2_discharge    DOUBLE,
+    sell_price       DOUBLE,
+    sold             BIT(1),
     inspected        BIT(1),
     damaged          BOOLEAN,
     created_at       DATETIME(6)        NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -117,7 +119,7 @@ CREATE TABLE IF NOT EXISTS bookings
 CREATE TABLE IF NOT EXISTS invoices
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    booking_id BIGINT,
+    booking_id BIGINT NOT NULL,
     due_date   DATETIME(6) NOT NULL,
     paid_at    DATETIME(6),
     updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
