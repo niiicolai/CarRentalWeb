@@ -3,6 +3,7 @@ package carrental.carrentalweb.controller;
 import carrental.carrentalweb.entities.Booking;
 import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.entities.User;
+import carrental.carrentalweb.services.CarInvoiceService;
 import carrental.carrentalweb.repository.BookingRepository;
 import carrental.carrentalweb.repository.CarRepository;
 import carrental.carrentalweb.repository.DamageReportRepository;
@@ -16,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /*
  * Written by Thomas S. Andersen
@@ -44,6 +46,9 @@ public class BookingController {
 	@Autowired
 	private BookingRepository br;
 
+	@Autowired
+    CarInvoiceService CarInvoiceService;
+
 	@GetMapping("/bookings")
 	public String index(@AuthenticationPrincipal User user, Model model){
 		model.addAttribute("bookinglist", br.getBookingList(user));
@@ -57,7 +62,7 @@ public class BookingController {
 	}
 
 	@PostMapping("/bookings/create")
-	public String create(@ModelAttribute("booking") Booking booking) {
+	public String create(@ModelAttribute("booking") Booking booking, RedirectAttributes redirectAttributes) {
 		br.createBooking(booking);
 
 		Booking last = br.last();
@@ -65,6 +70,9 @@ public class BookingController {
 
 		/* Send invoice. */
 		bookingInvoiceService.execute(id);
+
+		redirectAttributes.addAttribute("response", "Udlejningsaftale oprettet.");
+        redirectAttributes.addAttribute("state", "success");
 
 		return "redirect:/bookings/show/" + id;
 	}
@@ -76,16 +84,41 @@ public class BookingController {
 	}
 
 	@GetMapping("/bookings/deliver/{id}")
-	public String deliver(@PathVariable Long id) {
+	public String deliver(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 		br.setDeliveredAt(id);
+
+		redirectAttributes.addAttribute("response", "Bil afleveret til kunde.");
+        redirectAttributes.addAttribute("state", "success");
+
 		return "redirect:/bookings";
 	}
 
 	@GetMapping("/bookings/return/{id}")
-	public String returning(@PathVariable Long id) {
+	public String returning(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 		br.setReturnedAt(id);
+
+		redirectAttributes.addAttribute("response", "Bil afleveret til beholdning.");
+        redirectAttributes.addAttribute("state", "success");
+
 		return "redirect:/bookings";
 	}
+
+	@GetMapping("/bookings/sell/{id}")
+    public String sell(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+		Booking booking = br.findByBookingId(id);
+		
+		// Set returned at (important)
+		br.setReturnedAt(id);
+
+		// sell car
+        carRepository.sellCar(booking.getVehicleNumber());
+        CarInvoiceService.execute(booking.getId());
+
+		redirectAttributes.addAttribute("response", "Bil solgt til kunde.");
+        redirectAttributes.addAttribute("state", "success");
+
+        return "redirect:/bookings";
+    }
 
 	@GetMapping("/bookings/show/{id}")
 	public String showBooking(Model model, @PathVariable Long id) {

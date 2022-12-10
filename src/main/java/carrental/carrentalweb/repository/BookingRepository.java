@@ -240,7 +240,9 @@ public class BookingRepository {
 				(double) record.map().get("registration_fee"), 
 				(double) record.map().get("co2_discharge"), 
 				(Boolean) record.map().get("inspected"), 
-				(Boolean) record.map().get("damaged")
+				(Boolean) record.map().get("damaged"),
+        (Boolean) record.map().get("sold"),
+        (double) record.map().get("sell_price")
 			);
 			booking.setCar(car);
 		}

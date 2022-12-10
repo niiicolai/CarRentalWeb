@@ -60,12 +60,29 @@
                                    class="button danger medium">
                                         Aflever til kunde
                                 </a>
-    
-                                <a th:if="${booking.getDeliveredAt() != null && booking.getReturnedAt() == null}" 
-                                   th:href="@{/bookings/return/{id}(id = ${booking.getId()})}"
-                                   class="button danger medium">
-                                        Modtag fra kunde
-                                </a>
+                                
+                                <div th:if="${booking.getDeliveredAt() != null && booking.getReturnedAt() == null}"
+                                     th:id="${'booking-return-' + booking.getId()}">
+                                    <a th:href="@{/bookings/return/{id}(id = ${booking.getId()})}"
+                                       class="button danger small">
+                                        Returner til beholdning
+                                    </a>
+                                    <a th:href="@{/bookings/sell/{id}(id = ${booking.getId()})}"
+                                       class="button danger small"
+                                       th:data-id="${booking.getId()}"
+                                       onclick="showSellSpinner(this)">
+                                        Sælg til lejer
+                                    </a>
+                                </div>
+
+                                <div th:id="${'booking-return-spinner-' + booking.getId()}" class="display hide">
+                                    <div class="padding border secondary margin-bottom text-center">
+                                        <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 40px;"></i><br />
+                                        <br />
+                                        Sætter bilen som solgt og sender faktura.
+                                    </div>
+                                </div>
+                                
                             </td>
                             <td sec:authorize="hasRole('ROLE_EMPLOYEE')">
                                 <a th:if="${booking.getDeliveredAt() != null && booking.getDamageReport() != null}"
@@ -73,7 +90,7 @@
                                    class="button secondary medium">
                                         Se skaderapport
                                 </a>
-                                <a th:if="${booking.getDeliveredAt() != null && booking.getDamageReport() == null}" 
+                                <a th:if="${!booking.getCar().getSold() && booking.getDeliveredAt() != null && booking.getReturnedAt() != null && booking.getDamageReport() == null}" 
                                    th:href="@{/damage-report/new/{id}(id = ${booking.getId()})}"
                                    class="button warning medium">
                                         Udfør skaderapport
@@ -85,6 +102,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function showSellSpinner(e) {
+            const id = e.dataset.id;
+            const spinner = document.getElementById('booking-return-spinner-' + id);
+            const wrapper = document.getElementById('booking-return-' + id);
+
+            spinner.className = "";
+            wrapper.className = "display hide";
+        }
+    </script>
 
     <div th:replace="layout/fragments/footer.html :: footer" />
 

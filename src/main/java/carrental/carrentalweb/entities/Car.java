@@ -15,13 +15,15 @@ public class Car {
     private double steelPrice;
     private double registrationFee;
     private double co2Discharge;
+    private double sellPrice;
     private boolean inspected;
     private boolean damaged;
+    private boolean sold;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     //New car constructor (Does not need booking. createdAt and updatedAt are generated)
-    public Car(String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged) {
+    public Car(String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged, boolean sold, double sellPrice) {
         this.frameNumber = frameNumber;
         this.brand = brand;
         this.model = model;
@@ -32,11 +34,13 @@ public class Car {
         this.co2Discharge = co2Discharge;
         this.inspected = inspected;
         this.damaged = damaged;
+        this.sold = sold;
+        this.sellPrice = sellPrice;
     }
 
     public Car(){}
 
-    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged, boolean sold, double sellPrice, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.vehicleNumber = vehicleNumber;
         this.frameNumber = frameNumber;
         this.brand = brand;
@@ -48,6 +52,8 @@ public class Car {
         this.co2Discharge = co2Discharge;
         this.inspected = inspected;
         this.damaged = damaged;
+        this.sold = sold;
+        this.sellPrice = sellPrice;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -62,6 +68,22 @@ public class Car {
 
     public boolean getInspected(){
         return this.inspected;
+    }
+
+    public boolean getSold() {
+        return this.sold;
+    }
+
+    public double getSellPrice() {
+        return this.sellPrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public void setSold(boolean sold){
+        this.sold = sold;
     }
 
     public void setInspected(boolean inspected){
