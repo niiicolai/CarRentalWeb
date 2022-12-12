@@ -73,6 +73,7 @@ public class DamageSpecificationRepositoryTest {
         // Assert
         assertEquals(testDamageSpecification.getDescription(), lastInsertedDamageSpecification.getDescription(), "Description must be equal");
         assertEquals(testDamageSpecification.getPrice(), lastInsertedDamageSpecification.getPrice(), "Prices must be equal");
+    
     }
 
     /*
