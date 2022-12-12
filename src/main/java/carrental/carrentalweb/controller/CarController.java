@@ -38,15 +38,29 @@ public class CarController {
     
 
     @GetMapping("/cars")
-    public String cars(Model model, @AuthenticationPrincipal User user){
+    public String cars(Model model, @AuthenticationPrincipal User user) {
 
-        model.addAttribute("cars", carRepository.getAllCars());
+        /*
+         * Employees kan se alle biler.
+         * & andre kan se tilgængelige.
+         */
+        if (user != null && user.isEmployee()) {
+            model.addAttribute("cars", carRepository.getAllCars());
+        } else {
+            model.addAttribute("cars", carRepository.getCarsAvailableForRent());
+        }
+
         model.addAttribute("user", user);
         model.addAttribute("creditRating", user == null ? null : creditRatingRepository.find("user_id", user.getId()));
         model.addAttribute("booking", new Booking());
         model.addAttribute("pickupPoints", pickupPointRepository.getPickupPointsList());
-        model.addAttribute("subscriptions", subscriptionRepository.getAll());
-        model.addAttribute("bookingAmounts", bookingService.getBookingAmountsOfTheWeek());
+
+        // Vigtigt: Returner kun abonnementer markerede som tilgængelig.
+        model.addAttribute("subscriptions", subscriptionRepository.getCollection("available", 1));
+        
+        // Fik et endless loop herfra, så har kommenteret den ud.
+        //model.addAttribute("bookingAmounts", bookingService.getBookingAmountsOfTheWeek());
+        
         return "car/car_list";
     }
 

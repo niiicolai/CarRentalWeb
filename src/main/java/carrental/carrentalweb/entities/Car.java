@@ -1,5 +1,6 @@
 package carrental.carrentalweb.entities;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 /*
@@ -19,11 +20,13 @@ public class Car {
     private boolean inspected;
     private boolean damaged;
     private boolean sold;
+
+    private LocalDateTime firstRentedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     //New car constructor (Does not need booking. createdAt and updatedAt are generated)
-    public Car(String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged, boolean sold, double sellPrice) {
+    public Car(String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged, boolean sold, double sellPrice, LocalDateTime firstRentedAt) {
         this.frameNumber = frameNumber;
         this.brand = brand;
         this.model = model;
@@ -36,11 +39,12 @@ public class Car {
         this.damaged = damaged;
         this.sold = sold;
         this.sellPrice = sellPrice;
+        this.firstRentedAt = firstRentedAt;
     }
 
     public Car(){}
 
-    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged, boolean sold, double sellPrice, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Car(long vehicleNumber, String frameNumber, String brand, String model, String color, int equipmentLevel, double steelPrice, double registrationFee, double co2Discharge, boolean inspected, boolean damaged, boolean sold, double sellPrice, LocalDateTime firstRentedAt, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.vehicleNumber = vehicleNumber;
         this.frameNumber = frameNumber;
         this.brand = brand;
@@ -54,8 +58,17 @@ public class Car {
         this.damaged = damaged;
         this.sold = sold;
         this.sellPrice = sellPrice;
+        this.firstRentedAt = firstRentedAt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getFirstRentedAt() {
+        return firstRentedAt;
+    }
+
+    public void setFirstRentedAt(LocalDateTime firstRentedAt) {
+        this.firstRentedAt = firstRentedAt;
     }
 
     public boolean getDamaged(){
@@ -124,6 +137,14 @@ public class Car {
 
     public double getCo2Discharge() {
         return co2Discharge;
+    }
+
+    public double getSecondsBeforeRent() {
+        if (firstRentedAt == null)
+            return -1;
+
+        Duration duration = Duration.between(createdAt, firstRentedAt);
+        return duration.toSeconds();
     }
 
     public LocalDateTime getCreatedAt() {

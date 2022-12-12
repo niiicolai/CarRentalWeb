@@ -1,4 +1,3 @@
-
 <!-- Written by Nicolai Berg Andersen -->
 <div th:fragment="clientIndex(title)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div>
@@ -8,10 +7,15 @@
         </div>
         <br />
 
-         <div class="flex justify-space-evenly direction-row direction-wrap gap-8">
+        <div th:if="${subscriptions.size() == 0}">
+            <div th:replace="layout/fragments/empty_state.html :: empty_state('Ingen abonnementer blev fundet.', 'Kontakt vores kundeservice for hjælp.', '/contact', 'Kontakt')" />
+        </div>
+            
+
+        <div th:if="${subscriptions.size() > 0}" class="flex justify-space-evenly direction-row direction-wrap gap-8">
             <div class="padding border black width-percent-25 text-center" th:each="subscription : ${subscriptions}">
-                
-                <h2  class="text-box black">
+
+                <h2 class="text-box black">
                     <div th:replace="layout/fragments/lines.html :: lines" />
                     <span th:text="${subscription.name}" />
                 </h2>
@@ -26,8 +30,8 @@
                         <strong th:text="${subscription.price} + ' DKK'" />
                     </div>
                 </div>
-             </div>
-         </div>
+            </div>
+        </div>
 
     </div>
 </div>

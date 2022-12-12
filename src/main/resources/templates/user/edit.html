@@ -2,9 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
 
-<head></head>
 <!-- Written by Nicolai Berg Andersen -->
-
+<head th:replace="layout/fragments/head.html :: head('Rediger Bruger')" />
 <body layout:fragment="content">
     <div class="text-box secondary text-center">
 

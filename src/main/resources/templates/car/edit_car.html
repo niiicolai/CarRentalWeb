@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout}">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Car</title>
-</head>
+      
+<head th:replace="layout/fragments/head.html :: head('Rediger Bil')" />
 <body layout:fragment="content">
 <h1>Edit Car</h1>
 

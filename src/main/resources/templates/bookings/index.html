@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="layout/fragments/head.html :: head('Udlejningsaftaler')" />
 <!-- Thomas -->
 
@@ -14,8 +15,14 @@
 
         <div>
             <p class="text-center">Se og administrer aftaler.</p>
-    
-            <div class="text-box secondary text-center">
+
+            <div th:if="${bookinglist.size() == 0}">
+                <div th:replace="layout/fragments/empty_state.html :: empty_state('Ingen udlejningsaftaler blev fundet.', 'Gå til biler for at lave en ny aftale.', '/cars', 'Biler')" />
+            </div>
+                 
+
+            <div th:if="${bookinglist.size() > 0}"
+                 class="text-box secondary text-center">
                 <span class="line-1"></span>
                 <span class="line-2"></span>
                 <span class="line-3"></span>
@@ -24,7 +31,7 @@
                 <span class="line-6"></span>
                 <span class="line-7"></span>
                 <span class="line-8"></span>
-                
+
                 <div>
                     <table class="table border width-percent-100">
                         <tr>
@@ -32,7 +39,10 @@
                             <th>Bil</th>
                             <th>Abonnement</th>
                             <th>State</th>
-                            <th>Oprettet</th>
+                            <th>Kilometer Kørt</th>
+                            <th>Aftale Oprettet</th>
+                            <th>Afleveret til kunde</th>
+                            <th>Returneret fra kunde</th>
                             <th>Valgmulighed</th>
                             <th sec:authorize="hasRole('ROLE_EMPLOYEE')">Aflever/Modtag</th>
                             <th sec:authorize="hasRole('ROLE_EMPLOYEE')">Skaderapport</th>
@@ -47,34 +57,68 @@
                             <td>
                                 <strong th:text="${booking.getState()}" />
                             </td>
+                            <td>
+                                <!-- Vis kilometer kørt, hvis en booking er afsluttet. -->
+                                <div
+                                    th:if="${booking.getKilometerDriven() != 0.0 && booking.getState() == 'Afsluttet'}">
+                                    <strong th:text="${booking.getKilometerDriven()}" />
+                                </div>
+
+                                <!-- Orienter medarbejder om at kilometer kørt sættes efter en booking er afsluttet. -->
+                                <div
+                                    th:if="${booking.getKilometerDriven() == 0.0 && booking.getState() != 'Afsluttet'}">
+                                    Afventer afslutning
+                                </div>
+
+                                <!-- Giv en mulighed for at sætte kilometer kørt, hvis en booking er afsluttet,
+                                     og kilometer kørt ikke er blevet sat endnu. -->
+                                <div
+                                    th:if="${booking.getKilometerDriven() == 0.0 && booking.getState() == 'Afsluttet'}">
+                                    <a th:href="@{/bookings/kilometer_driven/{id}(id = ${booking.getId()})}"
+                                        class="button primary small">
+                                        Udfyld Kilometer kørt
+                                    </a>
+                                </div>
+                            </td>
                             <td th:text="${#temporals.format(booking.getCreatedAt(), 'dd-MM-yyyy HH:mm')}" />
+                            <td th:text="${#temporals.format(booking.getDeliveredAt(), 'dd-MM-yyyy HH:mm')}" />
+                            <td th:text="${#temporals.format(booking.getReturnedAt(), 'dd-MM-yyyy HH:mm')}" />
                             <td>
                                 <a th:href="@{/bookings/show/{id}(id = ${booking.getId()})}"
-                                    class="button primary medium">
-                                        Se aftale
+                                    class="button primary small">
+                                    Se aftale
                                 </a>
-                            </td>  
-                            <td sec:authorize="hasRole('ROLE_EMPLOYEE')"> 
-                                <a th:if="${booking.getDeliveredAt() == null}" 
-                                   th:href="@{/bookings/deliver/{id}(id = ${booking.getId()})}"
-                                   class="button danger medium">
-                                        Aflever til kunde
+                            </td>
+                            <td sec:authorize="hasRole('ROLE_EMPLOYEE')">
+                                <!-- Hvis en bil ikke er leveret til en kunde endnu.
+                                     Giv en muligt for at aflevere bil til kunde. -->
+                                <a th:if="${booking.getDeliveredAt() == null}"
+                                    th:href="@{/bookings/deliver/{id}(id = ${booking.getId()})}"
+                                    class="button danger medium">
+                                    Aflever til kunde
                                 </a>
-                                
+
+                                <!-- Hvis en bil er leveret til en kunde. -->
                                 <div th:if="${booking.getDeliveredAt() != null && booking.getReturnedAt() == null}"
-                                     th:id="${'booking-return-' + booking.getId()}">
+                                    th:id="${'booking-return-' + booking.getId()}">
+
+                                    <!-- Giv mulighed for at returnere bil til beholdning,
+                                         så en anden kan leje bilen. -->
                                     <a th:href="@{/bookings/return/{id}(id = ${booking.getId()})}"
-                                       class="button danger small">
+                                        class="button danger small">
                                         Returner til beholdning
                                     </a>
+
+                                    <!-- Giv en mulighed for at sætte bilen som solgt,
+                                         så bilen IKKE kan udlejes igen. -->
                                     <a th:href="@{/bookings/sell/{id}(id = ${booking.getId()})}"
-                                       class="button danger small"
-                                       th:data-id="${booking.getId()}"
-                                       onclick="showSellSpinner(this)">
+                                        class="button danger small" th:data-id="${booking.getId()}"
+                                        onclick="showSellSpinner(this)">
                                         Sælg til lejer
                                     </a>
                                 </div>
 
+                                <!-- En spinner for at vise requested er sendt til serveren. -->
                                 <div th:id="${'booking-return-spinner-' + booking.getId()}" class="display hide">
                                     <div class="padding border secondary margin-bottom text-center">
                                         <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 40px;"></i><br />
@@ -82,18 +126,22 @@
                                         Sætter bilen som solgt og sender faktura.
                                     </div>
                                 </div>
-                                
+
                             </td>
                             <td sec:authorize="hasRole('ROLE_EMPLOYEE')">
+                                <!-- Hvis bilen har en skaderapport -->
                                 <a th:if="${booking.getDeliveredAt() != null && booking.getDamageReport() != null}"
-                                   th:href="@{/damage-report/show/{id}(id = ${booking.getId()})}"
-                                   class="button secondary medium">
-                                        Se skaderapport
+                                    th:href="@{/damage-report/show/{id}(id = ${booking.getId()})}"
+                                    class="button secondary medium">
+                                    Se skaderapport
                                 </a>
-                                <a th:if="${!booking.getCar().getSold() && booking.getDeliveredAt() != null && booking.getReturnedAt() != null && booking.getDamageReport() == null}" 
-                                   th:href="@{/damage-report/new/{id}(id = ${booking.getId()})}"
-                                   class="button warning medium">
-                                        Udfør skaderapport
+
+                                <!-- Hvis en bil IKKE er solgt og er afleveret til beholdningen,
+                                     giv en mulighed for at oprette en skaderapport. -->
+                                <a th:if="${!booking.getCar().getSold() && booking.getDeliveredAt() != null && booking.getReturnedAt() != null && booking.getDamageReport() == null}"
+                                    th:href="@{/damage-report/new/{id}(id = ${booking.getId()})}"
+                                    class="button warning medium">
+                                    Udfør skaderapport
                                 </a>
                             </td>
                         </tr>

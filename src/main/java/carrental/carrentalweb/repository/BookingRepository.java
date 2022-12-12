@@ -1,11 +1,14 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.*;
+import carrental.carrentalweb.enums.TimeDiffTypes;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -75,6 +78,44 @@ public class BookingRepository {
 
 
   public List<Booking> getBookingList(User findByUser) {
+
+    String query = "SELECT * FROM bookings "
+      + "INNER JOIN subscriptions ON bookings.subscription_name=subscriptions.name "
+      + "INNER JOIN cars ON bookings.vehicle_number=cars.vehicle_number "
+      + "LEFT JOIN damage_reports ON bookings.id=damage_reports.booking_id "
+      + "WHERE bookings.user_id = ?";
+    DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody(findByUser.getId()));
+    return parseResponse(databaseResponse);
+    /*
+    //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
+
+    List<Booking> bookings = new ArrayList<>();
+    try {
+      Connection conn = databaseService.getConnection();
+      String query = "SELECT * FROM bookings WHERE user_id = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+      preparedStatement.setObject(1, findByUser.getId());
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      while (resultSet.next()) {
+        bookings.add(new Booking(
+            resultSet.getLong("id"),
+            resultSet.getLong("user_id"),
+            resultSet.getLong("vehicle_number"),
+            resultSet.getString("subscription_name"),
+            resultSet.getString("pickup_point_name"),
+            (LocalDateTime) resultSet.getObject("delivered_at"),
+            (LocalDateTime) resultSet.getObject("created_at"),
+            (LocalDateTime) resultSet.getObject("updated_at"))
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return bookings;*/
+  }
+
+  public List<Booking> getBookingList() {
 
     String query = "SELECT * FROM bookings "
       + "INNER JOIN subscriptions ON bookings.subscription_name=subscriptions.name "
@@ -155,7 +196,31 @@ public class BookingRepository {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return findBooking;*/
+    return findBooking;*/ 
+  }
+
+  public BigDecimal getAverageTimeBeforePickup(TimeDiffTypes type) {
+    BigDecimal average = new BigDecimal(0);
+    String sql = String.format("SELECT AVG(TIMESTAMPDIFF(%s, created_at, delivered_at)) as average FROM bookings", type.toString());
+    DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+    while (databaseResponse.hasNext()) {
+      DatabaseRecord record = databaseResponse.next();
+      if (record.map().get("average") != null)
+            average = (BigDecimal) record.map().get("average");
+    }
+    return average;
+  }
+
+  public BigDecimal getAverageTimeFromPickupToReturn(TimeDiffTypes type) {
+    BigDecimal average = new BigDecimal(0);
+    String sql = String.format("SELECT AVG(TIMESTAMPDIFF(%s, delivered_at, returned_at)) as average FROM bookings", type.toString());
+    DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+    while (databaseResponse.hasNext()) {
+      DatabaseRecord record = databaseResponse.next();
+      if (record.map().get("average") != null)
+            average = (BigDecimal) record.map().get("average");
+    }
+    return average;
   }
 
   public boolean updateBooking(Booking booking) {
@@ -178,6 +243,13 @@ public class BookingRepository {
   public boolean setReturnedAt(long id) {
     String query = "UPDATE bookings SET returned_at = ? WHERE id=?";
     DatabaseRequestBody requestBody = new DatabaseRequestBody(LocalDateTime.now(), id);
+    DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
+    return databaseResponse.isSuccessful();
+  }
+
+  public boolean setKilometerDrivenAt(long id, double km) {
+    String query = "UPDATE bookings SET kilometer_driven = ? WHERE id=?";
+    DatabaseRequestBody requestBody = new DatabaseRequestBody(km, id);
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();
   }
@@ -242,7 +314,8 @@ public class BookingRepository {
 				(Boolean) record.map().get("inspected"), 
 				(Boolean) record.map().get("damaged"),
         (Boolean) record.map().get("sold"),
-        (double) record.map().get("sell_price")
+        (double) record.map().get("sell_price"),
+        (LocalDateTime) record.map().get("first_rented_at")
 			);
 			booking.setCar(car);
 		}

@@ -1,7 +1,7 @@
 package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.Booking;
-import carrental.carrentalweb.entities.PickupPoint;
+import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.services.CarInvoiceService;
 import carrental.carrentalweb.repository.BookingRepository;
@@ -50,8 +50,18 @@ public class BookingController {
     CarInvoiceService CarInvoiceService;
 
 	@GetMapping("/bookings")
-	public String index(@AuthenticationPrincipal User user, Model model){
-		model.addAttribute("bookinglist", br.getBookingList(user));
+	public String index(@AuthenticationPrincipal User user, Model model) {
+
+		/*
+         * Employees kan se alle bookings.
+         * & andre kan se deres egne bookings.
+         */
+        if (user.isEmployee()) {
+            model.addAttribute("bookinglist", br.getBookingList());
+        } else {
+            model.addAttribute("bookinglist", br.getBookingList(user));
+        }
+
 		return "bookings/index";
 	}
 
@@ -63,24 +73,40 @@ public class BookingController {
 
 	@PostMapping("/bookings/create")
 	public String create(@ModelAttribute("booking") Booking booking, RedirectAttributes redirectAttributes) {
-		br.createBooking(booking);
 
-		Booking last = br.last();
-		long id = last.getId();
+		// Sørger for der ikke oprettes en booking på en bil,
+		// som allerede er udlejet.
+		long vehicleNumber = booking.getVehicleNumber();
+		if (!carRepository.isCarAvailableForRent(vehicleNumber)) {
+			redirectAttributes.addAttribute("response", "Bilen er ikke tilgængelig for udlejning!");
+        	redirectAttributes.addAttribute("state", "danger");
+			return "redirect:/cars";
+		} else {
+			// Sæt first rented at, hvis den ikke er sat.
+			Car car = carRepository.findCarByVehicleNumber(vehicleNumber);
+			if (car.getFirstRentedAt() == null) {
+				carRepository.setFirstRentedAt(vehicleNumber);
+			}
 
-		/* Send invoice. */
-		bookingInvoiceService.execute(id);
+			br.createBooking(booking);
 
-		redirectAttributes.addAttribute("response", "Udlejningsaftale oprettet.");
-        redirectAttributes.addAttribute("state", "success");
+			Booking last = br.last();
+			long id = last.getId();
 
-		return "redirect:/bookings/show/" + id;
+			/* Send invoice. */
+			bookingInvoiceService.execute(id);
+
+			redirectAttributes.addAttribute("response", "Udlejningsaftale oprettet.");
+			redirectAttributes.addAttribute("state", "success");
+
+			return "redirect:/bookings/show/" + id;
+		}
 	}
 
-	@GetMapping("/bookings/edit/{id}")
+	@GetMapping("/bookings/kilometer_driven/{id}")
 	public String updateBooking(Model model, @PathVariable Long id) {
 		model.addAttribute("booking", br.find("id", id));
-		return "bookings/edit";
+		return "bookings/edit_kilometer_driven";
 	}
 
 	@GetMapping("/bookings/deliver/{id}")
@@ -132,5 +158,15 @@ public class BookingController {
 		model.addAttribute("subscription", subscriptionRepository.get("name", booking.getSubscriptionName()));
 
 		return "bookings/show";
+	}
+
+	@PatchMapping("/bookings/edit/{id}")
+	public String updateBooking(Booking booking, @PathVariable Long id, RedirectAttributes redirectAttributes) {
+		br.setKilometerDrivenAt(id, booking.getKilometerDriven());
+
+		redirectAttributes.addAttribute("response", "Udlejningsaftale opdateret.");
+        redirectAttributes.addAttribute("state", "success");
+
+		return "redirect:/bookings";
 	}
 }
