@@ -25,15 +25,15 @@ public class AddressRepository {
 
 
   public boolean createAddress(Address newAddress) {
-    String query = "INSERT INTO address(street, city, zipCode, country, updated_at, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+    String query = "INSERT INTO address(street, city, zipCode, country, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)";
 
     DatabaseRequestBody requestBody = new DatabaseRequestBody(
         newAddress.getStreet(),
         newAddress.getCity(),
         newAddress.getZipCode(),
         newAddress.getCountry(),
-        LocalDateTime.now(),
-        LocalDateTime.now());
+        newAddress.getLatitude(),
+        newAddress.getLongitude());
 
     DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
     return databaseResponse.isSuccessful();

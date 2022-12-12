@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS cars
     sold             BIT(1),
     inspected        BIT(1),
     damaged          BOOLEAN,
+    first_rented_at  DATETIME(6),        
     created_at       DATETIME(6)        NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at       DATETIME(6)        NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );

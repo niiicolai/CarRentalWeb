@@ -24,7 +24,6 @@ public class DamageReportRepositoryTest {
      * oprettet i databasen.
      */
     private static DamageReport testDamageReport;
-    private static List<DamageSpecification> testDamageSpecifications;
 
     /*
      * Database versionen af
@@ -98,7 +97,11 @@ public class DamageReportRepositoryTest {
     /*
      * Køres efter alle tests.
      * Sletter database objekter
-     */
+     *
+     * Jeg har kommenteret delete actions i after() her pga.
+     * det ikke kommer til at fungere som det er sat op på nuværende tidspunkt,
+     * fordi koden fejler på at slette en booking pga. en foreign key constraint
+     * til damage report systemet. 
     @AfterAll
     public static void after() {
         bookingRepository.delete(lastInsertedBooking);
@@ -107,6 +110,7 @@ public class DamageReportRepositoryTest {
         userRepository.delete(lastInsertedUser);
         carRepository.deleteCarByVehicleNumber(lastInsertedCar.getVehicleNumber());
     }
+    */
 
     /*
      * Test af DamageReportRepository.create() og last()
@@ -117,12 +121,9 @@ public class DamageReportRepositoryTest {
     public void testCreateAndLast_SaveToDatabase_AndReturnDatabaseObject() {
         // Arrange
         testDamageReport = TestDamageReportFactory.create(lastInsertedBooking.getId());
-        testDamageSpecifications.add(TestDamageSpecificationFactory.create());
-        testDamageSpecifications.add(TestDamageSpecificationFactory.create());
 
         List<String> descriptions = new ArrayList<String>();
-        descriptions.add(testDamageSpecifications.get(0).getDescription());
-        descriptions.add(testDamageSpecifications.get(1).getDescription());
+        descriptions.add(TestDamageSpecificationFactory.getValidDescription());
 
         // Act
         repository.create(descriptions, lastInsertedBooking.getId());
@@ -139,17 +140,12 @@ public class DamageReportRepositoryTest {
     @Test
     @Order(2)
     public void testGet_ReturnsDamageReportObjectFromDatabase() {
-        List<String> descriptions = new ArrayList<String>();
-        descriptions.add(testDamageSpecifications.get(0).getDescription());
-        descriptions.add(testDamageSpecifications.get(1).getDescription());
 
         // Act
-        repository.create(descriptions, lastInsertedBooking.getId());
-        lastInsertedDamageReport = repository.last();
         DamageReport damageReport = repository.get("booking_id", lastInsertedDamageReport.getBookingId());
 
         // Assert
-        assertNotNull(damageReport, "DamageReport object not returned.");
+        assertEquals(lastInsertedDamageReport.getBookingId(), damageReport.getBookingId(), "Booking ID must be equal");
     }
 
     /*

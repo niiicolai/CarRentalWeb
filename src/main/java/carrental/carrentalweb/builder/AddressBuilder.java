@@ -44,6 +44,16 @@ public class AddressBuilder {
     return this;
   }
 
+  public AddressBuilder latitude(double latitude) {
+    address.setLatitude(latitude);
+    return this;
+  }
+
+  public AddressBuilder longitude(double longitude) {
+    address.setLongitude(longitude);
+    return this;
+  }
+
   public AddressBuilder createdAt(LocalDateTime createdAt) {
     address.setCreatedAt(createdAt);
     return this;
