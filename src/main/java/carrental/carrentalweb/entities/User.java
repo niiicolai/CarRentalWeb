@@ -78,7 +78,7 @@ public class User implements UserDetails {
 
     public boolean isEmployee() {
         for (int i = 0; i < authorities.size(); i++)
-            if (authorities.get(i).getAuthority() == UserRole.ROLE_EMPLOYEE.toString())
+            if (authorities.get(i).getAuthority().equals(UserRole.ROLE_EMPLOYEE.toString()))
                 return true;
         return false;
     }

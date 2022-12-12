@@ -50,9 +50,9 @@ public class UserController {
     @GetMapping("/user")
     public String show(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("bookings", bookingRepository.getBookingList(user));
-        model.addAttribute("cars", carRepository.getAllCars());
+        model.addAttribute("cars", carRepository.getCarsAvailableForRent());
         model.addAttribute("pickups", pickupPointRepository.getPickupPointsList());
-        model.addAttribute("subscriptions", subscriptionRepository.getAll());
+        model.addAttribute("subscriptions", subscriptionRepository.getCollection("available", 1));
 
         model.addAttribute("user", userRepository.find("id", user.getId()));
         model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));

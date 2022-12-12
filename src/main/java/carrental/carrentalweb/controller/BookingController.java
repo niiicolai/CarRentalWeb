@@ -49,8 +49,18 @@ public class BookingController {
     CarInvoiceService CarInvoiceService;
 
 	@GetMapping("/bookings")
-	public String index(@AuthenticationPrincipal User user, Model model){
-		model.addAttribute("bookinglist", br.getBookingList(user));
+	public String index(@AuthenticationPrincipal User user, Model model) {
+
+		/*
+         * Employees kan se alle bookings.
+         * & andre kan se deres egne bookings.
+         */
+        if (user.isEmployee()) {
+            model.addAttribute("bookinglist", br.getBookingList());
+        } else {
+            model.addAttribute("bookinglist", br.getBookingList(user));
+        }
+
 		return "bookings/index";
 	}
 

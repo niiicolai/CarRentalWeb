@@ -79,6 +79,44 @@ public class BookingRepository {
     String query = "SELECT * FROM bookings "
       + "INNER JOIN subscriptions ON bookings.subscription_name=subscriptions.name "
       + "INNER JOIN cars ON bookings.vehicle_number=cars.vehicle_number "
+      + "LEFT JOIN damage_reports ON bookings.id=damage_reports.booking_id "
+      + "WHERE bookings.user_id = ?";
+    DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody(findByUser.getId()));
+    return parseResponse(databaseResponse);
+    /*
+    //Connection conn = MySQLConnector.getInstance().getConnection(url, username, password);
+
+    List<Booking> bookings = new ArrayList<>();
+    try {
+      Connection conn = databaseService.getConnection();
+      String query = "SELECT * FROM bookings WHERE user_id = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+      preparedStatement.setObject(1, findByUser.getId());
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      while (resultSet.next()) {
+        bookings.add(new Booking(
+            resultSet.getLong("id"),
+            resultSet.getLong("user_id"),
+            resultSet.getLong("vehicle_number"),
+            resultSet.getString("subscription_name"),
+            resultSet.getString("pickup_point_name"),
+            (LocalDateTime) resultSet.getObject("delivered_at"),
+            (LocalDateTime) resultSet.getObject("created_at"),
+            (LocalDateTime) resultSet.getObject("updated_at"))
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return bookings;*/
+  }
+
+  public List<Booking> getBookingList() {
+
+    String query = "SELECT * FROM bookings "
+      + "INNER JOIN subscriptions ON bookings.subscription_name=subscriptions.name "
+      + "INNER JOIN cars ON bookings.vehicle_number=cars.vehicle_number "
       + "LEFT JOIN damage_reports ON bookings.id=damage_reports.booking_id";
     DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());
     return parseResponse(databaseResponse);
