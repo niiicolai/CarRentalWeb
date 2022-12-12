@@ -182,6 +182,13 @@ public class BookingRepository {
     return databaseResponse.isSuccessful();
   }
 
+  public boolean setKilometerDrivenAt(long id, double km) {
+    String query = "UPDATE bookings SET kilometer_driven = ? WHERE id=?";
+    DatabaseRequestBody requestBody = new DatabaseRequestBody(km, id);
+    DatabaseResponse databaseResponse = databaseService.executeUpdate(query, requestBody);
+    return databaseResponse.isSuccessful();
+  }
+
   public boolean delete(Booking booking) {
     String query = String.format("DELETE FROM bookings WHERE id = ?");
     DatabaseRequestBody requestBody = new DatabaseRequestBody(booking.getId());

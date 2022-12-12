@@ -18,33 +18,16 @@
             <span class="line-7"></span>
             <span class="line-8"></span>
 
-            <h2 class="text-box secondary text-center">Rediger booking</h2>
+            <h2 class="text-box secondary text-center">Udfyld Kilometer Kørt</h2>
 
             <form th:action="@{/bookings/edit/{id}(id=${booking.getId()})}" th:object="${booking}" th:method="patch"
                 class="form">
 
-
                 <div class="input-control">
-                    <label for="vnumber">Vognummer: </label>
-                    <input th:field="*{vehicleNumber}" id="vnumber" type="text" placeholder="Vognnummer" required>
+                    <input name="kilometerDriven" id="stype" type="text" placeholder="500" required>
                 </div>
 
-                <div class="input-control">
-                    <label for="stype">Subscription: </label>
-                    <input th:field="*{subscriptionName}" id="stype" type="text" placeholder="Subscription name"
-                        required>
-                </div>
-
-
-                <div class="input-control">
-                    <label for="pickupId">Afhentningssted ID: </label>
-                    <input th:field="*{pickupPointId}" id="pickupId" type="text" placeholder="Pickup point id" required>
-                </div>
-                <br>
-                <input class="button primary medium" type="submit" value="Registrer ændringer">
-
-
-
+                <input class="button primary medium" type="submit" value="Registrer ændring">
 
             </form>
         </div>

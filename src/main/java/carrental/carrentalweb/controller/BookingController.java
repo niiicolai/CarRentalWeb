@@ -77,10 +77,10 @@ public class BookingController {
 		return "redirect:/bookings/show/" + id;
 	}
 
-	@GetMapping("/bookings/edit/{id}")
+	@GetMapping("/bookings/kilometer_driven/{id}")
 	public String updateBooking(Model model, @PathVariable Long id) {
 		model.addAttribute("booking", br.find("id", id));
-		return "bookings/edit";
+		return "bookings/edit_kilometer_driven";
 	}
 
 	@GetMapping("/bookings/deliver/{id}")
@@ -132,5 +132,15 @@ public class BookingController {
 		model.addAttribute("subscription", subscriptionRepository.get("name", booking.getSubscriptionName()));
 
 		return "bookings/show";
+	}
+
+	@PatchMapping("/bookings/edit/{id}")
+	public String updateBooking(Booking booking, @PathVariable Long id, RedirectAttributes redirectAttributes) {
+		br.setKilometerDrivenAt(id, booking.getKilometerDriven());
+
+		redirectAttributes.addAttribute("response", "Udlejningsaftale opdateret.");
+        redirectAttributes.addAttribute("state", "success");
+
+		return "redirect:/bookings";
 	}
 }
