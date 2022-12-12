@@ -2,11 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout}">
-<head>
-    <!-- Written by Mads Kristian Pedersen -->
-    <meta charset="UTF-8">
-    <title>New Subscription</title>
-</head>
+
+<!-- Written by Mads Kristian Pedersen -->
+<head th:replace="layout/fragments/head.html :: head('Opret Abonnement')" />
 <body layout:fragment="content">
 
 <div class="flex justify-space-evenly text-center">

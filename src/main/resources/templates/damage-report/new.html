@@ -2,12 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
 
-<head>
-    <!-- HTML written by Mads Kristian Pedersen -->
-    <meta charset="UTF-8">
-    <title>New Damage Report</title>
-</head>
-
+<!-- HTML written by Mads Kristian Pedersen -->
+<head th:replace="layout/fragments/head.html :: head('Opret skaderapport')" />
 <body layout:fragment="content">
 
     <!-- Det her div element returner en alert, hvis noget går galt når der oprettes en damage report. -->

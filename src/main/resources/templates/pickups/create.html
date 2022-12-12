@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+
+<head th:replace="layout/fragments/head.html :: head('Opret afhentningslokation')" />
 <body layout:fragment="content">
 
 <div class="flex justify-space-evenly text-center">

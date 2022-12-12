@@ -2,12 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
 
-<head>
-    <!-- Written by Mads Kristian Pedersen -->
-    <meta charset="UTF-8">
-    <title>Subscriptions</title>
-</head>
-
+<!-- Written by Mads Kristian Pedersen -->
+<head th:replace="layout/fragments/head.html :: head('Abonnementer')" />
 <body layout:fragment="content">
     <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')" th:replace="subscriptions/fragments/client_index.html :: clientIndex('Sammensæt din aftale med en af vores abonnementer')" />
 

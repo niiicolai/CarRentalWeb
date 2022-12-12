@@ -2,11 +2,7 @@
 <html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-
+<head th:replace="layout/fragments/head.html :: head('Biler')" />
 <body layout:fragment="content">
 
     <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')"
