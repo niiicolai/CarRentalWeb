@@ -62,18 +62,27 @@ public class BookingController {
 
 	@PostMapping("/bookings/create")
 	public String create(@ModelAttribute("booking") Booking booking, RedirectAttributes redirectAttributes) {
-		br.createBooking(booking);
 
-		Booking last = br.last();
-		long id = last.getId();
+		// Sørger for der ikke oprettes en booking på en bil,
+		// som allerede er udlejet.
+		if (!carRepository.isCarAvailableForRent(booking.getVehicleNumber())) {
+			redirectAttributes.addAttribute("response", "Bilen er ikke tilgængelig for udlejning!");
+        	redirectAttributes.addAttribute("state", "danger");
+			return "redirect:/cars";
+		} else {
+			br.createBooking(booking);
 
-		/* Send invoice. */
-		bookingInvoiceService.execute(id);
+			Booking last = br.last();
+			long id = last.getId();
 
-		redirectAttributes.addAttribute("response", "Udlejningsaftale oprettet.");
-        redirectAttributes.addAttribute("state", "success");
+			/* Send invoice. */
+			bookingInvoiceService.execute(id);
 
-		return "redirect:/bookings/show/" + id;
+			redirectAttributes.addAttribute("response", "Udlejningsaftale oprettet.");
+			redirectAttributes.addAttribute("state", "success");
+
+			return "redirect:/bookings/show/" + id;
+		}
 	}
 
 	@GetMapping("/bookings/kilometer_driven/{id}")

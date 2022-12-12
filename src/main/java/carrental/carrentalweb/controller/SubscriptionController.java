@@ -1,7 +1,10 @@
 package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.Subscription;
+import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.repository.SubscriptionRepository;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +27,18 @@ public class SubscriptionController {
     }
 
     @GetMapping("/subscriptions")
-    public String index(Model model) {
-        model.addAttribute("subscriptions", subRepo.getAll());
+    public String index(Model model, @AuthenticationPrincipal User user) {
+
+        /*
+         * Employees kan se alle subscriptions.
+         * & andre kan se tilgængelige.
+         */
+        if (user != null && user.isEmployee()) {
+            model.addAttribute("subscriptions", subRepo.getAll());
+        } else {
+            model.addAttribute("subscriptions", subRepo.getCollection("available", 1));
+        }
+
         return "subscriptions/index";
     }
 
