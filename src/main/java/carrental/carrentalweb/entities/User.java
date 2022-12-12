@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import carrental.carrentalweb.config.SecurityConfig;
+import carrental.carrentalweb.enums.UserRole;
 
 /*
  * Written by Nicolai Berg Andersen.
@@ -73,6 +74,13 @@ public class User implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public boolean isEmployee() {
+        for (int i = 0; i < authorities.size(); i++)
+            if (authorities.get(i).getAuthority() == UserRole.ROLE_EMPLOYEE.toString())
+                return true;
+        return false;
     }
 
     @Override

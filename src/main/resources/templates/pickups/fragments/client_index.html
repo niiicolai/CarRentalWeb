@@ -6,7 +6,9 @@
         </div>
         <br />
 
-        <div th:if="${pickupPoints.size() == 0}" th:replace="layout/fragments/empty_state.html :: empty_state('Ingen afhentningslokationer blev fundet.', 'Kontakt vores kundeservice for hjælp.', '/contact', 'Kontakt')" />
+        <div th:if="${pickupPoints.size() == 0}">
+            <div th:replace="layout/fragments/empty_state.html :: empty_state('Ingen afhentningslokationer blev fundet.', 'Kontakt vores kundeservice for hjælp.', '/contact', 'Kontakt')" />
+        </div>
 
         <div th:if="${pickupPoints.size() > 0}" class="container">
             <div class="flex justify-space-evenly direction-row direction-wrap gap-8 width-percent-100 margin-bottom">

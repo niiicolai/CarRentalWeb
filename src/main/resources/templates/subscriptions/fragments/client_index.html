@@ -7,8 +7,10 @@
         </div>
         <br />
 
-        <div th:if="${subscriptions.size() == 0}"
-            th:replace="layout/fragments/empty_state.html :: empty_state('Ingen abonnementer blev fundet.', 'Kontakt vores kundeservice for hjælp.', '/contact', 'Kontakt')" />
+        <div th:if="${subscriptions.size() == 0}">
+            <div th:replace="layout/fragments/empty_state.html :: empty_state('Ingen abonnementer blev fundet.', 'Kontakt vores kundeservice for hjælp.', '/contact', 'Kontakt')" />
+        </div>
+            
 
         <div th:if="${subscriptions.size() > 0}" class="flex justify-space-evenly direction-row direction-wrap gap-8">
             <div class="padding border black width-percent-25 text-center" th:each="subscription : ${subscriptions}">

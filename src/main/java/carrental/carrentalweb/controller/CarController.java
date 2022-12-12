@@ -46,7 +46,10 @@ public class CarController {
         model.addAttribute("booking", new Booking());
         model.addAttribute("pickupPoints", pickupPointRepository.getPickupPointsList());
         model.addAttribute("subscriptions", subscriptionRepository.getAll());
-        model.addAttribute("bookingAmounts", bookingService.getBookingAmountsOfTheWeek());
+        
+        // Fik et endless loop herfra, så har kommenteret den ud.
+        //model.addAttribute("bookingAmounts", bookingService.getBookingAmountsOfTheWeek());
+        
         return "car/car_list";
     }
 

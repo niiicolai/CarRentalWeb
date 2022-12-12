@@ -1,7 +1,6 @@
 package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.Booking;
-import carrental.carrentalweb.entities.PickupPoint;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.services.CarInvoiceService;
 import carrental.carrentalweb.repository.BookingRepository;
