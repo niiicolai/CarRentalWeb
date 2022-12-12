@@ -11,7 +11,11 @@
     <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
         <h2 class="margin text-center">Abonnementer</h2>
 
-        <div class="flex justify-space-evenly text-center">
+        <div th:if="${subscriptions.size() == 0}"
+            th:replace="layout/fragments/empty_state.html :: empty_state('Ingen abonnementer blev fundet.', 'Klik på knappen for at komme igang.', '/subscriptions/new', 'Opret Abonnement')" />
+
+        <div th:if="${subscriptions.size() > 0}"
+            class="flex justify-space-evenly text-center">
             <div class="text-box primary">
                 <div th:replace="layout/fragments/lines.html :: lines" />
 

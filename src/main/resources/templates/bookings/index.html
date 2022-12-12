@@ -16,7 +16,11 @@
         <div>
             <p class="text-center">Se og administrer aftaler.</p>
 
-            <div class="text-box secondary text-center">
+            <div th:if="${bookinglist.size() == 0}"
+                 th:replace="layout/fragments/empty_state.html :: empty_state('Ingen udlejningsaftaler blev fundet.', 'Gå til biler for at lave en ny aftale.', '/cars', 'Biler')" />
+
+            <div th:if="${bookinglist.size() > 0}"
+                 class="text-box secondary text-center">
                 <span class="line-1"></span>
                 <span class="line-2"></span>
                 <span class="line-3"></span>
