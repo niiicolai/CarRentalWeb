@@ -1,5 +1,7 @@
 package carrental.carrentalweb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.enums.TimeDiffTypes;
 import carrental.carrentalweb.repository.BookingRepository;
@@ -70,6 +74,13 @@ public class UserController {
             model.addAttribute("averageTimeBeforePickup", bookingRepository.getAverageTimeBeforePickup(TimeDiffTypes.SECOND));
             model.addAttribute("averageTimeBeforeReturn", bookingRepository.getAverageTimeFromPickupToReturn(TimeDiffTypes.SECOND));
             model.addAttribute("averageTimeBeforeRent", carRepository.getAverageTimeBeforeRent(TimeDiffTypes.SECOND));
+            
+            List<Car> rentedCars = carRepository.getCarsWithOpenBookings();
+            double totalPrice = 0;
+            for (int i = 0; i < rentedCars.size(); i++)
+                totalPrice += rentedCars.get(i).getSellPrice();
+            model.addAttribute("noOfOpenBookings", rentedCars.size());
+            model.addAttribute("totalPriceOfRentedCars", totalPrice);
         }
 
         return "user/show";
