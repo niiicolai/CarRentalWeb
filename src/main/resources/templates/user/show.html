@@ -22,7 +22,8 @@
                         </span>
                     </div>
 
-                    <div class="flex justify-space-between align-items-center gap-8 text-center">
+                    <div sec:authorize="hasRole('ROLE_EMPLOYEE')" 
+                         class="flex justify-space-between align-items-center gap-8 text-center">
                         <div>
                             <div>Gns. afhentingstid (s)</div>
                             <div th:text="${averageTimeBeforePickup}" />
