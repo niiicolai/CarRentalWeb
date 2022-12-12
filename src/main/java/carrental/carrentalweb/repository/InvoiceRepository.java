@@ -1,10 +1,12 @@
 package carrental.carrentalweb.repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import carrental.carrentalweb.entities.Invoice;
+import carrental.carrentalweb.enums.TimeDiffTypes;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
@@ -57,6 +59,18 @@ public class InvoiceRepository {
         
         return databaseResponse.isSuccessful();
     }
+
+    public BigDecimal getAveragePayTime(TimeDiffTypes type) {
+        BigDecimal average = new BigDecimal(0);
+        String sql = String.format("SELECT AVG(TIMESTAMPDIFF(%s, created_at, paid_at)) as average FROM invoices", type.toString());
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+        while (databaseResponse.hasNext()) {
+          DatabaseRecord record = databaseResponse.next();
+          if (record.map().get("average") != null)
+            average = (BigDecimal) record.map().get("average");
+        }
+        return average;
+      }
 
     public Invoice parseResponseFirst(DatabaseResponse databaseResponse) {
         List<Invoice> invoices = parseResponse(databaseResponse);

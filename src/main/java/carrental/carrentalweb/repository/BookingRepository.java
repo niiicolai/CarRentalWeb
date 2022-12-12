@@ -1,11 +1,14 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.*;
+import carrental.carrentalweb.enums.TimeDiffTypes;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
 import carrental.carrentalweb.utilities.DatabaseResponse;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -193,7 +196,31 @@ public class BookingRepository {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return findBooking;*/
+    return findBooking;*/ 
+  }
+
+  public BigDecimal getAverageTimeBeforePickup(TimeDiffTypes type) {
+    BigDecimal average = new BigDecimal(0);
+    String sql = String.format("SELECT AVG(TIMESTAMPDIFF(%s, created_at, delivered_at)) as average FROM bookings", type.toString());
+    DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+    while (databaseResponse.hasNext()) {
+      DatabaseRecord record = databaseResponse.next();
+      if (record.map().get("average") != null)
+            average = (BigDecimal) record.map().get("average");
+    }
+    return average;
+  }
+
+  public BigDecimal getAverageTimeFromPickupToReturn(TimeDiffTypes type) {
+    BigDecimal average = new BigDecimal(0);
+    String sql = String.format("SELECT AVG(TIMESTAMPDIFF(%s, delivered_at, returned_at)) as average FROM bookings", type.toString());
+    DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+    while (databaseResponse.hasNext()) {
+      DatabaseRecord record = databaseResponse.next();
+      if (record.map().get("average") != null)
+            average = (BigDecimal) record.map().get("average");
+    }
+    return average;
   }
 
   public boolean updateBooking(Booking booking) {
@@ -287,7 +314,8 @@ public class BookingRepository {
 				(Boolean) record.map().get("inspected"), 
 				(Boolean) record.map().get("damaged"),
         (Boolean) record.map().get("sold"),
-        (double) record.map().get("sell_price")
+        (double) record.map().get("sell_price"),
+        (LocalDateTime) record.map().get("first_rented_at")
 			);
 			booking.setCar(car);
 		}

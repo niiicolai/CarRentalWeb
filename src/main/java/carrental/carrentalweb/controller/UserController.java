@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import carrental.carrentalweb.entities.User;
+import carrental.carrentalweb.enums.TimeDiffTypes;
 import carrental.carrentalweb.repository.BookingRepository;
 import carrental.carrentalweb.repository.CarRepository;
 import carrental.carrentalweb.repository.CreditRatingRepository;
+import carrental.carrentalweb.repository.InvoiceRepository;
 import carrental.carrentalweb.repository.PickupPointRepository;
 import carrental.carrentalweb.repository.SubscriptionRepository;
 import carrental.carrentalweb.repository.UserRepository;
@@ -45,6 +47,9 @@ public class UserController {
     BookingRepository bookingRepository;
 
     @Autowired
+    InvoiceRepository invoiceRepository;
+
+    @Autowired
     TimeOfDayService timeOfDayService;
 
     @GetMapping("/user")
@@ -58,6 +63,15 @@ public class UserController {
         model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
         model.addAttribute("timeOfDayImage", timeOfDayService.getImage());
         model.addAttribute("timeOfDayGreeting", timeOfDayService.getGreeting());
+
+        // ADD KPI
+        if (user.isEmployee()) {
+            model.addAttribute("averagePayTimeInSeconds", invoiceRepository.getAveragePayTime(TimeDiffTypes.SECOND));
+            model.addAttribute("averageTimeBeforePickup", bookingRepository.getAverageTimeBeforePickup(TimeDiffTypes.SECOND));
+            model.addAttribute("averageTimeBeforeReturn", bookingRepository.getAverageTimeFromPickupToReturn(TimeDiffTypes.SECOND));
+            model.addAttribute("averageTimeBeforeRent", carRepository.getAverageTimeBeforeRent(TimeDiffTypes.SECOND));
+        }
+
         return "user/show";
     }
 

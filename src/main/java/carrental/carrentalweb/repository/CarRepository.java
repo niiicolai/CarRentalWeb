@@ -1,10 +1,16 @@
 package carrental.carrentalweb.repository;
 
 import carrental.carrentalweb.entities.Car;
+import carrental.carrentalweb.enums.TimeDiffTypes;
+import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
+import carrental.carrentalweb.utilities.DatabaseRequestBody;
+import carrental.carrentalweb.utilities.DatabaseResponse;
 import groovyjarjarantlr4.v4.parse.ANTLRParser.elementEntry_return;
 
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -159,6 +165,32 @@ public class CarRepository {
         }
     }
 
+    public void setFirstRentedAt(long vehicleNumber){
+        String query = "UPDATE cars SET first_rented_at=? WHERE vehicle_number=?";
+        try {
+            Connection conn = databaseService.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setObject(1, LocalDateTime.now());
+            preparedStatement.setLong(2, vehicleNumber);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public BigDecimal getAverageTimeBeforeRent(TimeDiffTypes type) {
+        BigDecimal average = new BigDecimal(0);
+        String sql = String.format("SELECT AVG(TIMESTAMPDIFF(%s, created_at, first_rented_at)) as average FROM cars", type.toString());
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+        while (databaseResponse.hasNext()) {
+          DatabaseRecord record = databaseResponse.next();
+          if (record.map().get("average") != null)
+            average = (BigDecimal) record.map().get("average");
+        }
+        return average;
+      }
+
     public void deleteCarByVehicleNumber(long vehicleNumber){
         String query = "DELETE FROM cars WHERE vehicle_number=?";
         try {
@@ -187,7 +219,7 @@ public class CarRepository {
 		}
 
 		return foundCar;
-    }
+    }    
 
     // Returns all cars available for rent
     public List<Car> getCarsAvailableForRent() {
@@ -262,6 +294,7 @@ public class CarRepository {
 		return cars;
     }
 
+
     public boolean isCarAvailableForRent(long vehicleNumber) {
         Car car = findCarByVehicleNumber(vehicleNumber);        
         if (car.getSold() || car.getDamaged() || !car.isInspected()) {
@@ -314,6 +347,7 @@ public class CarRepository {
             boolean damaged = resultSet.getBoolean("damaged");
             boolean sold = resultSet.getBoolean("sold");
             double sellPrice = resultSet.getDouble("sell_price");
+            LocalDateTime firstRentedAt = (LocalDateTime) resultSet.getObject("first_rented_at");
             LocalDateTime createdAt = (LocalDateTime) resultSet.getObject("created_at");
             LocalDateTime updatedAt = (LocalDateTime) resultSet.getObject("updated_at");
             
@@ -329,6 +363,7 @@ public class CarRepository {
                     damaged,
                     sold,
                     sellPrice,
+                    firstRentedAt,
                     createdAt,
                     updatedAt));
         }

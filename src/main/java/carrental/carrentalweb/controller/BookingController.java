@@ -1,6 +1,7 @@
 package carrental.carrentalweb.controller;
 
 import carrental.carrentalweb.entities.Booking;
+import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.entities.User;
 import carrental.carrentalweb.services.CarInvoiceService;
 import carrental.carrentalweb.repository.BookingRepository;
@@ -75,11 +76,18 @@ public class BookingController {
 
 		// Sørger for der ikke oprettes en booking på en bil,
 		// som allerede er udlejet.
-		if (!carRepository.isCarAvailableForRent(booking.getVehicleNumber())) {
+		long vehicleNumber = booking.getVehicleNumber();
+		if (!carRepository.isCarAvailableForRent(vehicleNumber)) {
 			redirectAttributes.addAttribute("response", "Bilen er ikke tilgængelig for udlejning!");
         	redirectAttributes.addAttribute("state", "danger");
 			return "redirect:/cars";
 		} else {
+			// Sæt first rented at, hvis den ikke er sat.
+			Car car = carRepository.findCarByVehicleNumber(vehicleNumber);
+			if (car.getFirstRentedAt() == null) {
+				carRepository.setFirstRentedAt(vehicleNumber);
+			}
+
 			br.createBooking(booking);
 
 			Booking last = br.last();

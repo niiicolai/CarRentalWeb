@@ -39,6 +39,7 @@
                             <th>Vehicle #</th>
                             <th>Brand</th>
                             <th>Model</th>
+                            <th>Sekunder fra oprettelse til første udlejning</th>
                             <th>Salgspris</th>
                             <th>Solgt?</th>
                             <th>Valgmulighed</th>
@@ -48,6 +49,15 @@
                                 <td><span th:text="${car.getVehicleNumber()}" /></td>
                                 <td><span th:text="${car.getBrand()}" /></td>
                                 <td><span th:text="${car.getModel()}" /></td>
+                                <td>
+                                    <span th:if="${car.getSecondsBeforeRent() > -1}">
+                                        <span th:text="${car.getSecondsBeforeRent()}" />
+                                    </span>
+
+                                    <span th:if="${car.getSecondsBeforeRent() == -1}">
+                                        Afventer udlejning
+                                    </span>
+                                </td>
                                 <td><span th:text="${car.getSellPrice()}" /></td>
                                 <td><span th:text="${car.getSold() ? 'Ja' : 'Nej'}" /></td>
                                 <td>
