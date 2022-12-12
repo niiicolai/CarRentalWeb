@@ -54,6 +54,7 @@ public class SubscriptionRepositoryTest {
 
         // Arrange
         repository = new SubscriptionRepository(database);
+        testSubscription = TestSubscriptionFactory.create(true);
     }
 
     /*
@@ -63,9 +64,6 @@ public class SubscriptionRepositoryTest {
     @Test
     @Order(1)
     public void testInsertAndLast_SaveToDatabase_AndReturnDatabaseObject() {
-        // Arrange
-        testSubscription = TestSubscriptionFactory.create(true);
-
         // Act
         repository.create(testSubscription);
         lastInsertedSubscription = repository.last();
@@ -84,12 +82,12 @@ public class SubscriptionRepositoryTest {
     @Order(2)
     public void testGet_ReturnsSubscriptionObjectFromDatabase() {
         // Act
-        repository.create(testSubscription);
-        lastInsertedSubscription = repository.last();
         Subscription subscription = repository.get("name", lastInsertedSubscription.getName());
 
         // Assert
-        assertNotNull(subscription, "Subscription object not returned.");
+        assertEquals(lastInsertedSubscription.getName(), subscription.getName(), "Names must be equal");
+        assertEquals(lastInsertedSubscription.getDays(), subscription.getDays(), "Days must be equal");
+        assertEquals(lastInsertedSubscription.getPrice(), subscription.getPrice(), "Prices must be equal");
     }
 
     /*
@@ -99,10 +97,6 @@ public class SubscriptionRepositoryTest {
     @Test
     @Order(3)
     public void testUpdate_SavesToDatabase() {
-        // Arrange
-        repository.create(testSubscription);
-        lastInsertedSubscription = repository.last();
-
         // Act
         repository.update(lastInsertedSubscription);
         Subscription updatedSubscription = repository.get("name", lastInsertedSubscription.getName());

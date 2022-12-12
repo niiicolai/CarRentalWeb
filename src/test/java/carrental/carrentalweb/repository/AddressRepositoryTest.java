@@ -62,7 +62,8 @@ class AddressRepositoryTest {
     assertEquals(testAddress.getCity(), lastInsertedAddress.getCity(), "City must be the same");
     assertEquals(testAddress.getZipCode(), lastInsertedAddress.getZipCode(), "ZipCode must be the same");
     assertEquals(testAddress.getCountry(), lastInsertedAddress.getCountry(), "Country must be the same");
-
+    assertEquals(testAddress.getLongitude(), lastInsertedAddress.getLongitude(), "Longitude must be the same");
+    assertEquals(testAddress.getLatitude(), lastInsertedAddress.getLatitude(), "Latitude must be the same");
   }
 
   @Test
@@ -84,6 +85,8 @@ class AddressRepositoryTest {
     assertEquals(lastInsertedAddress.getCity(),findAddress.getCity(), "City must be the same");
     assertEquals(lastInsertedAddress.getZipCode(), findAddress.getZipCode(), "ZipCode must be the same");
     assertEquals(lastInsertedAddress.getCountry(), findAddress.getCountry(), "Country must be the same");
+    assertEquals(lastInsertedAddress.getLongitude(), findAddress.getLongitude(), "Longitude must be the same");
+    assertEquals(lastInsertedAddress.getLatitude(), findAddress.getLatitude(), "Latitude must be the same");
   }
 
 

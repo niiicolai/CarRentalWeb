@@ -10,6 +10,12 @@ import java.util.HashMap;
 // Mads
 public class TestDamageSpecificationFactory {
 
+    public static String getValidDescription() {
+        return new String[]{
+            "Bule", "Ridse", "Smadret rude"
+        }[(int)(Math.random() * 3)]; 
+    }
+
     public static DamageSpecification create() {
         LocalDateTime now = LocalDateTime.now();
         return new DamageSpecificationBuilder()

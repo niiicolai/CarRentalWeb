@@ -41,7 +41,7 @@ public class DamageSpecificationRepository {
         return parseResponse(databaseResponse);
     }
     public boolean create(DamageSpecification dmgSpec) {
-        String query = "INSERT INTO damage_specifications (description, price) VALUES (?, ?, ?)";
+        String query = "INSERT INTO damage_specifications (description, price) VALUES (?, ?)";
         DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.getPrice());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();

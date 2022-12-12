@@ -7,6 +7,7 @@ import carrental.carrentalweb.records.DatabaseRecord;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Random;
 
 public class TestAddressFactory {
 
@@ -17,6 +18,8 @@ public class TestAddressFactory {
         .city(now.toString())
         .zipCode(now.toString())
         .country(now.toString())
+        .latitude(Math.random() * 100)
+        .longitude(Math.random() * 100)
         .createdAt(now)
         .updatedAt(now)
         .build();
@@ -30,6 +33,8 @@ public class TestAddressFactory {
     map.put("city", now.toString());
     map.put("zipCode", now.toString());
     map.put("country", now.toString());
+    map.put("latitude", Math.random() * 100);
+    map.put("longitude", Math.random() * 100);
     map.put("created_at", now.toString());
     map.put("updated_at", now.toString());
     return new DatabaseRecord(map);

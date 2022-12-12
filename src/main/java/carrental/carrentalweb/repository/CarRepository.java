@@ -124,8 +124,8 @@ public class CarRepository {
                     "model=?," +
                     "brand=?," +
                     "updated_at=?," +
-                    "damaged=? " +
-                    "sold=?" +
+                    "damaged=?, " +
+                    "sold=?," +
                     "sell_price=?" +
                     "WHERE vehicle_number=?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);

@@ -81,15 +81,7 @@ public class CarRepositoryTest {
         Car updatedCar = carRepository.findCarByVehicleNumber(lastInsertedCar.getVehicleNumber());
 
         //Assert
-        assertEquals(updatedCar.getVehicleNumber(), modifiedCar.getVehicleNumber());
-
-
-        assertNotEquals(modifiedCar.getFrameNumber(), updatedCar.getFrameNumber(), "Frame numbers must not be equal");
-
-        System.out.println(testCar.getBrand());
-        System.out.println(lastInsertedCar.getBrand());
-        System.out.println(modifiedCar.getBrand());
-        System.out.println(updatedCar.getBrand());
+        assertEquals(lastInsertedCar.getVehicleNumber(), updatedCar.getVehicleNumber());
         assertNotEquals(lastInsertedCar.getBrand(), updatedCar.getBrand(), "Brand must not be equal");
         assertNotEquals(lastInsertedCar.getModel(), updatedCar.getModel(), "Model must not be equal");
         assertNotEquals(lastInsertedCar.getColor(), updatedCar.getColor(), "Color must not be equal");
@@ -108,6 +100,6 @@ public class CarRepositoryTest {
         Car car = carRepository.findCarByVehicleNumber(lastInsertedCar.getVehicleNumber());
 
         // Assert
-        assertNotNull(car, "Car must be null");
+        assertNull(car, "Car must be null");
     }
 }
