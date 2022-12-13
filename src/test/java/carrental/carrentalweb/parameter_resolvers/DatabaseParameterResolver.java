@@ -28,6 +28,6 @@ public class DatabaseParameterResolver implements ParameterResolver {
     @Override
     public Object resolveParameter(ParameterContext parameterContext, 
       ExtensionContext extensionContext) throws ParameterResolutionException {
-        return new DatabaseService("jdbc:mysql://localhost/carrental_test", "carrental_test", "password");
+        return new DatabaseService(System.getenv("JDBCUrl"), System.getenv("JDBCUsername"), System.getenv("JDBCPassword"));
     }
 }
