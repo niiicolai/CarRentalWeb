@@ -6,8 +6,13 @@
         </div>
         <br />
 
-        <div class="flex justify-space-evenly direction-row direction-wrap gap-8">
-            <div class="width-percent-40" th:each="car: ${cars}">
+        <div th:if="${cars.size() == 0}">
+            <div th:replace="layout/fragments/empty_state.html :: empty_state('Ingen biler blev fundet.', 'Kontakt vores kundeservice for hjælp.', '/contact', 'Kontakt')" />
+        </div>
+
+        <div th:if="${cars.size() > 0}" 
+             class="flex justify-space-evenly direction-row direction-wrap gap-8">
+            <div class="width-percent-25" th:each="car: ${cars}">
                 <div>
                     <h1>
                         <span th:text="${car.getBrand()}" />
@@ -61,10 +66,32 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="button primary">Lej Bil</button>
+                        <div th:id="${'car-spinner-' + car.getVehicleNumber()}" class="display hide">
+                            <div class="padding border secondary margin-bottom text-center">
+                                <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 40px;"></i><br />
+                                <br />
+                                Opretter Udlejningsaftale og sender faktura.
+                            </div>
+                        </div>
+                        
+                        <button type="submit" 
+                            class="button primary" 
+                            th:id="${'car-button-' + car.getVehicleNumber()}"
+                            th:data-id="${car.getVehicleNumber()}" 
+                            th:onclick="send(this)">Lej Bil</button>
                     </form>
                 </div>
             </div>
+            <script>
+                function send(e) {
+                    const id = e.dataset.id;
+                    const spinner = document.getElementById('car-spinner-' + id);
+                    const button = document.getElementById('car-button-' + id);
+
+                    spinner.className = "";
+                    button.className = "display hide";
+                }
+            </script>
         </div>
     </div>
 </div>

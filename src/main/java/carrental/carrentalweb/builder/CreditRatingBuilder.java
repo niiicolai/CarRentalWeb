@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import carrental.carrentalweb.entities.CreditRating;
 import carrental.carrentalweb.enums.CreditRatingState;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class CreditRatingBuilder {
 
     private CreditRating creditRating;

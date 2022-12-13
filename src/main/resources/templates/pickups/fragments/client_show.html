@@ -1,0 +1,19 @@
+<div th:fragment="clientShow(title)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div>
+        <div class="text-black">
+            <h2 class="margin-bottom" th:text="${title}" />
+        </div>
+        <div>
+
+            <div>
+                <div th:replace="pickups/fragments/pickup.html :: pickup(${pickupPoint})" />
+            </div>
+            <br>
+            <div id="map" class="border black"></div>
+            <script>
+                // See /static/js/map.js
+                InitMap("map", "pickup-buttons", "pickup-name", "pickup-latitude", "pickup-longitude", "pickup-address");
+            </script>
+        </div>
+    </div>
+</div>

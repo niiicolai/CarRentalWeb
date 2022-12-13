@@ -55,6 +55,7 @@ public class DamageSpecificationRepositoryTest {
 
         // Arrange
         repository = new DamageSpecificationRepository(database);
+        testDamageSpecification = TestDamageSpecificationFactory.create();
     }
 
     /*
@@ -64,9 +65,7 @@ public class DamageSpecificationRepositoryTest {
     @Test
     @Order(1)
     public void testCreateAndLast_SaveToDatabase_AndReturnDatabaseObject() {
-        // Arrange
-        testDamageSpecification = TestDamageSpecificationFactory.create();
-
+        
         // Act
         repository.create(testDamageSpecification);
         lastInsertedDamageSpecification = repository.last();
@@ -74,6 +73,7 @@ public class DamageSpecificationRepositoryTest {
         // Assert
         assertEquals(testDamageSpecification.getDescription(), lastInsertedDamageSpecification.getDescription(), "Description must be equal");
         assertEquals(testDamageSpecification.getPrice(), lastInsertedDamageSpecification.getPrice(), "Prices must be equal");
+    
     }
 
     /*
@@ -84,32 +84,11 @@ public class DamageSpecificationRepositoryTest {
     @Order(2)
     public void testGet_ReturnsDamageSpecificationObjectFromDatabase() {
         // Act
-        repository.create(testDamageSpecification);
-        lastInsertedDamageSpecification = repository.last();
         DamageSpecification damageSpecification = repository.get("description", lastInsertedDamageSpecification.getDescription());
 
         // Assert
-        assertNotNull(damageSpecification, "DamageSpecification object not returned.");
-    }
-
-    /*
-     * Test af DamageSpecificationRepository.update()
-     * tester om metoden opdaterer en række i database tabellen.
-     */
-    @Test
-    @Order(3)
-    public void testUpdate_SavesToDatabase() {
-        // Arrange
-        repository.create(testDamageSpecification);
-        lastInsertedDamageSpecification = repository.last();
-
-        // Act
-        repository.update(lastInsertedDamageSpecification);
-        DamageSpecification updatedDamageSpecification = repository.get("description", lastInsertedDamageSpecification.getDescription());
-
-        // Assert
-        assertEquals(lastInsertedDamageSpecification.getDescription(), updatedDamageSpecification.getDescription(), "Description must be equal");
-        assertEquals(lastInsertedDamageSpecification.getPrice(), updatedDamageSpecification.getPrice(), "Price must be equal");
+        assertEquals(lastInsertedDamageSpecification.getDescription(), damageSpecification.getDescription(), "Description must be equal");
+        assertEquals(lastInsertedDamageSpecification.getPrice(), damageSpecification.getPrice(), "Prices must be equal");
     }
 
     /*
@@ -117,7 +96,7 @@ public class DamageSpecificationRepositoryTest {
      * tester om metoden parser DatabaseResponse rigtigt.
      */
     @Test
-    @Order(4)
+    @Order(3)
     public void testParseResponseFirst_ReturnNullIfNoDamageSpecificationWasFound() {
         // Arrange
         DatabaseResponse response = new DatabaseResponse();
@@ -134,7 +113,7 @@ public class DamageSpecificationRepositoryTest {
      * tester om metoden parser DatabaseResponse rigtigt.
      */
     @Test
-    @Order(5)
+    @Order(4)
     public void testParseResponseFirst_ReturnDamageSpecificationIfDamageSpecificationWasFound() {
         // Arrange
         DatabaseResponse response = new DatabaseResponse();
@@ -154,7 +133,7 @@ public class DamageSpecificationRepositoryTest {
      * tester om metoden parser DatabaseResponse rigtigt.
      */
     @Test
-    @Order(6)
+    @Order(5)
     public void testParseResponse_ReturnDamageSpecificationsIfDamageSpecificationsWereFound() {
         // Arrange
         DatabaseResponse response = new DatabaseResponse();

@@ -1,10 +1,12 @@
 package carrental.carrentalweb.repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import carrental.carrentalweb.entities.Invoice;
+import carrental.carrentalweb.enums.TimeDiffTypes;
 import carrental.carrentalweb.records.DatabaseRecord;
 import carrental.carrentalweb.services.DatabaseService;
 import carrental.carrentalweb.utilities.DatabaseRequestBody;
@@ -29,6 +31,13 @@ public class InvoiceRepository {
         DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
         return parseResponseFirst(databaseResponse);
     }
+
+    public List<Invoice> where(String column, Object value) {
+        String sql = String.format("SELECT * FROM invoices WHERE %s=?", column);
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        return parseResponse(databaseResponse);
+    }
     
     public boolean insert(Invoice invoice) {
         String sql = "INSERT INTO invoices (booking_id, due_date, paid_at) VALUES (?, ?, ?)";
@@ -51,6 +60,18 @@ public class InvoiceRepository {
         return databaseResponse.isSuccessful();
     }
 
+    public BigDecimal getAveragePayTime(TimeDiffTypes type) {
+        BigDecimal average = new BigDecimal(0);
+        String sql = String.format("SELECT AVG(TIMESTAMPDIFF(%s, created_at, paid_at)) as average FROM invoices", type.toString());
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, new DatabaseRequestBody());
+        while (databaseResponse.hasNext()) {
+          DatabaseRecord record = databaseResponse.next();
+          if (record.map().get("average") != null)
+            average = (BigDecimal) record.map().get("average");
+        }
+        return average;
+      }
+
     public Invoice parseResponseFirst(DatabaseResponse databaseResponse) {
         List<Invoice> invoices = parseResponse(databaseResponse);
         if (invoices.size() == 0) return null;
@@ -67,7 +88,9 @@ public class InvoiceRepository {
                     (long) record.map().get("id"),
                     (long) record.map().get("booking_id"),
                     (LocalDateTime) record.map().get("due_date"),
-                    (LocalDateTime) record.map().get("paid_at")
+                    (LocalDateTime) record.map().get("paid_at"),
+                    (LocalDateTime) record.map().get("created_at"),
+                    (LocalDateTime) record.map().get("updated_at")
                 )
             );
         }

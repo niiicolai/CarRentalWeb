@@ -1,5 +1,7 @@
 package carrental.carrentalweb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -9,10 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import carrental.carrentalweb.entities.Car;
 import carrental.carrentalweb.entities.User;
+import carrental.carrentalweb.enums.TimeDiffTypes;
 import carrental.carrentalweb.repository.BookingRepository;
 import carrental.carrentalweb.repository.CarRepository;
 import carrental.carrentalweb.repository.CreditRatingRepository;
+import carrental.carrentalweb.repository.InvoiceRepository;
 import carrental.carrentalweb.repository.PickupPointRepository;
 import carrental.carrentalweb.repository.SubscriptionRepository;
 import carrental.carrentalweb.repository.UserRepository;
@@ -45,19 +51,38 @@ public class UserController {
     BookingRepository bookingRepository;
 
     @Autowired
+    InvoiceRepository invoiceRepository;
+
+    @Autowired
     TimeOfDayService timeOfDayService;
 
     @GetMapping("/user")
     public String show(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("bookings", bookingRepository.getBookingList(user));
-        model.addAttribute("cars", carRepository.getAllCars());
+        model.addAttribute("cars", carRepository.getCarsAvailableForRent());
         model.addAttribute("pickups", pickupPointRepository.getPickupPointsList());
-        model.addAttribute("subscriptions", subscriptionRepository.getAll());
+        model.addAttribute("subscriptions", subscriptionRepository.getCollection("available", 1));
 
         model.addAttribute("user", userRepository.find("id", user.getId()));
         model.addAttribute("creditRating", creditRatingRepository.find("user_id", user.getId()));
         model.addAttribute("timeOfDayImage", timeOfDayService.getImage());
         model.addAttribute("timeOfDayGreeting", timeOfDayService.getGreeting());
+
+        // ADD KPI
+        if (user.isEmployee()) {
+            model.addAttribute("averagePayTimeInSeconds", invoiceRepository.getAveragePayTime(TimeDiffTypes.SECOND));
+            model.addAttribute("averageTimeBeforePickup", bookingRepository.getAverageTimeBeforePickup(TimeDiffTypes.SECOND));
+            model.addAttribute("averageTimeBeforeReturn", bookingRepository.getAverageTimeFromPickupToReturn(TimeDiffTypes.SECOND));
+            model.addAttribute("averageTimeBeforeRent", carRepository.getAverageTimeBeforeRent(TimeDiffTypes.SECOND));
+            
+            List<Car> rentedCars = carRepository.getCarsWithOpenBookings();
+            double totalPrice = 0;
+            for (int i = 0; i < rentedCars.size(); i++)
+                totalPrice += rentedCars.get(i).getSellPrice();
+            model.addAttribute("noOfOpenBookings", rentedCars.size());
+            model.addAttribute("totalPriceOfRentedCars", totalPrice);
+        }
+
         return "user/show";
     }
 

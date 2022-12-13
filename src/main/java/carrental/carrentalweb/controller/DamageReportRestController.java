@@ -4,34 +4,58 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import carrental.carrentalweb.entities.DamageReport;
+import carrental.carrentalweb.entities.Booking;
+import carrental.carrentalweb.entities.Car;
+import carrental.carrentalweb.repository.BookingRepository;
+import carrental.carrentalweb.repository.CarRepository;
 import carrental.carrentalweb.repository.DamageReportRepository;
-import carrental.carrentalweb.repository.DamageSpecificationRepository;
+import carrental.carrentalweb.services.DamageReportInvoiceService;
 import carrental.carrentalweb.utilities.DatabaseResponse;
-import groovyjarjarantlr4.v4.parse.ANTLRParser.elementEntry_return;
+
+/*
+ * Written by Nicolai Berg Andersen
+ */
 
 @RestController
 public class DamageReportRestController {
 
-    private final DamageReportRepository dmgRepo;
-    private final DamageSpecificationRepository dmgSpecRepo;
+    @Autowired
+    DamageReportRepository damageReportRepository;
 
-    public DamageReportRestController(DamageReportRepository dmgRepo, DamageSpecificationRepository dmgSpecRepo) {
-        this.dmgRepo = dmgRepo;
-        this.dmgSpecRepo = dmgSpecRepo;
-    }
+    @Autowired
+    DamageReportInvoiceService damageReportInvoiceService;
+
+    @Autowired
+    private CarRepository carRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
     
     @PostMapping("/damage-report/new/{booking_id}")
     public Map<String, String> create(@RequestBody List<String> descriptions, @PathVariable("booking_id") Long bookingId) {
-        DatabaseResponse response = dmgRepo.create(descriptions, bookingId);
+        DatabaseResponse response = damageReportRepository.create(descriptions, bookingId);
 
         HashMap<String, String> results = new HashMap<>();
         if (response.isSuccessful()) {
+
+            // Kun send faktura, hvis der faktisk er nogle skader.
+            if (descriptions.size() > 0) {
+                damageReportInvoiceService.execute(bookingId);
+
+                Booking booking = bookingRepository.find("id", bookingId);
+
+                // Sæt bilen som damage, hvis der er nogle skader.
+                Car car = carRepository.findCarByVehicleNumber(booking.getVehicleNumber());
+                car.setDamaged(true);
+                carRepository.updateCar(car);
+            }
+                
             results.put("response", "Skaderapport oprettet!");
             results.put("state", "success");
         } else {

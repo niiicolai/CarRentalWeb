@@ -11,6 +11,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+/*
+ * Written by Mads Kristian Pedersen & Nicolai Berg Andersen
+ */
 @Configuration
 public class MailConfig {
 

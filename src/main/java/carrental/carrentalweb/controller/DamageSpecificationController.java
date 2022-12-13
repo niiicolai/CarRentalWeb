@@ -6,7 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-// Mads
+
+/*
+ * Written by Mads Kristian Pedersen
+ */
 @Controller
 public class DamageSpecificationController {
 

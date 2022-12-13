@@ -2,20 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
 
-<head>
-    <!-- Mads -->
-    <meta charset="UTF-8">
-    <title>Subscriptions</title>
-</head>
-
+<!-- Written by Mads Kristian Pedersen -->
+<head th:replace="layout/fragments/head.html :: head('Abonnementer')" />
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
+    
     <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')" th:replace="subscriptions/fragments/client_index.html :: clientIndex('Sammensæt din aftale med en af vores abonnementer')" />
 
     <!-- EMPLOYEE SETTINGS -->
     <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
         <h2 class="margin text-center">Abonnementer</h2>
 
-        <div class="flex justify-space-evenly text-center">
+        <div th:if="${subscriptions.size() == 0}">
+            <div th:replace="layout/fragments/empty_state.html :: empty_state('Ingen abonnementer blev fundet.', 'Klik på knappen for at komme igang.', '/subscriptions/new', 'Opret Abonnement')" />
+        </div>
+
+        <div th:if="${subscriptions.size() > 0}"
+            class="flex justify-space-evenly text-center">
             <div class="text-box primary">
                 <div th:replace="layout/fragments/lines.html :: lines" />
 

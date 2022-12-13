@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.io.File;
 
-// Mads
+/*
+ * Written by Mads Kristian Pedersen & Nicolai Berg Andersen
+ */
 @Service
 public class MailerService {
     private final JavaMailSender emailSender;
@@ -23,6 +25,7 @@ public class MailerService {
         simpleMailMessage.setTo(to);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(text);
+
         emailSender.send(simpleMailMessage);
     }
     public void send(String to, String subject, String text, File file) throws MessagingException {
@@ -31,6 +34,7 @@ public class MailerService {
         mimeMessageHelper.setText(text);
         FileSystemResource resource = new FileSystemResource(file);
         mimeMessageHelper.addAttachment(resource.getFilename(), resource);
+
         emailSender.send(mimeMessageHelper.getMimeMessage());
     }
 }

@@ -1,0 +1,12 @@
+
+<!-- Written by Nicolai Berg Andersen -->
+<div th:fragment="empty_state(title, message, href, link_text)" xmlns:th="http://www.thymeleaf.org">
+    <!-- General alert -->
+    <div class="text-box text-center">
+
+        <h3 th:text="${title}" />
+        <p th:text="${message}" />
+        <a th:href="${href}" th:text="${link_text}" class="button primary large no-shadow" />
+    </div>
+</div>
+

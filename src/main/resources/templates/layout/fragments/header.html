@@ -1,4 +1,5 @@
 <header th:fragment="header" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" class="header">
+    <!-- Written by Nicolai Berg Andersen -->
     <div class="wrapper flex align-items-center justify-space-between">
         <a href="/"><img src="/images/logo.png" alt="logo"></a>
         
@@ -10,8 +11,12 @@
 
             <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_EMPLOYEE')"
                 class="flex align-items-center justify-space-evenly gap-5">
-
+                
                 <div class="vr"></div>
+
+                <a class="button secondary rounded small" href="/bookings">
+                    <i class="fa-regular fa-handshake"></i>
+                </a>
 
                 <a class="button secondary rounded small" href="/user">
                     <i class="fa-sharp fa-solid fa-user"></i>

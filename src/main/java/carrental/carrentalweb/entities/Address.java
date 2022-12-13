@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import groovyjarjarantlr4.v4.parse.ANTLRParser.prequelConstruct_return;
 
+/*
+ * Written by Thomas S. Andersen
+ */
 public class Address {
 
   private Long id;
@@ -22,8 +25,8 @@ public class Address {
     String city,
     String zipCode,
     String country,
-	Double latitude,
-	Double longitude,
+    Double latitude,
+    Double longitude,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
   ) {
@@ -32,8 +35,8 @@ public class Address {
     this.city = city;
     this.zipCode = zipCode;
     this.country = country;
-	this.latitude = latitude;
-	this.longitude = longitude;
+    this.latitude = latitude;
+    this.longitude = longitude;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -60,8 +63,8 @@ public class Address {
     this.city = city;
     this.zipCode = zipCode;
     this.country = country;
-	this.latitude = latitude;
-	this.longitude = longitude;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 
   public Address() {}

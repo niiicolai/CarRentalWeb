@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
  * Written by Nicolai Berg Andersen.
  */
 
-
 public class Invoice {
     private long id;
     private long bookingId;

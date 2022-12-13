@@ -2,9 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
 
-<head></head>
-
+<!-- Written by Nicolai Berg Andersen -->
+<head th:replace="layout/fragments/head.html :: head('Rediger Bruger')" />
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
+    
     <div class="text-box secondary text-center">
 
         <h2 class="text-secondary">Opdater brugeroplysninger</h2>

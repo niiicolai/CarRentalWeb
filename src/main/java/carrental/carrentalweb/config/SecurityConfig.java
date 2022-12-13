@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import carrental.carrentalweb.enums.UserRole;
 import carrental.carrentalweb.services.UserService;
 
 /*
@@ -21,17 +22,52 @@ import carrental.carrentalweb.services.UserService;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private static final String[] employeePaths = {};
-    private static final String employeeRole = "ROLE_EMPLOYEE";
+    /* Employee only authorized path */
+    private static final String[] employeePaths = {
+        "/bookings/kilometer_driven/**",
+        "/bookings/deliver/**",
+        "/bookings/return/**",
+        "/bookings/sell/**",
+        "/bookings/edit/**",
+        "/add-car",
+        "/edit-car**",
+        "/delete-car/**",
+        "/damage-report/new/**",
+        "/damage-report/edit/**",
+        "/pickups/create",
+        "/pickups/edit**",
+        "/delete/**",
+        "/subscriptions/new",
+        "/subscriptions/edit**",
+    };
 
-    private static final String[] clientPaths = {};
-    private static final String clientRole = "ROLE_CLIENT";
-
-    /* Shared authories properties */
-    private static final String[] sharedPaths = {"/user", "/credit/rating", "/pickuppoints**"};
+    /* Shared authorized path */
+    private static final String[] sharedPaths = {
+        "/user", 
+        "/user/edit",
+        "/user/password",
+        "/credit/rating",
+        "/bookings",
+        "/bookings/create",
+        "/bookings/show/**",
+        "/damage-report/show/**",
+        "/invoice/**",
+    };
     
-    /* Unauthorized properties */
-    private static final String[] unauthorizedPaths = {"/", "/cars", "/contact", "/pickups", "/subscriptions", "/signup", "/login**", "/css/**", "/js/**", "/images/**", "/css_framework"};
+    /* Unauthorized path */
+    private static final String[] unauthorizedPaths = {
+        "/", 
+        "/cars", 
+        "/contact", 
+        "/pickups", 
+        "/subscriptions", 
+        "/agreement", 
+        "/signup", 
+        "/login", 
+        "/css/**", 
+        "/js/**", 
+        "/images/**"
+    };
 
 
     private static final String LOGIN_PAGE = "/login";
@@ -50,13 +86,15 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String clientRole = UserRole.ROLE_CLIENT.toString();
+        String employeeRole = UserRole.ROLE_EMPLOYEE.toString();
+
         http.authorizeRequests()
                 .antMatchers(unauthorizedPaths)
                 .permitAll()
             .and()
                 .authorizeRequests()
                 .antMatchers(employeePaths).hasAuthority(employeeRole) 
-                .antMatchers(clientPaths).hasAuthority(clientRole) 
                 .antMatchers(sharedPaths).hasAnyAuthority(employeeRole, clientRole)
                 .anyRequest()
                 .authenticated()

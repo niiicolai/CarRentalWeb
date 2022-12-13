@@ -10,7 +10,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-// Mads
+
+/*
+ * Written by Mads Kristian Pedersen
+ */
 @Repository
 public class DamageSpecificationRepository {
     private final DatabaseService databaseService;
@@ -38,7 +41,7 @@ public class DamageSpecificationRepository {
         return parseResponse(databaseResponse);
     }
     public boolean create(DamageSpecification dmgSpec) {
-        String query = "INSERT INTO damage_specifications (description, price) VALUES (?, ?, ?)";
+        String query = "INSERT INTO damage_specifications (description, price) VALUES (?, ?)";
         DatabaseRequestBody body = new DatabaseRequestBody(dmgSpec.getDescription(), dmgSpec.getPrice());
         DatabaseResponse databaseResponse = databaseService.executeUpdate(query, body);
         return databaseResponse.isSuccessful();

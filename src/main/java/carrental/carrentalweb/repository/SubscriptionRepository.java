@@ -10,7 +10,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-// Mads
+
+/*
+ * Written by Mads Kristian Pedersen
+ */
 @Repository
 public class SubscriptionRepository {
     private final DatabaseService databaseService;
@@ -23,6 +26,20 @@ public class SubscriptionRepository {
         DatabaseResponse databaseResponse = databaseService.executeQuery(query, body);
         return parseResponseFirst(databaseResponse);
     }
+
+    public List<Subscription> getCollection(String column, Object value) {
+        return getCollection(column, value, 0);
+    }
+
+    public List<Subscription> getCollection(String column, Object value, int limit) {
+        String sql = String.format("SELECT * FROM subscriptions WHERE %s=?", column);
+        if (limit > 0) sql += String.format(" LIMIT %d", limit);
+
+        DatabaseRequestBody body = new DatabaseRequestBody(value);
+        DatabaseResponse databaseResponse = databaseService.executeQuery(sql, body);
+        return parseResponse(databaseResponse);
+    }
+    
     public List<Subscription> getAll() {
         String query = "SELECT * FROM subscriptions";
         DatabaseResponse databaseResponse = databaseService.executeQuery(query, new DatabaseRequestBody());

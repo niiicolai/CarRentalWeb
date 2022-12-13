@@ -1,76 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/layout/layout}">
 
-<!--Mikkel-->
 
-<head>
-    <meta charset="UTF-8">
-    <title>Create Car</title>
-</head>
+
+<head th:replace="layout/fragments/head.html :: head('Opret Bil')" />
+
 <body layout:fragment="content">
-<h1>New Car</h1>
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
 
-<form th:action="@{/add-car}" method="post" th:object="${car}" class="form">
+    <h1>New Car</h1>
 
-    <div class="flex-column flex gap-8">
-        <input th:field="*{vehicleNumber}" type="hidden">
+    <form th:action="@{/add-car}" method="post" th:object="${car}" class="form">
 
-        <div>
-            <label for="frame-number">Frame number: </label>
-            <input id="frame-number" th:field="*{frameNumber}" type="text" required>
+        <div class="flex-column flex gap-8">
+            <input th:field="*{vehicleNumber}" type="hidden">
+
+            <div>
+                <label for="frame-number">Frame number: </label>
+                <input id="frame-number" th:field="*{frameNumber}" type="text" required>
+            </div>
+
+            <div>
+                <label for="brand">Brand: </label>
+                <input id="brand" th:field="*{brand}" type="text" required>
+            </div>
+
+            <div>
+                <label for="model">Model: </label>
+                <input id="model" th:field="*{model}" type="text" required>
+            </div>
+
+            <div>
+                <label for="color">Color: </label>
+                <input id="color" th:field="*{color}" type="text" required>
+            </div>
+
+            <div>
+                <label for="equipment-level">Equipment level: </label>
+                <input id="equipment-level" th:field="*{equipmentLevel}" type="number" required>
+            </div>
+
+            <div>
+                <label for="steel-price">Steel price: </label>
+                <input id="steel-price" th:field="*{steelPrice}" type="number" required>
+            </div>
+
+            <div>
+                <label for="sell-price">Salgspris: </label>
+                <input id="sell-price" th:field="*{sellPrice}" type="number" required>
+            </div>
+
+            <div>
+                <label for="registration-fee">Registration price:</label>
+                <input id="registration-fee" th:field="*{registrationFee}" type="number" required>
+            </div>
+
+            <div>
+                <label for="co2-discharge">Co2 discharge:</label>
+                <input id="co2-discharge" th:field="*{co2Discharge}" type="number" required>
+            </div>
+
+            <div>
+                <label for="inspected">Inspected: </label>
+                <input id="inspected" th:field="*{inspected}" type="checkbox">
+            </div>
+
+            <div>
+                <input class="button primary" type="submit" id="submitForm" value="Add car">
+            </div>
+
+            <p class="successPrompt" th:if="${param.success}">Car created successfully</p>
         </div>
 
-        <div>
-            <label for="brand">Brand: </label>
-            <input id="brand" th:field="*{brand}" type="text" required>
-        </div>
-
-        <div>
-            <label for="model">Model: </label>
-            <input id="model" th:field="*{model}" type="text" required>
-        </div>
-
-        <div>
-            <label for="color">Color: </label>
-            <input id="color" th:field="*{color}" type="text" required>
-        </div>
-
-        <div>
-            <label for="equipment-level">Equipment level: </label>
-            <input id="equipment-level" th:field="*{equipmentLevel}" type="number" required>
-        </div>
-
-        <div>
-            <label for="steel-price">Steel price: </label>
-            <input id="steel-price" th:field="*{steelPrice}" type="number" required>
-        </div>
-
-        <div>
-            <label for="registration-fee">Registration price:</label>
-            <input id="registration-fee" th:field="*{registrationFee}" type="number" required>
-        </div>
-
-        <div>
-            <label for="co2-discharge">Co2 discharge:</label>
-            <input id="co2-discharge" th:field="*{co2Discharge}" type="number" required>
-        </div>
-
-        <div>
-            <label for="inspected">Inspected: </label>
-            <input id="inspected" th:field="*{inspected}" type="checkbox">
-        </div>
-
-        <div>
-            <input class="button primary" type="submit" id="submitForm" value="Add car">
-        </div>
-
-        <p class="successPrompt" th:if="${param.success}">Car created successfully</p>
-    </div>
-
-</form>
+    </form>
 
 
 </body>
+
 </html>

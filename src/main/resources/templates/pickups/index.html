@@ -2,19 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+
+<head th:replace="layout/fragments/head.html :: head('Afhentningslokationer')" />
 
 <body layout:fragment="content">
-    <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')" th:replace="pickups/fragments/client_index_vertical.html :: clientIndex('Afhent din bil på følgende lokationer')" />
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
+
+    <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')"
+        th:replace="pickups/fragments/client_index_vertical.html :: clientIndex('Afhent din bil på følgende lokationer')" />
 
     <!-- EMPLOYEE SETTINGS -->
     <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
         <h2 class="margin text-center">Afhentningssteder</h2>
 
-        <div class="text-box secondary text-center">
+        <div th:if="${pickupPoints.size() == 0}">
+            <div
+                th:replace="layout/fragments/empty_state.html :: empty_state('Ingen afhentningslokationer blev fundet.', 'Klik på knappen for komme igang.', '/pickups/create', 'Opret Afhentningslokation')" />
+        </div>
+
+        <div th:if="${pickupPoints.size() > 0}" class="text-box secondary text-center">
             <!-- Insætter <span class="line-1" /> ... -->
             <div th:replace="layout/fragments/lines.html :: lines" />
 

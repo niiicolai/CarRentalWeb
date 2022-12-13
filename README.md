@@ -28,16 +28,16 @@ $ mvn test
 ```
 Sample results:
 ```
-[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.119 s - in carrental.carrentalweb.service.UserServiceTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.099 s - in carrental.carrentalweb.service.UserServiceTest
 [INFO]
 [INFO] Results:
 [INFO]
-[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 68, Failures: 0, Errors: 0, Skipped: 0
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  7.858 s
-[INFO] Finished at: 2022-11-27T00:51:12+01:00
+[INFO] Total time:  9.618 s
+[INFO] Finished at: 2022-12-12T20:48:23+01:00
 [INFO] ------------------------------------------------------------------------
 ```

@@ -8,6 +8,9 @@ import java.io.FileOutputStream;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 
+/*
+ * Written by Nicolai Berg Andersen
+ */
 public class PDFBuilder {    
     protected Document document;
     private File file;

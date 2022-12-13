@@ -2,12 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
-<head>
-    <!-- Mads -->
-    <meta charset="UTF-8">
-    <title>New Damage Specification</title>
-</head>
+
+<!-- Written by Mads Kristian Pedersen -->
+<head th:replace="layout/fragments/head.html :: head('Opret Skadespecifikation')" />
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
 
 <div class="flex justify-space-evenly text-center">
     <div class="text-box primary">
@@ -25,7 +29,7 @@
         <form th:action="@{/damage-specification/new}" th:method="post" th:object="${damageSpec}" class="form">
             <div class="input-control">
                 <label>Beskrivelse:</label>
-                <input th:field="${damageSpec.description}" type="text" required>
+                <input th:field="${damageSpec.description}" type="text" required autofocus>
             </div>
             <div class="input-control">
                 <label>Pris:</label>

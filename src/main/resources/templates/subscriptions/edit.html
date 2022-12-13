@@ -2,12 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{/layout/layout}">
-<head>
-    <!-- Mads -->
-    <meta charset="UTF-8">
-    <title>Edit Subscription</title>
-</head>
+
+<!-- Written by Mads Kristian Pedersen -->
+<head th:replace="layout/fragments/head.html :: head('Rediger Abonnement')" />
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
 
 <div class="flex justify-space-evenly text-center">
     <div class="text-box primary">
@@ -26,7 +30,7 @@
                 <h3 th:text="${subscription.name}"></h3>
                 <input th:field="*{name}" type="hidden" required>
                 <label>Dage:</label>
-                <input th:field="*{days}" type="text" placeholder="days" required>
+                <input th:field="*{days}" type="text" placeholder="days" required autofocus>
             </div>
             <div class="input-control">
                 <label>Pris:</label>

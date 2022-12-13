@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{/layout/layout}">
 
-<head></head>
+<!-- Written by Nicolai Berg Andersen -->
+
+<head th:replace="layout/fragments/head.html :: head('Dashboard')" />
 
 <body layout:fragment="content">
 
@@ -11,14 +13,50 @@
             <div class="text-white">
                 <span><span th:text="${timeOfDayGreeting}" />, <strong th:text="${user.getUsername()}" />.<br>
                     <small>Velkommen til dit dashboard.</small></span><br>
-                <br>
                 <small>
-                    <span>Rolle(r):</span>
-                    <span th:each="authority: ${user.getAuthorities()}">
-                        <strong th:if="${authority.toString() == 'ROLE_CLIENT'}">Kunde;</strong>
-                        <strong th:if="${authority.toString() == 'ROLE_EMPLOYEE'}">Medarbejder;</strong>
-                    </span>
+                    <div class="margin-bottom">
+                        <span>Rolle(r):</span>
+                        <span th:each="authority: ${user.getAuthorities()}">
+                            <strong th:if="${authority.toString() == 'ROLE_CLIENT'}">Kunde;</strong>
+                            <strong th:if="${authority.toString() == 'ROLE_EMPLOYEE'}">Medarbejder;</strong>
+                        </span>
+                    </div>
+
+                    <div sec:authorize="hasRole('ROLE_EMPLOYEE')" 
+                         class="flex justify-space-between align-items-center gap-8 text-center">
+                        <div>
+                            <div>Gns. afhentingstid (s)</div>
+                            <div th:text="${averageTimeBeforePickup}" />
+                        </div>
+    
+                        <div>
+                            <div>Gns. afleveringsstid (s)</div>
+                            <div th:text="${averageTimeBeforeReturn}" />
+                        </div>
+    
+                        <div>
+                            <div>Gns. betalingstid (s)</div>
+                            <div th:text="${averagePayTimeInSeconds}" />
+                        </div>
+    
+                        <div>
+                            <div>Gns. udlejningstid (s)</div>
+                            <div th:text="${averageTimeBeforeRent}" />
+                        </div>
+
+                        <div>
+                            <div>Antal biler udlejet</div>
+                            <div th:text="${noOfOpenBookings}" />
+                        </div>
+
+                        <div>
+                            <div>Total pris på udlejede biler</div>
+                            <div th:text="${totalPriceOfRentedCars}" />
+                        </div>
+                    </div>
                 </small>
+
+                
             </div>
             <div class="text-white">
                 <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})" />
@@ -50,7 +88,7 @@
             <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
             <small>Vi har lige <strong th:text="${cars.size()}" /> biler til udlejning.</small><br><br>
         </a>
-        <a class="button danger large text-center min-height-205 width-percent-25" href="/pickups">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/agreement">
             <p><strong><i class="fa-regular fa-handshake"></i><br><br> Betingelser</strong></p>
             <small>Find vores handelsbetingelser.</small><br><br>
         </a>
