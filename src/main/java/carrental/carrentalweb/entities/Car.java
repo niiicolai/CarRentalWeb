@@ -2,6 +2,7 @@ package carrental.carrentalweb.entities;
 
 import java.time.LocalDateTime;
 
+//Mikkel
 public class Car {
     private long vehicleNumber;
     private String frameNumber;

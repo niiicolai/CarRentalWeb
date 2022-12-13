@@ -11,6 +11,7 @@ import carrental.carrentalweb.services.DatabaseService;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+//Mikkel
 @ExtendWith(DatabaseParameterResolver.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CarRepositoryTest {
