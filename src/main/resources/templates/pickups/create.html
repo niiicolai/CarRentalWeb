@@ -3,53 +3,48 @@
 
 <head th:replace="layout/fragments/head.html :: head('Opret afhentningslokation')" />
 <!-- Thomas -->
-<body>
+<body style="margin-bottom: 80px;">
     <div th:replace="layout/fragments/header.html :: header" />
     <div th:replace="layout/fragments/alert.html :: alert" />
-    <style>
-        /* Add 80px toward the bottom to counter the fixed footer element. */
-        body {
-            margin-bottom: 80px;
-        }
-    </style>
-
-    <div class="flex justify-space-evenly text-center">
+    <div class="container">
+        <div class="flex justify-space-evenly text-center">
 
 
-        <div class="text-box secondary text-center">
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
-            <span class="line-4"></span>
-            <span class="line-5"></span>
-            <span class="line-6"></span>
-            <span class="line-7"></span>
-            <span class="line-8"></span>
-            <form th:action="@{/pickups/create}" th:object="${pickupPoint}" th:method="post" class="form">
+            <div class="text-box secondary text-center">
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+                <span class="line-4"></span>
+                <span class="line-5"></span>
+                <span class="line-6"></span>
+                <span class="line-7"></span>
+                <span class="line-8"></span>
+                <form th:action="@{/pickups/create}" th:object="${pickupPoint}" th:method="post" class="form">
 
-                <h3 class="text-box secondary text-center">Opret nyt afhentningssted</h3>
+                    <h3 class="text-box secondary text-center">Opret nyt afhentningssted</h3>
 
-                <div class="input-control">
-                    <label for="name">Navn: </label>
-                    <input th:field="*{name}" id="name" type="text" placeholder="name" required>
-                </div>
+                    <div class="input-control">
+                        <label for="name">Navn: </label>
+                        <input th:field="*{name}" id="name" type="text" placeholder="name" required>
+                    </div>
 
-                <div class="input-control">
-                    <label for="addressId">Adresse id: </label>
-                    <input th:field="*{addressId}" id="addressId" type="text" placeholder="addressId" required>
-                </div>
-                <br>
-                <input class="button primary medium" type="submit" value="Opret ny">
+                    <div class="input-control">
+                        <label for="addressId">Adresse id: </label>
+                        <input th:field="*{addressId}" id="addressId" type="text" placeholder="addressId" required>
+                    </div>
+                    <br>
+                    <input class="button primary medium" type="submit" value="Opret ny">
 
-            </form>
-        </div>
+                </form>
+            </div>
 
 
-        <div>
-            <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+            <div>
+                <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+            </div>
         </div>
     </div>
-
+    <div th:replace="layout/fragments/footer.html :: footer" />
 </body>
 
 </html>

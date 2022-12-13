@@ -3,53 +3,51 @@
 
 <!-- Written by Mads Kristian Pedersen -->
 <head th:replace="layout/fragments/head.html :: head('Skaderapport')" />
-<body>
+<body style="margin-bottom: 80px;">
     <div th:replace="layout/fragments/header.html :: header" />
     <div th:replace="layout/fragments/alert.html :: alert" />
-    <style>
-        /* Add 80px toward the bottom to counter the fixed footer element. */
-        body {
-            margin-bottom: 80px;
-        }
-    </style>
+    <div class="container">
 
-<div class="flex justify-space-evenly text-center">
-    <div class="text-box primary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
+        <div class="flex justify-space-evenly text-center">
+            <div class="text-box primary">
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+                <span class="line-4"></span>
+                <span class="line-5"></span>
+                <span class="line-6"></span>
+                <span class="line-7"></span>
+                <span class="line-8"></span>
 
-    <h2>Skadesrapport</h2>
+            <h2>Skadesrapport</h2>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Beskrivelse</th>
-            <th>Pris</th>
-            <th>Skadet</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="ds : ${damageSpecs}">
-            <td th:text="${ds.description}">Beskrivelse</td>
-            <td th:text="${ds.price} + ' DKK'">Pris</td>
-            <td th:if="${damageReport} ? 'Skadet' : 'Ikke skadet'">Skadet</td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/bookings/show/{id}(id=${bookingId})}">
-        <button class="button primary medium">Tilbage til booking</button>
-    </a>
-    <div>
-        <i class="fa-solid fa-car-burst" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Beskrivelse</th>
+                    <th>Pris</th>
+                    <th>Skadet</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ds : ${damageSpecs}">
+                    <td th:text="${ds.description}">Beskrivelse</td>
+                    <td th:text="${ds.price} + ' DKK'">Pris</td>
+                    <td th:if="${damageReport} ? 'Skadet' : 'Ikke skadet'">Skadet</td>
+                </tr>
+                </tbody>
+            </table>
+            <a th:href="@{/bookings/show/{id}(id=${bookingId})}">
+                <button class="button primary medium">Tilbage til booking</button>
+            </a>
+            <div>
+                <i class="fa-solid fa-car-burst" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
+            </div>
+
+        </div>
+        </div>
     </div>
 
-</div>
-</div>
+    <div th:replace="layout/fragments/footer.html :: footer" />
 </body>
 </html>

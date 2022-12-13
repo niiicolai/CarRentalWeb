@@ -3,45 +3,42 @@
 
 <!-- Written by Mads Kristian Pedersen -->
 <head th:replace="layout/fragments/head.html :: head('Rediger skaderapport')" />
-<body>
+<body style="margin-bottom: 80px;">
     <div th:replace="layout/fragments/header.html :: header" />
     <div th:replace="layout/fragments/alert.html :: alert" />
-    <style>
-        /* Add 80px toward the bottom to counter the fixed footer element. */
-        body {
-            margin-bottom: 80px;
-        }
-    </style>
+    <div class="container">
 
-<div class="flex justify-space-evenly text-center">
-    <div class="text-box primary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
-        <h2>Rediger Skadesrapport</h2>
+        <div class="flex justify-space-evenly text-center">
+            <div class="text-box primary">
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+                <span class="line-4"></span>
+                <span class="line-5"></span>
+                <span class="line-6"></span>
+                <span class="line-7"></span>
+                <span class="line-8"></span>
+                <h2>Rediger Skadesrapport</h2>
 
-        <form th:action="/damage-report/edit/ + ${bookingId}" th:method="patch" th:object="${damageSpecs}" class="form">
-            <div th:each="ds : ${damageSpecs}" class="input-control">
-                <label th:text="${ds.description} + ':'">
-                    <input type="checkbox">
-                </label>
+                <form th:action="/damage-report/edit/ + ${bookingId}" th:method="patch" th:object="${damageSpecs}" class="form">
+                    <div th:each="ds : ${damageSpecs}" class="input-control">
+                        <label th:text="${ds.description} + ':'">
+                            <input type="checkbox">
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit" value="Opdater" class="button primary medium"></button>
+                    </div>
+                </form>
+                <a th:href="/bookings/show/ + bookingId">
+                    <button class="button primary medium">Tilbage til booking</button>
+                </a>
             </div>
             <div>
-                <button type="submit" value="Opdater" class="button primary medium"></button>
+                <i class="fa-solid fa-car-burst" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
             </div>
-        </form>
-        <a th:href="/bookings/show/ + bookingId">
-            <button class="button primary medium">Tilbage til booking</button>
-        </a>
+        </div>
     </div>
-    <div>
-        <i class="fa-solid fa-car-burst" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
-    </div>
-</div>
+    <div th:replace="layout/fragments/footer.html :: footer" />
 </body>
 </html>
