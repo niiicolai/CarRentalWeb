@@ -4,12 +4,12 @@
 name: Build and deploy WAR app to Azure Web App - carrentalaps
 
 env:
-  JDBCUrl: ${{env.JDBCUrl}}
-  JDBCUrl_test: ${{env.JDBCUrl_test}}
-  JDBCUsername: ${{env.JDBCUsername}}
-  JDBCPassword: ${{env.JDBCPassword}}
-  EMAILUsername: ${{env.EMAILUsername}}
-  EMAILPassword: ${{env.EMAILPassword}}
+  JDBCUrl: ${{secrets.JDBCUrl}}
+  JDBCUrl_test: ${{secrets.JDBCUrl_test}}
+  JDBCUsername: ${{secrets.JDBCUsername}}
+  JDBCPassword: ${{secrets.JDBCPassword}}
+  EMAILUsername: ${{secrets.EMAILUsername}}
+  EMAILPassword: ${{secrets.EMAILPassword}}
 
 on:
   push:
