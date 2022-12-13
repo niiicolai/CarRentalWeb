@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS subscriptions
     created_at DATETIME(6)              NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at DATETIME(6)              NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
--- Nicolai (one-to-one, bookings)
+-- Nicolai 
 CREATE TABLE IF NOT EXISTS credit_ratings
 (
     user_id    BIGINT PRIMARY KEY,
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS address
     updated_at DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     created_at DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
-
+-- Thomas
 CREATE TABLE IF NOT EXISTS pickup_points
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS bookings
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
--- Nicolai (one-to-one, bookings)
+-- Nicolai
 CREATE TABLE IF NOT EXISTS invoices
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS invoice_specifications
     invoice_id  BIGINT       NOT NULL,
     FOREIGN KEY (invoice_id) REFERENCES invoices (id)
 );
--- Mads (one-to-one, bookings)
+-- Mads
 CREATE TABLE IF NOT EXISTS damage_reports
 (
     booking_id BIGINT PRIMARY KEY,
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS damage_reports
     updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     FOREIGN KEY (booking_id) REFERENCES bookings (id)
 );
--- Mads (many-to-many, damage_reports)
+-- Mads
 CREATE TABLE IF NOT EXISTS damage_specifications
 (
     description VARCHAR(255) PRIMARY KEY,
