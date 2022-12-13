@@ -41,3 +41,11 @@ Sample results:
 [INFO] Finished at: 2022-12-12T20:48:23+01:00
 [INFO] ------------------------------------------------------------------------
 ```
+
+# Deploy
+
+## How to deploy
+`cd` into the folder containing the project's `pom.xml` file, and enter the following into a terminal:
+```
+$ mvn package azure-webapp:deploy
+```
