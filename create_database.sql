@@ -79,14 +79,6 @@ CREATE TABLE IF NOT EXISTS address
     updated_at DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     created_at DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
-INSERT INTO address (street, city, zipCode, country, latitude, longitude)
-VALUES ('Street 1A', 'City A', '42311', 'Denmark', 55.696, 12.557);
-INSERT INTO address (street, city, zipCode, country, latitude, longitude)
-VALUES ('Street 1B', 'City B', '32545', 'Denmark', 55.696, 11.557);
-INSERT INTO address (street, city, zipCode, country, latitude, longitude)
-VALUES ('Street 1C', 'City C', '14324', 'Denmark', 54.696, 12.557);
-INSERT INTO address (street, city, zipCode, country, latitude, longitude)
-VALUES ('Street 1D', 'City D', '53463', 'Denmark', 55.696, 10.557);
 
 CREATE TABLE IF NOT EXISTS pickup_points
 (
@@ -154,16 +146,6 @@ CREATE TABLE IF NOT EXISTS damage_specifications
     created_at  DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at  DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
-INSERT INTO damage_specifications (description, price)
-VALUES ('Bule', 2000);
-INSERT INTO damage_specifications (description, price)
-VALUES ('Ridse', 1000);
-INSERT INTO damage_specifications (description, price)
-VALUES ('Smadret rude', 3000);
-INSERT INTO damage_specifications (description, price)
-VALUES ('Ødelagt forsæde', 1500);
-INSERT INTO damage_specifications (description, price)
-VALUES ('Ødelagt bagsæde', 2500);
 -- Mads
 CREATE TABLE IF NOT EXISTS damage_report_specifications
 (
@@ -174,3 +156,53 @@ CREATE TABLE IF NOT EXISTS damage_report_specifications
     FOREIGN KEY (report_id) REFERENCES damage_reports (booking_id),
     FOREIGN KEY (spec_description) REFERENCES damage_specifications (description)
 );
+-- Example data
+-- Mads
+INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
+VALUES ('JTHKGJEC80N519573', 'Opel', 'Corsa', 'Orange', 4, 1500, 8000, 133, 150000, false, true, false);
+INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
+VALUES ('AKLFDASD39H256126', 'Citroën', 'C5 Aircross PHEV', 'Marineblå', 5, 1500, 9000, 133, 140000, false, true, false);
+INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
+VALUES ('HSFDAENL95J912464', 'Opel', 'Crossland', 'Grå', 2, 1500, 8500, 133, 120000, false, true, false);
+INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
+VALUES ('FAOJDBVG26D481259', 'Citroën', 'C3 Aircross', 'Koksgrå', 3, 1500, 7000, 133, 110000, false, true, false);
+INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
+VALUES ('HASDIKWY52M586732', 'Fiat', '500e', 'Lyseblå', 1, 1500, 6000, 0, 90000, false, true, false);
+INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
+VALUES ('HKVCLKDH91F654284', 'Toyota', 'Aygo', 'Hvid', 3, 1500, 6500, 133, 95000, false, true, true);
+INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
+VALUES ('LKASDHBA23L175635', 'Suzuki', 'Swift', 'Rød', 1, 1500, 7500, 133, 105000, true, true, false);
+-- Mads
+INSERT INTO subscriptions (name, days, price)
+VALUES ('4 måneder', 120, 19194);
+INSERT INTO subscriptions (name, days, price)
+VALUES ('Unlimited (36 måneder)', 1096, 107964);
+-- Thomas
+INSERT INTO address (street, city, zipCode, country, latitude, longitude)
+VALUES ('Street 1A', 'City A', '42311', 'Denmark', 55.696, 12.557);
+INSERT INTO address (street, city, zipCode, country, latitude, longitude)
+VALUES ('Street 1B', 'City B', '32545', 'Denmark', 55.696, 11.557);
+INSERT INTO address (street, city, zipCode, country, latitude, longitude)
+VALUES ('Street 1C', 'City C', '14324', 'Denmark', 54.696, 12.557);
+INSERT INTO address (street, city, zipCode, country, latitude, longitude)
+VALUES ('Street 1D', 'City D', '53463', 'Denmark', 55.696, 10.557);
+-- Mads
+INSERT INTO pickup_points (name, address_id)
+VALUES ('Afhentnings sted 1', 1);
+INSERT INTO pickup_points (name, address_id)
+VALUES ('Afhentnings sted 2', 2);
+INSERT INTO pickup_points (name, address_id)
+VALUES ('Afhentnings sted 3', 3);
+INSERT INTO pickup_points (name, address_id)
+VALUES ('Afhentnings sted 4', 4);
+-- Mads
+INSERT INTO damage_specifications (description, price)
+VALUES ('Bule', 2000);
+INSERT INTO damage_specifications (description, price)
+VALUES ('Ridse', 1000);
+INSERT INTO damage_specifications (description, price)
+VALUES ('Smadret rude', 3000);
+INSERT INTO damage_specifications (description, price)
+VALUES ('Ødelagt forsæde', 1500);
+INSERT INTO damage_specifications (description, price)
+VALUES ('Ødelagt bagsæde', 2500);
