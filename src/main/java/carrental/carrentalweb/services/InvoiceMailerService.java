@@ -23,10 +23,11 @@ public class InvoiceMailerService {
     private static final String subject = "Faktura (#%d)";
     private static final String description = "Tak for dit køb.";
 
-    public void send(User user, Invoice invoice, InvoiceSpecification[] specifications) {
+    public void send(User user, Invoice invoice, InvoiceSpecification[] specifications) throws Exception {
         File file = invoicePDFService.execute(invoice, specifications);
         String mailTo = user.getEmail();
 
+        // Catch exception to counter SMTP lockout.
         try {
             mailerService.send(mailTo, String.format(subject, invoice.getBookingId()), description, file);
         } catch (MessagingException e) {
