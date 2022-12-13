@@ -235,8 +235,6 @@ public class CarRepository {
             String sql = "SELECT * FROM cars "
                        + "WHERE sold = 0 AND inspected = 1 AND damaged = 0 "
                        + "ORDER BY created_at DESC";
-
-            if (limit > 0) sql += String.format(" LIMIT %d", limit);
 			
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
             System.out.println(preparedStatement);
@@ -257,7 +255,8 @@ public class CarRepository {
                 }
 
                 if (!hasBooking) {
-                    cars.add(availableCar);
+                    if (limit > 0 && cars.size() < limit || limit <= 0)
+                        cars.add(availableCar);
                 }
             }
             
