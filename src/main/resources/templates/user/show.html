@@ -111,13 +111,13 @@
             <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
             <small>Vi har lige <strong th:text="${cars.size()}" /> biler til udlejning.</small><br><br>
         </a>
-        <a class="button danger large text-center min-height-205 width-percent-25" href="/pickups">
-            <p><strong><i class="fa-solid fa-location-dot"></i><br><br> Pickup points</strong></p>
-            <small>Tilføj afhentningslokationer.</small><br><br>
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/agreement">
+            <p><strong><i class="fa-regular fa-handshake"></i><br><br> Betingelser</strong></p>
+            <small>Find vores handelsbetingelser.</small><br><br>
         </a>
         <a class="button danger large text-center min-height-205 width-percent-25" href="/damage-specifications">
             <p><strong><i class="fa-solid fa-circle-exclamation"></i><br><br> Skader</strong></p>
-            <small>Tilføj skade specifikationer.</small><br><br>
+            <small>Find skade specifikationer.</small><br><br>
         </a>
         <form th:action="@{/logout}" th:method="post" class="display inline width-percent-25">
             <button type="submit" class="button danger large text-center min-height-205">
