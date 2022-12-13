@@ -86,7 +86,7 @@
             </a>
         </div>
         <br>
-        <div class="flex justify-space-between gap-8">
+        <div sec:authorize="hasRole('ROLE_CLIENT')" class="flex justify-space-between gap-8">
             <a class="button danger large text-center min-height-205 width-percent-25" href="/cars">
                 <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
                 <small>Vi har lige <strong th:text="${cars.size()}" /> biler til udlejning.</small><br><br>
@@ -106,6 +106,26 @@
                 </button>
             </form>
         </div>
+        <div sec:authorize="hasRole('ROLE_EMPLOYEE')" class="flex justify-space-between gap-8">
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/cars">
+            <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
+            <small>Vi har lige <strong th:text="${cars.size()}" /> biler til udlejning.</small><br><br>
+        </a>
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/pickups">
+            <p><strong><i class="fa-solid fa-location-dot"></i><br><br> Pickups</strong></p>
+            <small>Tilføj afhentningslokationer.</small><br><br>
+        </a>
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/damage-specifications">
+            <p><strong><i class="fa-solid fa-circle-exclamation"></i><br><br> Skader</strong></p>
+            <small>Tilføj skade specifikationer.</small><br><br>
+        </a>
+        <form th:action="@{/logout}" th:method="post" class="display inline width-percent-25">
+            <button type="submit" class="button danger large text-center min-height-205">
+                <p><strong><i class="fa-sharp fa-solid fa-right-from-bracket"></i><br><br> Log ud</strong></p>
+                <small>Du kan altid logge på igen, så længe du kan huske din kode.</small><br><br>
+            </button>
+        </form>
+    </div>
         <br><br>
     </div>
 
