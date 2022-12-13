@@ -26,11 +26,7 @@ public class MailerService {
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(text);
 
-        // Jeg har kommenteret den del der sender,
-        // fordi Microsoft er begyndt at markere vores
-        // konto som spam og derfor har låst den.
-        // ~ Nicolai
-        //emailSender.send(simpleMailMessage);
+        emailSender.send(simpleMailMessage);
     }
     public void send(String to, String subject, String text, File file) throws MessagingException {
         mimeMessageHelper.setTo(to);
@@ -39,10 +35,6 @@ public class MailerService {
         FileSystemResource resource = new FileSystemResource(file);
         mimeMessageHelper.addAttachment(resource.getFilename(), resource);
 
-        // Jeg har kommenteret den del der sender,
-        // fordi Microsoft er begyndt at markere vores
-        // konto som spam og derfor har låst den.
-        // ~ Nicolai
-        //emailSender.send(mimeMessageHelper.getMimeMessage());
+        emailSender.send(mimeMessageHelper.getMimeMessage());
     }
 }

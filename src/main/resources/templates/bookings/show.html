@@ -5,6 +5,12 @@
 <!-- Thomas -->
 <head th:replace="layout/fragments/head.html :: head('Udlejningsaftale')" />
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
 
     <div th:if="${booking.getDeliveredAt() == null}"
          class="alert success margin-bottom">

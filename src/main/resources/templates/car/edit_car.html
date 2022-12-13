@@ -1,52 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout}">
-      
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/layout/layout}">
+
 <head th:replace="layout/fragments/head.html :: head('Rediger Bil')" />
+
 <body layout:fragment="content">
-<h1>Edit Car</h1>
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
+    <h1>Edit Car</h1>
 
-<form class="form" th:action="@{/edit-car}" th:method="patch" th:object="${car}">
-    <div class="text-field">
-        <input th:field="*{vehicleNumber}" type="hidden">
+    <form class="form" th:action="@{/edit-car}" th:method="patch" th:object="${car}">
+        <div class="text-field">
+            <input th:field="*{vehicleNumber}" type="hidden">
 
-        <label for="brand">Brand: </label>
-        <input id="brand" th:field="*{brand}" type="text" required>
+            <label for="brand">Brand: </label>
+            <input id="brand" th:field="*{brand}" type="text" required>
 
-        <label for="model">Model: </label>
-        <input id="model" th:field="*{model}" type="text" required>
+            <label for="model">Model: </label>
+            <input id="model" th:field="*{model}" type="text" required>
 
-        <label for="color">Color: </label>
-        <input id="color" th:field="*{color}" type="text" required>
+            <label for="color">Color: </label>
+            <input id="color" th:field="*{color}" type="text" required>
 
-        <label for="equipment-level">Equipment level: </label>
-        <input id="equipment-level" th:field="*{equipmentLevel}" type="number" required>
+            <label for="equipment-level">Equipment level: </label>
+            <input id="equipment-level" th:field="*{equipmentLevel}" type="number" required>
 
-        <label for="steel-price">Steel price: </label>
-        <input id="steel-price" th:field="*{steelPrice}" type="number" required>
+            <label for="steel-price">Steel price: </label>
+            <input id="steel-price" th:field="*{steelPrice}" type="number" required>
 
-        <label for="sell-price">Salgspris: </label>
-        <input id="sell-price" th:field="*{sellPrice}" type="number" required>
+            <label for="sell-price">Salgspris: </label>
+            <input id="sell-price" th:field="*{sellPrice}" type="number" required>
 
-        <label for="registration-fee">Registration price:</label>
-        <input id="registration-fee" th:field="*{registrationFee}" type="number" required>
+            <label for="registration-fee">Registration price:</label>
+            <input id="registration-fee" th:field="*{registrationFee}" type="number" required>
 
-        <label for="co2-discharge">Co2 discharge:</label>
-        <input id="co2-discharge" th:field="*{co2Discharge}" type="number" required>
+            <label for="co2-discharge">Co2 discharge:</label>
+            <input id="co2-discharge" th:field="*{co2Discharge}" type="number" required>
 
-        <label for="inspected">Inspected: </label>
-        <input id="inspected" type="checkbox" th:field="*{inspected}">
+            <label for="inspected">Inspected: </label>
+            <input id="inspected" type="checkbox" th:field="*{inspected}">
 
-        <label for="damaged">Damaged</label>
-        <input id="damaged" type="checkbox" th:field="*{damaged}">
+            <label for="damaged">Damaged</label>
+            <input id="damaged" type="checkbox" th:field="*{damaged}">
 
-        <input type="submit" id="submitForm" value="Submit">
+            <input type="submit" id="submitForm" value="Submit">
 
-        <p class="successPrompt" th:if="${param.success}">Car updated successfully</p>
+            <p class="successPrompt" th:if="${param.success}">Car updated successfully</p>
 
-    </div>
-</form>
+        </div>
+    </form>
 
 </body>
+
 </html>

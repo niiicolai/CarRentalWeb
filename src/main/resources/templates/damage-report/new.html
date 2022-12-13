@@ -5,6 +5,12 @@
 <!-- HTML written by Mads Kristian Pedersen -->
 <head th:replace="layout/fragments/head.html :: head('Opret skaderapport')" />
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
 
     <!-- Det her div element returner en alert, hvis noget går galt når der oprettes en damage report. -->
     <div id="report-result"></div>

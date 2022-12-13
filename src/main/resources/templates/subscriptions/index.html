@@ -5,6 +5,13 @@
 <!-- Written by Mads Kristian Pedersen -->
 <head th:replace="layout/fragments/head.html :: head('Abonnementer')" />
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
+    
     <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')" th:replace="subscriptions/fragments/client_index.html :: clientIndex('Sammensæt din aftale med en af vores abonnementer')" />
 
     <!-- EMPLOYEE SETTINGS -->

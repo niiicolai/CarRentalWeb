@@ -5,6 +5,12 @@
 <!-- Thomas -->
 <head th:replace="layout/fragments/head.html :: head('Rediger Udlejningsaftale')" />
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
 
     <div class="flex justify-space-evenly text-center">
 

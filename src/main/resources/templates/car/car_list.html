@@ -3,7 +3,14 @@
     layout:decorate="~{/layout/layout}">
 
 <head th:replace="layout/fragments/head.html :: head('Biler')" />
+
 <body layout:fragment="content">
+    <style>
+        /* Add 80px toward the bottom to counter the fixed footer element. */
+        body {
+            margin-bottom: 80px;
+        }
+    </style>
 
     <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')"
         th:replace="car/fragments/client_index.html :: clientIndex('Find drømmebilen')" />
@@ -13,10 +20,11 @@
         <p class="text-center">Find biler der har behov for inspektion.</p>
 
         <div th:if="${cars.size() == 0}">
-            <div th:replace="layout/fragments/empty_state.html :: empty_state('Ingen biler blev fundet.', 'Klik på knappen for at komme igang.', '/add-car', 'Opret Bil')" />   
+            <div
+                th:replace="layout/fragments/empty_state.html :: empty_state('Ingen biler blev fundet.', 'Klik på knappen for at komme igang.', '/add-car', 'Opret Bil')" />
         </div>
 
-        <div th:if="${cars.size() > 0}">         
+        <div th:if="${cars.size() > 0}">
             <div class="text-box width-percent-100">
                 <span class="line-1"></span>
                 <span class="line-2"></span>
@@ -73,35 +81,35 @@
             </div>
             <div class="text-box booked-list" style="overflow-y: scroll;">
                 <h3>Biler markeret for inspektion</h3>
-                    <span class="line-1"></span>
-                    <span class="line-2"></span>
-                    <span class="line-3"></span>
-                    <span class="line-4"></span>
-                    <span class="line-5"></span>
-                    <span class="line-6"></span>
-                    <span class="line-7"></span>
-                    <span class="line-8"></span>
-                    <table class="table border text-center width-percent-100">
-                        <tr>
-                            <th>Vehicle #</th>
-                            <th>Brand</th>
-                            <th>Model</th>
-                            <th>Valgmulighed</th>
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+                <span class="line-4"></span>
+                <span class="line-5"></span>
+                <span class="line-6"></span>
+                <span class="line-7"></span>
+                <span class="line-8"></span>
+                <table class="table border text-center width-percent-100">
+                    <tr>
+                        <th>Vehicle #</th>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Valgmulighed</th>
+                    </tr>
+                    <ul th:each="car: ${cars}">
+                        <tr th:if="${car.getInspected() != true}">
+                            <td><span th:text="${car.getVehicleNumber()}" /></td>
+                            <td><span th:text="${car.getBrand()}" /></td>
+                            <td><span th:text="${car.getModel()}" /></td>
+                            <td>
+                                <div class="input-control">
+                                    <a class="button secondary"
+                                        th:href="@{/edit-car/{vehicleNumber}(vehicleNumber = ${car.getVehicleNumber()})}">Edit</a>
+                                </div>
+                            </td>
                         </tr>
-                        <ul th:each="car: ${cars}">
-                            <tr th:if="${car.getInspected() != true}">
-                                <td><span th:text="${car.getVehicleNumber()}" /></td>
-                                <td><span th:text="${car.getBrand()}" /></td>
-                                <td><span th:text="${car.getModel()}" /></td>
-                                <td>                                
-                                    <div class="input-control">
-                                        <a class="button secondary"
-                                            th:href="@{/edit-car/{vehicleNumber}(vehicleNumber = ${car.getVehicleNumber()})}">Edit</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </ul>
-                    </table>
+                    </ul>
+                </table>
             </div>
             <div class="text-box damaged-list" style="overflow-y: scroll;">
                 <h3>Defekte biler</h3>
