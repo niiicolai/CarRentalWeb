@@ -18,6 +18,9 @@ public class TestCarFactory {
      * can be used in Unit and integration tests.
      */
 
+    /*
+    * Written by Mikkel Aabo Simonsen
+     */
     public static Car create(boolean inspected) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
