@@ -172,6 +172,8 @@ INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_pric
 VALUES ('HKVCLKDH91F654284', 'Toyota', 'Aygo', 'Hvid', 3, 1500, 6500, 133, 95000, false, true, true);
 INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
 VALUES ('LKASDHBA23L175635', 'Suzuki', 'Swift', 'Rød', 1, 1500, 7500, 133, 105000, true, true, false);
+INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
+VALUES ('GHAHSDBG64T285759', 'Peugeot', '107', 'Sort', 1, 1500, 6500, 97, 85000, false, false, false);
 -- Mads
 INSERT INTO subscriptions (name, days, price, available)
 VALUES ('4 måneder', 120, 19194, 1);
