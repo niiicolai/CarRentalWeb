@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 
 
 <!--
 Written by Mikkel Aabo Simonsen
 -->
 <head th:replace="layout/fragments/head.html :: head('Rediger Bil')" />
-
-<body layout:fragment="content">
+<body>
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
     <style>
         /* Add 80px toward the bottom to counter the fixed footer element. */
         body {
