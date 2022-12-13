@@ -1,44 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Thomas -->
 <head th:replace="layout/fragments/head.html :: head('Rediger Udlejningsaftale')" />
-<body layout:fragment="content">
-    <style>
-        /* Add 80px toward the bottom to counter the fixed footer element. */
-        body {
-            margin-bottom: 80px;
-        }
-    </style>
+<body style="margin-bottom: 80px;">
 
-    <div class="flex justify-space-evenly text-center">
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
+    <div class="container">
+        <div class="flex justify-space-evenly text-center">
 
-        <div class="text-box secondary text-center">
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
-            <span class="line-4"></span>
-            <span class="line-5"></span>
-            <span class="line-6"></span>
-            <span class="line-7"></span>
-            <span class="line-8"></span>
+            <div class="text-box secondary text-center">
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+                <span class="line-4"></span>
+                <span class="line-5"></span>
+                <span class="line-6"></span>
+                <span class="line-7"></span>
+                <span class="line-8"></span>
 
-            <h2 class="text-box secondary text-center">Udfyld Kilometer Kørt</h2>
+                <h2 class="text-box secondary text-center">Udfyld Kilometer Kørt</h2>
 
-            <form th:action="@{/bookings/edit/{id}(id=${booking.getId()})}" th:object="${booking}" th:method="patch"
-                class="form">
+                <form th:action="@{/bookings/edit/{id}(id=${booking.getId()})}" th:object="${booking}" th:method="patch"
+                    class="form">
 
-                <div class="input-control">
-                    <input name="kilometerDriven" id="stype" type="text" placeholder="500" required>
-                </div>
+                    <div class="input-control">
+                        <input name="kilometerDriven" id="stype" type="text" placeholder="500" required>
+                    </div>
 
-                <input class="button primary medium" type="submit" value="Registrer ændring">
+                    <input class="button primary medium" type="submit" value="Registrer ændring">
 
-            </form>
-        </div>
-        <div>
-            <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+                </form>
+            </div>
+            <div>
+                <img src="/images/textWheel.png" class="image fit" alt="Text wheel" style="width: 300px">
+            </div>
         </div>
     </div>
 </body>

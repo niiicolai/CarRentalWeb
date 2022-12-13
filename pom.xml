@@ -92,9 +92,9 @@
           <schemaVersion>v2</schemaVersion>
           <subscriptionId>2ecad697-1b68-4e98-9aca-e52892732e2e</subscriptionId>
           <resourceGroup>CarRentalWeb-1670949475872-rg</resourceGroup>
-          <appName>CarRentalWeb-1670949475872</appName>
+          <appName>biludlejning</appName>
           <pricingTier>P1v2</pricingTier>
-          <region>centralus</region>
+          <region>westeurope</region>
           <runtime>
             <os>Windows</os>
             <javaVersion>Java 17</javaVersion>
