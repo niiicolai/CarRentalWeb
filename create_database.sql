@@ -177,7 +177,7 @@ INSERT INTO subscriptions (name, days, price)
 VALUES ('4 måneder', 120, 19194);
 INSERT INTO subscriptions (name, days, price)
 VALUES ('Unlimited (36 måneder)', 1096, 107964);
--- Thomas
+-- Nicolai
 INSERT INTO address (street, city, zipCode, country, latitude, longitude)
 VALUES ('Street 1A', 'City A', '42311', 'Denmark', 55.696, 12.557);
 INSERT INTO address (street, city, zipCode, country, latitude, longitude)
