@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS subscriptions
     name       VARCHAR(255) PRIMARY KEY NOT NULL UNIQUE,
     days       DOUBLE                   NOT NULL,
     price      DOUBLE                   NOT NULL,
-    available  BIT(1),
+    available  BIT(1)                   NOT NULL,
     created_at DATETIME(6)              NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at DATETIME(6)              NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 );
@@ -173,10 +173,10 @@ VALUES ('HKVCLKDH91F654284', 'Toyota', 'Aygo', 'Hvid', 3, 1500, 6500, 133, 95000
 INSERT INTO cars (frame_number, brand, model, color, equipment_level, steel_price, registration_fee, co2_discharge, sell_price, sold, inspected, damaged)
 VALUES ('LKASDHBA23L175635', 'Suzuki', 'Swift', 'Rød', 1, 1500, 7500, 133, 105000, true, true, false);
 -- Mads
-INSERT INTO subscriptions (name, days, price)
-VALUES ('4 måneder', 120, 19194);
-INSERT INTO subscriptions (name, days, price)
-VALUES ('Unlimited (36 måneder)', 1096, 107964);
+INSERT INTO subscriptions (name, days, price, available)
+VALUES ('4 måneder', 120, 19194, 1);
+INSERT INTO subscriptions (name, days, price, available)
+VALUES ('Unlimited (36 måneder)', 1096, 107964, 1);
 -- Nicolai
 INSERT INTO address (street, city, zipCode, country, latitude, longitude)
 VALUES ('Street 1A', 'City A', '42311', 'Denmark', 55.696, 12.557);

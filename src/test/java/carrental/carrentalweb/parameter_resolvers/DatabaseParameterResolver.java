@@ -28,6 +28,6 @@ public class DatabaseParameterResolver implements ParameterResolver {
     @Override
     public Object resolveParameter(ParameterContext parameterContext, 
       ExtensionContext extensionContext) throws ParameterResolutionException {
-        return new DatabaseService(System.getenv("JDBCUrl"), System.getenv("JDBCUsername"), System.getenv("JDBCPassword"));
+        return new DatabaseService(System.getenv("JDBCUrl_test"), System.getenv("JDBCUsername"), System.getenv("JDBCPassword"));
     }
 }
