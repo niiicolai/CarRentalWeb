@@ -54,7 +54,7 @@ public class PickupPointRepositoryTest {
   @AfterAll
   public static void after() {
 
-    pickupPointRepository.delete(lastInsertedPickupPoint);
+    //pickupPointRepository.delete(lastInsertedPickupPoint);
 
   }
 
@@ -120,16 +120,6 @@ public class PickupPointRepositoryTest {
 
     }
 
-    @Test
-    @Order(5)
-    void delete() {
-      //act
-      pickupPointRepository.delete(lastInsertedPickupPoint);
-      PickupPoint pickupPoint = pickupPointRepository.findPickupPointById(lastInsertedPickupPoint.getId());
-
-      //assert
-      assertEquals(null, pickupPoint, "Must be null");
-    }
 
 
 }
