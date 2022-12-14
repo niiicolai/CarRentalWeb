@@ -205,7 +205,7 @@ public class PickupPointRepository {
 			DatabaseRecord record = databaseResponse.next();
 
 			/* 
-			* Jeg har tilføjer parsing af en adresse her.
+			* Jeg har tilføjet parsing af en adresse her.
 			* ~ Nicolai
 			*/
 			Address address = new Address(
