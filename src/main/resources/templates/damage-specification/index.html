@@ -1,49 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-    layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Written by Mads Kristian Pedersen -->
 <head th:replace="layout/fragments/head.html :: head('Skadespecifikationer')" />
-<body layout:fragment="content">
+<body style="margin-bottom: 80px;">
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
+    <div class="container">
 
-<div class="flex justify-space-evenly text-center">
-    <div class="text-box primary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
+        <div class="flex justify-space-evenly text-center">
+            <div class="text-box primary">
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+                <span class="line-4"></span>
+                <span class="line-5"></span>
+                <span class="line-6"></span>
+                <span class="line-7"></span>
+                <span class="line-8"></span>
 
-        <h2>Skade Specifikationer</h2>
+                <h2>Skade Specifikationer</h2>
 
-        <table class="table border">
-            <thead>
-            <tr>
-                <th>Beskrivelse</th>
-                <th>Pris</th>
-                <th>Rediger</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="ds : ${damageSpecs}">
-                <td th:text="${ds.description}">Beskrivelse</td>
-                <td th:text="${ds.price} + ' DKK'">Pris</td>
-                <td><a th:href="@{/damage-specification/edit/{desc}(desc = ${ds.description})}"><button class="button primary medium">Rediger</button></a></td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <a th:href="@{/damage-specification/new}">
-            <input type="button" value="Tilføj ny specifikation" class="button primary medium">
-        </a>
+                <table class="table border">
+                    <thead>
+                    <tr>
+                        <th>Beskrivelse</th>
+                        <th>Pris</th>
+                        <th>Rediger</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ds : ${damageSpecs}">
+                        <td th:text="${ds.description}">Beskrivelse</td>
+                        <td th:text="${ds.price} + ' DKK'">Pris</td>
+                        <td><a th:href="@{/damage-specification/edit/{desc}(desc = ${ds.description})}"><button class="button primary medium">Rediger</button></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <a th:href="@{/damage-specification/new}">
+                    <input type="button" value="Tilføj ny specifikation" class="button primary medium">
+                </a>
+            </div>
+            <div>
+                <i class="fa-solid fa-circle-exclamation" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
+            </div>
+        </div>
     </div>
-    <div>
-        <i class="fa-solid fa-circle-exclamation" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
-    </div>
-</div>
+    <div th:replace="layout/fragments/footer.html :: footer" />
 </body>
 </html>

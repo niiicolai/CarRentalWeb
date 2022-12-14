@@ -1,49 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-    layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Written by Mads Kristian Pedersen -->
 <head th:replace="layout/fragments/head.html :: head('Rediger Abonnement')" />
-<body layout:fragment="content">
+<body style="margin-bottom: 80px;">
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
+    <div class="container">
 
-<div class="flex justify-space-evenly text-center">
-    <div class="text-box primary">
-        <span class="line-1"></span>
-        <span class="line-2"></span>
-        <span class="line-3"></span>
-        <span class="line-4"></span>
-        <span class="line-5"></span>
-        <span class="line-6"></span>
-        <span class="line-7"></span>
-        <span class="line-8"></span>
+        <div class="flex justify-space-evenly text-center">
+            <div class="text-box primary">
+                <span class="line-1"></span>
+                <span class="line-2"></span>
+                <span class="line-3"></span>
+                <span class="line-4"></span>
+                <span class="line-5"></span>
+                <span class="line-6"></span>
+                <span class="line-7"></span>
+                <span class="line-8"></span>
 
-        <form th:action="@{/subscriptions/edit}" th:object="${subscription}" th:method="patch" class="form">
-            <h2>Rediger Abonnement</h2>
-            <div class="input-control">
-                <h3 th:text="${subscription.name}"></h3>
-                <input th:field="*{name}" type="hidden" required>
-                <label>Dage:</label>
-                <input th:field="*{days}" type="text" placeholder="days" required autofocus>
+                <form th:action="@{/subscriptions/edit}" th:object="${subscription}" th:method="patch" class="form">
+                    <h2>Rediger Abonnement</h2>
+                    <div class="input-control">
+                        <h3 th:text="${subscription.name}"></h3>
+                        <input th:field="*{name}" type="hidden" required>
+                        <label>Dage:</label>
+                        <input th:field="*{days}" type="text" placeholder="days" required autofocus>
+                    </div>
+                    <div class="input-control">
+                        <label>Pris:</label>
+                        <input th:field="*{price}" type="text" placeholder="price" required>
+                    </div>
+                    <div class="input-control">
+                        <label>Tilgængelig:
+                            <input th:field="*{available}" type="checkbox" th:checked="${subscription.available}">
+                        </label>
+                    </div>
+
+                    <button type="submit" class="button primary medium">Opdater</button>
+
+                </form>
+                <a th:href="@{/subscriptions}"><button class="button primary medium">Tilbage</button></a>
             </div>
-            <div class="input-control">
-                <label>Pris:</label>
-                <input th:field="*{price}" type="text" placeholder="price" required>
+            <div>
+                <i class="fa-solid fa-clipboard" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
             </div>
-            <div class="input-control">
-                <label>Tilgængelig:
-                    <input th:field="*{available}" type="checkbox" th:checked="${subscription.available}">
-                </label>
-            </div>
-
-            <button type="submit" class="button primary medium">Opdater</button>
-
-        </form>
-        <a th:href="@{/subscriptions}"><button class="button primary medium">Tilbage</button></a>
+        </div>
     </div>
-    <div>
-        <i class="fa-solid fa-clipboard" style="font-size: 20vw; color: var(--primary); padding: var(--padding)"></i>
-    </div>
-</div>
+    <div th:replace="layout/fragments/footer.html :: footer" />
 </body>
 </html>

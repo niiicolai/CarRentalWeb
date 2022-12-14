@@ -60,4 +60,9 @@ public class HomeController {
         model.addAttribute("pickupPoints", pickupPointRepository.last(3));
         return "home/contact";
     }
+
+    @GetMapping("/agreement")
+    public String agreement() {
+        return "home/agreement";
+    }
 }

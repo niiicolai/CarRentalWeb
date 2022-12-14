@@ -1,89 +1,112 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Written by Nicolai Berg Andersen -->
 
 <head th:replace="layout/fragments/head.html :: head('Dashboard')" />
 
-<body layout:fragment="content">
+<body style="margin-bottom: 80px;">
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
 
-    <div class="background-image cover" th:style="'background-image:url(' + @{${timeOfDayImage}} + ');'">
-        <div class="overlay flex justify-space-between">
-            <div class="text-white">
-                <span><span th:text="${timeOfDayGreeting}" />, <strong th:text="${user.getUsername()}" />.<br>
-                    <small>Velkommen til dit dashboard.</small></span><br>
-                <small>
-                    <div class="margin-bottom">
-                        <span>Rolle(r):</span>
-                        <span th:each="authority: ${user.getAuthorities()}">
-                            <strong th:if="${authority.toString() == 'ROLE_CLIENT'}">Kunde;</strong>
-                            <strong th:if="${authority.toString() == 'ROLE_EMPLOYEE'}">Medarbejder;</strong>
-                        </span>
-                    </div>
+    <div class="container">
 
-                    <div sec:authorize="hasRole('ROLE_EMPLOYEE')" 
-                         class="flex justify-space-between align-items-center gap-8 text-center">
-                        <div>
-                            <div>Gns. afhentingstid (s)</div>
-                            <div th:text="${averageTimeBeforePickup}" />
-                        </div>
-    
-                        <div>
-                            <div>Gns. afleveringsstid (s)</div>
-                            <div th:text="${averageTimeBeforeReturn}" />
-                        </div>
-    
-                        <div>
-                            <div>Gns. betalingstid (s)</div>
-                            <div th:text="${averagePayTimeInSeconds}" />
-                        </div>
-    
-                        <div>
-                            <div>Gns. udlejningstid (s)</div>
-                            <div th:text="${averageTimeBeforeRent}" />
+        <div class="background-image cover" th:style="'background-image:url(' + @{${timeOfDayImage}} + ');'">
+            <div class="overlay flex justify-space-between">
+                <div class="text-white">
+                    <span><span th:text="${timeOfDayGreeting}" />, <strong th:text="${user.getUsername()}" />.<br>
+                        <small>Velkommen til dit dashboard.</small></span><br>
+                    <small>
+                        <div class="margin-bottom">
+                            <span>Rolle(r):</span>
+                            <span th:each="authority: ${user.getAuthorities()}">
+                                <strong th:if="${authority.toString() == 'ROLE_CLIENT'}">Kunde;</strong>
+                                <strong th:if="${authority.toString() == 'ROLE_EMPLOYEE'}">Medarbejder;</strong>
+                            </span>
                         </div>
 
-                        <div>
-                            <div>Antal biler udlejet</div>
-                            <div th:text="${noOfOpenBookings}" />
-                        </div>
+                        <div sec:authorize="hasRole('ROLE_EMPLOYEE')" 
+                            class="flex justify-space-between align-items-center gap-8 text-center">
+                            <div>
+                                <div>Gns. afhentingstid (s)</div>
+                                <div th:text="${averageTimeBeforePickup}" />
+                            </div>
+        
+                            <div>
+                                <div>Gns. afleveringsstid (s)</div>
+                                <div th:text="${averageTimeBeforeReturn}" />
+                            </div>
+        
+                            <div>
+                                <div>Gns. betalingstid (s)</div>
+                                <div th:text="${averagePayTimeInSeconds}" />
+                            </div>
+        
+                            <div>
+                                <div>Gns. udlejningstid (s)</div>
+                                <div th:text="${averageTimeBeforeRent}" />
+                            </div>
 
-                        <div>
-                            <div>Total pris på udlejede biler</div>
-                            <div th:text="${totalPriceOfRentedCars}" />
-                        </div>
-                    </div>
-                </small>
+                            <div>
+                                <div>Antal biler udlejet</div>
+                                <div th:text="${noOfOpenBookings}" />
+                            </div>
 
-                
-            </div>
-            <div class="text-white">
-                <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})" />
+                            <div>
+                                <div>Total pris på udlejede biler</div>
+                                <div th:text="${totalPriceOfRentedCars}" />
+                            </div>
+                        </div>
+                    </small>
+
+                    
+                </div>
+                <div class="text-white">
+                    <div th:replace="credit_rating/fragments/check.html :: check(${creditRating})" />
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="flex justify-space-between gap-8">
-        <a class="button danger large text-center min-height-205 width-percent-25" href="/user/edit">
-            <p><strong><i class="fa-solid fa-user-pen"></i><br><br> Profil</strong></p>
-            <small>Du modtager lige<br> nu faktura på <strong th:text="${user.getEmail()}" /></small><br><br>
-        </a>
-        <a class="button danger large text-center min-height-205 width-percent-25" href="/bookings">
-            <p><strong><i class="fa-solid fa-car-side"></i><br><br> Aftaler</strong></p>
-            <small>Du har lige nu <strong th:text="${bookings.size()}" /> udlejningsaftaler.</small><br><br>
-        </a>
-        <a class="button danger large text-center min-height-205 width-percent-25" href="/pickups">
-            <p><strong><i class="fa-solid fa-location-dot"></i><br><br> Afhentning</strong></p>
-            <small>Der findes lige nu <strong th:text="${pickups.size()}" /> afhentningslokationer.</small><br><br>
-        </a>
-        <a class="button danger large text-center min-height-205 width-percent-25" href="/subscriptions">
-            <p><strong><i class="fa-solid fa-tags"></i><br><br> Abonnementer</strong></p>
-            <small>Der findes lige nu <strong th:text="${subscriptions.size()}" /> abonnementer.</small><br><br>
-        </a>
-    </div>
-    <br>
-    <div class="flex justify-space-between gap-8">
+        <div class="flex justify-space-between gap-8">
+            <a class="button danger large text-center min-height-205 width-percent-25" href="/user/edit">
+                <p><strong><i class="fa-solid fa-user-pen"></i><br><br> Profil</strong></p>
+                <small>Du modtager lige<br> nu faktura på <strong th:text="${user.getEmail()}" /></small><br><br>
+            </a>
+            <a class="button danger large text-center min-height-205 width-percent-25" href="/bookings">
+                <p><strong><i class="fa-solid fa-car-side"></i><br><br> Aftaler</strong></p>
+                <small>Du har lige nu <strong th:text="${bookings.size()}" /> udlejningsaftaler.</small><br><br>
+            </a>
+            <a class="button danger large text-center min-height-205 width-percent-25" href="/pickups">
+                <p><strong><i class="fa-solid fa-location-dot"></i><br><br> Afhentning</strong></p>
+                <small>Der findes lige nu <strong th:text="${pickups.size()}" /> afhentningslokationer.</small><br><br>
+            </a>
+            <a class="button danger large text-center min-height-205 width-percent-25" href="/subscriptions">
+                <p><strong><i class="fa-solid fa-tags"></i><br><br> Abonnementer</strong></p>
+                <small>Der findes lige nu <strong th:text="${subscriptions.size()}" /> abonnementer.</small><br><br>
+            </a>
+        </div>
+        <br>
+        <div sec:authorize="hasRole('ROLE_CLIENT')" class="flex justify-space-between gap-8">
+            <a class="button danger large text-center min-height-205 width-percent-25" href="/cars">
+                <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
+                <small>Vi har lige <strong th:text="${cars.size()}" /> biler til udlejning.</small><br><br>
+            </a>
+            <a class="button danger large text-center min-height-205 width-percent-25" href="/agreement">
+                <p><strong><i class="fa-regular fa-handshake"></i><br><br> Betingelser</strong></p>
+                <small>Find vores handelsbetingelser.</small><br><br>
+            </a>
+            <a class="button danger large text-center min-height-205 width-percent-25" href="/contact">
+                <p><strong><i class="fa-regular fa-address-card"></i><br><br> Virksomhed</strong></p>
+                <small>Find kontakt information.</small><br><br>
+            </a>
+            <form th:action="@{/logout}" th:method="post" class="display inline width-percent-25">
+                <button type="submit" class="button danger large text-center min-height-205">
+                    <p><strong><i class="fa-sharp fa-solid fa-right-from-bracket"></i><br><br> Log ud</strong></p>
+                    <small>Du kan altid logge på igen, så længe du kan huske din kode.</small><br><br>
+                </button>
+            </form>
+        </div>
+        <div sec:authorize="hasRole('ROLE_EMPLOYEE')" class="flex justify-space-between gap-8">
         <a class="button danger large text-center min-height-205 width-percent-25" href="/cars">
             <p><strong><i class="fa-solid fa-car"></i><br><br> Biler</strong></p>
             <small>Vi har lige <strong th:text="${cars.size()}" /> biler til udlejning.</small><br><br>
@@ -92,9 +115,9 @@
             <p><strong><i class="fa-regular fa-handshake"></i><br><br> Betingelser</strong></p>
             <small>Find vores handelsbetingelser.</small><br><br>
         </a>
-        <a class="button danger large text-center min-height-205 width-percent-25" href="/contact">
-            <p><strong><i class="fa-regular fa-address-card"></i><br><br> Virksomhed</strong></p>
-            <small>Find kontakt information.</small><br><br>
+        <a class="button danger large text-center min-height-205 width-percent-25" href="/damage-specifications">
+            <p><strong><i class="fa-solid fa-circle-exclamation"></i><br><br> Skader</strong></p>
+            <small>Find skade specifikationer.</small><br><br>
         </a>
         <form th:action="@{/logout}" th:method="post" class="display inline width-percent-25">
             <button type="submit" class="button danger large text-center min-height-205">
@@ -103,7 +126,10 @@
             </button>
         </form>
     </div>
-    <br><br>
+        <br><br>
+    </div>
+
+    <div th:replace="layout/fragments/footer.html :: footer" />
 </body>
 
 </html>

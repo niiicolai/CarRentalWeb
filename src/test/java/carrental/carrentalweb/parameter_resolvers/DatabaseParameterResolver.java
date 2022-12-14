@@ -4,6 +4,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
+import org.springframework.beans.factory.annotation.Value;
 
 import carrental.carrentalweb.services.DatabaseService;
 
@@ -11,6 +12,10 @@ import carrental.carrentalweb.services.DatabaseService;
  * https://www.baeldung.com/junit-5-parameters
  */
 public class DatabaseParameterResolver implements ParameterResolver {
+
+    private static String url = System.getenv("JDBCUrl_test");
+    private static String username = System.getenv("JDBCUsername");
+    private static String password = System.getenv("JDBCPassword");
 
     /*
      * Set the Database service class as a supported argument
@@ -28,6 +33,6 @@ public class DatabaseParameterResolver implements ParameterResolver {
     @Override
     public Object resolveParameter(ParameterContext parameterContext, 
       ExtensionContext extensionContext) throws ParameterResolutionException {
-        return new DatabaseService("jdbc:mysql://localhost/carrental_test", "carrental_test", "password");
+        return new DatabaseService(url, username, password);
     }
 }

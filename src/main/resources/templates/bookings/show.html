@@ -1,129 +1,132 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Thomas -->
 <head th:replace="layout/fragments/head.html :: head('Udlejningsaftale')" />
-<body layout:fragment="content">
+<body style="margin-bottom: 80px;">
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
+    <div class="container">
 
-    <div th:if="${booking.getDeliveredAt() == null}"
-         class="alert success margin-bottom">
-        <p>Tillykke med din nye bil. Du kan nu afhente den på den valgte afhentningslokation.</p>    
-    </div>
-
-    <div th:if="${booking.getState() == 'Afventer skaderapport'}"
-         class="alert info margin-bottom">
-        <p>Din bil er hos vores skadeinspektør som vil gennemgå bilen for skader inden for 5 hverdage.</p>    
-    </div>
-
-    <div th:if="${booking.getState() == 'Aflevering mangler'}"
-         class="alert danger margin-bottom">
-        <p>Dit abonnement er udløbet. Det er derfor vigtigt du afleverer din bil hos en af vores afhentningslokationer til inspektion hurtigst muligt.</p>    
-    </div>
-
-    <h1 style="margin-bottom: 0px;">
-        #<span th:text="${booking.getId()}" />
-        <span>Udlejningsaftale</span>            
-    </h1>
-    <hr>
-
-    <small>
-        <span>Oprettet:</span>
-        <strong th:text="${#temporals.format(booking.getCreatedAt(), 'dd-MM-yyyy HH:mm')}" />
-        <span>|</span>
-    </small>
-
-    <small th:if="${booking.getDeliveredAt() != null}">
-        <span>Afhentet:</span>
-        <strong th:text="${#temporals.format(booking.getDeliveredAt(), 'dd-MM-yyyy HH:mm')}" />
-        <span>|</span>
-    </small>
-
-    <small th:if="${booking.getReturnedAt() != null}">
-        <span>Afleveret:</span>
-        <strong th:text="${#temporals.format(booking.getReturnedAt(), 'dd-MM-yyyy HH:mm')}" />
-        <span>|</span>
-    </small>
-
-    <small>
-        <span>State:</span>
-        <strong th:text="${booking.getState()}" />
-    </small>
-
-    <div class="flex justify-space-between gap-20">
-        <div class="width-percent-50">
-            <h2 class="margin-bottom">Bil</h2>
-
-            <div class="flex justify-space-between margin-bottom">
-                <strong>Type:</strong>
-                <div>
-                    <span th:text="${car.getBrand()}" />
-                    <span th:text="${car.getModel()}" />
-                </div>
-            </div>
-            <div class="flex justify-space-between margin-bottom">
-                <strong>Farve:</strong>
-                <span th:text="${car.getColor()}" />
-            </div>
-            <div class="flex justify-space-between margin-bottom">
-                <strong>Udstyrsniveau:</strong>
-                <span th:text="${car.getEquipmentLevel()}" />
-            </div>
-            <div class="flex justify-space-between margin-bottom">
-                <strong>Registreringsafgift:</strong>
-                <span th:text="${car.getRegistrationFee()}" />
-            </div>
-            <div class="flex justify-space-between margin-bottom">
-                <strong>Co<sup>2</sup> udledning:</strong>
-                <span th:text="${car.getCo2Discharge()}" />
-            </div>
-
-            <h2 class="margin-bottom text">Abonnement</h2>
-
-            <div class="flex justify-space-between margin-bottom">
-                <strong>Navn:</strong>
-                <span th:text="${subscription.getName()}" />
-            </div>
-            <div class="flex justify-space-between margin-bottom">
-                <strong>Pris:</strong>
-                <span th:text="${subscription.getPrice()}" />
-            </div>
-            <div class="flex justify-space-between margin-bottom">
-                <strong>Dage:</strong>
-                <span th:text="${subscription.getDays()}" />
-            </div>
-
-            <h2 class="margin-bottom">Skaderapport</h2>
-        
-            <div th:if="${damageReport == null}">
-                <p>Der er ingen skaderapport tilknyttet denne aftale.</p>
-            </div>
-
-            <a th:if="${damageReport != null}"
-               th:href="@{/damage-report/show/{id}(id=${booking.getId()})}"
-               class="button primary large width-percent-100">
-                Se rapport
-            </a>
-
-            <h2 class="margin-bottom">Faktura</h2>
-            
-            <div th:if="${invoices.size() == 0}">
-                <p>Der er ingen faktura tilknyttet denne aftale.</p>
-            </div>
-
-            <div th:each="invoice : ${invoices}"
-                 class="flex justify-space-between margin-bottom">
-                <div>
-                    #<span th:text="${invoice.getId()}" />
-                </div>
-                <div>
-                    <a th:href="@{/invoice/{id}(id=${invoice.getId()})}">PDF</a>
-                </div>
-            </div>
+        <div th:if="${booking.getDeliveredAt() == null}"
+            class="alert success margin-bottom">
+            <p>Tillykke med din nye bil. Du kan nu afhente den på den valgte afhentningslokation.</p>    
         </div>
 
-        <div>
-            <div th:replace="pickups/fragments/client_show.html :: clientShow('Afhentningslokation')" />
+        <div th:if="${booking.getState() == 'Afventer skaderapport'}"
+            class="alert info margin-bottom">
+            <p>Din bil er hos vores skadeinspektør som vil gennemgå bilen for skader inden for 5 hverdage.</p>    
+        </div>
+
+        <div th:if="${booking.getState() == 'Aflevering mangler'}"
+            class="alert danger margin-bottom">
+            <p>Dit abonnement er udløbet. Det er derfor vigtigt du afleverer din bil hos en af vores afhentningslokationer til inspektion hurtigst muligt.</p>    
+        </div>
+
+        <h1 style="margin-bottom: 0px;">
+            #<span th:text="${booking.getId()}" />
+            <span>Udlejningsaftale</span>            
+        </h1>
+        <hr>
+
+        <small>
+            <span>Oprettet:</span>
+            <strong th:text="${#temporals.format(booking.getCreatedAt(), 'dd-MM-yyyy HH:mm')}" />
+            <span>|</span>
+        </small>
+
+        <small th:if="${booking.getDeliveredAt() != null}">
+            <span>Afhentet:</span>
+            <strong th:text="${#temporals.format(booking.getDeliveredAt(), 'dd-MM-yyyy HH:mm')}" />
+            <span>|</span>
+        </small>
+
+        <small th:if="${booking.getReturnedAt() != null}">
+            <span>Afleveret:</span>
+            <strong th:text="${#temporals.format(booking.getReturnedAt(), 'dd-MM-yyyy HH:mm')}" />
+            <span>|</span>
+        </small>
+
+        <small>
+            <span>State:</span>
+            <strong th:text="${booking.getState()}" />
+        </small>
+
+        <div class="flex justify-space-between gap-20">
+            <div class="width-percent-50">
+                <h2 class="margin-bottom">Bil</h2>
+
+                <div class="flex justify-space-between margin-bottom">
+                    <strong>Type:</strong>
+                    <div>
+                        <span th:text="${car.getBrand()}" />
+                        <span th:text="${car.getModel()}" />
+                    </div>
+                </div>
+                <div class="flex justify-space-between margin-bottom">
+                    <strong>Farve:</strong>
+                    <span th:text="${car.getColor()}" />
+                </div>
+                <div class="flex justify-space-between margin-bottom">
+                    <strong>Udstyrsniveau:</strong>
+                    <span th:text="${car.getEquipmentLevel()}" />
+                </div>
+                <div class="flex justify-space-between margin-bottom">
+                    <strong>Registreringsafgift:</strong>
+                    <span th:text="${car.getRegistrationFee()}" />
+                </div>
+                <div class="flex justify-space-between margin-bottom">
+                    <strong>Co<sup>2</sup> udledning:</strong>
+                    <span th:text="${car.getCo2Discharge()}" />
+                </div>
+
+                <h2 class="margin-bottom text">Abonnement</h2>
+
+                <div class="flex justify-space-between margin-bottom">
+                    <strong>Navn:</strong>
+                    <span th:text="${subscription.getName()}" />
+                </div>
+                <div class="flex justify-space-between margin-bottom">
+                    <strong>Pris:</strong>
+                    <span th:text="${subscription.getPrice()}" />
+                </div>
+                <div class="flex justify-space-between margin-bottom">
+                    <strong>Dage:</strong>
+                    <span th:text="${subscription.getDays()}" />
+                </div>
+
+                <h2 class="margin-bottom">Skaderapport</h2>
+            
+                <div th:if="${damageReport == null}">
+                    <p>Der er ingen skaderapport tilknyttet denne aftale.</p>
+                </div>
+
+                <a th:if="${damageReport != null}"
+                th:href="@{/damage-report/show/{id}(id=${booking.getId()})}"
+                class="button primary large width-percent-100">
+                    Se rapport
+                </a>
+
+                <h2 class="margin-bottom">Faktura</h2>
+                
+                <div th:if="${invoices.size() == 0}">
+                    <p>Der er ingen faktura tilknyttet denne aftale.</p>
+                </div>
+
+                <div th:each="invoice : ${invoices}"
+                    class="flex justify-space-between margin-bottom">
+                    <div>
+                        #<span th:text="${invoice.getId()}" />
+                    </div>
+                    <div>
+                        <a th:href="@{/invoice/{id}(id=${invoice.getId()})}">PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div th:replace="pickups/fragments/client_show.html :: clientShow('Afhentningslokation')" />
+            </div>
         </div>
     </div>
 

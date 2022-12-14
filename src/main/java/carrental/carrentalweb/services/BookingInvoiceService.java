@@ -71,10 +71,15 @@ public class BookingInvoiceService {
     }
 
     private void emailOwner(User user, InvoiceRecord invoiceRecord) {
-        invoiceMailerService.send(
-            user, 
-            invoiceRecord.invoice(), 
-            invoiceRecord.specifications());
+        // Catch exception to counter SMTP lockout.
+        try {
+            invoiceMailerService.send(
+                user, 
+                invoiceRecord.invoice(), 
+                invoiceRecord.specifications());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void execute(long bookingId) {

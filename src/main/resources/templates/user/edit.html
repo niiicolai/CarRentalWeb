@@ -1,62 +1,68 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Written by Nicolai Berg Andersen -->
 <head th:replace="layout/fragments/head.html :: head('Rediger Bruger')" />
-<body layout:fragment="content">
-    <div class="text-box secondary text-center">
+<body style="margin-bottom: 80px;">
+    <div th:replace="layout/fragments/header.html :: header" />
+    <div th:replace="layout/fragments/alert.html :: alert" />
+    
+    <div class="container">
+        <div class="text-box secondary text-center">
 
-        <h2 class="text-secondary">Opdater brugeroplysninger</h2>
-        <p>
-            Her kan du ændre dit brugernavn og e-mail. Blot vær opmærksom på at hvis du ændre brugernavnet, skal du bruge det nye brugernavn til at logge ind.
-        </p>
-        <form th:action="@{/user}" th:object="${user}" th:method="patch" class="form">
-            <div class="input-control">
-                <label name="username">Brugernavn</label>
-                <input type="text" th:field="*{username}" placeholder="Brugernavn" autocomplete="off"
-                    required="required" />
-            </div>
-            <div class="input-control">
-                <label name="email">E-mail</label>
-                <input type="text" th:field="*{email}" placeholder="E-mail" autocomplete="off" required="required" />
-            </div>
-
-            <div>
-                <button type="submit" class="button primary small">Gem</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="text-box secondary text-center">
-        <h2 class="text-secondary">Opdater adgangskode</h2>
-        <p>
-            Her kan du ændre din adgangskode. Bemærk koden mindst skal være 8 tegn.
-        </p>
-        <form th:action="@{/user/password}" th:object="${user}" th:method="patch" class="form">
-            <div class="input-control">
-                <div>
-                    <label name="password">Adgangskode</label>
+            <h2 class="text-secondary">Opdater brugeroplysninger</h2>
+            <p>
+                Her kan du ændre dit brugernavn og e-mail. Blot vær opmærksom på at hvis du ændre brugernavnet, skal du bruge det nye brugernavn til at logge ind.
+            </p>
+            <form th:action="@{/user}" th:object="${user}" th:method="patch" class="form">
+                <div class="input-control">
+                    <label name="username">Brugernavn</label>
+                    <input type="text" th:field="*{username}" placeholder="Brugernavn" autocomplete="off"
+                        required="required" />
                 </div>
-                <input name="password" type="password" placeholder="Adgangskode" autocomplete="off" minlength="8" required>
-            </div>
-            <div>
-                <button type="submit" class="button primary small">Gem</button>
-            </div>
-        </form>
+                <div class="input-control">
+                    <label name="email">E-mail</label>
+                    <input type="text" th:field="*{email}" placeholder="E-mail" autocomplete="off" required="required" />
+                </div>
+
+                <div>
+                    <button type="submit" class="button primary small">Gem</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="text-box secondary text-center">
+            <h2 class="text-secondary">Opdater adgangskode</h2>
+            <p>
+                Her kan du ændre din adgangskode. Bemærk koden mindst skal være 8 tegn.
+            </p>
+            <form th:action="@{/user/password}" th:object="${user}" th:method="patch" class="form">
+                <div class="input-control">
+                    <div>
+                        <label name="password">Adgangskode</label>
+                    </div>
+                    <input name="password" type="password" placeholder="Adgangskode" autocomplete="off" minlength="8" required>
+                </div>
+                <div>
+                    <button type="submit" class="button primary small">Gem</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="text-box secondary text-center">
+            <h2 class="text-secondary">Deaktiver bruger</h2>
+            <p>
+                Her kan du deaktivere dine bruger. Blot vær opmærksom du fremadrette ikke vil kunne logge ind i tilfældet af deaktivering.
+            </p>
+            <form th:action="@{/user}" th:object="${user}" th:method="delete" class="form">
+                <div>
+                    <button type="submit" class="button danger small">Deaktiver</button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="text-box secondary text-center">
-        <h2 class="text-secondary">Deaktiver bruger</h2>
-        <p>
-            Her kan du deaktivere dine bruger. Blot vær opmærksom du fremadrette ikke vil kunne logge ind i tilfældet af deaktivering.
-        </p>
-        <form th:action="@{/user}" th:object="${user}" th:method="delete" class="form">
-            <div>
-                <button type="submit" class="button danger small">Deaktiver</button>
-            </div>
-        </form>
-    </div>
+    <div th:replace="layout/fragments/footer.html :: footer" />
 
 </body>
 

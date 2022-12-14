@@ -147,7 +147,7 @@ public class InvoiceRepositoryTest {
     public static void after() {
         bookingRepository.delete(lastInsertedBooking);
         subscriptionRepository.delete(lastInsertedSubscription);
-        pickupPointRepository.delete(lastInsertedPickupPoint);
+        //pickupPointRepository.delete(lastInsertedPickupPoint);
         userRepository.delete(lastInsertedUser);
         carRepository.deleteCarByVehicleNumber(lastInsertedCar.getVehicleNumber());
     }
