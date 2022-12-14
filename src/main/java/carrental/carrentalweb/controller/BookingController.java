@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /*
- * Written by Thomas S. Andersen
+ * Written by Nicolai Berg Andersen and Thomas S. Andersen
  */
 @Controller
 public class BookingController {
