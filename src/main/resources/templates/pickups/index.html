@@ -3,6 +3,8 @@
     layout:decorate="~{/layout/layout}">
 
 <head th:replace="layout/fragments/head.html :: head('Afhentningslokationer')" />
+<!-- Thomas -->
+
 <body layout:fragment="content">
     <div sec:authorize="hasAnyRole('ROLE_CLIENT', 'ROLE_ANONYMOUS')" th:replace="pickups/fragments/client_index_vertical.html :: clientIndex('Afhent din bil på følgende lokationer')" />
 
