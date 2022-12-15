@@ -26,6 +26,7 @@ public class BookingRepository {
     this.databaseService = databaseService;
   }
 
+  //Thomas
   public boolean createBooking(Booking newBooking) {
 
     String query = "INSERT INTO bookings (user_id, vehicle_number, subscription_name, pickup_point_id, delivered_at, returned_at, kilometer_driven) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -164,6 +165,7 @@ public class BookingRepository {
     return parseResponseFirst(databaseResponse);
   }
 
+  //Thomas
   public Booking findByBookingId(Long id) {
 
     String sql = "SELECT * FROM bookings WHERE id = ?";
@@ -223,6 +225,7 @@ public class BookingRepository {
     return average;
   }
 
+  //Thomas
   public boolean updateBooking(Booking booking) {
 
     String query = "UPDATE bookings SET user_id = ?, vehicle_number = ?, subscription_name = ?, pickup_point_id = ?, delivered_at = ?, returned_at = ?, updated_at = ?, kilometer_driven = ? WHERE id=?";
