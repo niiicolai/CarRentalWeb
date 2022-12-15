@@ -64,7 +64,7 @@ public class BookingController {
 
 		return "bookings/index";
 	}
-
+//Thomas
 	@GetMapping("/bookings/create")
 	public String showCreate(Model model){
 		model.addAttribute("booking", new Booking());
@@ -103,6 +103,7 @@ public class BookingController {
 		}
 	}
 
+	//Thomas
 	@GetMapping("/bookings/kilometer_driven/{id}")
 	public String updateBooking(Model model, @PathVariable Long id) {
 		model.addAttribute("booking", br.find("id", id));

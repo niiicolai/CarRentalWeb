@@ -53,7 +53,7 @@ public class PickupPointController {
 	@DeleteMapping("/delete/{pickupPoint_id}")
 	public void deletePickupPoint(@PathVariable("pickupPoint_id") long id){
 		if (ppRepo.findPickupPointById(id) != null){
-			ppRepo.findPickupPointById(id);
+			ppRepo.delete(ppRepo.findPickupPointById(id));
 		}
 	}
 }
